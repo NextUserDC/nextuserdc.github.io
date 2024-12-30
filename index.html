@@ -13,23 +13,33 @@
     </header>
 
     <main>
+        <!-- Sección de agregar productos -->
         <section id="add-product">
             <h2>Agregar Producto</h2>
             <form id="add-product-form">
+                <label for="name">Nombre del Producto</label>
+                <input type="text" id="name" placeholder="Nombre del producto" required>
+                
                 <label for="code">Código de Barras</label>
                 <input type="text" id="code" placeholder="Escanea o escribe el código" required>
+                <button type="button" id="scan-add-code">Escanear Código</button>
+                
                 <label for="quantity">Cantidad</label>
                 <input type="number" id="quantity" placeholder="Cantidad" required>
+                
                 <button type="submit">Agregar</button>
             </form>
         </section>
 
+        <!-- Sección de escaneo para descuentos -->
         <section id="scanner-section">
-            <h2>Escanear Producto</h2>
+            <h2>Descontar Producto</h2>
+            <button id="start-discount-scan">Escanear para Descontar</button>
             <div id="reader"></div>
             <button id="stop-scan">Detener Escaneo</button>
         </section>
 
+        <!-- Sección de inventario -->
         <section id="inventory">
             <h2>Inventario Actual</h2>
             <ul id="inventory-list">
