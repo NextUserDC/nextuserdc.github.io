@@ -1,100 +1,146 @@
-let inventory = JSON.parse(localStorage.getItem('inventory')) || {};
-
-// Actualiza la lista de inventario en la interfaz
-function updateInventoryList() {
-    const inventoryList = document.getElementById('inventory-list');
-    inventoryList.innerHTML = '';
-    for (const [code, product] of Object.entries(inventory)) {
-        const item = document.createElement('li');
-        item.textContent = `Nombre: ${product.name}, Código: ${code}, Cantidad: ${product.quantity}`;
-        inventoryList.appendChild(item);
-    }
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Inicializa el escáner
-function initializeScanner(scannerElementId, callback) {
-    const html5QrCode = new Html5Qrcode(scannerElementId);
-
-    html5QrCode.start(
-        { facingMode: "environment" }, // Cámara trasera
-        {
-            fps: 10, // Frames por segundo
-            qrbox: { width: 250, height: 250 } // Tamaño del área de escaneo
-        },
-        (decodedText) => {
-            callback(decodedText); // Devuelve el texto escaneado
-        },
-        (errorMessage) => {
-            console.log("Error de escaneo:", errorMessage); // Ignora errores menores
-        }
-    ).catch((err) => {
-        console.error("Error al iniciar el escáner:", err);
-        alert("No se pudo iniciar el escáner. Verifica los permisos de la cámara.");
-    });
-
-    return html5QrCode;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 10px;
 }
 
-// Detiene el escáner
-function stopScanner(scannerInstance) {
-    if (scannerInstance) {
-        scannerInstance.stop().then(() => {
-            console.log("Escáner detenido.");
-        }).catch((err) => {
-            console.error("Error al detener el escáner:", err);
-        });
-    }
+/* Encabezado */
+header {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-// Agregar producto al inventario
-document.getElementById('add-product-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const code = document.getElementById('code').value.trim();
-    const quantity = parseInt(document.getElementById('quantity').value.trim(), 10);
+header h1 {
+    font-size: 1.8rem;
+    color: #007bff;
+}
 
-    if (!name || !code || quantity <= 0) {
-        alert('Por favor, ingrese datos válidos.');
-        return;
-    }
+/* Secciones principales */
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
-    inventory[code] = { name, quantity: (inventory[code]?.quantity || 0) + quantity };
-    localStorage.setItem('inventory', JSON.stringify(inventory));
-    updateInventoryList();
+section {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-    document.getElementById('name').value = '';
-    document.getElementById('code').value = '';
-    document.getElementById('quantity').value = '';
-});
+/* Títulos de sección */
+section h2 {
+    font-size: 1.4rem;
+    color: #007bff;
+    margin-bottom: 10px;
+}
 
-// Escáner de códigos de barras para agregar productos
-document.getElementById('scan-add-code').addEventListener('click', () => {
-    const html5QrCode = initializeScanner("reader", (decodedText) => {
-        document.getElementById('code').value = decodedText;
-        alert(`Código escaneado: ${decodedText}`);
-        stopScanner(html5QrCode); // Detenemos el escáner después de escanear
-    });
-});
+/* Formularios */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-// Escáner de códigos de barras para descuentos
-document.getElementById('start-discount-scan').addEventListener('click', () => {
-    const html5QrCode = initializeScanner("reader", (decodedText) => {
-        if (inventory[decodedText] && inventory[decodedText].quantity > 0) {
-            inventory[decodedText].quantity -= 1;
-            alert(`Producto descontado: ${inventory[decodedText].name}. Quedan ${inventory[decodedText].quantity} unidades.`);
-        } else {
-            alert(`Producto no encontrado o sin stock.`);
-        }
-        localStorage.setItem('inventory', JSON.stringify(inventory));
-        updateInventoryList();
-        stopScanner(html5QrCode); // Detenemos el escáner después de escanear
-    });
-});
+form label {
+    font-weight: bold;
+}
 
-// Botón para detener el escáner manualmente
-document.getElementById('stop-scan').addEventListener('click', () => {
-    stopScanner(html5QrCode);
-});
+form input[type="text"],
+form input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+}
 
-// Inicializar la lista al cargar la página
-document.addEventListener('DOMContentLoaded', updateInventoryList);
+form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Botones generales */
+button {
+    font-size: 1rem;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #28a745;
+    color: #fff;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#stop-scan {
+    background-color: #dc3545;
+}
+
+#stop-scan:hover {
+    background-color: #c82333;
+}
+
+/* Sección de inventario */
+#inventory ul {
+    list-style: none;
+    padding: 0;
+}
+
+#inventory ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+#inventory ul li:last-child {
+    border-bottom: none;
+}
+
+/* Escáner */
+#reader {
+    width: 100%;
+    max-width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+footer p {
+    margin-top: 10px;
+}
