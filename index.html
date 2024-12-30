@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario Inteligente</title>
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Gestión de Inventario</h1>
+    </header>
+
+    <main>
+        <section id="add-product">
+            <h2>Agregar Producto</h2>
+            <form id="add-product-form">
+                <label for="code">Código de Barras</label>
+                <input type="text" id="code" placeholder="Escanea o escribe el código" required>
+                <label for="quantity">Cantidad</label>
+                <input type="number" id="quantity" placeholder="Cantidad" required>
+                <button type="submit">Agregar</button>
+            </form>
+        </section>
+
+        <section id="scanner-section">
+            <h2>Escanear Producto</h2>
+            <div id="reader"></div>
+            <button id="stop-scan">Detener Escaneo</button>
+        </section>
+
+        <section id="inventory">
+            <h2>Inventario Actual</h2>
+            <ul id="inventory-list">
+                <!-- Aquí se listarán los productos -->
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>Inventario Inteligente - Desarrollado para todos los dispositivos</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
