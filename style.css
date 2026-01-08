@@ -21,6 +21,7 @@ body {
   font-size: 22px;
   background: rgba(0,0,0,0.3);
   padding: 15px 25px;
+  padding-top: 1%;
   border-radius: 10px;
   display: inline-block;
 }
