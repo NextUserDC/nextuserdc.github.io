@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Ventas</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="auth-container" class="auth-wrapper">
+        <div class="auth-card">
+            <div class="logo" style="justify-content: center; margin-bottom: 0.5rem; padding-bottom: 0; border: none;">
+                <i class="fas fa-store"></i>
+                <h2>VentasApp</h2>
+            </div>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 1.5rem;">Inicia sesión para gestionar tus ventas</p>
+            <form id="auth-form">
+                <div class="form-group">
+                    <label for="auth-email">Correo Electrónico</label>
+                    <input type="email" id="auth-email" required placeholder="correo@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label for="auth-password">Contraseña</label>
+                    <input type="password" id="auth-password" required placeholder="••••••••">
+                </div>
+                <div id="auth-error" class="error-msg d-none" style="color: var(--danger); font-size: 0.9rem; text-align: center;">Error al iniciar sesión</div>
+                <button type="submit" class="btn-primary btn-large mt-3" id="btn-login"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="app-container d-none" id="main-app">
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fas fa-store"></i>
+                <h2>VentasApp</h2>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-target="dashboard"><i class="fas fa-chart-line"></i> Dashboard</li>
+                <li id="nav-nueva-venta" data-target="nueva-venta"><i class="fas fa-cart-plus"></i> Registrar Venta</li>
+                <li data-target="productos"><i class="fas fa-box"></i> Productos</li>
+                <li data-target="base-datos"><i class="fas fa-database"></i> Datos (JSON)</li>
+            </ul>
+            <div class="sidebar-footer" style="margin-top: auto; padding: 2rem;">
+                <button id="theme-toggle" class="btn-secondary" style="width: 100%; margin-bottom: 1rem;"><i class="fas fa-moon"></i> <span id="theme-text">Modo Oscuro</span></button>
+                <button id="btn-logout" class="btn-secondary" style="width: 100%; color: var(--danger); border-color: #fee2e2;"><i class="fas fa-sign-out-alt"></i> Salir</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            
+            <section id="dashboard" class="page-section active">
+                <header class="section-header">
+                    <h1>Resumen de Ventas</h1>
+                    <div class="filter-group">
+                        <button class="filter-btn active" data-filter="dia">Hoy</button>
+                        <button class="filter-btn" data-filter="semana">Esta Semana</button>
+                        <button class="filter-btn" data-filter="mes">Este Mes</button>
+                        <button class="filter-btn" data-filter="todos">Todo</button>
+                    </div>
+                </header>
+                
+                <div class="summary-cards">
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-receipt"></i></div>
+                        <div class="card-info">
+                            <h3>Total de Ventas</h3>
+                            <p id="total-ventas-count">0</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="card-info">
+                            <h3>Ingresos Totales</h3>
+                            <p id="total-ventas-value">$0.00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-sales">
+                    <h2>Historial de Ventas</h2>
+                    <div class="table-responsive">
+                        <table class="sales-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha y Hora</th>
+                                    <th>Productos</th>
+                                    <th>Dpto.</th>
+                                    <th>Método de Pago</th>
+                                    <th>Total</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sales-list">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="no-sales-msg" class="empty-state">No hay ventas registradas en este periodo.</div>
+                </div>
+            </section>
+
+            <section id="nueva-venta" class="page-section">
+                <header class="section-header">
+                    <h1 id="titulo-nueva-venta">Registrar Nueva Venta</h1>
+                    <button id="btn-cancel-edit" class="btn-secondary d-none"><i class="fas fa-times"></i> Cancelar Edición</button>
+                </header>
+                
+                <div class="form-container">
+                    <form id="form-venta">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fecha-hora">Fecha y Hora</label>
+                                <input type="datetime-local" id="fecha-hora" required>
+                                <small>Se completa automáticamente, pero puedes editarla.</small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="departamento">Número de Depto.</label>
+                                <input type="text" id="departamento" placeholder="Ej. 402, 1005..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="metodo-pago">Método de Pago</label>
+                                <select id="metodo-pago" required>
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="Transferencia">Transferencia</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="products-section">
+                            <h3>Productos Vendidos</h3>
+                            <div id="productos-venta-container">
+                                <div class="producto-item">
+                                    <input type="text" class="producto-input" list="productos-lista" placeholder="Buscar o escribir producto..." required>
+                                    <button type="button" class="btn-remove-producto" disabled><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <button type="button" id="btn-add-producto" class="btn-secondary"><i class="fas fa-plus"></i> Añadir otro producto</button>
+                        </div>
+
+                        <div class="form-row mt-3">
+                            <div class="form-group">
+                                <label for="valor-total" class="label-large">Valor Total de la Venta ($)</label>
+                                <input type="number" id="valor-total" step="0.01" min="0" placeholder="0" required class="input-large">
+                            </div>
+                        </div>
+
+                        <div class="form-row" id="seccion-efectivo">
+                            <div class="form-group">
+                                <label for="pago-con">Paga con ($)</label>
+                                <input type="number" id="pago-con" step="0.01" min="0" placeholder="0">
+                                <small>Opcional. Indica con qué denominación pagan.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="vuelto">Vuelto a dar ($)</label>
+                                <input type="text" id="vuelto" readonly placeholder="0" class="input-readonly">
+                            </div>
+                        </div>
+
+                        <div class="form-row mt-3">
+                            <div class="form-group">
+                                <label for="comentario-venta">Comentario / Anotación</label>
+                                <textarea id="comentario-venta" placeholder="Ej. Dejar en recepción, el cliente debe dinero, etc." rows="2"></textarea>
+                                <small>Opcional.</small>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-large mt-3"><i class="fas fa-save"></i> Guardar Venta</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="productos" class="page-section">
+                <header class="section-header">
+                    <h1>Gestión de Productos</h1>
+                </header>
+
+                <div class="split-layout">
+                    <div class="form-container">
+                        <h2>Registrar Producto</h2>
+                        <form id="form-producto">
+                            <div class="form-group">
+                                <label for="nombre-producto">Nombre del Producto</label>
+                                <input type="text" id="nombre-producto" placeholder="Ej. Zapatos deportivos" required>
+                            </div>
+                            <button type="submit" class="btn-primary"><i class="fas fa-plus"></i> Añadir Producto</button>
+                        </form>
+                    </div>
+
+                    <div class="list-container">
+                        <h2>Productos Registrados</h2>
+                        <ul id="productos-registrados-list" class="item-list">
+                        </ul>
+                        <div id="no-products-msg" class="empty-state">No hay productos registrados.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="base-datos" class="page-section">
+                <header class="section-header">
+                    <h1>Base de Datos (JSON)</h1>
+                </header>
+
+                <div class="info-card" style="background-color: #ecfdf5; border-color: #10b981; color: #047857;">
+                    <p><strong><i class="fas fa-cloud-check"></i> Sincronización en la Nube (Firebase)</strong><br>Tus datos se sincronizan automáticamente en tiempo real entre todos tus dispositivos. Sin embargo, aquí puedes descargar o importar un respaldo local de seguridad en formato <strong>.json</strong>.</p>
+                </div>
+
+                <div class="db-actions">
+                    <div class="db-card">
+                        <i class="fas fa-download db-icon"></i>
+                        <h3>Exportar Datos</h3>
+                        <p>Descarga todas tus ventas y productos en un archivo JSON.</p>
+                        <button id="btn-export" class="btn-primary"><i class="fas fa-file-export"></i> Descargar JSON</button>
+                    </div>
+
+                    <div class="db-card">
+                        <i class="fas fa-upload db-icon"></i>
+                        <h3>Importar Datos</h3>
+                        <p>Sube un archivo JSON para restaurar tus ventas y productos.</p>
+                        <input type="file" id="file-import" accept=".json" style="display: none;">
+                        <button id="btn-import-trigger" class="btn-secondary"><i class="fas fa-file-import"></i> Seleccionar JSON</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <datalist id="productos-lista">
+    </datalist>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
