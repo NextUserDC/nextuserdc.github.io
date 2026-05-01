@@ -254,7 +254,25 @@ body {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
     overflow-x: auto;
+    overflow-y: auto;
+    max-height: 530px;
     border: 1px solid var(--border-color);
+}
+
+/* Scrollbar para la tabla */
+.table-responsive::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.table-responsive::-webkit-scrollbar-track {
+    background: transparent;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-light);
 }
 
 .sales-table {
@@ -270,9 +288,12 @@ body {
 }
 
 .sales-table th {
-    background-color: #fbf8ff;
+    background-color: var(--bg-color);
     color: var(--text-dark);
     font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .sales-table tbody tr {
