@@ -74,7 +74,12 @@
                 </div>
 
                 <div class="recent-sales">
-                    <h2>Historial de Ventas</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                        <h2 style="margin-bottom: 0;">Historial de Ventas</h2>
+                        <div class="form-group" style="margin-bottom: 0; min-width: 250px;">
+                            <input type="text" id="buscar-venta-depto" placeholder="Buscar por Depto...">
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="sales-table">
                             <thead>
@@ -91,6 +96,21 @@
                         </table>
                     </div>
                     <div id="no-sales-msg" class="empty-state">No hay ventas registradas en este periodo.</div>
+                </div>
+
+                <div class="dashboard-stats mt-3">
+                    <div class="stats-card">
+                        <h3><i class="fas fa-crown"></i> Productos más Vendidos</h3>
+                        <div id="top-products" class="stats-list">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <h3><i class="fas fa-building"></i> Top Departamentos</h3>
+                        <div id="top-departments" class="stats-list">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -135,15 +155,14 @@
                             <button type="button" id="btn-add-producto" class="btn-secondary"><i class="fas fa-plus"></i> Añadir otro producto</button>
                         </div>
 
-                        <div class="form-row mt-3">
-                            <div class="form-group">
+                        <div class="form-row" style="margin-bottom: 0.5rem;">
+                            <div class="form-group" style="margin-bottom: 0;">
                                 <label for="comentario-venta">Comentario / Anotación</label>
                                 <textarea id="comentario-venta" placeholder="Ej. Dejar en recepción, el cliente debe dinero, etc." rows="2"></textarea>
-                                <small>Opcional.</small>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn-primary btn-large mt-3"><i class="fas fa-save"></i> Guardar Venta</button>
+                        <button type="submit" class="btn-primary btn-large" style="margin-top: 3.5rem;"><i class="fas fa-save"></i> Guardar Venta</button>
                     </form>
                 </div>
             </section>
