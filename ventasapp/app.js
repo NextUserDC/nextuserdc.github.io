@@ -37,6 +37,7 @@ const nombreProductoInput = document.getElementById('nombre-producto');
 const productosRegistradosList = document.getElementById('productos-registrados-list');
 const noProductsMsg = document.getElementById('no-products-msg');
 const productosListaDatalist = document.getElementById('productos-lista');
+const buscarProductoInput = document.getElementById('buscar-producto');
 
 const formVenta = document.getElementById('form-venta');
 const fechaHoraInput = document.getElementById('fecha-hora');
@@ -175,6 +176,19 @@ function setupEventListeners() {
                 btn.style.background = '';
             }, 1500);
         }
+    });
+
+    buscarProductoInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const items = productosRegistradosList.querySelectorAll('li');
+        items.forEach(li => {
+            const text = li.querySelector('span').textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+                li.style.display = 'flex';
+            } else {
+                li.style.display = 'none';
+            }
+        });
     });
 
     btnAddProductoVenta.addEventListener('click', () => {

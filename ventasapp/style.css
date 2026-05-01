@@ -17,6 +17,8 @@
     --border-radius: 16px;
     --transition: all 0.3s ease;
     --input-bg: #f9fafb;
+    --item-hover-bg: #fbf8ff;
+    --item-border: #f3f4f6;
 }
 
 [data-theme="dark"] {
@@ -27,6 +29,8 @@
     --border-color: #374151;
     --input-bg: #374151;
     --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+    --item-hover-bg: rgba(168, 85, 247, 0.15);
+    --item-border: #374151;
 }
 
 .auth-wrapper {
@@ -496,6 +500,24 @@ input:focus, select:focus, textarea:focus {
 
 .item-list {
     list-style: none;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Scrollbar para la lista */
+.item-list::-webkit-scrollbar {
+    width: 6px;
+}
+.item-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+.item-list::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+.item-list::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-light);
 }
 
 .item-list li {
@@ -503,12 +525,12 @@ input:focus, select:focus, textarea:focus {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid var(--item-border);
     transition: var(--transition);
 }
 
 .item-list li:hover {
-    background-color: #fbf8ff;
+    background-color: var(--item-hover-bg);
 }
 
 .item-list li:last-child {
