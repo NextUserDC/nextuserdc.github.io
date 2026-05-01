@@ -31,6 +31,9 @@ const totalVentasCount = document.getElementById('total-ventas-count');
 const salesList = document.getElementById('sales-list');
 const noSalesMsg = document.getElementById('no-sales-msg');
 const filterBtns = document.querySelectorAll('.filter-btn');
+const topProductsList = document.getElementById('top-products');
+const topDepartmentsList = document.getElementById('top-departments');
+const buscarVentaDeptoInput = document.getElementById('buscar-venta-depto');
 
 const formProducto = document.getElementById('form-producto');
 const nombreProductoInput = document.getElementById('nombre-producto');
@@ -144,6 +147,10 @@ function setupEventListeners() {
                 setCurrentDateTime();
             }
         });
+    });
+
+    buscarVentaDeptoInput.addEventListener('input', () => {
+        updateDashboard();
     });
 
     filterBtns.forEach(btn => {
@@ -393,7 +400,7 @@ function updateProductosUI() {
 function updateDashboard() {
     const now = new Date();
 
-    const ventasFiltradas = appData.ventas.filter(venta => {
+    let ventasFiltradas = appData.ventas.filter(venta => {
         const fechaVenta = new Date(venta.fechaHora);
         
         if (currentFilter === 'dia') {
@@ -414,6 +421,13 @@ function updateDashboard() {
         return true; 
     });
 
+    const deptoSearch = buscarVentaDeptoInput.value.toLowerCase().trim();
+    if (deptoSearch) {
+        ventasFiltradas = ventasFiltradas.filter(venta => 
+            venta.departamento.toString().toLowerCase().includes(deptoSearch)
+        );
+    }
+
     const totalCount = ventasFiltradas.length;
 
     totalVentasCount.innerText = totalCount;
@@ -422,11 +436,47 @@ function updateDashboard() {
     if (ventasFiltradas.length === 0) {
         salesList.parentElement.style.display = 'none';
         noSalesMsg.style.display = 'block';
+        topProductsList.innerHTML = '<div class="empty-state">No hay datos</div>';
+        topDepartmentsList.innerHTML = '<div class="empty-state">No hay datos</div>';
     } else {
         salesList.parentElement.style.display = 'table';
         noSalesMsg.style.display = 'none';
 
         ventasFiltradas.sort((a, b) => new Date(b.fechaHora) - new Date(a.fechaHora));
+
+        const productCounts = {};
+        const deptCounts = {};
+
+        ventasFiltradas.forEach(venta => {
+            venta.productos.forEach(prod => {
+                productCounts[prod] = (productCounts[prod] || 0) + 1;
+            });
+            deptCounts[venta.departamento] = (deptCounts[venta.departamento] || 0) + 1;
+        });
+
+        const sortedProducts = Object.entries(productCounts)
+            .sort(([, a], [, b]) => b - a)
+            .slice(0, 5);
+        
+        const sortedDepts = Object.entries(deptCounts)
+            .sort(([, a], [, b]) => b - a)
+            .slice(0, 5);
+
+        topProductsList.innerHTML = sortedProducts.length > 0 
+            ? sortedProducts.map(([name, count]) => `
+                <div class="stats-item">
+                    <span class="stats-name">${escapeHTML(name)}</span>
+                    <span class="stats-count">${count} vendidos</span>
+                </div>`).join('')
+            : '<div class="empty-state">No hay datos</div>';
+
+        topDepartmentsList.innerHTML = sortedDepts.length > 0
+            ? sortedDepts.map(([name, count]) => `
+                <div class="stats-item">
+                    <span class="stats-name">Depto. ${escapeHTML(name)}</span>
+                    <span class="stats-count">${count} ventas</span>
+                </div>`).join('')
+            : '<div class="empty-state">No hay datos</div>';
 
         ventasFiltradas.forEach(venta => {
             const tr = document.createElement('tr');

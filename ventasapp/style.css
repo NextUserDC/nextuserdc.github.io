@@ -345,14 +345,14 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.8rem;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .form-group label {
@@ -366,7 +366,7 @@ body {
 }
 
 input, select, textarea {
-    padding: 12px 16px;
+    padding: 10px 14px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-family: 'Outfit', sans-serif;
@@ -383,7 +383,7 @@ input, select, textarea {
 
 textarea {
     resize: vertical;
-    min-height: 80px;
+    min-height: 60px;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -401,9 +401,9 @@ input:focus, select:focus, textarea:focus {
 
 .products-section {
     background-color: var(--bg-color);
-    padding: 1.5rem;
+    padding: 0.75rem;
     border-radius: 12px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.8rem;
     border: 1px dashed var(--primary);
 }
 
@@ -659,5 +659,74 @@ input:focus, select:focus, textarea:focus {
     
     .section-header h1 {
         font-size: 1.5rem;
+    }
+}
+
+/* Estadísticas del Dashboard */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.stats-card {
+    background: var(--surface);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+}
+
+.stats-card h3 {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.stats-card h3 i {
+    color: var(--primary);
+}
+
+.stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.stats-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.stats-item:hover {
+    transform: translateX(5px);
+    background-color: var(--item-hover-bg);
+}
+
+.stats-name {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.stats-count {
+    background-color: var(--primary);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .dashboard-stats {
+        grid-template-columns: 1fr;
     }
 }
