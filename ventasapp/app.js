@@ -28,7 +28,6 @@ const navLinks = document.querySelectorAll('.nav-links li');
 const pageSections = document.querySelectorAll('.page-section');
 
 const totalVentasCount = document.getElementById('total-ventas-count');
-const totalVentasValue = document.getElementById('total-ventas-value');
 const salesList = document.getElementById('sales-list');
 const noSalesMsg = document.getElementById('no-sales-msg');
 const filterBtns = document.querySelectorAll('.filter-btn');
@@ -44,10 +43,6 @@ const fechaHoraInput = document.getElementById('fecha-hora');
 const productosVentaContainer = document.getElementById('productos-venta-container');
 const btnAddProductoVenta = document.getElementById('btn-add-producto');
 const metodoPagoSelect = document.getElementById('metodo-pago');
-const seccionEfectivo = document.getElementById('seccion-efectivo');
-const pagoConInput = document.getElementById('pago-con');
-const vueltoInput = document.getElementById('vuelto');
-const valorTotalInput = document.getElementById('valor-total');
 
 const btnExport = document.getElementById('btn-export');
 const fileImport = document.getElementById('file-import');
@@ -212,30 +207,6 @@ function setupEventListeners() {
         }
     });
 
-    metodoPagoSelect.addEventListener('change', () => {
-        if (metodoPagoSelect.value === 'Efectivo') {
-            seccionEfectivo.classList.remove('d-none');
-        } else {
-            seccionEfectivo.classList.add('d-none');
-            pagoConInput.value = '';
-            vueltoInput.value = '';
-        }
-    });
-
-    const calcularVuelto = () => {
-        if (metodoPagoSelect.value !== 'Efectivo') return;
-        const total = parseFloat(valorTotalInput.value) || 0;
-        const pago = parseFloat(pagoConInput.value) || 0;
-        if (pago > 0 && pago >= total) {
-            vueltoInput.value = (pago - total).toFixed(2);
-        } else {
-            vueltoInput.value = '';
-        }
-    };
-
-    valorTotalInput.addEventListener('input', calcularVuelto);
-    pagoConInput.addEventListener('input', calcularVuelto);
-
     formVenta.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -259,20 +230,11 @@ function setupEventListeners() {
             fechaHora: document.getElementById('fecha-hora').value,
             departamento: document.getElementById('departamento').value,
             metodoPago: metodo,
-            productos: productosVendidos,
-            total: parseFloat(document.getElementById('valor-total').value)
+            productos: productosVendidos
         };
         
         if (comentario !== '') {
             nuevaVenta.comentario = comentario;
-        }
-
-        if (metodo === 'Efectivo') {
-            const pagoConVal = parseFloat(pagoConInput.value);
-            if (!isNaN(pagoConVal) && pagoConVal > 0) {
-                nuevaVenta.pagoCon = pagoConVal;
-                nuevaVenta.vuelto = parseFloat(vueltoInput.value) || 0;
-            }
         }
 
         if (editModeId) {
@@ -288,7 +250,6 @@ function setupEventListeners() {
         saveData();
 
         formVenta.reset();
-        seccionEfectivo.classList.remove('d-none'); 
         setCurrentDateTime();
 
         productosVentaContainer.innerHTML = `
@@ -440,11 +401,8 @@ function updateDashboard() {
     });
 
     const totalCount = ventasFiltradas.length;
-    const totalValue = ventasFiltradas.reduce((sum, v) => sum + v.total, 0);
 
     totalVentasCount.innerText = totalCount;
-    
-    totalVentasValue.innerText = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(totalValue).replace('CLP', '$');
 
     salesList.innerHTML = '';
     if (ventasFiltradas.length === 0) {
@@ -465,9 +423,6 @@ function updateDashboard() {
             const productosStr = escapeHTML(venta.productos.join(', '));
             
             let metodoBadge = escapeHTML(venta.metodoPago);
-            if (venta.metodoPago === 'Efectivo' && venta.pagoCon) {
-                metodoBadge += ` <br><small style="color: var(--text-light)">(Pagó con: $${venta.pagoCon} | Vuelto: $${venta.vuelto})</small>`;
-            }
             
             let comentarioHtml = '';
             if (venta.comentario) {
@@ -479,7 +434,6 @@ function updateDashboard() {
                 <td>${productosStr}${comentarioHtml}</td>
                 <td><span class="badge">Depto. ${escapeHTML(venta.departamento)}</span></td>
                 <td>${metodoBadge}</td>
-                <td><strong>${new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(venta.total).replace('CLP', '$')}</strong></td>
                 <td>
                     <button class="btn-icon" style="color: var(--primary);" onclick="editarVenta('${venta.id}')" title="Editar Venta"><i class="fas fa-edit"></i></button>
                     <button class="btn-icon" onclick="eliminarVenta('${venta.id}')" title="Eliminar Venta"><i class="fas fa-trash"></i></button>
@@ -517,18 +471,6 @@ window.editarVenta = function(id) {
     document.getElementById('fecha-hora').value = venta.fechaHora;
     document.getElementById('departamento').value = venta.departamento;
     document.getElementById('metodo-pago').value = venta.metodoPago;
-    document.getElementById('valor-total').value = venta.total;
-    
-    if (venta.metodoPago === 'Efectivo') {
-        seccionEfectivo.classList.remove('d-none');
-        document.getElementById('pago-con').value = venta.pagoCon || '';
-        document.getElementById('vuelto').value = venta.vuelto || '';
-    } else {
-        seccionEfectivo.classList.add('d-none');
-        document.getElementById('pago-con').value = '';
-        document.getElementById('vuelto').value = '';
-    }
-    
     document.getElementById('comentario-venta').value = venta.comentario || '';
     
     productosVentaContainer.innerHTML = '';
@@ -556,7 +498,6 @@ document.getElementById('btn-cancel-edit').addEventListener('click', () => {
     document.getElementById('titulo-nueva-venta').innerText = "Registrar Nueva Venta";
     document.getElementById('btn-cancel-edit').classList.add('d-none');
     formVenta.reset();
-    seccionEfectivo.classList.remove('d-none');
     setCurrentDateTime();
     productosVentaContainer.innerHTML = `
         <div class="producto-item">

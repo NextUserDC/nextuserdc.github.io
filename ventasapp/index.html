@@ -63,19 +63,12 @@
                     </div>
                 </header>
                 
-                <div class="summary-cards">
+                <div class="summary-cards" style="grid-template-columns: 1fr;">
                     <div class="card">
                         <div class="card-icon"><i class="fas fa-receipt"></i></div>
                         <div class="card-info">
                             <h3>Total de Ventas</h3>
                             <p id="total-ventas-count">0</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
-                        <div class="card-info">
-                            <h3>Ingresos Totales</h3>
-                            <p id="total-ventas-value">$0.00</p>
                         </div>
                     </div>
                 </div>
@@ -90,7 +83,6 @@
                                     <th>Productos</th>
                                     <th>Dpto.</th>
                                     <th>Método de Pago</th>
-                                    <th>Total</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -141,25 +133,6 @@
                                 </div>
                             </div>
                             <button type="button" id="btn-add-producto" class="btn-secondary"><i class="fas fa-plus"></i> Añadir otro producto</button>
-                        </div>
-
-                        <div class="form-row mt-3">
-                            <div class="form-group">
-                                <label for="valor-total" class="label-large">Valor Total de la Venta ($)</label>
-                                <input type="number" id="valor-total" step="0.01" min="0" placeholder="0" required class="input-large">
-                            </div>
-                        </div>
-
-                        <div class="form-row" id="seccion-efectivo">
-                            <div class="form-group">
-                                <label for="pago-con">Paga con ($)</label>
-                                <input type="number" id="pago-con" step="0.01" min="0" placeholder="0">
-                                <small>Opcional. Indica con qué denominación pagan.</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="vuelto">Vuelto a dar ($)</label>
-                                <input type="text" id="vuelto" readonly placeholder="0" class="input-readonly">
-                            </div>
                         </div>
 
                         <div class="form-row mt-3">
