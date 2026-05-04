@@ -19,7 +19,7 @@ const dbRef = ref(db, 'minimarket');
 const auth = getAuth(app);
 
 let editModeId = null;
-let editProductModeId = null; // Para editar productos
+let editProductModeId = null;
 
 let appData = {
     productos: [],
@@ -98,14 +98,12 @@ function init() {
             authContainer.classList.add('d-none');
             mainApp.classList.remove('d-none');
 
-            console.log("Sesión iniciada. Conectando a la base de datos...");
             onValue(dbRef, (snapshot) => {
                 const data = snapshot.val();
-                console.log("Snapshot recibido de Firebase:", data);
                 if (data) {
-                    appData.productos = Array.isArray(data.productos) ? data.productos : [];
-                    appData.ventas = Array.isArray(data.ventas) ? data.ventas : [];
-                    appData.encargados = Array.isArray(data.encargados) ? data.encargados : [];
+                    appData.productos = firebaseToArray(data.productos);
+                    appData.ventas = firebaseToArray(data.ventas);
+                    appData.encargados = firebaseToArray(data.encargados);
                 } else {
                     appData = { productos: [], ventas: [], encargados: [] };
                 }
@@ -118,11 +116,16 @@ function init() {
     });
 }
 
+function firebaseToArray(data) {
+    if (!data) return [];
+    if (Array.isArray(data)) return data;
+    return Object.values(data);
+}
+
 function saveData() {
-    console.log("Guardando datos completos en Firebase:", appData);
     set(dbRef, appData)
-        .then(() => console.log("Datos guardados correctamente"))
-        .catch(err => console.error("Error crítico al guardar:", err));
+        .then(() => console.log("Sincronizado"))
+        .catch(err => console.error("Error al guardar:", err));
 }
 
 function toFirebaseEmail(val) {
@@ -135,8 +138,7 @@ function setupEventListeners() {
         e.preventDefault();
         const email = toFirebaseEmail(authEmail.value);
         signInWithEmailAndPassword(auth, email, authPassword.value)
-            .catch((err) => {
-                console.error("Error login:", err);
+            .catch(() => {
                 authError.innerText = "Usuario o contraseña incorrectos.";
                 authError.classList.remove('d-none');
             });
@@ -212,7 +214,10 @@ function setupEventListeners() {
     buscarProductoInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
         document.querySelectorAll('#productos-registrados-list li').forEach(li => {
-            li.style.display = li.querySelector('.prod-info-name').textContent.toLowerCase().includes(term) ? 'flex' : 'none';
+            const nameEl = li.querySelector('.prod-info-name');
+            if (nameEl) {
+                li.style.display = nameEl.textContent.toLowerCase().includes(term) ? 'flex' : 'none';
+            }
         });
     });
 
@@ -244,53 +249,61 @@ function setupEventListeners() {
 
     formVenta.addEventListener('submit', (e) => {
         e.preventDefault();
-        const inputs = productosVentaContainer.querySelectorAll('.producto-input');
-        const productosVendidos = [];
-        let totalVenta = 0;
-        let costoVenta = 0;
+        try {
+            const inputs = productosVentaContainer.querySelectorAll('.producto-input');
+            const productosVendidos = [];
+            let totalVenta = 0;
+            let costoVenta = 0;
 
-        inputs.forEach(input => {
-            const val = input.value.trim();
-            if(val) {
-                productosVendidos.push(val);
-                const p = appData.productos.find(x => x.nombre === val);
-                if(p) {
-                    totalVenta += p.precioVenta;
-                    costoVenta += p.precioCompra;
+            inputs.forEach(input => {
+                const val = input.value.trim();
+                if(val) {
+                    productosVendidos.push(val);
+                    const p = appData.productos.find(x => x.nombre === val);
+                    if(p) {
+                        totalVenta += p.precioVenta;
+                        costoVenta += p.precioCompra;
+                    }
                 }
+            });
+
+            if(productosVendidos.length === 0) {
+                alert('Añade al menos un producto.');
+                return;
             }
-        });
 
-        if(productosVendidos.length === 0) return alert('Añade productos.');
+            const venta = {
+                id: editModeId || Date.now().toString(),
+                fechaHora: fechaHoraInput.value,
+                departamento: document.getElementById('departamento').value,
+                metodoPago: document.getElementById('metodo-pago').value,
+                encargado: encargadoEntregaSelect.value,
+                productos: productosVendidos,
+                comentario: document.getElementById('comentario-venta').value.trim(),
+                totalVenta,
+                costoVenta
+            };
 
-        const venta = {
-            id: editModeId || Date.now().toString(),
-            fechaHora: fechaHoraInput.value,
-            departamento: document.getElementById('departamento').value,
-            metodoPago: document.getElementById('metodo-pago').value,
-            encargado: encargadoEntregaSelect.value,
-            productos: productosVendidos,
-            comentario: document.getElementById('comentario-venta').value.trim(),
-            totalVenta,
-            costoVenta
-        };
-
-        if (editModeId) {
-            const idx = appData.ventas.findIndex(v => v.id === editModeId);
-            if (idx !== -1) appData.ventas[idx] = venta;
-            editModeId = null;
-            document.getElementById('titulo-nueva-venta').innerText = "Registrar Nueva Venta";
-            document.getElementById('btn-cancel-edit').classList.add('d-none');
-        } else {
-            appData.ventas.push(venta);
+            if (editModeId) {
+                const idx = appData.ventas.findIndex(v => v.id === editModeId);
+                if (idx !== -1) appData.ventas[idx] = venta;
+                editModeId = null;
+                document.getElementById('titulo-nueva-venta').innerText = "Registrar Nueva Venta";
+                document.getElementById('btn-cancel-edit').classList.add('d-none');
+            } else {
+                appData.ventas.push(venta);
+            }
+            
+            saveData();
+            formVenta.reset();
+            setCurrentDateTime();
+            resetProductosVenta();
+            calculateLiveTotal();
+            navLinks[0].click();
+        } catch (err) {
+            console.error("Error al registrar venta:", err);
+            alert("Ocurrió un error al procesar la venta.");
         }
-        
-        saveData();
-        formVenta.reset();
-        setCurrentDateTime();
-        resetProductosVenta();
-        calculateLiveTotal();
-        navLinks[0].click();
     });
 
     // Config Account
@@ -382,17 +395,35 @@ window.editarProducto = (id) => {
     precioVentaInput.value = p.precioVenta || 0;
     formProducto.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-save"></i> Guardar Cambios';
     nombreProductoInput.focus();
+    navLinks[2].click();
 };
 
 function updateEncargadosUI() {
     encargadosList.innerHTML = '';
     noEncargadosMsg.style.display = appData.encargados.length === 0 ? 'block' : 'none';
+    
+    const entregaCounts = {};
+    if (Array.isArray(appData.ventas)) {
+        appData.ventas.forEach(v => {
+            if (v.encargado) {
+                entregaCounts[v.encargado] = (entregaCounts[v.encargado] || 0) + 1;
+            }
+        });
+    }
+
     appData.encargados.forEach(e => {
+        const count = entregaCounts[e.nombre] || 0;
         const li = document.createElement('li');
-        li.innerHTML = `<span>${escapeHTML(e.nombre)}</span>
-                        <button class="btn-icon" onclick="eliminarEncargado('${e.id}')"><i class="fas fa-trash"></i></button>`;
+        li.innerHTML = `
+            <div style="flex: 1; display: flex; flex-direction: column;">
+                <span style="font-weight: 600;">${escapeHTML(e.nombre)}</span>
+                <small style="color: var(--primary); font-weight: 500;">${count} entregas realizadas</small>
+            </div>
+            <button class="btn-icon" onclick="eliminarEncargado('${e.id}')"><i class="fas fa-trash"></i></button>
+        `;
         encargadosList.appendChild(li);
     });
+    
     encargadoEntregaSelect.innerHTML = '<option value="" disabled selected>Seleccione un encargado</option>' + 
         appData.encargados.map(e => `<option value="${e.nombre}">${e.nombre}</option>`).join('');
 }
@@ -428,14 +459,13 @@ function updateDashboard() {
             <td>${escapeHTML(v.encargado || 'N/A')}</td>
             <td style="font-weight:600">$${(v.totalVenta || 0).toLocaleString()}</td>
             <td>
-                <button class="btn-icon" style="color:var(--primary)" onclick="editarVenta('${v.id}')"><i class="fas fa-edit"></i></button>
+                <button class="btn-icon" style="color: var(--primary);" onclick="editarVenta('${v.id}')"><i class="fas fa-edit"></i></button>
                 <button class="btn-icon" onclick="eliminarVenta('${v.id}')"><i class="fas fa-trash"></i></button>
             </td>
         `;
         salesList.appendChild(tr);
     });
 
-    // Top Stats
     const productCounts = {};
     const deptCounts = {};
     filtered.forEach(v => {
