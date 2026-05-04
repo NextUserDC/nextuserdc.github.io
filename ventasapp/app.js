@@ -64,7 +64,15 @@ const ventaTotalDisplay = document.getElementById('venta-total-display');
 const formConfigEmail = document.getElementById('form-config-email');
 const formConfigPassword = document.getElementById('form-config-password');
 
+// Export Elements
 const btnExport = document.getElementById('btn-export');
+const exportType = document.getElementById('export-type');
+const exportDateSingleGroup = document.getElementById('export-date-single-group');
+const exportDateRangeGroup = document.getElementById('export-date-range-group');
+const exportDateSingle = document.getElementById('export-date-single');
+const exportDateStart = document.getElementById('export-date-start');
+const exportDateEnd = document.getElementById('export-date-end');
+
 const fileImport = document.getElementById('file-import');
 const btnImportTrigger = document.getElementById('btn-import-trigger');
 
@@ -74,9 +82,11 @@ const authPassword = document.getElementById('auth-password');
 const authError = document.getElementById('auth-error');
 const authContainer = document.getElementById('auth-container');
 const mainApp = document.getElementById('main-app');
-const btnLogout = document.getElementById('btn-logout');
-const themeToggle = document.getElementById('theme-toggle');
-const themeText = document.getElementById('theme-text');
+
+// Move session/theme buttons to config
+const btnLogoutConfig = document.getElementById('btn-logout-config');
+const themeToggleConfig = document.getElementById('theme-toggle-config');
+const themeTextConfig = document.getElementById('theme-text-config');
 
 const navLinks = document.querySelectorAll('.nav-links li');
 const pageSections = document.querySelectorAll('.page-section');
@@ -90,7 +100,7 @@ function init() {
     const savedTheme = localStorage.getItem('appTheme') || 'light';
     if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        themeText.innerText = 'Modo Claro';
+        if (themeTextConfig) themeTextConfig.innerText = 'Modo Claro';
     }
 
     onAuthStateChanged(auth, (user) => {
@@ -144,18 +154,18 @@ function setupEventListeners() {
             });
     });
 
-    btnLogout.addEventListener('click', () => signOut(auth));
+    btnLogoutConfig.addEventListener('click', () => signOut(auth));
 
-    themeToggle.addEventListener('click', () => {
+    themeToggleConfig.addEventListener('click', () => {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         if (isDark) {
             document.documentElement.removeAttribute('data-theme');
             localStorage.setItem('appTheme', 'light');
-            themeText.innerText = 'Modo Oscuro';
+            themeTextConfig.innerText = 'Modo Oscuro';
         } else {
             document.documentElement.setAttribute('data-theme', 'dark');
             localStorage.setItem('appTheme', 'dark');
-            themeText.innerText = 'Modo Claro';
+            themeTextConfig.innerText = 'Modo Claro';
         }
     });
 
@@ -321,11 +331,42 @@ function setupEventListeners() {
         updatePassword(auth.currentUser, p1).then(() => alert('Contraseña actualizada.')).catch(err => alert(err.message));
     });
 
-    // JSON DB
+    // Enhanced JSON Export
+    exportType.addEventListener('change', () => {
+        exportDateSingleGroup.classList.toggle('d-none', exportType.value !== 'dia');
+        exportDateRangeGroup.classList.toggle('d-none', exportType.value !== 'rango');
+    });
+
     btnExport.addEventListener('click', () => {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+        let filteredVentas = appData.ventas;
+        const type = exportType.value;
+
+        if (type === 'dia') {
+            const date = exportDateSingle.value;
+            if (!date) return alert('Selecciona una fecha.');
+            filteredVentas = appData.ventas.filter(v => v.fechaHora.startsWith(date));
+        } else if (type === 'rango') {
+            const start = exportDateStart.value;
+            const end = exportDateEnd.value;
+            if (!start || !end) return alert('Selecciona el rango completo.');
+            filteredVentas = appData.ventas.filter(v => {
+                const vd = v.fechaHora.split('T')[0];
+                return vd >= start && vd <= end;
+            });
+        }
+
+        const dataToExport = {
+            productos: appData.productos,
+            ventas: filteredVentas,
+            encargados: appData.encargados,
+            exportDate: new Date().toISOString(),
+            filterUsed: type
+        };
+
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport, null, 2));
         const a = document.createElement('a');
-        a.href = dataStr; a.download = `ventas_${new Date().toISOString().split('T')[0]}.json`;
+        a.href = dataStr; 
+        a.download = `ventas_${type}_${new Date().toISOString().split('T')[0]}.json`;
         a.click();
     });
 

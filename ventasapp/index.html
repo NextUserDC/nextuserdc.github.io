@@ -46,10 +46,6 @@
                 <li data-target="base-datos"><i class="fas fa-database"></i> Datos (JSON)</li>
                 <li data-target="configuracion"><i class="fas fa-cog"></i> Configuración</li>
             </ul>
-            <div class="sidebar-footer" style="margin-top: auto; padding: 2rem;">
-                <button id="theme-toggle" class="btn-secondary" style="width: 100%; margin-bottom: 1rem;"><i class="fas fa-moon"></i> <span id="theme-text">Modo Oscuro</span></button>
-                <button id="btn-logout" class="btn-secondary" style="width: 100%; color: var(--danger); border-color: #fee2e2;"><i class="fas fa-sign-out-alt"></i> Salir</button>
-            </div>
         </nav>
 
         <main class="main-content">
@@ -275,11 +271,39 @@
                 </div>
 
                 <div class="db-actions">
-                    <div class="db-card">
+                    <div class="db-card" style="grid-column: span 1;">
                         <i class="fas fa-download db-icon"></i>
                         <h3>Exportar Datos</h3>
-                        <p>Descarga todas tus ventas y productos en un archivo JSON.</p>
-                        <button id="btn-export" class="btn-primary"><i class="fas fa-file-export"></i> Descargar JSON</button>
+                        <p>Filtra por fecha para descargar tus ventas.</p>
+                        
+                        <div class="form-group" style="margin-top: 1rem;">
+                            <label for="export-type">Rango de Exportación</label>
+                            <select id="export-type" class="input-small">
+                                <option value="todos">Todos los datos</option>
+                                <option value="dia">Un día específico</option>
+                                <option value="rango">Rango de fechas</option>
+                            </select>
+                        </div>
+
+                        <div id="export-date-single-group" class="form-group d-none" style="margin-top: 1rem;">
+                            <label for="export-date-single">Selecciona el día</label>
+                            <input type="date" id="export-date-single" class="input-small">
+                        </div>
+
+                        <div id="export-date-range-group" class="form-group d-none" style="margin-top: 1rem;">
+                            <div style="display: flex; gap: 0.5rem;">
+                                <div style="flex: 1;">
+                                    <label for="export-date-start">Desde</label>
+                                    <input type="date" id="export-date-start" class="input-small">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="export-date-end">Hasta</label>
+                                    <input type="date" id="export-date-end" class="input-small">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="btn-export" class="btn-primary mt-3"><i class="fas fa-file-export"></i> Descargar JSON</button>
                     </div>
 
                     <div class="db-card">
@@ -322,6 +346,14 @@
                         </div>
                         <button type="submit" class="btn-primary"><i class="fas fa-key"></i> Actualizar Contraseña</button>
                     </form>
+
+                    <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <h3>Opciones de Sesión y Tema</h3>
+                        <button id="theme-toggle-config" class="btn-secondary" style="justify-content: center;"><i class="fas fa-moon"></i> <span id="theme-text-config">Modo Oscuro</span></button>
+                        <button id="btn-logout-config" class="btn-secondary" style="justify-content: center; color: var(--danger); border-color: #fee2e2;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+                    </div>
                 </div>
             </section>
 
