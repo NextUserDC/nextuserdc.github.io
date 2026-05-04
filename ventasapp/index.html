@@ -19,8 +19,8 @@
             <p style="text-align: center; color: var(--text-light); margin-bottom: 1.5rem;">Inicia sesión para gestionar tus ventas</p>
             <form id="auth-form">
                 <div class="form-group">
-                    <label for="auth-email">Correo Electrónico</label>
-                    <input type="email" id="auth-email" required placeholder="correo@ejemplo.com">
+                    <label for="auth-email">Usuario</label>
+                    <input type="text" id="auth-email" required placeholder="Ingresa tu usuario">
                 </div>
                 <div class="form-group">
                     <label for="auth-password">Contraseña</label>
@@ -42,7 +42,9 @@
                 <li class="active" data-target="dashboard"><i class="fas fa-chart-line"></i> Dashboard</li>
                 <li id="nav-nueva-venta" data-target="nueva-venta"><i class="fas fa-cart-plus"></i> Registrar Venta</li>
                 <li data-target="productos"><i class="fas fa-box"></i> Productos</li>
+                <li data-target="encargados"><i class="fas fa-users"></i> Encargados</li>
                 <li data-target="base-datos"><i class="fas fa-database"></i> Datos (JSON)</li>
+                <li data-target="configuracion"><i class="fas fa-cog"></i> Configuración</li>
             </ul>
             <div class="sidebar-footer" style="margin-top: auto; padding: 2rem;">
                 <button id="theme-toggle" class="btn-secondary" style="width: 100%; margin-bottom: 1rem;"><i class="fas fa-moon"></i> <span id="theme-text">Modo Oscuro</span></button>
@@ -55,20 +57,37 @@
             <section id="dashboard" class="page-section active">
                 <header class="section-header">
                     <h1>Resumen de Ventas</h1>
-                    <div class="filter-group">
-                        <button class="filter-btn active" data-filter="dia">Hoy</button>
-                        <button class="filter-btn" data-filter="semana">Esta Semana</button>
-                        <button class="filter-btn" data-filter="mes">Este Mes</button>
-                        <button class="filter-btn" data-filter="todos">Todo</button>
+                    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                        <div class="filter-group">
+                            <button class="filter-btn active" data-filter="dia">Hoy</button>
+                            <button class="filter-btn" data-filter="semana">Semana</button>
+                            <button class="filter-btn" data-filter="mes">Mes</button>
+                            <button class="filter-btn" data-filter="todos">Todo</button>
+                        </div>
+                        <input type="date" id="filter-date-custom" class="input-small" style="padding: 6px 12px; border-radius: 20px;">
                     </div>
                 </header>
                 
-                <div class="summary-cards" style="grid-template-columns: 1fr;">
+                <div class="summary-cards">
                     <div class="card">
                         <div class="card-icon"><i class="fas fa-receipt"></i></div>
                         <div class="card-info">
-                            <h3>Total de Ventas</h3>
+                            <h3>Total Ventas</h3>
                             <p id="total-ventas-count">0</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--success); background: rgba(16, 185, 129, 0.1);"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="card-info">
+                            <h3>Ingresos</h3>
+                            <p id="total-ingresos-monetario">$0</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--danger); background: rgba(239, 68, 68, 0.1);"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="card-info">
+                            <h3>Inversión</h3>
+                            <p id="total-gastado-productos">$0</p>
                         </div>
                     </div>
                 </div>
@@ -87,7 +106,8 @@
                                     <th>Fecha y Hora</th>
                                     <th>Productos</th>
                                     <th>Dpto.</th>
-                                    <th>Método de Pago</th>
+                                    <th>Encargado</th>
+                                    <th>Total</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -144,6 +164,19 @@
                             </div>
                         </div>
 
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="encargado-entrega">Encargado de Entrega</label>
+                                <select id="encargado-entrega" required>
+                                    <option value="" disabled selected>Seleccione un encargado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="label-large">Total Venta Estimado</label>
+                                <div id="venta-total-display" style="font-size: 2rem; font-weight: 600; color: var(--primary);">$0</div>
+                            </div>
+                        </div>
+
                         <div class="products-section">
                             <h3>Productos Vendidos</h3>
                             <div id="productos-venta-container">
@@ -180,6 +213,16 @@
                                 <label for="nombre-producto">Nombre del Producto</label>
                                 <input type="text" id="nombre-producto" placeholder="Ej. Zapatos deportivos" required>
                             </div>
+                            <div class="form-row" style="margin-bottom: 1rem;">
+                                <div class="form-group">
+                                    <label for="precio-compra">Precio Compra (Costo)</label>
+                                    <input type="number" id="precio-compra" placeholder="0" required min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="precio-venta">Precio Venta (Público)</label>
+                                    <input type="number" id="precio-venta" placeholder="0" required min="0">
+                                </div>
+                            </div>
                             <button type="submit" class="btn-primary"><i class="fas fa-plus"></i> Añadir Producto</button>
                         </form>
                     </div>
@@ -192,6 +235,32 @@
                         <ul id="productos-registrados-list" class="item-list">
                         </ul>
                         <div id="no-products-msg" class="empty-state">No hay productos registrados.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="encargados" class="page-section">
+                <header class="section-header">
+                    <h1>Gestión de Encargados</h1>
+                </header>
+
+                <div class="split-layout">
+                    <div class="form-container">
+                        <h2>Registrar Encargado</h2>
+                        <form id="form-encargado">
+                            <div class="form-group">
+                                <label for="nombre-encargado">Nombre Completo</label>
+                                <input type="text" id="nombre-encargado" placeholder="Ej. Juan Pérez" required>
+                            </div>
+                            <button type="submit" class="btn-primary"><i class="fas fa-user-plus"></i> Añadir Encargado</button>
+                        </form>
+                    </div>
+
+                    <div class="list-container">
+                        <h2>Encargados Registrados</h2>
+                        <ul id="encargados-list" class="item-list">
+                        </ul>
+                        <div id="no-encargados-msg" class="empty-state">No hay encargados registrados.</div>
                     </div>
                 </div>
             </section>
@@ -220,6 +289,39 @@
                         <input type="file" id="file-import" accept=".json" style="display: none;">
                         <button id="btn-import-trigger" class="btn-secondary"><i class="fas fa-file-import"></i> Seleccionar JSON</button>
                     </div>
+                </div>
+            </section>
+
+            <section id="configuracion" class="page-section">
+                <header class="section-header">
+                    <h1>Configuración de Cuenta</h1>
+                </header>
+
+                <div class="form-container" style="max-width: 600px; margin: 0 auto;">
+                    <h2>Actualizar Credenciales</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-light);">Cambia tu correo de acceso o tu contraseña de administrador.</p>
+                    
+                    <form id="form-config-email">
+                        <div class="form-group">
+                            <label for="new-email">Nuevo Nombre de Usuario</label>
+                            <input type="text" id="new-email" placeholder="nuevo_usuario" required>
+                        </div>
+                        <button type="submit" class="btn-primary"><i class="fas fa-user-edit"></i> Actualizar Usuario</button>
+                    </form>
+
+                    <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                    <form id="form-config-password">
+                        <div class="form-group">
+                            <label for="new-password">Nueva Contraseña</label>
+                            <input type="password" id="new-password" placeholder="••••••••" required minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirmar Nueva Contraseña</label>
+                            <input type="password" id="confirm-password" placeholder="••••••••" required minlength="6">
+                        </div>
+                        <button type="submit" class="btn-primary"><i class="fas fa-key"></i> Actualizar Contraseña</button>
+                    </form>
                 </div>
             </section>
 
