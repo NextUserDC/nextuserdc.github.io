@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <div id="auth-container" class="auth-wrapper">
         <div class="auth-card">
@@ -16,7 +18,8 @@
                 <i class="fas fa-store"></i>
                 <h2>VentasApp</h2>
             </div>
-            <p style="text-align: center; color: var(--text-light); margin-bottom: 1.5rem;">Inicia sesión para gestionar tus ventas</p>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 1.5rem;">Inicia sesión para gestionar
+                tus ventas</p>
             <form id="auth-form">
                 <div class="form-group">
                     <label for="auth-email">Usuario</label>
@@ -26,8 +29,10 @@
                     <label for="auth-password">Contraseña</label>
                     <input type="password" id="auth-password" required placeholder="••••••••">
                 </div>
-                <div id="auth-error" class="error-msg d-none" style="color: var(--danger); font-size: 0.9rem; text-align: center;">Error al iniciar sesión</div>
-                <button type="submit" class="btn-primary btn-large mt-3" id="btn-login"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+                <div id="auth-error" class="error-msg d-none"
+                    style="color: var(--danger); font-size: 0.9rem; text-align: center;">Error al iniciar sesión</div>
+                <button type="submit" class="btn-primary btn-large mt-3" id="btn-login"><i
+                        class="fas fa-sign-in-alt"></i> Entrar</button>
             </form>
         </div>
     </div>
@@ -50,7 +55,7 @@
         </nav>
 
         <main class="main-content">
-            
+
             <section id="dashboard" class="page-section active">
                 <header class="section-header">
                     <h1>Resumen de Ventas</h1>
@@ -61,27 +66,35 @@
                             <button class="filter-btn" data-filter="mes">Mes</button>
                             <button class="filter-btn" data-filter="todos">Todo</button>
                         </div>
-                        <input type="date" id="filter-date-custom" class="input-small" style="padding: 6px 12px; border-radius: 20px;">
+                        <input type="date" id="filter-date-custom" class="input-small"
+                            style="padding: 6px 12px; border-radius: 20px;">
                     </div>
                 </header>
-                
+
                 <div class="summary-cards">
                     <div class="card">
                         <div class="card-icon"><i class="fas fa-receipt"></i></div>
                         <div class="card-info">
-                            <h3>Total Ventas</h3>
+                            <h3>Cant. Ventas</h3>
                             <p id="total-ventas-count">0</p>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-icon" style="color: var(--success); background: rgba(16, 185, 129, 0.1);"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="card-icon" style="color: var(--primary); background: rgba(99, 102, 241, 0.1);"><i class="fas fa-cash-register"></i></div>
                         <div class="card-info">
-                            <h3>Ingresos</h3>
-                            <p id="total-ingresos-monetario">$0</p>
+                            <h3>Ingreso Total</h3>
+                            <p id="total-ingresos-brutos">$0</p>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-icon" style="color: var(--danger); background: rgba(239, 68, 68, 0.1);"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="card-icon" style="color: var(--success); background: rgba(16, 185, 129, 0.1);"><i class="fas fa-chart-line"></i></div>
+                        <div class="card-info">
+                            <h3>Ganancia</h3>
+                            <p id="total-ganancias">$0</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--danger); background: rgba(239, 68, 68, 0.1);"><i class="fas fa-shopping-basket"></i></div>
                         <div class="card-info">
                             <h3>Inversión</h3>
                             <p id="total-gastado-productos">$0</p>
@@ -90,7 +103,8 @@
                 </div>
 
                 <div class="recent-sales">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
                         <h2 style="margin-bottom: 0;">Historial de Ventas</h2>
                         <div class="form-group" style="margin-bottom: 0; min-width: 250px;">
                             <input type="text" id="buscar-venta-depto" placeholder="Buscar por Depto...">
@@ -134,9 +148,10 @@
             <section id="nueva-venta" class="page-section">
                 <header class="section-header">
                     <h1 id="titulo-nueva-venta">Registrar Nueva Venta</h1>
-                    <button id="btn-cancel-edit" class="btn-secondary d-none"><i class="fas fa-times"></i> Cancelar Edición</button>
+                    <button id="btn-cancel-edit" class="btn-secondary d-none"><i class="fas fa-times"></i> Cancelar
+                        Edición</button>
                 </header>
-                
+
                 <div class="form-container">
                     <form id="form-venta">
                         <div class="form-row">
@@ -163,12 +178,12 @@
                         </div>
 
                         <div id="grupo-persona-credito" class="form-row d-none">
-                             <div class="form-group">
-                                 <label for="persona-credito-select">Persona a Crédito</label>
-                                 <select id="persona-credito-select">
-                                     <option value="" disabled selected>Seleccione una persona</option>
-                                 </select>
-                             </div>
+                            <div class="form-group">
+                                <label for="persona-credito-select">Persona a Crédito</label>
+                                <select id="persona-credito-select">
+                                    <option value="" disabled selected>Seleccione una persona</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-row">
@@ -180,7 +195,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="label-large">Total Venta Estimado</label>
-                                <div id="venta-total-display" style="font-size: 2rem; font-weight: 600; color: var(--primary);">$0</div>
+                                <div id="venta-total-display"
+                                    style="font-size: 2rem; font-weight: 600; color: var(--primary);">$0</div>
                             </div>
                         </div>
 
@@ -188,22 +204,29 @@
                             <h3>Productos Vendidos</h3>
                             <div id="productos-venta-container">
                                 <div class="producto-item">
-                                    <input type="text" class="producto-input" list="productos-lista" placeholder="Producto..." required>
-                                    <input type="number" class="precio-override-input" placeholder="Precio" required min="0">
-                                    <button type="button" class="btn-remove-producto" disabled><i class="fas fa-trash"></i></button>
+                                    <input type="text" class="producto-input" list="productos-lista"
+                                        placeholder="Producto..." required>
+                                    <input type="number" class="precio-override-input" placeholder="Precio" required
+                                        min="0">
+                                    <button type="button" class="btn-remove-producto" disabled><i
+                                            class="fas fa-trash"></i></button>
                                 </div>
                             </div>
-                            <button type="button" id="btn-add-producto" class="btn-secondary"><i class="fas fa-plus"></i> Añadir otro producto</button>
+                            <button type="button" id="btn-add-producto" class="btn-secondary"><i
+                                    class="fas fa-plus"></i> Añadir otro producto</button>
                         </div>
 
                         <div class="form-row" style="margin-bottom: 0.5rem;">
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="comentario-venta">Comentario / Anotación</label>
-                                <textarea id="comentario-venta" placeholder="Ej. Dejar en recepción, el cliente debe dinero, etc." rows="2"></textarea>
+                                <textarea id="comentario-venta"
+                                    placeholder="Ej. Dejar en recepción, el cliente debe dinero, etc."
+                                    rows="2"></textarea>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn-primary btn-large" style="margin-top: 3.5rem;"><i class="fas fa-save"></i> Guardar Venta</button>
+                        <button type="submit" class="btn-primary btn-large" style="margin-top: 3.5rem;"><i
+                                class="fas fa-save"></i> Guardar Venta</button>
                     </form>
                 </div>
             </section>
@@ -231,7 +254,8 @@
                                     <input type="number" id="precio-venta" placeholder="0" required min="0">
                                 </div>
                             </div>
-                            <button type="submit" class="btn-primary"><i class="fas fa-plus"></i> Añadir Producto</button>
+                            <button type="submit" class="btn-primary"><i class="fas fa-plus"></i> Añadir
+                                Producto</button>
                         </form>
                     </div>
 
@@ -260,7 +284,8 @@
                                 <label for="nombre-encargado">Nombre Completo</label>
                                 <input type="text" id="nombre-encargado" placeholder="Ej. Juan Pérez" required>
                             </div>
-                            <button type="submit" class="btn-primary"><i class="fas fa-user-plus"></i> Añadir Encargado</button>
+                            <button type="submit" class="btn-primary"><i class="fas fa-user-plus"></i> Añadir
+                                Encargado</button>
                         </form>
                     </div>
 
@@ -290,7 +315,8 @@
                                 <label for="limite-credito">Límite de Crédito ($)</label>
                                 <input type="number" id="limite-credito" placeholder="Ej. 50000" required min="0">
                             </div>
-                            <button type="submit" class="btn-primary"><i class="fas fa-user-plus"></i> Registrar Persona</button>
+                            <button type="submit" class="btn-primary"><i class="fas fa-user-plus"></i> Registrar
+                                Persona</button>
                         </form>
                     </div>
 
@@ -326,7 +352,10 @@
                 </header>
 
                 <div class="info-card" style="background-color: #ecfdf5; border-color: #10b981; color: #047857;">
-                    <p><strong><i class="fas fa-cloud-check"></i> Sincronización en la Nube (Firebase)</strong><br>Tus datos se sincronizan automáticamente en tiempo real entre todos tus dispositivos. Sin embargo, aquí puedes descargar o importar un respaldo local de seguridad en formato <strong>.json</strong>.</p>
+                    <p><strong><i class="fas fa-cloud-check"></i> Sincronización en la Nube (Firebase)</strong><br>Tus
+                        datos se sincronizan automáticamente en tiempo real entre todos tus dispositivos. Sin embargo,
+                        aquí puedes descargar o importar un respaldo local de seguridad en formato
+                        <strong>.json</strong>.</p>
                 </div>
 
                 <div class="db-actions">
@@ -334,7 +363,7 @@
                         <i class="fas fa-download db-icon"></i>
                         <h3>Exportar Datos</h3>
                         <p>Filtra por fecha para descargar tus ventas.</p>
-                        
+
                         <div class="form-group" style="margin-top: 1rem;">
                             <label for="export-type">Rango de Exportación</label>
                             <select id="export-type" class="input-small">
@@ -362,7 +391,8 @@
                             </div>
                         </div>
 
-                        <button id="btn-export" class="btn-primary mt-3"><i class="fas fa-file-export"></i> Descargar JSON</button>
+                        <button id="btn-export" class="btn-primary mt-3"><i class="fas fa-file-export"></i> Descargar
+                            JSON</button>
                     </div>
 
                     <div class="db-card">
@@ -370,7 +400,8 @@
                         <h3>Importar Datos</h3>
                         <p>Sube un archivo JSON para restaurar tus ventas y productos.</p>
                         <input type="file" id="file-import" accept=".json" style="display: none;">
-                        <button id="btn-import-trigger" class="btn-secondary"><i class="fas fa-file-import"></i> Seleccionar JSON</button>
+                        <button id="btn-import-trigger" class="btn-secondary"><i class="fas fa-file-import"></i>
+                            Seleccionar JSON</button>
                     </div>
                 </div>
             </section>
@@ -382,14 +413,16 @@
 
                 <div class="form-container" style="max-width: 600px; margin: 0 auto;">
                     <h2>Actualizar Credenciales</h2>
-                    <p style="margin-bottom: 1.5rem; color: var(--text-light);">Cambia tu correo de acceso o tu contraseña de administrador.</p>
-                    
+                    <p style="margin-bottom: 1.5rem; color: var(--text-light);">Cambia tu correo de acceso o tu
+                        contraseña de administrador.</p>
+
                     <form id="form-config-email">
                         <div class="form-group">
                             <label for="new-email">Nuevo Nombre de Usuario</label>
                             <input type="text" id="new-email" placeholder="nuevo_usuario" required>
                         </div>
-                        <button type="submit" class="btn-primary"><i class="fas fa-user-edit"></i> Actualizar Usuario</button>
+                        <button type="submit" class="btn-primary"><i class="fas fa-user-edit"></i> Actualizar
+                            Usuario</button>
                     </form>
 
                     <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
@@ -403,15 +436,19 @@
                             <label for="confirm-password">Confirmar Nueva Contraseña</label>
                             <input type="password" id="confirm-password" placeholder="••••••••" required minlength="6">
                         </div>
-                        <button type="submit" class="btn-primary"><i class="fas fa-key"></i> Actualizar Contraseña</button>
+                        <button type="submit" class="btn-primary"><i class="fas fa-key"></i> Actualizar
+                            Contraseña</button>
                     </form>
 
                     <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
 
                     <div style="display: flex; flex-direction: column; gap: 1rem;">
                         <h3>Opciones de Sesión y Tema</h3>
-                        <button id="theme-toggle-config" class="btn-secondary" style="justify-content: center;"><i class="fas fa-moon"></i> <span id="theme-text-config">Modo Oscuro</span></button>
-                        <button id="btn-logout-config" class="btn-secondary" style="justify-content: center; color: var(--danger); border-color: #fee2e2;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+                        <button id="theme-toggle-config" class="btn-secondary" style="justify-content: center;"><i
+                                class="fas fa-moon"></i> <span id="theme-text-config">Modo Oscuro</span></button>
+                        <button id="btn-logout-config" class="btn-secondary"
+                            style="justify-content: center; color: var(--danger); border-color: #fee2e2;"><i
+                                class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
                     </div>
                 </div>
             </section>
@@ -424,4 +461,5 @@
 
     <script type="module" src="app.js"></script>
 </body>
+
 </html>
