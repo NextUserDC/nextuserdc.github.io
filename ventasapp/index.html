@@ -43,6 +43,7 @@
                 <li id="nav-nueva-venta" data-target="nueva-venta"><i class="fas fa-cart-plus"></i> Registrar Venta</li>
                 <li data-target="productos"><i class="fas fa-box"></i> Productos</li>
                 <li data-target="encargados"><i class="fas fa-users"></i> Encargados</li>
+                <li data-target="creditos"><i class="fas fa-credit-card"></i> Créditos</li>
                 <li data-target="base-datos"><i class="fas fa-database"></i> Datos (JSON)</li>
                 <li data-target="configuracion"><i class="fas fa-cog"></i> Configuración</li>
             </ul>
@@ -156,8 +157,18 @@
                                 <select id="metodo-pago" required>
                                     <option value="Efectivo">Efectivo</option>
                                     <option value="Transferencia">Transferencia</option>
+                                    <option value="Crédito">Crédito</option>
                                 </select>
                             </div>
+                        </div>
+
+                        <div id="grupo-persona-credito" class="form-row d-none">
+                             <div class="form-group">
+                                 <label for="persona-credito-select">Persona a Crédito</label>
+                                 <select id="persona-credito-select">
+                                     <option value="" disabled selected>Seleccione una persona</option>
+                                 </select>
+                             </div>
                         </div>
 
                         <div class="form-row">
@@ -177,7 +188,8 @@
                             <h3>Productos Vendidos</h3>
                             <div id="productos-venta-container">
                                 <div class="producto-item">
-                                    <input type="text" class="producto-input" list="productos-lista" placeholder="Buscar o escribir producto..." required>
+                                    <input type="text" class="producto-input" list="productos-lista" placeholder="Producto..." required>
+                                    <input type="number" class="precio-override-input" placeholder="Precio" required min="0">
                                     <button type="button" class="btn-remove-producto" disabled><i class="fas fa-trash"></i></button>
                                 </div>
                             </div>
@@ -257,6 +269,53 @@
                         <ul id="encargados-list" class="item-list">
                         </ul>
                         <div id="no-encargados-msg" class="empty-state">No hay encargados registrados.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="creditos" class="page-section">
+                <header class="section-header">
+                    <h1>Personas a Crédito</h1>
+                </header>
+
+                <div class="grid-container">
+                    <div class="form-container">
+                        <h2>Registrar Persona</h2>
+                        <form id="form-persona-credito">
+                            <div class="form-group">
+                                <label for="nombre-credito">Nombre Completo</label>
+                                <input type="text" id="nombre-credito" placeholder="Ej. Juan Pérez" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="limite-credito">Límite de Crédito ($)</label>
+                                <input type="number" id="limite-credito" placeholder="Ej. 50000" required min="0">
+                            </div>
+                            <button type="submit" class="btn-primary"><i class="fas fa-user-plus"></i> Registrar Persona</button>
+                        </form>
+                    </div>
+
+                    <div class="list-container">
+                        <h2>Estado de Créditos</h2>
+                        <ul id="creditos-list" class="item-list"></ul>
+                        <div id="no-creditos-msg" class="empty-state">No hay personas registradas.</div>
+                    </div>
+                </div>
+
+                <div class="table-container mt-4">
+                    <h2>Ventas Pendientes de Pago</h2>
+                    <div class="table-responsive">
+                        <table class="sales-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Cliente</th>
+                                    <th>Depto.</th>
+                                    <th>Total</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ventas-pendientes-list"></tbody>
+                        </table>
                     </div>
                 </div>
             </section>
