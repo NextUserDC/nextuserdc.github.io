@@ -419,7 +419,41 @@ input:focus, select:focus, textarea:focus {
 }
 
 .producto-input {
+    flex: 2;
+}
+
+.precio-override-input {
     flex: 1;
+}
+
+@media (max-width: 500px) {
+    .producto-item {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+        background: var(--bg-color);
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+    
+    .producto-input {
+        grid-column: span 2;
+        width: 100%;
+    }
+    
+    .precio-override-input {
+        grid-column: 1;
+        width: 100%;
+    }
+    
+    .btn-remove-producto {
+        grid-column: 2;
+        position: static;
+        width: 48px;
+        height: 44px; /* Altura estándar de input */
+        margin: 0;
+    }
 }
 
 .btn-remove-producto {

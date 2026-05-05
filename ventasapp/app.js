@@ -24,7 +24,8 @@ let editProductModeId = null;
 let appData = {
     productos: [],
     ventas: [],
-    encargados: []
+    encargados: [],
+    personasCredito: []
 };
 
 // DOM Elements
@@ -55,6 +56,17 @@ const encargadosList = document.getElementById('encargados-list');
 const noEncargadosMsg = document.getElementById('no-encargados-msg');
 const encargadoEntregaSelect = document.getElementById('encargado-entrega');
 
+// Credits Elements
+const formPersonaCredito = document.getElementById('form-persona-credito');
+const nombreCreditoInput = document.getElementById('nombre-credito');
+const limiteCreditoInput = document.getElementById('limite-credito');
+const creditosList = document.getElementById('creditos-list');
+const noCreditosMsg = document.getElementById('no-creditos-msg');
+const ventasPendientesList = document.getElementById('ventas-pendientes-list');
+const metodoPagoSelect = document.getElementById('metodo-pago');
+const grupoPersonaCredito = document.getElementById('grupo-persona-credito');
+const personaCreditoSelect = document.getElementById('persona-credito-select');
+
 const formVenta = document.getElementById('form-venta');
 const fechaHoraInput = document.getElementById('fecha-hora');
 const productosVentaContainer = document.getElementById('productos-venta-container');
@@ -64,7 +76,6 @@ const ventaTotalDisplay = document.getElementById('venta-total-display');
 const formConfigEmail = document.getElementById('form-config-email');
 const formConfigPassword = document.getElementById('form-config-password');
 
-// Export Elements
 const btnExport = document.getElementById('btn-export');
 const exportType = document.getElementById('export-type');
 const exportDateSingleGroup = document.getElementById('export-date-single-group');
@@ -83,7 +94,6 @@ const authError = document.getElementById('auth-error');
 const authContainer = document.getElementById('auth-container');
 const mainApp = document.getElementById('main-app');
 
-// Move session/theme buttons to config
 const btnLogoutConfig = document.getElementById('btn-logout-config');
 const themeToggleConfig = document.getElementById('theme-toggle-config');
 const themeTextConfig = document.getElementById('theme-text-config');
@@ -114,8 +124,9 @@ function init() {
                     appData.productos = firebaseToArray(data.productos);
                     appData.ventas = firebaseToArray(data.ventas);
                     appData.encargados = firebaseToArray(data.encargados);
+                    appData.personasCredito = firebaseToArray(data.personasCredito);
                 } else {
-                    appData = { productos: [], ventas: [], encargados: [] };
+                    appData = { productos: [], ventas: [], encargados: [], personasCredito: [] };
                 }
                 updateUI();
             });
@@ -243,37 +254,88 @@ function setupEventListeners() {
         }
     });
 
+    // CRUD Personas a Crédito
+    formPersonaCredito.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const persona = {
+            id: Date.now().toString(),
+            nombre: nombreCreditoInput.value.trim(),
+            limite: parseFloat(limiteCreditoInput.value) || 0
+        };
+        appData.personasCredito.push(persona);
+        saveData();
+        formPersonaCredito.reset();
+        updateCreditosUI();
+    });
+
     // Sales Form Logic
     btnAddProductoVenta.addEventListener('click', () => {
         const div = document.createElement('div');
         div.className = 'producto-item';
         div.innerHTML = `
-            <input type="text" class="producto-input" list="productos-lista" placeholder="Buscar producto...">
+            <input type="text" class="producto-input" list="productos-lista" placeholder="Producto..." required>
+            <input type="number" class="precio-override-input" placeholder="Precio" required min="0">
             <button type="button" class="btn-remove-producto"><i class="fas fa-trash"></i></button>
         `;
         productosVentaContainer.appendChild(div);
-        div.querySelector('.btn-remove-producto').addEventListener('click', () => { div.remove(); calculateLiveTotal(); });
+        
+        const prodInput = div.querySelector('.producto-input');
+        const priceInput = div.querySelector('.precio-override-input');
+        
+        prodInput.addEventListener('input', () => {
+            const p = appData.productos.find(x => x.nombre === prodInput.value.trim());
+            if (p) {
+                priceInput.value = p.precioVenta;
+                calculateLiveTotal();
+            }
+        });
+
+        priceInput.addEventListener('input', calculateLiveTotal);
+
+        div.querySelector('.btn-remove-producto').addEventListener('click', () => { 
+            div.remove(); 
+            calculateLiveTotal(); 
+        });
     });
 
-    productosVentaContainer.addEventListener('input', calculateLiveTotal);
+    productosVentaContainer.addEventListener('input', (e) => {
+        if (e.target.classList.contains('producto-input')) {
+            const p = appData.productos.find(x => x.nombre === e.target.value.trim());
+            if (p) {
+                const priceInput = e.target.parentElement.querySelector('.precio-override-input');
+                if (priceInput) priceInput.value = p.precioVenta;
+            }
+        }
+        calculateLiveTotal();
+    });
+
+    metodoPagoSelect.addEventListener('change', () => {
+        grupoPersonaCredito.classList.toggle('d-none', metodoPagoSelect.value !== 'Crédito');
+        if (metodoPagoSelect.value === 'Crédito') {
+            personaCreditoSelect.required = true;
+        } else {
+            personaCreditoSelect.required = false;
+        }
+    });
 
     formVenta.addEventListener('submit', (e) => {
         e.preventDefault();
         try {
-            const inputs = productosVentaContainer.querySelectorAll('.producto-input');
+            const items = productosVentaContainer.querySelectorAll('.producto-item');
             const productosVendidos = [];
             let totalVenta = 0;
-            let costoVenta = 0;
+            let costoVentaTotal = 0;
 
-            inputs.forEach(input => {
-                const val = input.value.trim();
-                if(val) {
-                    productosVendidos.push(val);
-                    const p = appData.productos.find(x => x.nombre === val);
-                    if(p) {
-                        totalVenta += p.precioVenta;
-                        costoVenta += p.precioCompra;
-                    }
+            items.forEach(item => {
+                const nombre = item.querySelector('.producto-input').value.trim();
+                const precio = parseFloat(item.querySelector('.precio-override-input').value) || 0;
+                
+                if(nombre) {
+                    productosVendidos.push({ nombre, precio });
+                    totalVenta += precio;
+                    
+                    const p = appData.productos.find(x => x.nombre === nombre);
+                    if(p) costoVentaTotal += p.precioCompra;
                 }
             });
 
@@ -282,16 +344,34 @@ function setupEventListeners() {
                 return;
             }
 
+            const metodo = metodoPagoSelect.value;
+            const personaCreditoId = metodo === 'Crédito' ? personaCreditoSelect.value : null;
+
+            // Validar límite de crédito
+            if (metodo === 'Crédito') {
+                const pc = appData.personasCredito.find(x => x.id === personaCreditoId);
+                if (pc) {
+                    const usado = appData.ventas
+                        .filter(v => v.personaCreditoId === pc.id && v.estadoPago === 'Pendiente')
+                        .reduce((acc, v) => acc + v.totalVenta, 0);
+                    if (usado + totalVenta > pc.limite) {
+                        return alert(`Límite de crédito excedido para ${pc.nombre}. (Límite: $${pc.limite}, Usado: $${usado})`);
+                    }
+                }
+            }
+
             const venta = {
                 id: editModeId || Date.now().toString(),
                 fechaHora: fechaHoraInput.value,
                 departamento: document.getElementById('departamento').value,
-                metodoPago: document.getElementById('metodo-pago').value,
+                metodoPago: metodo,
+                personaCreditoId,
+                estadoPago: metodo === 'Crédito' ? 'Pendiente' : 'Pagado',
                 encargado: encargadoEntregaSelect.value,
                 productos: productosVendidos,
                 comentario: document.getElementById('comentario-venta').value.trim(),
                 totalVenta,
-                costoVenta
+                costoVenta: costoVentaTotal
             };
 
             if (editModeId) {
@@ -309,6 +389,7 @@ function setupEventListeners() {
             setCurrentDateTime();
             resetProductosVenta();
             calculateLiveTotal();
+            grupoPersonaCredito.classList.add('d-none');
             navLinks[0].click();
         } catch (err) {
             console.error("Error al registrar venta:", err);
@@ -332,43 +413,48 @@ function setupEventListeners() {
     });
 
     // Enhanced JSON Export
-    exportType.addEventListener('change', () => {
-        exportDateSingleGroup.classList.toggle('d-none', exportType.value !== 'dia');
-        exportDateRangeGroup.classList.toggle('d-none', exportType.value !== 'rango');
-    });
+    if (exportType) {
+        exportType.addEventListener('change', () => {
+            exportDateSingleGroup.classList.toggle('d-none', exportType.value !== 'dia');
+            exportDateRangeGroup.classList.toggle('d-none', exportType.value !== 'rango');
+        });
+    }
 
-    btnExport.addEventListener('click', () => {
-        let filteredVentas = appData.ventas;
-        const type = exportType.value;
+    if (btnExport) {
+        btnExport.addEventListener('click', () => {
+            let filteredVentas = appData.ventas;
+            const type = exportType.value;
 
-        if (type === 'dia') {
-            const date = exportDateSingle.value;
-            if (!date) return alert('Selecciona una fecha.');
-            filteredVentas = appData.ventas.filter(v => v.fechaHora.startsWith(date));
-        } else if (type === 'rango') {
-            const start = exportDateStart.value;
-            const end = exportDateEnd.value;
-            if (!start || !end) return alert('Selecciona el rango completo.');
-            filteredVentas = appData.ventas.filter(v => {
-                const vd = v.fechaHora.split('T')[0];
-                return vd >= start && vd <= end;
-            });
-        }
+            if (type === 'dia') {
+                const date = exportDateSingle.value;
+                if (!date) return alert('Selecciona una fecha.');
+                filteredVentas = appData.ventas.filter(v => v.fechaHora.startsWith(date));
+            } else if (type === 'rango') {
+                const start = exportDateStart.value;
+                const end = exportDateEnd.value;
+                if (!start || !end) return alert('Selecciona el rango completo.');
+                filteredVentas = appData.ventas.filter(v => {
+                    const vd = v.fechaHora.split('T')[0];
+                    return vd >= start && vd <= end;
+                });
+            }
 
-        const dataToExport = {
-            productos: appData.productos,
-            ventas: filteredVentas,
-            encargados: appData.encargados,
-            exportDate: new Date().toISOString(),
-            filterUsed: type
-        };
+            const dataToExport = {
+                productos: appData.productos,
+                ventas: filteredVentas,
+                encargados: appData.encargados,
+                personasCredito: appData.personasCredito,
+                exportDate: new Date().toISOString(),
+                filterUsed: type
+            };
 
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport, null, 2));
-        const a = document.createElement('a');
-        a.href = dataStr; 
-        a.download = `ventas_${type}_${new Date().toISOString().split('T')[0]}.json`;
-        a.click();
-    });
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport, null, 2));
+            const a = document.createElement('a');
+            a.href = dataStr; 
+            a.download = `ventas_${type}_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+        });
+    }
 
     btnImportTrigger.addEventListener('click', () => fileImport.click());
     fileImport.addEventListener('change', (e) => {
@@ -393,9 +479,8 @@ function setupEventListeners() {
 
 function calculateLiveTotal() {
     let total = 0;
-    productosVentaContainer.querySelectorAll('.producto-input').forEach(input => {
-        const p = appData.productos.find(x => x.nombre === input.value.trim());
-        if(p) total += p.precioVenta;
+    productosVentaContainer.querySelectorAll('.precio-override-input').forEach(input => {
+        total += parseFloat(input.value) || 0;
     });
     ventaTotalDisplay.innerText = `$${total.toLocaleString()}`;
 }
@@ -403,6 +488,7 @@ function calculateLiveTotal() {
 function updateUI() {
     updateProductosUI();
     updateEncargadosUI();
+    updateCreditosUI();
     updateDashboard();
 }
 
@@ -469,6 +555,83 @@ function updateEncargadosUI() {
         appData.encargados.map(e => `<option value="${e.nombre}">${e.nombre}</option>`).join('');
 }
 
+function updateCreditosUI() {
+    creditosList.innerHTML = '';
+    noCreditosMsg.style.display = appData.personasCredito.length === 0 ? 'block' : 'none';
+    
+    // Selectores de la app
+    personaCreditoSelect.innerHTML = '<option value="" disabled selected>Seleccione una persona</option>' + 
+        appData.personasCredito.map(p => `<option value="${p.id}">${p.nombre}</option>`).join('');
+
+    appData.personasCredito.forEach(p => {
+        const pendiente = appData.ventas
+            .filter(v => v.personaCreditoId === p.id && v.estadoPago === 'Pendiente')
+            .reduce((acc, v) => acc + (v.totalVenta || 0), 0);
+        
+        const disponible = p.limite - pendiente;
+        const li = document.createElement('li');
+        li.style.flexDirection = 'column';
+        li.style.alignItems = 'flex-start';
+        li.style.gap = '5px';
+        li.innerHTML = `
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 600;">${escapeHTML(p.nombre)}</span>
+                <button class="btn-icon" onclick="eliminarPersonaCredito('${p.id}')"><i class="fas fa-trash"></i></button>
+            </div>
+            <div style="width: 100%; display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-light);">
+                <span>Usado: <strong style="color:var(--danger)">$${pendiente.toLocaleString()}</strong></span>
+                <span>Límite: <strong>$${p.limite.toLocaleString()}</strong></span>
+            </div>
+            <div style="width: 100%; background: #eee; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 5px;">
+                <div style="background: var(--primary); height: 100%; width: ${Math.min((pendiente/p.limite)*100, 100)}%;"></div>
+            </div>
+            <small style="color: var(--success); font-weight: 500;">Disponible: $${disponible.toLocaleString()}</small>
+        `;
+        creditosList.appendChild(li);
+    });
+
+    updateVentasPendientesUI();
+}
+
+function updateVentasPendientesUI() {
+    ventasPendientesList.innerHTML = '';
+    const pendientes = appData.ventas.filter(v => v.metodoPago === 'Crédito' && v.estadoPago === 'Pendiente');
+    
+    pendientes.sort((a,b) => new Date(b.fechaHora) - new Date(a.fechaHora)).forEach(v => {
+        const pc = appData.personasCredito.find(p => p.id === v.personaCreditoId);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${new Date(v.fechaHora).toLocaleDateString()}</td>
+            <td>${escapeHTML(pc ? pc.nombre : 'Desconocido')}</td>
+            <td><span class="badge">Depto. ${escapeHTML(v.departamento)}</span></td>
+            <td style="font-weight:600">$${v.totalVenta.toLocaleString()}</td>
+            <td>
+                <button class="btn-icon" style="color: var(--success);" onclick="liquidarCredito('${v.id}')" title="Marcar como Pagado"><i class="fas fa-check-circle"></i> Liquidar</button>
+            </td>
+        `;
+        ventasPendientesList.appendChild(tr);
+    });
+}
+
+window.liquidarCredito = (id) => {
+    if (confirm('¿Marcar esta venta como PAGADA? Se liberará el crédito de la persona.')) {
+        const idx = appData.ventas.findIndex(v => v.id === id);
+        if (idx !== -1) {
+            appData.ventas[idx].estadoPago = 'Pagado';
+            saveData();
+            updateUI();
+        }
+    }
+};
+
+window.eliminarPersonaCredito = (id) => {
+    if (confirm('¿Eliminar esta persona? Sus deudas activas podrían quedar huérfanas.')) {
+        appData.personasCredito = appData.personasCredito.filter(p => p.id !== id);
+        saveData();
+        updateUI();
+    }
+};
+
 function updateDashboard() {
     const now = new Date();
     let filtered = appData.ventas.filter(v => {
@@ -493,11 +656,20 @@ function updateDashboard() {
     noSalesMsg.style.display = filtered.length === 0 ? 'block' : 'none';
     filtered.sort((a,b) => new Date(b.fechaHora) - new Date(a.fechaHora)).forEach(v => {
         const tr = document.createElement('tr');
+        
+        const displayProds = v.productos.map(p => {
+            if (typeof p === 'string') return p;
+            return `${p.nombre} ($${p.precio.toLocaleString()})`;
+        }).join(', ');
+
+        const statusLabel = v.metodoPago === 'Crédito' ? 
+            `<br><small style="color:${v.estadoPago === 'Pendiente' ? 'var(--danger)' : 'var(--success)'}">${v.estadoPago}</small>` : '';
+
         tr.innerHTML = `
             <td>${new Date(v.fechaHora).toLocaleString([], {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'})}</td>
-            <td>${escapeHTML(v.productos.join(', '))}${v.comentario ? `<br><small style="color:var(--primary)">${escapeHTML(v.comentario)}</small>` : ''}</td>
+            <td>${escapeHTML(displayProds)}${v.comentario ? `<br><small style="color:var(--primary)">${escapeHTML(v.comentario)}</small>` : ''}</td>
             <td><span class="badge">Depto. ${escapeHTML(v.departamento)}</span></td>
-            <td>${escapeHTML(v.encargado || 'N/A')}</td>
+            <td>${escapeHTML(v.encargado || 'N/A')}${statusLabel}</td>
             <td style="font-weight:600">$${(v.totalVenta || 0).toLocaleString()}</td>
             <td>
                 <button class="btn-icon" style="color: var(--primary);" onclick="editarVenta('${v.id}')"><i class="fas fa-edit"></i></button>
@@ -510,7 +682,10 @@ function updateDashboard() {
     const productCounts = {};
     const deptCounts = {};
     filtered.forEach(v => {
-        v.productos.forEach(p => productCounts[p] = (productCounts[p] || 0) + 1);
+        v.productos.forEach(p => {
+            const name = typeof p === 'string' ? p : p.nombre;
+            productCounts[name] = (productCounts[name] || 0) + 1;
+        });
         deptCounts[v.departamento] = (deptCounts[v.departamento] || 0) + 1;
     });
 
@@ -539,14 +714,27 @@ window.editarVenta = (id) => {
     document.getElementById('btn-cancel-edit').classList.remove('d-none');
     fechaHoraInput.value = v.fechaHora;
     document.getElementById('departamento').value = v.departamento;
-    document.getElementById('metodo-pago').value = v.metodoPago;
+    metodoPagoSelect.value = v.metodoPago;
+    
+    grupoPersonaCredito.classList.toggle('d-none', v.metodoPago !== 'Crédito');
+    if (v.metodoPago === 'Crédito') {
+        personaCreditoSelect.value = v.personaCreditoId || '';
+    }
+
     encargadoEntregaSelect.value = v.encargado || '';
     document.getElementById('comentario-venta').value = v.comentario || '';
-    productosVentaContainer.innerHTML = v.productos.map(p => `
-        <div class="producto-item">
-            <input type="text" class="producto-input" list="productos-lista" value="${p}">
-            <button type="button" class="btn-remove-producto"><i class="fas fa-trash"></i></button>
-        </div>`).join('');
+    
+    productosVentaContainer.innerHTML = v.productos.map(p => {
+        const name = typeof p === 'string' ? p : p.nombre;
+        const price = typeof p === 'string' ? 0 : p.precio;
+        return `
+            <div class="producto-item">
+                <input type="text" class="producto-input" list="productos-lista" value="${name}">
+                <input type="number" class="precio-override-input" value="${price}">
+                <button type="button" class="btn-remove-producto"><i class="fas fa-trash"></i></button>
+            </div>`;
+    }).join('');
+    
     productosVentaContainer.querySelectorAll('.btn-remove-producto').forEach(b => b.addEventListener('click', () => { b.parentElement.remove(); calculateLiveTotal(); }));
     calculateLiveTotal();
     document.getElementById('nav-nueva-venta').click();
@@ -556,11 +744,20 @@ document.getElementById('btn-cancel-edit').addEventListener('click', () => {
     editModeId = null;
     document.getElementById('titulo-nueva-venta').innerText = "Registrar Nueva Venta";
     document.getElementById('btn-cancel-edit').classList.add('d-none');
-    formVenta.reset(); setCurrentDateTime(); resetProductosVenta(); calculateLiveTotal();
+    formVenta.reset(); 
+    setCurrentDateTime(); 
+    resetProductosVenta(); 
+    calculateLiveTotal();
+    grupoPersonaCredito.classList.add('d-none');
 });
 
 function resetProductosVenta() {
-    productosVentaContainer.innerHTML = '<div class="producto-item"><input type="text" class="producto-input" list="productos-lista" placeholder="Buscar producto..." required><button type="button" class="btn-remove-producto" disabled><i class="fas fa-trash"></i></button></div>';
+    productosVentaContainer.innerHTML = `
+        <div class="producto-item">
+            <input type="text" class="producto-input" list="productos-lista" placeholder="Producto..." required>
+            <input type="number" class="precio-override-input" placeholder="Precio" required min="0">
+            <button type="button" class="btn-remove-producto" disabled><i class="fas fa-trash"></i></button>
+        </div>`;
 }
 
 function escapeHTML(str) {
