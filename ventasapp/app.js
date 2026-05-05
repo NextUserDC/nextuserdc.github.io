@@ -3,14 +3,14 @@ import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebase
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDX35b9tyOCPQNmAqNydWGvwolKKDx7v8c",
-  authDomain: "ventas-6fc67.firebaseapp.com",
-  databaseURL: "https://ventas-6fc67-default-rtdb.firebaseio.com",
-  projectId: "ventas-6fc67",
-  storageBucket: "ventas-6fc67.firebasestorage.app",
-  messagingSenderId: "567945428451",
-  appId: "1:567945428451:web:30ccacd405b9c39d58b4d6",
-  measurementId: "G-PG686TLSVV"
+    apiKey: "AIzaSyDX35b9tyOCPQNmAqNydWGvwolKKDx7v8c",
+    authDomain: "ventas-6fc67.firebaseapp.com",
+    databaseURL: "https://ventas-6fc67-default-rtdb.firebaseio.com",
+    projectId: "ventas-6fc67",
+    storageBucket: "ventas-6fc67.firebasestorage.app",
+    messagingSenderId: "567945428451",
+    appId: "1:567945428451:web:30ccacd405b9c39d58b4d6",
+    measurementId: "G-PG686TLSVV"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -30,7 +30,8 @@ let appData = {
 
 // DOM Elements
 const totalVentasCount = document.getElementById('total-ventas-count');
-const totalIngresosMonetario = document.getElementById('total-ingresos-monetario');
+const totalIngresosBrutos = document.getElementById('total-ingresos-brutos');
+const totalGanancias = document.getElementById('total-ganancias');
 const totalGastadoProductos = document.getElementById('total-gastado-productos');
 const salesList = document.getElementById('sales-list');
 const noSalesMsg = document.getElementById('no-sales-msg');
@@ -101,7 +102,7 @@ const themeTextConfig = document.getElementById('theme-text-config');
 const navLinks = document.querySelectorAll('.nav-links li');
 const pageSections = document.querySelectorAll('.page-section');
 
-let currentFilter = 'dia'; 
+let currentFilter = 'dia';
 
 function init() {
     setupEventListeners();
@@ -186,7 +187,7 @@ function setupEventListeners() {
             link.classList.add('active');
             const target = link.getAttribute('data-target');
             pageSections.forEach(s => s.classList.toggle('active', s.id === target));
-            if(target === 'nueva-venta' && !editModeId) setCurrentDateTime();
+            if (target === 'nueva-venta' && !editModeId) setCurrentDateTime();
         });
     });
 
@@ -278,10 +279,10 @@ function setupEventListeners() {
             <button type="button" class="btn-remove-producto"><i class="fas fa-trash"></i></button>
         `;
         productosVentaContainer.appendChild(div);
-        
+
         const prodInput = div.querySelector('.producto-input');
         const priceInput = div.querySelector('.precio-override-input');
-        
+
         prodInput.addEventListener('input', () => {
             const p = appData.productos.find(x => x.nombre === prodInput.value.trim());
             if (p) {
@@ -292,9 +293,9 @@ function setupEventListeners() {
 
         priceInput.addEventListener('input', calculateLiveTotal);
 
-        div.querySelector('.btn-remove-producto').addEventListener('click', () => { 
-            div.remove(); 
-            calculateLiveTotal(); 
+        div.querySelector('.btn-remove-producto').addEventListener('click', () => {
+            div.remove();
+            calculateLiveTotal();
         });
     });
 
@@ -329,17 +330,17 @@ function setupEventListeners() {
             items.forEach(item => {
                 const nombre = item.querySelector('.producto-input').value.trim();
                 const precio = parseFloat(item.querySelector('.precio-override-input').value) || 0;
-                
-                if(nombre) {
+
+                if (nombre) {
                     productosVendidos.push({ nombre, precio });
                     totalVenta += precio;
-                    
+
                     const p = appData.productos.find(x => x.nombre === nombre);
-                    if(p) costoVentaTotal += p.precioCompra;
+                    if (p) costoVentaTotal += p.precioCompra;
                 }
             });
 
-            if(productosVendidos.length === 0) {
+            if (productosVendidos.length === 0) {
                 alert('Añade al menos un producto.');
                 return;
             }
@@ -383,7 +384,7 @@ function setupEventListeners() {
             } else {
                 appData.ventas.push(venta);
             }
-            
+
             saveData();
             formVenta.reset();
             setCurrentDateTime();
@@ -408,7 +409,7 @@ function setupEventListeners() {
         e.preventDefault();
         const p1 = document.getElementById('new-password').value;
         const p2 = document.getElementById('confirm-password').value;
-        if(p1 !== p2) return alert('Contraseñas no coinciden.');
+        if (p1 !== p2) return alert('Contraseñas no coinciden.');
         updatePassword(auth.currentUser, p1).then(() => alert('Contraseña actualizada.')).catch(err => alert(err.message));
     });
 
@@ -428,12 +429,13 @@ function setupEventListeners() {
             if (type === 'dia') {
                 const date = exportDateSingle.value;
                 if (!date) return alert('Selecciona una fecha.');
-                filteredVentas = appData.ventas.filter(v => v.fechaHora.startsWith(date));
+                filteredVentas = appData.ventas.filter(v => v.fechaHora && v.fechaHora.startsWith(date));
             } else if (type === 'rango') {
                 const start = exportDateStart.value;
                 const end = exportDateEnd.value;
                 if (!start || !end) return alert('Selecciona el rango completo.');
                 filteredVentas = appData.ventas.filter(v => {
+                    if(!v.fechaHora) return false;
                     const vd = v.fechaHora.split('T')[0];
                     return vd >= start && vd <= end;
                 });
@@ -450,7 +452,7 @@ function setupEventListeners() {
 
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport, null, 2));
             const a = document.createElement('a');
-            a.href = dataStr; 
+            a.href = dataStr;
             a.download = `ventas_${type}_${new Date().toISOString().split('T')[0]}.json`;
             a.click();
         });
@@ -470,7 +472,7 @@ function setupEventListeners() {
                     updateUI();
                     alert('Importado.');
                 }
-            } catch(e) { alert('JSON inválido.'); }
+            } catch (e) { alert('JSON inválido.'); }
         };
         reader.readAsText(file);
         fileImport.value = '';
@@ -528,7 +530,7 @@ window.editarProducto = (id) => {
 function updateEncargadosUI() {
     encargadosList.innerHTML = '';
     noEncargadosMsg.style.display = appData.encargados.length === 0 ? 'block' : 'none';
-    
+
     const entregaCounts = {};
     if (Array.isArray(appData.ventas)) {
         appData.ventas.forEach(v => {
@@ -550,24 +552,24 @@ function updateEncargadosUI() {
         `;
         encargadosList.appendChild(li);
     });
-    
-    encargadoEntregaSelect.innerHTML = '<option value="" disabled selected>Seleccione un encargado</option>' + 
+
+    encargadoEntregaSelect.innerHTML = '<option value="" disabled selected>Seleccione un encargado</option>' +
         appData.encargados.map(e => `<option value="${e.nombre}">${e.nombre}</option>`).join('');
 }
 
 function updateCreditosUI() {
     creditosList.innerHTML = '';
     noCreditosMsg.style.display = appData.personasCredito.length === 0 ? 'block' : 'none';
-    
+
     // Selectores de la app
-    personaCreditoSelect.innerHTML = '<option value="" disabled selected>Seleccione una persona</option>' + 
+    personaCreditoSelect.innerHTML = '<option value="" disabled selected>Seleccione una persona</option>' +
         appData.personasCredito.map(p => `<option value="${p.id}">${p.nombre}</option>`).join('');
 
     appData.personasCredito.forEach(p => {
         const pendiente = appData.ventas
             .filter(v => v.personaCreditoId === p.id && v.estadoPago === 'Pendiente')
             .reduce((acc, v) => acc + (v.totalVenta || 0), 0);
-        
+
         const disponible = p.limite - pendiente;
         const li = document.createElement('li');
         li.style.flexDirection = 'column';
@@ -583,7 +585,7 @@ function updateCreditosUI() {
                 <span>Límite: <strong>$${p.limite.toLocaleString()}</strong></span>
             </div>
             <div style="width: 100%; background: #eee; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 5px;">
-                <div style="background: var(--primary); height: 100%; width: ${Math.min((pendiente/p.limite)*100, 100)}%;"></div>
+                <div style="background: var(--primary); height: 100%; width: ${Math.min((pendiente / p.limite) * 100, 100)}%;"></div>
             </div>
             <small style="color: var(--success); font-weight: 500;">Disponible: $${disponible.toLocaleString()}</small>
         `;
@@ -596,15 +598,15 @@ function updateCreditosUI() {
 function updateVentasPendientesUI() {
     ventasPendientesList.innerHTML = '';
     const pendientes = appData.ventas.filter(v => v.metodoPago === 'Crédito' && v.estadoPago === 'Pendiente');
-    
-    pendientes.sort((a,b) => new Date(b.fechaHora) - new Date(a.fechaHora)).forEach(v => {
+
+    pendientes.sort((a, b) => new Date(b.fechaHora) - new Date(a.fechaHora)).forEach(v => {
         const pc = appData.personasCredito.find(p => p.id === v.personaCreditoId);
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${new Date(v.fechaHora).toLocaleDateString()}</td>
             <td>${escapeHTML(pc ? pc.nombre : 'Desconocido')}</td>
             <td><span class="badge">Depto. ${escapeHTML(v.departamento)}</span></td>
-            <td style="font-weight:600">$${v.totalVenta.toLocaleString()}</td>
+            <td style="font-weight:600">$${(v.totalVenta || 0).toLocaleString()}</td>
             <td>
                 <button class="btn-icon" style="color: var(--success);" onclick="liquidarCredito('${v.id}')" title="Marcar como Pagado"><i class="fas fa-check-circle"></i> Liquidar</button>
             </td>
@@ -633,68 +635,87 @@ window.eliminarPersonaCredito = (id) => {
 };
 
 function updateDashboard() {
-    const now = new Date();
-    let filtered = appData.ventas.filter(v => {
-        const fv = new Date(v.fechaHora);
-        if (currentFilter === 'dia') return fv.toDateString() === now.toDateString();
-        if (currentFilter === 'semana') return (now - fv) / 86400000 <= 7;
-        if (currentFilter === 'mes') return fv.getMonth() === now.getMonth() && fv.getFullYear() === now.getFullYear();
-        if (currentFilter === 'custom') return v.fechaHora.startsWith(filterDateCustom.value);
-        return true;
-    });
+    try {
+        const now = new Date();
+        let filtered = appData.ventas.filter(v => {
+            if (!v.fechaHora) return false;
+            const fv = new Date(v.fechaHora);
+            if (isNaN(fv.getTime())) return false;
 
-    const depto = buscarVentaDeptoInput.value.toLowerCase().trim();
-    if(depto) filtered = filtered.filter(v => v.departamento.toLowerCase().includes(depto));
-
-    totalVentasCount.innerText = filtered.length;
-    const ingresos = filtered.reduce((acc, v) => acc + (v.totalVenta || 0), 0);
-    const inversion = filtered.reduce((acc, v) => acc + (v.costoVenta || 0), 0);
-    totalIngresosMonetario.innerText = `$${ingresos.toLocaleString()}`;
-    totalGastadoProductos.innerText = `$${inversion.toLocaleString()}`;
-
-    salesList.innerHTML = '';
-    noSalesMsg.style.display = filtered.length === 0 ? 'block' : 'none';
-    filtered.sort((a,b) => new Date(b.fechaHora) - new Date(a.fechaHora)).forEach(v => {
-        const tr = document.createElement('tr');
-        
-        const displayProds = v.productos.map(p => {
-            if (typeof p === 'string') return p;
-            return `${p.nombre} ($${p.precio.toLocaleString()})`;
-        }).join(', ');
-
-        const statusLabel = v.metodoPago === 'Crédito' ? 
-            `<br><small style="color:${v.estadoPago === 'Pendiente' ? 'var(--danger)' : 'var(--success)'}">${v.estadoPago}</small>` : '';
-
-        tr.innerHTML = `
-            <td>${new Date(v.fechaHora).toLocaleString([], {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'})}</td>
-            <td>${escapeHTML(displayProds)}${v.comentario ? `<br><small style="color:var(--primary)">${escapeHTML(v.comentario)}</small>` : ''}</td>
-            <td><span class="badge">Depto. ${escapeHTML(v.departamento)}</span></td>
-            <td>${escapeHTML(v.encargado || 'N/A')}${statusLabel}</td>
-            <td style="font-weight:600">$${(v.totalVenta || 0).toLocaleString()}</td>
-            <td>
-                <button class="btn-icon" style="color: var(--primary);" onclick="editarVenta('${v.id}')"><i class="fas fa-edit"></i></button>
-                <button class="btn-icon" onclick="eliminarVenta('${v.id}')"><i class="fas fa-trash"></i></button>
-            </td>
-        `;
-        salesList.appendChild(tr);
-    });
-
-    const productCounts = {};
-    const deptCounts = {};
-    filtered.forEach(v => {
-        v.productos.forEach(p => {
-            const name = typeof p === 'string' ? p : p.nombre;
-            productCounts[name] = (productCounts[name] || 0) + 1;
+            if (currentFilter === 'dia') return fv.toDateString() === now.toDateString();
+            if (currentFilter === 'semana') return (now - fv) / 86400000 <= 7;
+            if (currentFilter === 'mes') return fv.getMonth() === now.getMonth() && fv.getFullYear() === now.getFullYear();
+            if (currentFilter === 'custom') return v.fechaHora.startsWith(filterDateCustom.value);
+            return true;
         });
-        deptCounts[v.departamento] = (deptCounts[v.departamento] || 0) + 1;
-    });
 
-    renderStats(topProductsList, productCounts, 'vendidos');
-    renderStats(topDepartmentsList, deptCounts, 'ventas', 'Depto.');
+        const deptoTerm = buscarVentaDeptoInput.value.toLowerCase().trim();
+        if (deptoTerm) filtered = filtered.filter(v => v.departamento && v.departamento.toLowerCase().includes(deptoTerm));
+
+        totalVentasCount.innerText = filtered.length;
+        const totalVentasBrutas = filtered.reduce((acc, v) => acc + (v.totalVenta || 0), 0);
+        const inversionTotal = filtered.reduce((acc, v) => acc + (v.costoVenta || 0), 0);
+        const ganancias = totalVentasBrutas - inversionTotal;
+
+        if (totalIngresosBrutos) totalIngresosBrutos.innerText = `$${totalVentasBrutas.toLocaleString()}`;
+        if (totalGanancias) totalGanancias.innerText = `$${ganancias.toLocaleString()}`;
+        if (totalGastadoProductos) totalGastadoProductos.innerText = `$${inversionTotal.toLocaleString()}`;
+
+        salesList.innerHTML = '';
+        noSalesMsg.style.display = filtered.length === 0 ? 'block' : 'none';
+        
+        filtered.sort((a, b) => {
+            const da = new Date(a.fechaHora);
+            const db = new Date(b.fechaHora);
+            return db - da;
+        }).forEach(v => {
+            const tr = document.createElement('tr');
+            
+            const prodsArray = Array.isArray(v.productos) ? v.productos : [];
+            const displayProds = prodsArray.map(p => {
+                if (typeof p === 'string') return escapeHTML(p);
+                return `${escapeHTML(p.nombre)} ($${(p.precio || 0).toLocaleString()})`;
+            }).join(', ');
+
+            const statusLabel = v.metodoPago === 'Crédito' ?
+                `<br><small style="color:${v.estadoPago === 'Pendiente' ? 'var(--danger)' : 'var(--success)'}">${v.estadoPago}</small>` : '';
+
+            const fechaStr = v.fechaHora ? new Date(v.fechaHora).toLocaleString([], { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'N/A';
+
+            tr.innerHTML = `
+                <td>${fechaStr}</td>
+                <td>${displayProds}${v.comentario ? `<br><small style="color:var(--primary)">${escapeHTML(v.comentario)}</small>` : ''}</td>
+                <td><span class="badge">Depto. ${escapeHTML(v.departamento)}</span></td>
+                <td>${escapeHTML(v.encargado || 'N/A')}${statusLabel}</td>
+                <td style="font-weight:600">$${(v.totalVenta || 0).toLocaleString()}</td>
+                <td>
+                    <button class="btn-icon" style="color: var(--primary);" onclick="editarVenta('${v.id}')"><i class="fas fa-edit"></i></button>
+                    <button class="btn-icon" onclick="eliminarVenta('${v.id}')"><i class="fas fa-trash"></i></button>
+                </td>
+            `;
+            salesList.appendChild(tr);
+        });
+
+        const productCounts = {};
+        const deptCounts = {};
+        filtered.forEach(v => {
+            const prodsArray = Array.isArray(v.productos) ? v.productos : [];
+            prodsArray.forEach(p => {
+                const name = typeof p === 'string' ? p : p.nombre;
+                if(name) productCounts[name] = (productCounts[name] || 0) + 1;
+            });
+            if(v.departamento) deptCounts[v.departamento] = (deptCounts[v.departamento] || 0) + 1;
+        });
+
+        renderStats(topProductsList, productCounts, 'vendidos');
+        renderStats(topDepartmentsList, deptCounts, 'ventas', 'Depto.');
+    } catch (err) {
+        console.error("Error en updateDashboard:", err);
+    }
 }
 
 function renderStats(container, counts, label, prefix = '') {
-    const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
     container.innerHTML = sorted.length ? sorted.map(([name, count]) => `
         <div class="stats-item">
             <span class="stats-name">${prefix} ${escapeHTML(name)}</span>
@@ -702,20 +723,20 @@ function renderStats(container, counts, label, prefix = '') {
         </div>`).join('') : '<div class="empty-state">No hay datos</div>';
 }
 
-window.eliminarProducto = (id) => { if(confirm('¿Eliminar producto?')) { appData.productos = appData.productos.filter(p => p.id !== id); saveData(); } };
-window.eliminarEncargado = (id) => { if(confirm('¿Eliminar encargado?')) { appData.encargados = appData.encargados.filter(e => e.id !== id); saveData(); } };
-window.eliminarVenta = (id) => { if(confirm('¿Eliminar venta?')) { appData.ventas = appData.ventas.filter(v => v.id !== id); saveData(); } };
+window.eliminarProducto = (id) => { if (confirm('¿Eliminar producto?')) { appData.productos = appData.productos.filter(p => p.id !== id); saveData(); } };
+window.eliminarEncargado = (id) => { if (confirm('¿Eliminar encargado?')) { appData.encargados = appData.encargados.filter(e => e.id !== id); saveData(); } };
+window.eliminarVenta = (id) => { if (confirm('¿Eliminar venta?')) { appData.ventas = appData.ventas.filter(v => v.id !== id); saveData(); } };
 
 window.editarVenta = (id) => {
     const v = appData.ventas.find(x => x.id === id);
-    if(!v) return;
+    if (!v) return;
     editModeId = id;
     document.getElementById('titulo-nueva-venta').innerText = "Editar Venta";
     document.getElementById('btn-cancel-edit').classList.remove('d-none');
     fechaHoraInput.value = v.fechaHora;
     document.getElementById('departamento').value = v.departamento;
     metodoPagoSelect.value = v.metodoPago;
-    
+
     grupoPersonaCredito.classList.toggle('d-none', v.metodoPago !== 'Crédito');
     if (v.metodoPago === 'Crédito') {
         personaCreditoSelect.value = v.personaCreditoId || '';
@@ -723,18 +744,18 @@ window.editarVenta = (id) => {
 
     encargadoEntregaSelect.value = v.encargado || '';
     document.getElementById('comentario-venta').value = v.comentario || '';
-    
-    productosVentaContainer.innerHTML = v.productos.map(p => {
+
+    productosVentaContainer.innerHTML = (Array.isArray(v.productos) ? v.productos : []).map(p => {
         const name = typeof p === 'string' ? p : p.nombre;
-        const price = typeof p === 'string' ? 0 : p.precio;
+        const price = typeof p === 'string' ? 0 : (p.precio || 0);
         return `
             <div class="producto-item">
-                <input type="text" class="producto-input" list="productos-lista" value="${name}">
+                <input type="text" class="producto-input" list="productos-lista" value="${escapeHTML(name)}">
                 <input type="number" class="precio-override-input" value="${price}">
                 <button type="button" class="btn-remove-producto"><i class="fas fa-trash"></i></button>
             </div>`;
     }).join('');
-    
+
     productosVentaContainer.querySelectorAll('.btn-remove-producto').forEach(b => b.addEventListener('click', () => { b.parentElement.remove(); calculateLiveTotal(); }));
     calculateLiveTotal();
     document.getElementById('nav-nueva-venta').click();
@@ -744,9 +765,9 @@ document.getElementById('btn-cancel-edit').addEventListener('click', () => {
     editModeId = null;
     document.getElementById('titulo-nueva-venta').innerText = "Registrar Nueva Venta";
     document.getElementById('btn-cancel-edit').classList.add('d-none');
-    formVenta.reset(); 
-    setCurrentDateTime(); 
-    resetProductosVenta(); 
+    formVenta.reset();
+    setCurrentDateTime();
+    resetProductosVenta();
     calculateLiveTotal();
     grupoPersonaCredito.classList.add('d-none');
 });
@@ -762,7 +783,7 @@ function resetProductosVenta() {
 
 function escapeHTML(str) {
     if (!str) return '';
-    return String(str).replace(/[&<>'"]/g, t => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[t] || t));
+    return String(str).replace(/[&<>'"]/g, t => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[t] || t));
 }
 
 function setCurrentDateTime() {
