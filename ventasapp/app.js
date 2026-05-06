@@ -677,16 +677,28 @@ function updateDashboard() {
                 return `${escapeHTML(p.nombre)} ($${(p.precio || 0).toLocaleString()})`;
             }).join(', ');
 
-            const statusLabel = v.metodoPago === 'Crédito' ?
-                `<br><small style="color:${v.estadoPago === 'Pendiente' ? 'var(--danger)' : 'var(--success)'}">${v.estadoPago}</small>` : '';
+            const metodoIcon = v.metodoPago === 'Efectivo' ? 'fa-money-bill-wave' : 
+                               v.metodoPago === 'Transferencia' ? 'fa-mobile-alt' : 'fa-credit-card';
+            
+            const metodoColor = v.metodoPago === 'Crédito' ? (v.estadoPago === 'Pendiente' ? 'var(--danger)' : 'var(--success)') : 'var(--text-light)';
 
             const fechaStr = v.fechaHora ? new Date(v.fechaHora).toLocaleString([], { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'N/A';
+
+            const pagoLabel = `
+                <div style="margin-top: 4px; font-size: 0.75rem; color: ${metodoColor}; display: flex; align-items: center; gap: 4px;">
+                    <i class="fas ${metodoIcon}"></i>
+                    <span>${v.metodoPago}${v.metodoPago === 'Crédito' ? ` (${v.estadoPago})` : ''}</span>
+                </div>
+            `;
 
             tr.innerHTML = `
                 <td>${fechaStr}</td>
                 <td>${displayProds}${v.comentario ? `<br><small style="color:var(--primary)">${escapeHTML(v.comentario)}</small>` : ''}</td>
                 <td><span class="badge">Depto. ${escapeHTML(v.departamento)}</span></td>
-                <td>${escapeHTML(v.encargado || 'N/A')}${statusLabel}</td>
+                <td>
+                    <div style="font-weight: 500;">${escapeHTML(v.encargado || 'N/A')}</div>
+                    ${pagoLabel}
+                </td>
                 <td style="font-weight:600">$${(v.totalVenta || 0).toLocaleString()}</td>
                 <td>
                     <button class="btn-icon" style="color: var(--primary);" onclick="editarVenta('${v.id}')"><i class="fas fa-edit"></i></button>
