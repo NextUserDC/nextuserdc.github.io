@@ -46,15 +46,15 @@ class AccountSearcher {
             if (e.key === 'Enter') this.search();
         });
 
-        // Búsqueda en tiempo real con debounce
+        // Búsqueda en tiempo real con debounce aumentado a 600ms
         let timeout;
         searchInput.addEventListener('input', (e) => {
             clearTimeout(timeout);
             timeout = setTimeout(() => {
-                if (e.target.value.trim().length >= 2) {
+                if (e.target.value.trim().length >= 3) { // Require 3 chars minimum to avoid huge initial search
                     this.search();
                 }
-            }, 300);
+            }, 600);
         });
     }
 
@@ -87,9 +87,18 @@ class AccountSearcher {
 
     searchAccounts(searchTerm) {
         const searchLower = searchTerm.toLowerCase();
-        return this.accounts.filter(account => 
-            account.nick && account.nick.toLowerCase().includes(searchLower)
-        );
+        const results = [];
+        const MAX_RESULTS = 150; // Límite para no congelar el navegador
+        
+        for (let i = 0; i < this.accounts.length; i++) {
+            const account = this.accounts[i];
+            if (account.nick && account.nick.toLowerCase().includes(searchLower)) {
+                results.push(account);
+                // Si ya encontramos suficientes, detenemos la búsqueda para ahorrar recursos
+                if (results.length >= MAX_RESULTS) break;
+            }
+        }
+        return results;
     }
 
     displayResults(results, searchTerm) {
@@ -109,10 +118,15 @@ class AccountSearcher {
             return;
         }
 
+        let countMessage = `Se encontraron <strong>${results.length.toLocaleString()}</strong> resultado(s) para "<strong>${this.escapeHtml(searchTerm)}</strong>"`;
+        if (results.length >= 150) {
+            countMessage = `Mostrando los primeros <strong>150</strong> resultados para "<strong>${this.escapeHtml(searchTerm)}</strong>". Por favor, sé más específico.`;
+        }
+
         resultsCount.innerHTML = `
             <div class="success account-card-first">
                 <i class="fas fa-check-circle"></i>
-                Se encontraron <strong>${results.length.toLocaleString()}</strong> resultado(s) para "<strong>${this.escapeHtml(searchTerm)}</strong>"
+                ${countMessage}
             </div>
         `;
 
