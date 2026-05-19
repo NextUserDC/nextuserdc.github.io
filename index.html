@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>NextUserDC - Proyectos</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="page-shell">
     <header>
@@ -13,14 +15,29 @@
 
     <main>
       <ul class="projects">
-        <!--   <li>
+        <li>
           <a href="/mcaccounts/">🎮 Minecraft Accounts</a>
-        </li> -->
+        </li>
         <li>
           <a class="button-link" href="ventasapp/index.html">💼 Ventas App</a>
         </li>
       </ul>
+
+      <section class="contact-section">
+        <h2>📬 Contáctame</h2>
+        <p>¿Tienes dudas o sugerencias? Envíame un correo.</p>
+        <form action="https://formspree.io/f/maqkqjpo" method="POST" class="contact-form">
+          <div class="form-group">
+            <input type="text" name="Nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="form-group">
+            <textarea name="Mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Enviar Mensaje</button>
+        </form>
+      </section>
     </main>
   </div>
 </body>
+
 </html>
