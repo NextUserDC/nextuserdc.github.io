@@ -50,8 +50,15 @@ class AccountSearcher {
         let timeout;
         searchInput.addEventListener('input', (e) => {
             clearTimeout(timeout);
+            
+            const value = e.target.value.trim();
+            if (value.length === 0) {
+                this.clearSearch();
+                return;
+            }
+
             timeout = setTimeout(() => {
-                if (e.target.value.trim().length >= 3) { // Require 3 chars minimum to avoid huge initial search
+                if (value.length >= 3) { // Require 3 chars minimum to avoid huge initial search
                     this.search();
                 }
             }, 600);
