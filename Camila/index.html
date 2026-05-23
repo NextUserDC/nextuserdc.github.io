@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
     <meta name="description" content="Página dedicada a Camila para celebrar nuestros dos meses juntos.">
-    <meta name="keywords" content="Amor, Aniversario, Camila, Dos Meses">
     <meta name="author" content="Alexander">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -290,7 +289,7 @@
 
         if (localStorage.getItem('ultimoDiaJugado') === hoyString && localStorage.getItem('juegoGanado') !== 'true') {
             juegoTerminado = true;
-            mostrarMensaje('Bueno, quizá en el próximo intento');
+            mostrarMensaje('Ya usaste tu intento de hoy. ¡Vuelve mañana!');
         }
 
         btnJugarWordle.addEventListener('click', () => {
@@ -413,14 +412,14 @@
             }
         }
 
-        function enviarNotificacionWhatsApp() {
+        function enviarNotificacionWhatsApp(textoMensaje) {
             const sysDataNum = "NTY5MjYyODYyNTE="; 
             const sysDataKey = "REDACTED_CALLMEBOT_DATAKEY_B64=="; 
             
             const n = atob(sysDataNum);
             const k = atob(sysDataKey);
             
-            const mensajeTexto = encodeURIComponent("Camila adivinó la palabra de hoy: " + palabraSecreta + " y ya entró a la web.");
+            const mensajeTexto = encodeURIComponent(textoMensaje);
             const url = `https://api.callmebot.com/whatsapp.php?phone=${n}&text=${mensajeTexto}&apikey=${k}`;
             
             fetch(url, { mode: 'no-cors' }).catch(err => console.log(err));
@@ -471,7 +470,7 @@
                 localStorage.setItem('juegoGanado', 'true');
                 mostrarMensaje('Felicidades amor, lo lograste', 0);
                 
-                enviarNotificacionWhatsApp();
+                enviarNotificacionWhatsApp("Camila adivinó la palabra de hoy: " + palabraSecreta + " y ya entró a la web");
 
                 setTimeout(() => {
                     wordleModal.classList.add('oculto');
@@ -485,6 +484,9 @@
                 if (intentoActual === MAX_INTENTOS) {
                     juegoTerminado = true;
                     localStorage.setItem('ultimoDiaJugado', hoyString);
+                    
+                    enviarNotificacionWhatsApp("Camila no adivinó la palabra de hoy: " + palabraSecreta);
+
                     const msgDerrota = (diaDeHoy === 25) 
                         ? 'Perdiste, ya solo queda esperar' 
                         : 'Perdiste amor, quizá mañana';
