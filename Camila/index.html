@@ -512,7 +512,7 @@
                     juegoTerminado = true;
                     localStorage.setItem('ultimoDiaJugado', hoyString);
                     
-                    enviarNotificacionWhatsApp("Camila no adivinó la palabra de hoy" + palabraSecreta);
+                    enviarNotificacionWhatsApp("Camila no adivinó la palabra de hoy: " + palabraSecreta);
 
                     btnJugarWordle.style.display = 'none';
                     proximoJuegoContenedor.style.display = 'block';
