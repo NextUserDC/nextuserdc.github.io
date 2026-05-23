@@ -47,6 +47,9 @@
             <button id="btn-entrar-directo" class="btn-juego" style="display: none;">
                 <i data-lucide="heart"></i> Entrar
             </button>
+            <div id="proximo-juego-contenedor" style="display: none; margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem; font-weight: 700;">
+                Próximo juego en: <span id="proximo-juego-tiempo" style="color: var(--accent-secondary);">00:00:00</span>
+            </div>
         </div>
 
         <div id="wordle-modal" class="oculto">
@@ -141,7 +144,7 @@
 
         <section id="album" class="seccion">
             <div class="contenido-seccion">
-                <h2 class="encabezado-seccion texto-centrado">Albúm (No musical)</h2>
+                <h2 class="encabezado-seccion texto-centrado">Albúm (No de música)</h2>
                 <p class="introduccion-seccion texto-centrado">Pa que tengas flashbacks</p>
                 
                 <div class="cuadricula-album">
@@ -246,6 +249,8 @@
         const mensaje = document.getElementById('wordle-mensaje');
         const pantallaEspera = document.getElementById('pantalla-espera');
         const contenidoPrincipal = document.getElementById('contenido-principal');
+        const proximoJuegoContenedor = document.getElementById('proximo-juego-contenedor');
+        const proximoJuegoTiempo = document.getElementById('proximo-juego-tiempo');
 
         const desbloquearPagina = () => {
             pantallaEspera.classList.add('desvanecer');
@@ -254,6 +259,18 @@
                 contenidoPrincipal.classList.remove('oculto');
                 contenidoPrincipal.classList.add('aparicion-activa');
             }, 600);
+        };
+
+        const actualizarMiniContador = () => {
+            const ahora = new Date();
+            const mañana = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate() + 1);
+            const diferencia = mañana - ahora;
+
+            const h = Math.floor(diferencia / (1000 * 60 * 60));
+            const m = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            proximoJuegoTiempo.innerText = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
         };
 
         if (localStorage.getItem('juegoGanado') === 'true') {
@@ -289,7 +306,17 @@
 
         if (localStorage.getItem('ultimoDiaJugado') === hoyString && localStorage.getItem('juegoGanado') !== 'true') {
             juegoTerminado = true;
-            mostrarMensaje('Ya usaste tu intento de hoy. ¡Vuelve mañana!');
+            btnJugarWordle.style.display = 'none';
+            proximoJuegoContenedor.style.display = 'block';
+            actualizarMiniContador();
+            setInterval(actualizarMiniContador, 1000);
+            
+            const hoy = hoyObj.getDate();
+            if (hoy === 25) {
+                mostrarMensaje('Perdiste, ya solo queda esperar');
+            } else {
+                mostrarMensaje('Perdiste amor, quizá mañana');
+            }
         }
 
         btnJugarWordle.addEventListener('click', () => {
@@ -470,7 +497,7 @@
                 localStorage.setItem('juegoGanado', 'true');
                 mostrarMensaje('Felicidades amor, lo lograste', 0);
                 
-                enviarNotificacionWhatsApp("Camila adivinó la palabra de hoy: " + palabraSecreta + " y ya entró a la web");
+                enviarNotificacionWhatsApp("Camila adivinó la palabra de hoy: " + palabraSecreta + ", y ya tiene acceso a la página");
 
                 setTimeout(() => {
                     wordleModal.classList.add('oculto');
@@ -485,12 +512,19 @@
                     juegoTerminado = true;
                     localStorage.setItem('ultimoDiaJugado', hoyString);
                     
-                    enviarNotificacionWhatsApp("Camila no adivinó la palabra de hoy: " + palabraSecreta);
+                    enviarNotificacionWhatsApp("Camila no adivinó la palabra de hoy" + palabraSecreta);
 
-                    const msgDerrota = (diaDeHoy === 25) 
-                        ? 'Perdiste, ya solo queda esperar' 
-                        : 'Perdiste amor, quizá mañana';
-                    mostrarMensaje(msgDerrota, 0);
+                    btnJugarWordle.style.display = 'none';
+                    proximoJuegoContenedor.style.display = 'block';
+                    actualizarMiniContador();
+                    setInterval(actualizarMiniContador, 1000);
+
+                    const hoy = hoyObj.getDate();
+                    if (hoy === 25) {
+                        mostrarMensaje('Perdiste, ya solo queda esperar');
+                    } else {
+                        mostrarMensaje('Perdiste amor, quizá mañana');
+                    }
                 }
             }
         }
