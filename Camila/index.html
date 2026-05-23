@@ -40,6 +40,24 @@
                 <i data-lucide="flower" class="icono-brillo girasol-color"></i>
                 <i data-lucide="flower-2" class="icono-brillo tulipan-color"></i>
             </div>
+            
+            <button id="btn-jugar-wordle" class="btn-juego">
+                <i data-lucide="gamepad-2"></i> Jugar 
+            </button>
+            <button id="btn-entrar-directo" class="btn-juego" style="display: none;">
+                <i data-lucide="heart"></i> Entrar
+            </button>
+        </div>
+
+        <div id="wordle-modal" class="oculto">
+            <div class="wordle-contenedor">
+                <button id="btn-cerrar-wordle"><i data-lucide="x"></i></button>
+                <h2>Adivina la palabra clave</h2>
+                <p class="wordle-info">Tendrás 1 intento de 6 turnos por día</p>
+                <div id="wordle-grid"></div>
+                <div id="wordle-teclado"></div>
+                <div id="wordle-mensaje" class="oculto"></div>
+            </div>
         </div>
     </div>
 
@@ -219,17 +237,233 @@
             document.getElementById('segundos').innerText = String(segundos).padStart(2, '0');
         }, 1000);
 
-        const botonOmitir = document.getElementById('boton-omitir');
+        const btnJugarWordle = document.getElementById('btn-jugar-wordle');
+        const btnEntrarDirecto = document.getElementById('btn-entrar-directo');
+        const wordleModal = document.getElementById('wordle-modal');
+        const btnCerrarWordle = document.getElementById('btn-cerrar-wordle');
+        const grid = document.getElementById('wordle-grid');
+        const teclado = document.getElementById('wordle-teclado');
+        const mensaje = document.getElementById('wordle-mensaje');
         const pantallaEspera = document.getElementById('pantalla-espera');
         const contenidoPrincipal = document.getElementById('contenido-principal');
 
-        botonOmitir.addEventListener('click', () => {
+        const desbloquearPagina = () => {
             pantallaEspera.classList.add('desvanecer');
             setTimeout(() => {
                 pantallaEspera.style.display = 'none';
                 contenidoPrincipal.classList.remove('oculto');
                 contenidoPrincipal.classList.add('aparicion-activa');
             }, 600);
+        };
+
+        if (localStorage.getItem('juegoGanado') === 'true') {
+            btnJugarWordle.style.display = 'none';
+            btnEntrarDirecto.style.display = 'inline-flex';
+        }
+
+        btnEntrarDirecto.addEventListener('click', () => {
+            desbloquearPagina();
+        });
+
+        const palabraSecreta = "MARIA";
+        const LONGITUD_PALABRA = palabraSecreta.length;
+        const MAX_INTENTOS = 6;
+        let intentoActual = 0;
+        let juegoTerminado = false;
+        let tablero = Array.from({ length: MAX_INTENTOS }, () => Array(LONGITUD_PALABRA).fill(''));
+
+        const hoy = new Date().toDateString();
+
+        if (localStorage.getItem('ultimoDiaJugado') === hoy && localStorage.getItem('juegoGanado') !== 'true') {
+            juegoTerminado = true;
+            mostrarMensaje('Ya jugaste hoy. Vuelve mañana.');
+        }
+
+        btnJugarWordle.addEventListener('click', () => {
+            wordleModal.classList.remove('oculto');
+            if(intentoActual === 0) generarTablero();
+        });
+
+        btnCerrarWordle.addEventListener('click', () => {
+            wordleModal.classList.add('oculto');
+        });
+
+        function mostrarMensaje(texto, tiempo = 3000) {
+            mensaje.innerText = texto;
+            mensaje.classList.remove('oculto');
+            if (tiempo > 0) {
+                setTimeout(() => mensaje.classList.add('oculto'), tiempo);
+            }
+        }
+
+        function generarTablero() {
+            grid.innerHTML = '';
+            for (let i = 0; i < MAX_INTENTOS; i++) {
+                const fila = document.createElement('div');
+                fila.className = 'wordle-fila';
+                for (let j = 0; j < LONGITUD_PALABRA; j++) {
+                    const celda = document.createElement('div');
+                    celda.className = 'wordle-celda';
+                    celda.id = `celda-${i}-${j}`;
+                    fila.appendChild(celda);
+                }
+                grid.appendChild(fila);
+            }
+            generarTeclado();
+        }
+
+        function generarTeclado() {
+            const filasTeclado = [
+                ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+                ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+                ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'DEL']
+            ];
+
+            teclado.innerHTML = '';
+            filasTeclado.forEach(fila => {
+                const filaDiv = document.createElement('div');
+                filaDiv.className = 'teclado-fila';
+                fila.forEach(tecla => {
+                    const boton = document.createElement('button');
+                    boton.className = 'tecla';
+                    if (tecla === 'ENTER') {
+                        boton.classList.add('ancho');
+                        boton.innerHTML = '&#9166;';
+                        boton.style.fontSize = "1.2rem";
+                    } else if (tecla === 'DEL') {
+                        boton.classList.add('ancho');
+                        boton.innerHTML = '&#9003;';
+                        boton.style.fontSize = "1.2rem";
+                    } else {
+                        boton.textContent = tecla;
+                    }
+                    boton.id = `tecla-${tecla}`;
+                    boton.onclick = () => manejarTecla(tecla);
+                    filaDiv.appendChild(boton);
+                });
+                teclado.appendChild(filaDiv);
+            });
+        }
+
+        function manejarTecla(tecla) {
+            if (juegoTerminado) return;
+
+            if (tecla === 'DEL' || tecla === 'BACKSPACE') {
+                const filaVirtual = tablero[intentoActual];
+                for (let i = LONGITUD_PALABRA - 1; i >= 0; i--) {
+                    if (filaVirtual[i] !== '') {
+                        filaVirtual[i] = '';
+                        actualizarGrid();
+                        return;
+                    }
+                }
+                return;
+            }
+
+            if (tecla === 'ENTER') {
+                if (tablero[intentoActual].every(letra => letra !== '')) {
+                    verificarPalabra();
+                } else {
+                    mostrarMensaje('Faltan letras');
+                }
+                return;
+            }
+
+            if (/^[A-Z]$/.test(tecla)) {
+                const filaVirtual = tablero[intentoActual];
+                const indiceVacio = filaVirtual.indexOf('');
+                if (indiceVacio !== -1) {
+                    filaVirtual[indiceVacio] = tecla;
+                    actualizarGrid();
+                }
+            }
+        }
+
+        function actualizarGrid() {
+            for (let i = 0; i < MAX_INTENTOS; i++) {
+                for (let j = 0; j < LONGITUD_PALABRA; j++) {
+                    const celda = document.getElementById(`celda-${i}-${j}`);
+                    celda.textContent = tablero[i][j];
+                    if (tablero[i][j] !== '' && i === intentoActual) {
+                        celda.classList.add('llena');
+                    } else if (i === intentoActual) {
+                        celda.classList.remove('llena');
+                    }
+                }
+            }
+        }
+
+        function verificarPalabra() {
+            const intentoArr = tablero[intentoActual];
+            const palabraArr = palabraSecreta.split('');
+
+            for (let i = 0; i < LONGITUD_PALABRA; i++) {
+                const celda = document.getElementById(`celda-${intentoActual}-${i}`);
+                const tecla = document.getElementById(`tecla-${intentoArr[i]}`);
+                const letra = intentoArr[i];
+
+                if (letra === palabraArr[i]) {
+                    celda.classList.add('correcto');
+                    tecla.classList.remove('presente');
+                    tecla.classList.add('correcto');
+                    palabraArr[i] = null;
+                }
+            }
+
+            for (let i = 0; i < LONGITUD_PALABRA; i++) {
+                const celda = document.getElementById(`celda-${intentoActual}-${i}`);
+                const tecla = document.getElementById(`tecla-${intentoArr[i]}`);
+                const letra = intentoArr[i];
+
+                if (!celda.classList.contains('correcto')) {
+                    const index = palabraArr.indexOf(letra);
+                    if (index !== -1) {
+                        celda.classList.add('presente');
+                        if (!tecla.classList.contains('correcto')) {
+                            tecla.classList.add('presente');
+                        }
+                        palabraArr[index] = null;
+                    } else {
+                        celda.classList.add('ausente');
+                        if (!tecla.classList.contains('correcto') && !tecla.classList.contains('presente')) {
+                            tecla.classList.add('ausente');
+                        }
+                    }
+                }
+            }
+
+            const intentoFinal = intentoArr.join('');
+            if (intentoFinal === palabraSecreta) {
+                juegoTerminado = true;
+                localStorage.setItem('juegoGanado', 'true');
+                mostrarMensaje('Felicidades amor, lo lograste', 0);
+                setTimeout(() => {
+                    wordleModal.classList.add('oculto');
+                    desbloquearPagina();
+                    
+                    btnJugarWordle.style.display = 'none';
+                    btnEntrarDirecto.style.display = 'inline-flex';
+                }, 2000);
+            } else {
+                intentoActual++;
+                if (intentoActual === MAX_INTENTOS) {
+                    juegoTerminado = true;
+                    localStorage.setItem('ultimoDiaJugado', hoy);
+                    
+                    const esUltimoDia = hoy === new Date('May 25, 2026 00:00:00').toDateString();
+                    const msgDerrota = esUltimoDia 
+                        ? 'Perdiste, ya solo queda esperar' 
+                        : 'Perdiste amor, quizá mañana';
+                    mostrarMensaje(msgDerrota, 0);
+                }
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const tecla = e.key.toUpperCase();
+            if (/^[A-Z]$/.test(tecla) || tecla === 'ENTER' || tecla === 'BACKSPACE') {
+                manejarTecla(tecla === 'BACKSPACE' ? 'DEL' : tecla);
+            }
         });
 
         const secciones = document.querySelectorAll('.seccion');
