@@ -163,7 +163,10 @@ body {
 
 #wordle-modal {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(11, 10, 12, 0.9);
     backdrop-filter: blur(15px);
     display: flex;
@@ -192,13 +195,18 @@ body {
 
 #btn-cerrar-wordle {
     position: absolute;
-    top: 15px; right: 15px;
-    background: none; border: none;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
     color: var(--text-muted);
     cursor: pointer;
     transition: color 0.3s;
 }
-#btn-cerrar-wordle:hover { color: var(--accent-secondary); }
+
+#btn-cerrar-wordle:hover {
+    color: var(--accent-secondary);
+}
 
 .wordle-contenedor h2 {
     font-family: var(--font-heading);
@@ -215,7 +223,7 @@ body {
 
 #wordle-grid {
     display: grid;
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
     gap: 8px;
     margin: 0 auto 1.5rem;
     width: max-content;
@@ -236,7 +244,7 @@ body {
 .wordle-celda {
     width: 45px;
     height: 45px;
-    border: 2px solid rgba(255,255,255,0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -262,19 +270,19 @@ body {
         height: 35px;
         font-size: 1.2rem;
     }
-    
+
     #wordle-teclado {
         gap: 4px;
         width: 100%;
         box-sizing: border-box;
     }
-    
+
     .teclado-fila {
         gap: 2px;
         width: 100%;
         justify-content: center;
     }
-    
+
     .tecla {
         flex: 1;
         min-width: 0;
@@ -283,7 +291,7 @@ body {
         border-radius: 4px;
         text-align: center;
     }
-    
+
     .tecla.ancho {
         flex: 1.5;
         font-size: 0.55rem;
@@ -297,9 +305,19 @@ body {
 }
 
 @keyframes popIn {
-    0% { transform: scale(0.8); opacity: 0.5; }
-    40% { transform: scale(1.1); }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+
+    40% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .wordle-celda.correcto {
@@ -309,6 +327,7 @@ body {
     text-shadow: 0 0 15px var(--accent-glow);
     box-shadow: inset 0 0 15px var(--accent-glow);
 }
+
 .wordle-celda.presente {
     background-color: rgba(255, 101, 163, 0.15);
     border-color: var(--accent-secondary);
@@ -316,6 +335,7 @@ body {
     text-shadow: 0 0 15px var(--accent-secondary-glow);
     box-shadow: inset 0 0 15px var(--accent-secondary-glow);
 }
+
 .wordle-celda.ausente {
     background-color: rgba(255, 255, 255, 0.03);
     border-color: rgba(255, 255, 255, 0.05);
@@ -358,28 +378,34 @@ body {
     align-items: center;
 }
 
-.tecla.ancho { padding: 12px 16px; font-size: 0.8rem; }
-.tecla:hover { 
-    background: rgba(255, 255, 255, 0.15); 
+.tecla.ancho {
+    padding: 12px 16px;
+    font-size: 0.8rem;
+}
+
+.tecla:hover {
+    background: rgba(255, 255, 255, 0.15);
     transform: translateY(-2px);
 }
 
-.tecla.correcto { 
-    background: rgba(0, 210, 255, 0.2); 
-    border-color: var(--accent); 
+.tecla.correcto {
+    background: rgba(0, 210, 255, 0.2);
+    border-color: var(--accent);
     color: var(--accent);
     box-shadow: 0 0 10px var(--accent-glow);
 }
-.tecla.presente { 
-    background: rgba(255, 101, 163, 0.2); 
-    border-color: var(--accent-secondary); 
+
+.tecla.presente {
+    background: rgba(255, 101, 163, 0.2);
+    border-color: var(--accent-secondary);
     color: var(--accent-secondary);
     box-shadow: 0 0 10px var(--accent-secondary-glow);
 }
-.tecla.ausente { 
-    background: rgba(0, 0, 0, 0.4); 
+
+.tecla.ausente {
+    background: rgba(0, 0, 0, 0.4);
     border-color: rgba(255, 255, 255, 0.02);
-    color: var(--text-muted); 
+    color: var(--text-muted);
 }
 
 #wordle-mensaje {
@@ -802,11 +828,13 @@ body {
 }
 
 @keyframes pulsacionIcono {
+
     0%,
     100% {
         transform: scale(1);
         filter: drop-shadow(0 0 5px var(--accent-glow));
     }
+
     50% {
         transform: scale(1.15);
         filter: drop-shadow(0 0 18px var(--accent));
@@ -814,11 +842,13 @@ body {
 }
 
 @keyframes latidoCorazon {
+
     0%,
     100% {
         transform: scale(1);
         filter: drop-shadow(0 0 8px rgba(255, 101, 163, 0.4));
     }
+
     50% {
         transform: scale(1.2);
         filter: drop-shadow(0 0 20px rgba(255, 101, 163, 0.8));
@@ -829,6 +859,7 @@ body {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -848,16 +879,19 @@ body {
         grid-template-columns: 1.2fr 1.1fr;
         gap: 4rem;
     }
+
     .contenedor-texto-sentimientos {
         grid-column: 1;
         padding-left: 3rem;
     }
+
     .contenedor-imagen-sentimientos {
         grid-column: 2;
     }
 }
 
 @media (max-width: 1200px) {
+
     .cuadricula-recuerdos,
     .cuadricula-album {
         grid-template-columns: repeat(3, 1fr);
@@ -872,9 +906,11 @@ body {
         scroll-snap-align: none;
         padding: 5rem 1.5rem 4rem 1.5rem;
     }
+
     html {
         scroll-snap-type: none;
     }
+
     .cuadricula-historia,
     .cuadricula-sentimientos {
         grid-template-columns: 1fr;
@@ -882,20 +918,24 @@ body {
         width: 100%;
         text-align: center;
     }
+
     .contenedor-texto-sentimientos {
         padding-left: 0;
     }
+
     .marco-imagen-historia,
     .contenedor-imagen-sentimientos .marco-imagen-historia {
         max-width: 270px;
         margin: 0 auto;
     }
+
     .cuadricula-recuerdos,
     .cuadricula-album {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.2rem;
         width: 100%;
     }
+
     .barra-navegacion {
         position: fixed;
         top: auto;
@@ -913,11 +953,13 @@ body {
         box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.6);
         z-index: 999;
     }
+
     .item-navegacion {
         width: 40px;
         height: 40px;
         box-shadow: none;
     }
+
     .item-navegacion svg {
         width: 16px;
         height: 16px;
@@ -931,42 +973,53 @@ body {
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
     }
+
     .tarjeta-contador {
         padding: 2.5rem 1.5rem;
         width: 92%;
     }
+
     .titulo-contador {
         font-size: 2.2rem;
     }
+
     .subtitulo-contador {
         margin-bottom: 2rem;
         font-size: 0.9rem;
     }
+
     .temporizador {
         gap: 0.8rem;
         margin-bottom: 2rem;
     }
+
     .bloque-tiempo {
         min-width: 72px;
         padding: 0.8rem 0.6rem;
     }
+
     .bloque-tiempo span:first-child {
         font-size: 2rem;
     }
+
     .bloque-tiempo .etiqueta {
         font-size: 0.65rem;
         margin-top: 0.4rem;
     }
+
     .encabezado-seccion {
         font-size: 1.5rem;
     }
+
     .subencabezado-seccion {
         font-size: 0.85rem;
     }
+
     .introduccion-seccion {
         font-size: 0.85rem;
         margin-bottom: 1.5rem;
     }
+
     .parrafo-historia,
     .texto-sentimientos {
         font-size: 0.9rem;
@@ -975,21 +1028,25 @@ body {
 }
 
 @media (max-width: 576px) {
+
     .cuadricula-recuerdos,
     .cuadricula-album {
         grid-template-columns: 1fr;
         max-width: 320px;
         margin: 0 auto;
     }
+
     .marco-album {
         transform: none !important;
         padding: 12px;
         padding-bottom: 24px;
     }
+
     .tarjeta-nota {
         min-height: auto;
         gap: 1rem;
     }
+
     .temporizador {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -998,6 +1055,7 @@ body {
         margin-left: auto;
         margin-right: auto;
     }
+
     .bloque-tiempo {
         width: 100%;
         min-width: 0;
