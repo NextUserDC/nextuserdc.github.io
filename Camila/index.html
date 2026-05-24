@@ -70,6 +70,7 @@
             <a href="#recuerdos" class="item-navegacion" title="Momentos"><i data-lucide="sparkles"></i></a>
             <a href="#album" class="item-navegacion" title="Álbum"><i data-lucide="image"></i></a>
             <a href="#sentimientos" class="item-navegacion" title="Lo Que Siento"><i data-lucide="flower-2"></i></a>
+            <a href="#musica" class="item-navegacion" title="Música"><i data-lucide="music"></i></a>
         </nav>
 
         <section id="historia" class="seccion">
@@ -209,6 +210,22 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section id="musica" class="seccion">
+            <div class="contenido-seccion">
+                <h2 class="encabezado-seccion texto-centrado">REDACTED_CAMILA_TEXT</h2>
+                <p class="introduccion-seccion texto-centrado">Ti = Tú - Tú = Camila..</p>
+                <div class="contenedor-spotify">
+                    <iframe id="spotify-embed" 
+                        src="https://open.spotify.com/embed/playlist/2ObYtIq6lDwm1NlGHY0aMN" 
+                        width="100%" height="380" frameborder="0" 
+                        allowtransparency="true" allow="encrypted-media">
+                    </iframe>
+                </div>
+
+
             </div>
         </section>
     </div>
@@ -512,7 +529,7 @@
                     juegoTerminado = true;
                     localStorage.setItem('ultimoDiaJugado', hoyString);
                     
-                    enviarNotificacionWhatsApp("Camila no adivinó la palabra de hoy: " + palabraSecreta);
+                    enviarNotificacionWhatsApp("Camila no adivinó la palabra de hoy" + palabraSecreta);
 
                     btnJugarWordle.style.display = 'none';
                     proximoJuegoContenedor.style.display = 'block';
@@ -563,6 +580,8 @@
         secciones.forEach(seccion => {
             observador.observe(seccion);
         });
+
     </script>
+
 </body>
 </html>
