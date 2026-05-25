@@ -1,0 +1,388 @@
+* {
+    font-family: "Rubik";
+    font-optical-sizing: auto;
+    font-style: normal;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-image: url(../imgs/fondo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+#logo-intro {
+    width: 100px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-radius: 50%;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(255, 230, 0, 0.5);
+    box-sizing: border-box;
+    padding: 8px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header > h1 {
+    font-size: 32px;
+    margin-left: 10px;
+}
+
+.menu-icon {
+    display: none;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #333;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 5px 0;
+    transition: opacity 0.2s;
+}
+
+.nav-menu a:hover {
+    opacity: 0.6;
+}
+
+.div-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 60px 20px 0;
+}
+
+.div-intro p {
+    font-size: 22px;
+    color: #555;
+    max-width: 750px;
+    line-height: 1.6;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 15px;
+    margin: 10px 0;
+}
+
+.div-intro .eslogan {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a1a1a;
+    font-style: italic;
+    background-color: rgba(255, 230, 0, 0.6);
+    padding: 15px 30px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+section {
+    width: 100%;
+    min-height: 100vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    scroll-margin-top: 60px;
+}
+
+section > h2 {
+    font-size: 48px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    color: #fff;
+    text-align: center;
+}
+
+.div-principal, .div-secundario, .div-sopas {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.div-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+    font-size: 22px;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+}
+
+.card span {
+    font-size: 13px;
+    color: #888;
+    letter-spacing: 2px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.div-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 15px;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.list-item {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 18px 20px;
+    text-align: left;
+    border-left: 4px solid rgba(255, 230, 0, 0.6);
+}
+
+.list-item p {
+    font-size: 17px;
+    color: #333;
+    font-weight: 500;
+}
+
+.div-cultura {
+    background-color: #2a2a2a;
+    text-align: center;
+    padding: 80px 20px;
+    width: 100%;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.div-cultura > h2 {
+    color: #fff;
+    font-size: 42px;
+    margin: 0 0 40px 0;
+}
+
+.cultura-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.cultura-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+}
+
+.cultura-card h3 {
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.cultura-card p {
+    font-size: 15px;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+footer {
+    width: 100%;
+    margin-top: 60px;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-text {
+    color: #f0c27a;
+    font-size: 16px;
+    font-style: italic;
+}
+
+@media (max-width: 1024px) {
+    section > h2 {
+        font-size: 38px;
+    }
+    .div-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-wrap: wrap;
+        padding: 6px 15px;
+        position: relative;
+    }
+
+    header > h1 {
+        font-size: 24px;
+    }
+
+    .menu-icon {
+        display: block;
+        font-size: 28px;
+        cursor: pointer;
+        user-select: none;
+        padding: 5px 10px;
+    }
+
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        z-index: 200;
+        background-color: rgba(255, 230, 0, 0.9);
+        padding: 10px 0;
+        gap: 0;
+    }
+
+    #menu-toggle:checked ~ .nav-menu {
+        display: flex;
+    }
+
+    .nav-menu a {
+        font-size: 16px;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        width: 100%;
+        text-align: center;
+    }
+
+    section > h2 {
+        font-size: 30px;
+        margin-top: 25px;
+    }
+
+    .div-list {
+        grid-template-columns: 1fr;
+    }
+
+    .div-intro p {
+        font-size: 18px;
+        padding: 18px;
+    }
+
+    .div-intro .eslogan {
+        font-size: 20px;
+        padding: 12px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    header > h1 {
+        font-size: 18px;
+    }
+
+    #logo-intro {
+        width: 80px;
+        margin-top: 10px;
+    }
+
+    section > h2 {
+        font-size: 24px;
+        margin-top: 20px;
+    }
+
+    .div-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .div-intro p {
+        font-size: 16px;
+        padding: 15px;
+    }
+
+    .div-intro .eslogan {
+        font-size: 17px;
+    }
+
+    .cultura-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .div-cultura > h2 {
+        font-size: 28px;
+    }
+
+    .list-item p {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 360px) {
+    header > h1 {
+        font-size: 16px;
+    }
+
+    #logo-intro {
+        width: 65px;
+    }
+
+    section > h2 {
+        font-size: 20px;
+    }
+
+    .div-intro p {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .div-cultura {
+        padding: 40px 10px;
+    }
+}
