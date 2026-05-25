@@ -1,0 +1,728 @@
+* {
+    font-family: "Rubik";
+    font-optical-sizing: auto;
+    font-style: normal;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    position: relative;
+    background: none;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    background-image: url(imgs/fondo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+
+:root {
+    --yellow: rgb(236, 225, 130);   
+}
+
+#logo {
+    width: 55px;
+    margin: 10px;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--yellow);
+    box-sizing: border-box;
+    padding-right: 20px;
+}
+
+.menu-icon {
+    display: none;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-left: auto;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 5px 0;
+    transition: opacity 0.2s;
+}
+
+.nav-menu a:hover {
+    opacity: 0.6;
+}
+
+header>h1 {
+    font-size: 40px;
+    margin-left: 20px;
+}
+
+#logo-intro {
+    width: 180px;
+    margin-bottom: 20px;
+    margin-top: 80px;
+}
+
+.div-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    position: relative;
+}
+
+.div-intro>header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 12px 20px 12px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.div-intro p {
+    padding: 0 20px;
+}
+
+.div-intro p {
+    font-size: 22px;
+    color: #333;
+    font-weight: 600;
+    max-width: 700px;
+    line-height: 1.6;
+    text-shadow: -1px -1px 0 var(--yellow), 1px -1px 0 var(--yellow), -1px 1px 0 var(--yellow), 1px 1px 0 var(--yellow);
+}
+
+.div-intro .eslogan {
+    margin-top: 40px;
+    font-size: 28px;
+    font-weight: 900;
+    color: #111;
+    font-style: italic;
+    text-shadow: -1px -1px 0 var(--yellow), 1px -1px 0 var(--yellow), -1px 1px 0 var(--yellow), 1px 1px 0 var(--yellow);
+}
+
+.div-principal, .div-secundario, .div-postres {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.div-sopas {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    min-height: auto;
+}
+
+.div-comida, .div-bebidas, .postres {
+    border-radius: 10px;
+    max-width: 80%;
+    margin: 40px auto;
+    padding: 30px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.sopas {
+    border-radius: 10px;
+    margin: 40px auto;
+    padding: 30px;
+    box-sizing: border-box;
+    max-width: 30%;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 250px);
+    gap: 20px;
+    justify-content: center;
+}
+
+.comidas, .bebidas {
+    border: solid 1px var(--yellow);
+    border-radius: 10px;
+    width: 250px;
+    height: 235px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.comidas>img, .bebidas>img {
+    width: 100%;
+    height: 140px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: 3px solid var(--yellow);
+}
+
+.comidas>p, .bebidas>p {
+    font-size: 20px;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.comidas>p.nombre, .bebidas>p.nombre {
+    text-align: left;
+    margin-top: 15px;
+}
+
+.comidas>p.precio, .bebidas>p.precio {
+    text-align: right;
+    margin-top: 5px;
+}
+
+@keyframes fadeSection {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+section {
+    width: 100%;
+    height: 100vh;
+    padding-bottom: 80px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    animation: fadeSection 1.5s ease both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+}
+
+section>h2 {
+    font-size: 60px;
+    margin-top: 75px;
+    color: #fff;
+}
+
+.div-principal, .div-secundario, .div-postres, .div-sopas {
+    scroll-margin-top: 60px;
+}
+
+.div-principal>h2, .div-secundario>h2, .div-postres>h2, .div-sopas>h2 {
+    margin-top: 100px;
+}
+
+.div-cultura {
+    background-color: #2a2a2a;
+    text-align: center;
+    padding: 80px 0 0;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.div-cultura>h2 {
+    color: #f0c27a;
+    font-size: 48px;
+    margin: 0 0 40px 0;
+    padding: 0 20px;
+}
+
+.cultura-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    flex: 1;
+}
+
+.cultura-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.cultura-card h3 {
+    font-size: 26px;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.cultura-card span {
+    font-size: 13px;
+    color: #f0c27a;
+    letter-spacing: 3px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.cultura-card p {
+    font-size: 15px;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+footer {
+    width: 100%;
+    background-color: var(--yellow);
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer ul {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+footer a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+footer a:hover {
+    opacity: 0.6;
+}
+
+/*Aquí empieza el responsive*/
+
+@media (max-width: 1200px) {
+    header>h1 {
+        font-size: 34px;
+    }
+
+    section>h2 {
+        font-size: 48px;
+        margin-top: 60px;
+    }
+
+    .div-principal>h2, .div-secundario>h2, .div-postres>h2, .div-sopas>h2 {
+        margin-top: 85px;
+    }
+
+    .menu {
+        grid-template-columns: repeat(auto-fill, 190px);
+        gap: 15px;
+    }
+
+    .comidas, .bebidas {
+        width: 190px;
+        height: 185px;
+    }
+
+    .comidas>img, .bebidas>img {
+        height: 110px;
+    }
+
+    .comidas>p, .bebidas>p {
+        font-size: 17px;
+    }
+
+    .div-comida, .div-bebidas, .postres {
+        padding: 25px;
+    }
+
+    .sopas {
+        max-width: 40%;
+    }
+
+    section {
+        padding-bottom: 60px;
+    }
+}
+
+@media (max-width: 1024px) {
+    header>h1 {
+        font-size: 30px;
+    }
+
+    section>h2 {
+        font-size: 40px;
+        margin-top: 50px;
+    }
+
+    .div-principal>h2, .div-secundario>h2, .div-postres>h2, .div-sopas>h2 {
+        margin-top: 70px;
+    }
+
+    .menu {
+        grid-template-columns: repeat(auto-fill, 165px);
+        gap: 12px;
+    }
+
+    .comidas, .bebidas {
+        width: 165px;
+        height: 165px;
+    }
+
+    .comidas>img, .bebidas>img {
+        height: 95px;
+    }
+
+    .comidas>p, .bebidas>p {
+        font-size: 15px;
+    }
+
+    .div-comida, .div-bebidas, .postres {
+        padding: 20px;
+        max-width: 85%;
+    }
+
+    .sopas {
+        max-width: 50%;
+    }
+
+    section {
+        padding-bottom: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-wrap: wrap;
+        padding-right: 0;
+        position: relative;
+        justify-content: space-between;
+    }
+
+    .div-intro>header {
+        padding: 6px 15px 6px 0;
+    }
+
+    header>h1 {
+        font-size: 24px;
+    }
+
+    #logo {
+        width: 50px;
+    }
+
+    .menu-icon {
+        display: block;
+        font-size: 30px;
+        cursor: pointer;
+        user-select: none;
+        padding: 10px 15px;
+    }
+
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        z-index: 200;
+        background-color: var(--yellow);
+        padding: 10px 0;
+        gap: 0;
+    }
+
+    #menu-toggle:checked ~ .nav-menu {
+        display: flex;
+    }
+
+    .nav-menu a {
+        font-size: 16px;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        width: 100%;
+        text-align: center;
+    }
+
+    section>h2 {
+        font-size: 32px;
+        margin-top: 40px;
+    }
+
+    .div-principal>h2, .div-secundario>h2, .div-postres>h2, .div-sopas>h2 {
+        margin-top: 55px;
+    }
+
+    .menu {
+        grid-template-columns: repeat(auto-fill, 145px);
+        gap: 10px;
+    }
+
+    .comidas, .bebidas {
+        width: 145px;
+        height: 155px;
+    }
+
+    .comidas>img, .bebidas>img {
+        height: 85px;
+    }
+
+    .comidas>p, .bebidas>p {
+        font-size: 14px;
+    }
+
+    .comidas>p.nombre, .bebidas>p.nombre {
+        margin-top: 8px;
+    }
+
+    .comidas>p.precio, .bebidas>p.precio {
+        margin-top: 3px;
+    }
+
+    .div-comida, .div-bebidas, .postres {
+        padding: 15px;
+        max-width: 90%;
+        margin: 20px auto;
+    }
+
+    .sopas {
+        max-width: 65%;
+        padding: 20px;
+    }
+
+    .div-intro p {
+        font-size: 18px;
+    }
+
+    .div-intro .eslogan {
+        font-size: 22px;
+        margin-top: 30px;
+    }
+
+    .cultura-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    section {
+        padding-bottom: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    header>h1 {
+        font-size: 18px;
+    }
+
+    #logo {
+        width: 40px;
+        margin: 6px;
+    }
+
+    section>h2 {
+        font-size: 22px;
+        margin-top: 25px;
+    }
+
+    .div-principal>h2, .div-secundario>h2, .div-postres>h2, .div-sopas>h2 {
+        margin-top: 40px;
+    }
+
+    .menu {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+
+    .comidas, .bebidas {
+        width: 100%;
+        height: auto;
+        min-height: 120px;
+    }
+
+    .comidas>img, .bebidas>img {
+        height: 75px;
+    }
+
+    .comidas>p, .bebidas>p {
+        font-size: 12px;
+        padding: 0 6px;
+    }
+
+    .comidas>p.nombre, .bebidas>p.nombre {
+        margin-top: 4px;
+    }
+
+    .comidas>p.precio, .bebidas>p.precio {
+        margin-top: 2px;
+    }
+
+    .div-comida, .div-bebidas, .postres {
+        padding: 8px;
+        max-width: 95%;
+        margin: 10px auto;
+    }
+
+    .sopas {
+        max-width: 90%;
+        padding: 8px;
+    }
+
+    .cultura-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .div-cultura {
+        padding: 70px 0 0;
+    }
+
+    .div-cultura>h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .cultura-card {
+        padding: 12px;
+        max-height: 180px;
+    }
+
+    .cultura-card h3 {
+        font-size: 16px;
+    }
+
+    .cultura-card span {
+        font-size: 11px;
+        margin-bottom: 8px;
+    }
+
+    .cultura-card p {
+        font-size: 12px;
+    }
+
+    section {
+        padding-bottom: 25px;
+    }
+
+    .div-intro p {
+        font-size: 16px;
+    }
+
+    .div-intro .eslogan {
+        font-size: 18px;
+        margin-top: 25px;
+    }
+
+}
+
+@media (max-width: 360px) {
+    header>h1 {
+        font-size: 16px;
+    }
+
+    #logo {
+        width: 35px;
+        margin: 5px;
+    }
+
+    section>h2 {
+        font-size: 18px;
+        margin-top: 20px;
+    }
+
+    .div-principal>h2, .div-secundario>h2, .div-postres>h2, .div-sopas>h2 {
+        margin-top: 30px;
+    }
+
+    .menu {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+
+    .comidas, .bebidas {
+        min-height: 105px;
+    }
+
+    .comidas>img, .bebidas>img {
+        height: 65px;
+    }
+
+    .comidas>p, .bebidas>p {
+        font-size: 11px;
+        padding: 0 4px;
+    }
+
+    .comidas>p.nombre, .bebidas>p.nombre {
+        margin-top: 3px;
+    }
+
+    .div-comida, .div-bebidas, .postres {
+        padding: 6px;
+        max-width: 97%;
+        margin: 6px auto;
+    }
+
+    .sopas {
+        max-width: 95%;
+        padding: 6px;
+    }
+
+    .cultura-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .div-cultura {
+        padding: 60px 0 0;
+    }
+
+    .div-cultura>h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .cultura-card {
+        padding: 8px;
+        max-height: 160px;
+    }
+
+    .cultura-card h3 {
+        font-size: 14px;
+    }
+
+    .cultura-card span {
+        font-size: 10px;
+        margin-bottom: 5px;
+    }
+
+    .cultura-card p {
+        font-size: 11px;
+    }
+
+    .div-intro p {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .div-intro .eslogan {
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    section {
+        padding-bottom: 15px;
+    }
+}
