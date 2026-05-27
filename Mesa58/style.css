@@ -153,8 +153,19 @@ header>h1 {
     margin: 40px auto;
     padding: 30px;
     box-sizing: border-box;
-    max-width: 30%;
+    max-width: 80%;
     background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.sopas .bebidas {
+    flex: 1 1 0;
+    min-width: 0;
+    height: auto;
 }
 
 .menu {
@@ -515,9 +526,34 @@ footer a:hover {
         margin: 20px auto;
     }
 
+    .postres.menu {
+        max-width: 80%;
+    }
+
+    .div-sopas {
+        min-height: 100vh;
+    }
+
     .sopas {
-        max-width: 65%;
+        max-width: 90%;
         padding: 20px;
+        gap: 10px;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    .sopas .bebidas {
+        width: 100%;
+        min-height: auto;
+        flex: none;
+    }
+
+    .sopas .bebidas>img {
+        height: 140px;
+    }
+
+    .sopas .bebidas>p {
+        font-size: 18px;
     }
 
     .div-intro p {
