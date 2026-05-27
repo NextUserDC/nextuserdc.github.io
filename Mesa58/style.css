@@ -444,7 +444,7 @@ footer a:hover {
         gap: 0;
     }
 
-    .nav-menu:target {
+    #menu:target ~ .nav-menu {
         display: flex;
     }
 
@@ -531,6 +531,10 @@ footer a:hover {
 
     .cultura-grid {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .cultura-card {
+        max-height: 130px;
     }
 
     section {
