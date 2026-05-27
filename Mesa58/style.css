@@ -51,6 +51,8 @@ header {
 
 .menu-icon {
     display: none;
+    text-decoration: none;
+    color: #333;
 }
 
 .nav-menu {
@@ -137,6 +139,7 @@ header>h1 {
     text-align: center;
     align-items: center;
     min-height: auto;
+    max-height: fit-content;
 }
 
 .div-comida, .div-bebidas, .postres {
@@ -444,7 +447,7 @@ footer a:hover {
         gap: 0;
     }
 
-    #menu-toggle:checked ~ .nav-menu {
+    .nav-menu:target {
         display: flex;
     }
 
@@ -454,6 +457,24 @@ footer a:hover {
         border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         width: 100%;
         text-align: center;
+        position: relative;
+        z-index: 3;
+        background-color: var(--yellow);
+    }
+
+    .menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 2;
+        text-decoration: none;
+    }
+
+    #menu:target ~ .menu-overlay {
+        display: block;
     }
 
     section>h2 {
