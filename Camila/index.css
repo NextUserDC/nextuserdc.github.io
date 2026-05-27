@@ -133,7 +133,6 @@ body {
 }
 
 .btn-juego {
-    margin-top: 1.5rem;
     background: rgba(255, 101, 163, 0.15);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
@@ -1060,6 +1059,7 @@ body {
     width: 100%;
     min-width: 0;
 }
+}
 
 .contenedor-spotify {
     max-width: 560px;
@@ -1078,4 +1078,114 @@ body {
 .contenedor-spotify iframe {
     display: block;
 }
+
+.acciones-contador {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: center;
+    margin-top: 1.5rem;
+    position: relative;
+}
+
+.fila-acceso {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.btn-key {
+    font-size: 1.3rem;
+    padding: 0.6rem 1rem;
+    line-height: 1;
+}
+
+#password-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fila-password {
+    display: flex;
+    align-items: center;
+}
+
+.fila-password input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-right: none;
+    border-radius: 30px 0 0 30px;
+    padding: 0.8rem 1rem 0.8rem 1.5rem;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: left;
+    outline: none;
+    transition: all 0.3s ease;
+    width: 150px;
+}
+
+.fila-password input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
+    position: relative;
+    z-index: 1;
+}
+
+.fila-password input::placeholder {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.btn-enviar-password {
+    padding: 0.8rem 1.2rem 0.8rem 0.8rem;
+    border-radius: 0 30px 30px 0;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 101, 163, 0.15);
+}
+
+.btn-enviar-password:hover {
+    background: rgba(255, 101, 163, 0.3);
+}
+
+#password-error {
+    color: var(--accent-secondary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+#password-error.oculto {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    #password-group {
+        width: auto;
+    }
+
+    .fila-password {
+        width: auto;
+        max-width: 100%;
+    }
+
+    .fila-password input {
+        flex: none;
+        width: 130px;
+    }
+
+    .fila-acceso {
+        flex-direction: row;
+        width: 100%;
+    }
 }
