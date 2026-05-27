@@ -204,10 +204,9 @@ header>h1 {
 
 section {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     padding-bottom: 80px;
     box-sizing: border-box;
-    overflow-y: auto;
     animation: fadeSection 1.5s ease both;
     animation-timeline: view();
     animation-range: entry 0% entry 100%;
@@ -260,8 +259,6 @@ section>h2 {
     border-radius: 15px;
     padding: 30px;
     text-align: center;
-    max-height: 220px;
-    overflow-y: auto;
 }
 
 .cultura-card h3 {
@@ -597,7 +594,6 @@ footer a:hover {
 
     .cultura-card {
         padding: 12px;
-        max-height: 180px;
     }
 
     .cultura-card h3 {
@@ -696,7 +692,6 @@ footer a:hover {
 
     .cultura-card {
         padding: 8px;
-        max-height: 160px;
     }
 
     .cultura-card h3 {
