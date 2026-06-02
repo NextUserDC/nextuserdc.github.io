@@ -1,3 +1,4 @@
+/*Fuente y ajuste de espacios*/
 * {
     font-family: "Rubik";
     font-optical-sizing: auto;
@@ -30,6 +31,8 @@ body::before {
     z-index: -1;
 }
 
+
+/*Variable para color más usado*/
 :root {
     --yellow: rgb(236, 225, 130);   
 }
@@ -39,6 +42,8 @@ body::before {
     margin: 10px;
 }
 
+
+/*Toda sección del header*/
 header {
     width: 100%;
     display: flex;
@@ -80,6 +85,7 @@ header>h1 {
     margin-left: 20px;
 }
 
+/*Sección de inicio*/
 #logo-intro {
     width: 180px;
     margin-bottom: 20px;
@@ -123,6 +129,7 @@ header>h1 {
     text-shadow: -1px -1px 0 var(--yellow), 1px -1px 0 var(--yellow), -1px 1px 0 var(--yellow), 1px 1px 0 var(--yellow);
 }
 
+/* Estilos universales menús*/
 .div-principal, .div-secundario, .div-postres {
     display: flex;
     flex-direction: column;
@@ -208,6 +215,7 @@ header>h1 {
     margin-top: 5px;
 }
 
+/*Estilo de secciones*/
 @keyframes fadeSection {
     from { opacity: 0; transform: translateY(30px) scale(0.97); }
     to { opacity: 1; transform: translateY(0) scale(1); }
@@ -237,6 +245,7 @@ section>h2 {
     margin-top: 100px;
 }
 
+/*Sección cultura*/
 .div-cultura {
     background-color: #2a2a2a;
     text-align: center;
