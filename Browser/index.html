@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Finder</title>
+    <meta name="description" content="Busca y encuentra las mejores ofertas de videojuegos en tiendas legales.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <main class="container">
+        <header>
+            <h1 class="logo">Game <span>Finder</span></h1>
+            <p class="subtitle">Encuentra los mejores precios en tiendas oficiales</p>
+        </header>
+
+        <section class="search-section">
+            <form id="search-form" class="search-box">
+                <div class="input-wrapper">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21.0004 21.0004L16.6504 16.6504" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <input type="text" id="search-input" placeholder="Buscar juego" autocomplete="off" required>
+                </div>
+                <button type="submit" id="search-btn">Buscar</button>
+            </form>
+        </section>
+
+        <nav class="tabs-header">
+            <button class="tab-btn active" data-tab="deals">Ofertas Legales</button>
+            <button class="tab-btn" data-tab="other">Otros Sitios</button>
+        </nav>
+
+        <div id="loading-state" class="hidden">
+            <div class="spinner"></div>
+            <p>Buscando ofertas...</p>
+        </div>
+
+        <div id="tab-deals" class="tab-panel active">
+            <div id="official-stores-container" class="official-stores-grid"></div>
+            <h3 class="section-divider">Ofertas en otras tiendas</h3>
+            <section id="results-container" class="results-grid">
+            </section>
+            <div id="empty-state" class="hidden">
+                <p>No se encontraron resultados. Intenta con otro nombre.</p>
+            </div>
+        </div>
+
+        <div id="tab-other" class="tab-panel">
+            <section id="other-sites-container" class="sites-grid">
+            </section>
+            <div id="other-empty-state" class="hidden">
+                <p>Escribe un nombre de juego y selecciona "Otros Sitios" para ver los enlaces de búsqueda.</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
