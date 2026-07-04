@@ -146,7 +146,9 @@ if (localStorage.getItem('ultimoDiaJugado') === hoyString) {
     btnJugarWordle.style.display = 'none';
     proximoJuegoContenedor.style.display = 'block';
     actualizarMiniContador();
-    setInterval(actualizarMiniContador, 1000);
+    if (!window._miniContadorInterval) {
+        window._miniContadorInterval = setInterval(actualizarMiniContador, 1000);
+    }
     mostrarMensaje('Ya jugaste hoy, vuelve mañana');
 }
 
@@ -339,7 +341,9 @@ function verificarPalabra() {
             btnJugarWordle.style.display = 'none';
             proximoJuegoContenedor.style.display = 'block';
             actualizarMiniContador();
-            setInterval(actualizarMiniContador, 1000);
+            if (!window._miniContadorInterval) {
+                window._miniContadorInterval = setInterval(actualizarMiniContador, 1000);
+            }
         }, 3000);
     } else {
         intentoActual++;
@@ -357,7 +361,9 @@ function verificarPalabra() {
                 btnJugarWordle.style.display = 'none';
                 proximoJuegoContenedor.style.display = 'block';
                 actualizarMiniContador();
-                setInterval(actualizarMiniContador, 1000);
+                if (!window._miniContadorInterval) {
+                    window._miniContadorInterval = setInterval(actualizarMiniContador, 1000);
+                }
             }, 3000);
         }
     }

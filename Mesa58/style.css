@@ -37,12 +37,6 @@ body::before {
     --yellow: rgb(236, 225, 130);   
 }
 
-#logo {
-    width: 55px;
-    margin: 10px;
-}
-
-
 /*Toda sección del header*/
 header {
     width: 100%;
@@ -110,9 +104,6 @@ header>h1 {
 
 .div-intro p {
     padding: 0 20px;
-}
-
-.div-intro p {
     font-size: 22px;
     color: #333;
     font-weight: 600;
@@ -170,7 +161,7 @@ header>h1 {
     justify-content: center;
 }
 
-.sopas .bebidas {
+.sopas .sopa {
     flex: 1 1 0;
     min-width: 0;
     height: auto;
@@ -192,7 +183,7 @@ header>h1 {
     background-color: rgba(255, 255, 255, 0.7);
 }
 
-.comidas>img, .bebidas>img {
+.comidas>img, .bebidas>img, .postres>img, .sopa>img {
     width: 100%;
     height: 140px;
     border-top-left-radius: 10px;
@@ -200,18 +191,18 @@ header>h1 {
     border-bottom: 3px solid var(--yellow);
 }
 
-.comidas>p, .bebidas>p {
+.comidas>p, .bebidas>p, .postres>p, .sopa>p {
     font-size: 20px;
     padding: 0 15px;
     box-sizing: border-box;
 }
 
-.comidas>p.nombre, .bebidas>p.nombre {
+.comidas>p.nombre, .bebidas>p.nombre, .postres>p.nombre, .sopa>p.nombre {
     text-align: left;
     margin-top: 15px;
 }
 
-.comidas>p.precio, .bebidas>p.precio {
+.comidas>p.precio, .bebidas>p.precio, .postres>p.precio, .sopa>p.precio {
     text-align: right;
     margin-top: 5px;
 }
@@ -288,15 +279,6 @@ section>h2 {
     margin-bottom: 5px;
 }
 
-.cultura-card span {
-    font-size: 13px;
-    color: #f0c27a;
-    letter-spacing: 3px;
-    font-weight: bold;
-    display: block;
-    margin-bottom: 15px;
-}
-
 .cultura-card p {
     font-size: 15px;
     color: #ccc;
@@ -357,11 +339,11 @@ footer a:hover {
         height: 185px;
     }
 
-    .comidas>img, .bebidas>img {
+    .comidas>img, .bebidas>img, .postres>img, .sopa>img {
         height: 110px;
     }
 
-    .comidas>p, .bebidas>p {
+    .comidas>p, .bebidas>p, .postres>p, .sopa>p {
         font-size: 17px;
     }
 
@@ -402,11 +384,11 @@ footer a:hover {
         height: 165px;
     }
 
-    .comidas>img, .bebidas>img {
+    .comidas>img, .bebidas>img, .postres>img, .sopa>img {
         height: 95px;
     }
 
-    .comidas>p, .bebidas>p {
+    .comidas>p, .bebidas>p, .postres>p, .sopa>p {
         font-size: 15px;
     }
 
@@ -438,10 +420,6 @@ footer a:hover {
 
     header>h1 {
         font-size: 24px;
-    }
-
-    #logo {
-        width: 50px;
     }
 
     .menu-icon {
@@ -514,19 +492,19 @@ footer a:hover {
         height: 155px;
     }
 
-    .comidas>img, .bebidas>img {
+    .comidas>img, .bebidas>img, .postres>img, .sopa>img {
         height: 85px;
     }
 
-    .comidas>p, .bebidas>p {
+    .comidas>p, .bebidas>p, .postres>p, .sopa>p {
         font-size: 14px;
     }
 
-    .comidas>p.nombre, .bebidas>p.nombre {
+    .comidas>p.nombre, .bebidas>p.nombre, .postres>p.nombre, .sopa>p.nombre {
         margin-top: 8px;
     }
 
-    .comidas>p.precio, .bebidas>p.precio {
+    .comidas>p.precio, .bebidas>p.precio, .postres>p.precio, .sopa>p.precio {
         margin-top: 3px;
     }
 
@@ -552,17 +530,17 @@ footer a:hover {
         flex-wrap: wrap;
     }
 
-    .sopas .bebidas {
+    .sopas .sopa {
         width: 100%;
         min-height: auto;
         flex: none;
     }
 
-    .sopas .bebidas>img {
+    .sopas .sopa>img {
         height: 140px;
     }
 
-    .sopas .bebidas>p {
+    .sopas .sopa>p {
         font-size: 18px;
     }
 
@@ -593,11 +571,6 @@ footer a:hover {
         font-size: 18px;
     }
 
-    #logo {
-        width: 40px;
-        margin: 6px;
-    }
-
     section>h2 {
         font-size: 22px;
         margin-top: 25px;
@@ -618,20 +591,20 @@ footer a:hover {
         min-height: 120px;
     }
 
-    .comidas>img, .bebidas>img {
+    .comidas>img, .bebidas>img, .postres>img, .sopa>img {
         height: 75px;
     }
 
-    .comidas>p, .bebidas>p {
+    .comidas>p, .bebidas>p, .postres>p, .sopa>p {
         font-size: 12px;
         padding: 0 6px;
     }
 
-    .comidas>p.nombre, .bebidas>p.nombre {
+    .comidas>p.nombre, .bebidas>p.nombre, .postres>p.nombre, .sopa>p.nombre {
         margin-top: 4px;
     }
 
-    .comidas>p.precio, .bebidas>p.precio {
+    .comidas>p.precio, .bebidas>p.precio, .postres>p.precio, .sopa>p.precio {
         margin-top: 2px;
     }
 
@@ -697,11 +670,6 @@ footer a:hover {
         font-size: 16px;
     }
 
-    #logo {
-        width: 35px;
-        margin: 5px;
-    }
-
     section>h2 {
         font-size: 18px;
         margin-top: 20px;
@@ -720,16 +688,16 @@ footer a:hover {
         min-height: 105px;
     }
 
-    .comidas>img, .bebidas>img {
+    .comidas>img, .bebidas>img, .postres>img, .sopa>img {
         height: 65px;
     }
 
-    .comidas>p, .bebidas>p {
+    .comidas>p, .bebidas>p, .postres>p, .sopa>p {
         font-size: 11px;
         padding: 0 4px;
     }
 
-    .comidas>p.nombre, .bebidas>p.nombre {
+    .comidas>p.nombre, .bebidas>p.nombre, .postres>p.nombre, .sopa>p.nombre {
         margin-top: 3px;
     }
 

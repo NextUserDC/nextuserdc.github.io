@@ -44,7 +44,7 @@ class AccountSearcher {
         searchBtn.addEventListener('click', () => this.search());
         clearBtn.addEventListener('click', () => this.clearSearch());
 
-        searchInput.addEventListener('keypress', (e) => {
+        searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') this.search();
         });
 
@@ -65,13 +65,18 @@ class AccountSearcher {
             }, 400);
         });
 
+        let ticking = false;
         window.addEventListener('scroll', () => {
-            if (this.displayedCount < this.currentResults.length) {
-                const scrollBottom = window.innerHeight + window.scrollY;
-                const docHeight = document.documentElement.scrollHeight;
-                if (scrollBottom >= docHeight - 500) {
-                    this.appendNextBatch();
-                }
+            if (!ticking && this.displayedCount < this.currentResults.length) {
+                ticking = true;
+                requestAnimationFrame(() => {
+                    const scrollBottom = window.innerHeight + window.scrollY;
+                    const docHeight = document.documentElement.scrollHeight;
+                    if (scrollBottom >= docHeight - 500) {
+                        this.appendNextBatch();
+                    }
+                    ticking = false;
+                });
             }
         });
     }
@@ -251,16 +256,15 @@ class AccountSearcher {
         toast.textContent = message;
         toast.className = `toast ${type} show`;
 
-        setTimeout(() => {
+        clearTimeout(this._toastTimeout);
+        this._toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
         }, 3000);
     }
 
     escapeHtml(text) {
         if (!text) return '';
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+        return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 }
 
