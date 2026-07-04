@@ -7,6 +7,8 @@
   <title>Sistemas Operativos</title>
   <link rel="icon" type="image/png" href="src/favicon.png">
   <link rel="stylesheet" href="style.css">
+  <meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+  <meta name="robots" content="noimageindex">
 </head>
 <body>
   <div class="page-shell">
@@ -185,7 +187,7 @@
 
   <script>
     const searchInput = document.getElementById('searchInput');
-    const projectItems = document.querySelectorAll('.projects li');
+    const projectItems = document.querySelectorAll('.projects')[0].querySelectorAll('li');
 
     searchInput.addEventListener('input', function() {
       const filter = searchInput.value.toLowerCase();
