@@ -1,35 +1,37 @@
 class AccountSearcher {
     constructor() {
-        this.accounts = [];
+        this.index = {};
+        this.loaded = false;
         this.currentResults = [];
+        this.displayedCount = 0;
+        this.BATCH_SIZE = 50;
+        this.MAX_RESULTS = 150;
         this.init();
     }
 
     async init() {
-        await this.loadDatabase();
         this.setupEventListeners();
+        await this.loadDatabase();
     }
 
     async loadDatabase() {
         try {
             this.showLoading(true);
             this.updateFileInfo('🔄 Cargando base de datos...');
-            
-            const response = await fetch('db_processed.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            this.accounts = await response.json();
-            
-            console.log(`✅ Base de datos cargada: ${this.accounts.length.toLocaleString()} cuentas`);
-            this.updateFileInfo(`✅ Base de datos cargada: ${this.accounts.length.toLocaleString()} cuentas disponibles`);
+
+            const response = await fetch('db_indexed.json');
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+            this.index = await response.json();
+            this.loaded = true;
+
+            let total = 0;
+            for (const key in this.index) total += this.index[key].length;
+            this.updateFileInfo(`✅ Base de datos cargada: ${total.toLocaleString()} cuentas`);
             this.showLoading(false);
-            
         } catch (error) {
-            console.error('❌ Error cargando la base de datos:', error);
-            this.updateFileInfo('❌ Error cargando la base de datos. Asegúrate de que db_processed.json esté en el mismo directorio.');
-            this.showError('Error cargando la base de datos. Verifica la consola para más detalles.');
+            console.error('Error loading database:', error);
+            this.updateFileInfo('❌ Error cargando la base de datos. Verifica la consola.');
             this.showLoading(false);
         }
     }
@@ -41,16 +43,15 @@ class AccountSearcher {
 
         searchBtn.addEventListener('click', () => this.search());
         clearBtn.addEventListener('click', () => this.clearSearch());
-        
+
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.search();
         });
 
-        // Búsqueda en tiempo real con debounce aumentado a 600ms
         let timeout;
         searchInput.addEventListener('input', (e) => {
             clearTimeout(timeout);
-            
+
             const value = e.target.value.trim();
             if (value.length === 0) {
                 this.clearSearch();
@@ -58,10 +59,20 @@ class AccountSearcher {
             }
 
             timeout = setTimeout(() => {
-                if (value.length >= 3) { // Require 3 chars minimum to avoid huge initial search
+                if (value.length >= 3) {
                     this.search();
                 }
-            }, 600);
+            }, 400);
+        });
+
+        window.addEventListener('scroll', () => {
+            if (this.displayedCount < this.currentResults.length) {
+                const scrollBottom = window.innerHeight + window.scrollY;
+                const docHeight = document.documentElement.scrollHeight;
+                if (scrollBottom >= docHeight - 500) {
+                    this.appendNextBatch();
+                }
+            }
         });
     }
 
@@ -71,40 +82,52 @@ class AccountSearcher {
 
     search() {
         const searchTerm = document.getElementById('searchInput').value.trim();
-        
+
         if (!searchTerm) {
             this.showError('Por favor, ingresa un nombre de usuario para buscar');
             return;
         }
 
-        if (this.accounts.length === 0) {
+        if (!this.loaded) {
             this.showError('La base de datos no está cargada todavía. Por favor, espera.');
             return;
         }
 
-        this.showLoading(true);
-        
-        // Usar setTimeout para permitir que la UI se actualice
-        setTimeout(() => {
-            const results = this.searchAccounts(searchTerm);
-            this.displayResults(results, searchTerm);
-            this.showLoading(false);
-        }, 100);
+        const results = this.searchAccounts(searchTerm);
+        this.currentResults = results;
+        this.displayedCount = 0;
+        this.displayResults(results, searchTerm);
     }
 
     searchAccounts(searchTerm) {
         const searchLower = searchTerm.toLowerCase();
         const results = [];
-        const MAX_RESULTS = 150; // Límite para no congelar el navegador
-        
-        for (let i = 0; i < this.accounts.length; i++) {
-            const account = this.accounts[i];
-            if (account.nick && account.nick.toLowerCase().includes(searchLower)) {
-                results.push(account);
-                // Si ya encontramos suficientes, detenemos la búsqueda para ahorrar recursos
-                if (results.length >= MAX_RESULTS) break;
+        const MAX = this.MAX_RESULTS;
+
+        if (searchLower.length >= 3) {
+            const prefix = searchLower.substring(0, 3);
+            const candidates = this.index[prefix];
+
+            if (candidates) {
+                for (let i = 0; i < candidates.length && results.length < MAX; i++) {
+                    const [nick, password, ip] = candidates[i];
+                    if (nick.toLowerCase().includes(searchLower)) {
+                        results.push({ nick, password, ip });
+                    }
+                }
+            }
+        } else {
+            for (const prefix in this.index) {
+                const candidates = this.index[prefix];
+                for (let i = 0; i < candidates.length && results.length < MAX; i++) {
+                    const [nick, password, ip] = candidates[i];
+                    if (nick.toLowerCase().includes(searchLower)) {
+                        results.push({ nick, password, ip });
+                    }
+                }
             }
         }
+
         return results;
     }
 
@@ -112,9 +135,9 @@ class AccountSearcher {
         const resultsContainer = document.getElementById('resultsContainer');
         const resultsCount = document.getElementById('resultsCount');
 
-        this.currentResults = results;
         resultsContainer.innerHTML = '';
-        
+        resultsCount.innerHTML = '';
+
         if (results.length === 0) {
             resultsCount.innerHTML = `
                 <div class="error account-card">
@@ -126,8 +149,8 @@ class AccountSearcher {
         }
 
         let countMessage = `Se encontraron <strong>${results.length.toLocaleString()}</strong> resultado(s) para "<strong>${this.escapeHtml(searchTerm)}</strong>"`;
-        if (results.length >= 150) {
-            countMessage = `Mostrando los primeros <strong>150</strong> resultados para "<strong>${this.escapeHtml(searchTerm)}</strong>". Por favor, sé más específico.`;
+        if (results.length >= this.MAX_RESULTS) {
+            countMessage = `Mostrando los primeros <strong>${this.MAX_RESULTS}</strong> resultados para "<strong>${this.escapeHtml(searchTerm)}</strong>". Por favor, sé más específico.`;
         }
 
         resultsCount.innerHTML = `
@@ -137,28 +160,39 @@ class AccountSearcher {
             </div>
         `;
 
-        results.forEach((account, index) => {
-            const accountCard = this.createAccountCard(account, index);
-            resultsContainer.appendChild(accountCard);
-        });
+        this.appendNextBatch();
+    }
+
+    appendNextBatch() {
+        const resultsContainer = document.getElementById('resultsContainer');
+        const fragment = document.createDocumentFragment();
+        const end = Math.min(this.displayedCount + this.BATCH_SIZE, this.currentResults.length);
+
+        for (let i = this.displayedCount; i < end; i++) {
+            const card = this.createAccountCard(this.currentResults[i], i);
+            fragment.appendChild(card);
+        }
+
+        resultsContainer.appendChild(fragment);
+        this.displayedCount = end;
     }
 
     createAccountCard(account, index) {
         const card = document.createElement('div');
         card.className = 'account-card';
-        
+
         card.innerHTML = `
             <div class="account-field">
                 <span class="field-label"><i class="fas fa-user"></i> Usuario</span>
-                <span class="field-value">${this.escapeHtml(account.nick || 'N/A')}</span>
+                <span class="field-value">${this.escapeHtml(account.nick)}</span>
             </div>
             <div class="account-field">
                 <span class="field-label"><i class="fas fa-key"></i> Contraseña</span>
-                <span class="field-value">${this.escapeHtml(account.password || 'No disponible')}</span>
+                <span class="field-value">${this.escapeHtml(account.password)}</span>
             </div>
             <div class="account-field">
                 <span class="field-label"><i class="fas fa-globe"></i> IP</span>
-                <span class="field-value">${this.escapeHtml(account.ip || 'No disponible')}</span>
+                <span class="field-value">${this.escapeHtml(account.ip)}</span>
             </div>
             <button class="copy-btn" onclick="accountSearcher.copyToClipboard(${index})">
                 <i class="fas fa-copy"></i> Copiar
@@ -172,12 +206,11 @@ class AccountSearcher {
         if (this.currentResults && this.currentResults[index]) {
             const account = this.currentResults[index];
             const text = `Usuario: ${account.nick}\nContraseña: ${account.password || 'N/A'}\nIP: ${account.ip || 'N/A'}`;
-            
+
             navigator.clipboard.writeText(text).then(() => {
                 this.showToast('✅ Datos copiados al portapapeles');
             }).catch(err => {
                 console.error('Error copying to clipboard:', err);
-                // Fallback para navegadores antiguos
                 this.fallbackCopyToClipboard(text);
             });
         }
@@ -202,6 +235,7 @@ class AccountSearcher {
         document.getElementById('resultsContainer').innerHTML = '';
         document.getElementById('resultsCount').innerHTML = '';
         this.currentResults = [];
+        this.displayedCount = 0;
     }
 
     showLoading(show) {
@@ -216,7 +250,7 @@ class AccountSearcher {
         const toast = document.getElementById('toast');
         toast.textContent = message;
         toast.className = `toast ${type} show`;
-        
+
         setTimeout(() => {
             toast.classList.remove('show');
         }, 3000);
@@ -230,7 +264,6 @@ class AccountSearcher {
     }
 }
 
-// Inicializar la aplicación cuando se carga la página
 let accountSearcher;
 document.addEventListener('DOMContentLoaded', () => {
     accountSearcher = new AccountSearcher();
