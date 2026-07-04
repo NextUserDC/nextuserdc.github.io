@@ -39,11 +39,15 @@
             <span class="sys-name">Kubuntu</span>
           </a>
         </li>
-        <li>
-          <a href="https://www.mediafire.com/file_premium/9mb7iuasgnsdpln/MiniOS7_Pro_v26.0_x64_-_dprojects.rar/file" target="_blank" rel="noopener noreferrer">
+        <li class="win7-wrapper">
+          <a href="javascript:void(0)" onclick="toggleWin7Menu(event)">
             <img class="sys-logo" src="src/windows7.logo.svg" alt="Windows 7 Logo">
-            <span class="sys-name">Windows 7 (MiniOS)</span>
+            <span class="sys-name">Windows 7</span>
           </a>
+          <div class="win7-dropdown" id="win7Dropdown">
+            <a href="https://www.mediafire.com/file/96q1cjcowsmrybw/Window_7_Ultimate_Espanol_SP1_x32.iso/file" target="_blank" rel="noopener noreferrer">32 bits</a>
+            <a href="https://www.mediafire.com/file/gjro9jpec2fsigd/Window_7_Ultimate_Espanol_SP1_x64.iso/file" target="_blank" rel="noopener noreferrer">64 bits</a>
+          </div>
         </li>
         <li>
           <a href="https://www.microsoft.com/es-es/software-download/windows10" target="_blank" rel="noopener noreferrer">
@@ -193,6 +197,19 @@
           item.style.display = 'none';
         }
       });
+    });
+
+    function toggleWin7Menu(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById('win7Dropdown').classList.toggle('show');
+    }
+
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('win7Dropdown');
+      if (dropdown && !e.target.closest('.win7-wrapper')) {
+        dropdown.classList.remove('show');
+      }
     });
   </script>
 </body>

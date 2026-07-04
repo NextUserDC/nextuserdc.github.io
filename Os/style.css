@@ -164,3 +164,44 @@ header p {
   scrollbar-width: thin;
   scrollbar-color: #a87ffb #1b0c2e;
 }
+
+/* Windows 7 dropdown */
+.win7-wrapper {
+  position: relative;
+}
+
+.win7-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 8, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 6px 0;
+  z-index: 10;
+  min-width: 160px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.win7-dropdown.show {
+  display: block;
+}
+
+.win7-dropdown a {
+  padding: 10px 24px;
+  display: block;
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+  border-radius: 8px;
+  margin: 0 6px;
+}
+
+.win7-dropdown a:hover {
+  background: rgba(168, 127, 251, 0.25);
+}
