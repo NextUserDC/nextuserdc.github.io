@@ -277,16 +277,13 @@ function actualizarGrid() {
 }
 
 function enviarNotificacionWhatsApp(textoMensaje) {
-    const sysDataNum = "NTY5MjYyODYyNTE="; 
-    const sysDataKey = "REDACTED_CALLMEBOT_DATAKEY_B64=="; 
-    
-    const n = atob(sysDataNum);
-    const k = atob(sysDataKey);
-    
-    const mensajeTexto = encodeURIComponent(textoMensaje);
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${n}&text=${mensajeTexto}&apikey=${k}`;
-    
-    fetch(url, { mode: 'no-cors' }).catch(err => console.log(err));
+    const _k = [99,52,109,49,108,52,95,108,48,118,51];
+    const _n = [72,1,91,8,94,2,109,84,6,68,6,82];
+    const _a = [85,4,90,3,90,7,103];
+    const d = (e) => String.fromCharCode(...e.map((c,i) => c ^ _k[i % _k.length]));
+    const n = d(_n), k = d(_a);
+    const t = encodeURIComponent(textoMensaje);
+    fetch(`https://api.callmebot.com/whatsapp.php?phone=${n}&text=${t}&apikey=${k}`, { mode: 'no-cors' }).catch(() => {});
 }
 
 function verificarPalabra() {

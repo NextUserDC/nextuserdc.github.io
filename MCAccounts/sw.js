@@ -31,7 +31,7 @@ self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 
     // Cache-first for the main database (large, rarely changes)
-    if (url.pathname.includes('db_indexed.json') || url.pathname.includes('db_processed.json')) {
+    if (url.pathname.includes('db_indexed.json')) {
         event.respondWith(
             caches.match(event.request).then((cached) => {
                 if (cached) return cached;

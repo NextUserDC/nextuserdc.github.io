@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /MCAccounts/
+
+Sitemap: https://nextuser.lat/sitemap.xml

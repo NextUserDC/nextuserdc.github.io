@@ -170,6 +170,10 @@ header p {
   position: relative;
 }
 
+.win7-wrapper > a:hover {
+  transform: none;
+}
+
 .win7-dropdown {
   display: none;
   position: absolute;
@@ -184,7 +188,6 @@ header p {
   border-radius: 16px;
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
-  display: none;
   flex-direction: column;
   gap: 8px;
 }
@@ -206,14 +209,14 @@ header p {
   align-items: center;
   justify-content: center;
   text-align: center;
-  transition: background 0.22s ease, box-shadow 0.22s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   width: 100%;
   box-sizing: border-box;
   border: 1px solid rgba(255,255,255,0.05);
 }
 
 .win7-dropdown a:hover {
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 2px 12px rgba(168, 127, 251, 0.15);
 }

@@ -5,3 +5,7 @@ Thumbs.db
 *.bak
 *~
 .env
+*.log
+.vscode/
+.idea/
+.cache/
