@@ -176,32 +176,44 @@ header p {
   top: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(15, 8, 30, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  padding: 6px 0;
   z-index: 10;
-  min-width: 160px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  min-width: 180px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
+  display: none;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .win7-dropdown.show {
-  display: block;
+  display: flex;
 }
 
 .win7-dropdown a {
-  padding: 10px 24px;
-  display: block;
   text-decoration: none;
   color: white;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: background 0.2s ease;
-  border-radius: 8px;
-  margin: 0 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 18px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 .win7-dropdown a:hover {
-  background: rgba(168, 127, 251, 0.25);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
 }
