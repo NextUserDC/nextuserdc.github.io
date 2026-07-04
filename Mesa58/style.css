@@ -789,3 +789,23 @@ footer a:hover {
         padding-bottom: 15px;
     }
 }
+
+/* Super Skinny Scrollbar with Theme Colors */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #2a2a2a; 
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(236, 225, 130); 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fff; 
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(236, 225, 130) #2a2a2a;
+}

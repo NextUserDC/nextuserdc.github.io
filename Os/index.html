@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistemas Operativos</title>
+  <link rel="icon" type="image/jpeg" href="src/favicon.jpg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <h1>💻 Sistemas Operativos</h1>
+      <p>Lista de descargas directas de sistemas operativos.</p>
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar sistema operativo..." autocomplete="off">
+      </div>
+    </header>
+
+    <main>
+      <ul class="projects">
+        <li>
+          <a href="https://xubuntu.org/download/" target="_blank">
+            <img class="sys-logo" src="src/xubuntu.logo.svg" alt="Xubuntu Logo" onerror="this.src='data:image/svg+xml;utf8,<svg width=\'64\' height=\'64\' xmlns=\'http://www.w3.org/2000/svg\'><rect width=\'64\' height=\'64\' fill=\'transparent\'/><text x=\'32\' y=\'32\' fill=\'white\' font-size=\'32\' font-weight=\'bold\' text-anchor=\'middle\' alignment-baseline=\'middle\' font-family=\'sans-serif\'>X</text></svg>'">
+            <span class="sys-name">Xubuntu</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://ubuntu.com/download/desktop" target="_blank">
+            <img class="sys-logo" src="src/ubuntu.logo.svg" alt="Ubuntu Logo">
+            <span class="sys-name">Ubuntu</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.debian.org/download" target="_blank">
+            <img class="sys-logo" src="src/debian.logo.svg" alt="Debian Logo">
+            <span class="sys-name">Debian</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="https://www.microsoft.com/es-es/software-download/windows10" target="_blank">
+            <img class="sys-logo" src="src/windows.logo.svg" alt="Windows 10 Logo">
+            <span class="sys-name">Windows 10</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.microsoft.com/software-download/windows11" target="_blank">
+            <img class="sys-logo" src="src/windows.logo.svg" alt="Windows 11 Logo">
+            <span class="sys-name">Windows 11</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.kali.org/get-kali/" target="_blank">
+            <img class="sys-logo" src="src/kali_linux.logo.svg" alt="Kali Linux Logo">
+            <span class="sys-name">Kali Linux</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://zorin.com/os/download/" target="_blank">
+            <img class="sys-logo" src="src/zorin_os.logo.svg" alt="Zorin OS Logo">
+            <span class="sys-name">Zorin OS</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://archlinux.org/download/" target="_blank">
+            <img class="sys-logo" src="src/arch_linux.logo.svg" alt="Arch Linux Logo">
+            <span class="sys-name">Arch Linux</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://omarchy.org/" target="_blank">
+            <img class="sys-logo" src="src/linux.logo.svg" alt="Omarchy Logo">
+            <span class="sys-name">Omarchy</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://cachyos.org/download" target="_blank">
+            <img class="sys-logo" src="src/linux.logo.svg" alt="CachyOS Logo">
+            <span class="sys-name">Cachy OS</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://endeavouros.com/latest-release/" target="_blank">
+            <img class="sys-logo" src="src/endeavouros.logo.svg" alt="EndeavourOS Logo">
+            <span class="sys-name">Endeavour OS</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://manjaro.org/download/" target="_blank">
+            <img class="sys-logo" src="src/manjaro.logo.svg" alt="Manjaro Logo">
+            <span class="sys-name">Manjaro</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://linuxmint.com/download.php" target="_blank">
+            <img class="sys-logo" src="src/linux_mint.logo.svg" alt="Linux Mint Logo">
+            <span class="sys-name">Linux Mint</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linuxliteos.com/download.php" target="_blank">
+            <img class="sys-logo" src="src/linux.logo.svg" alt="Linux Lite Logo">
+            <span class="sys-name">Linux Lite</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://fedoraproject.org/workstation/download/" target="_blank">
+            <img class="sys-logo" src="src/fedora.logo.svg" alt="Fedora Logo">
+            <span class="sys-name">Fedora</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://nobaraproject.org/download/" target="_blank">
+            <img class="sys-logo" src="src/linux.logo.svg" alt="Nobara Logo">
+            <span class="sys-name">Nobara</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://pop.system76.com/" target="_blank">
+            <img class="sys-logo" src="src/pop_os.logo.svg" alt="Pop OS Logo">
+            <span class="sys-name">Pop OS</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://gparted.org/download.php" target="_blank">
+            <img class="sys-logo" src="src/linux.logo.svg" alt="GParted Logo">
+            <span class="sys-name">GParted</span>
+          </a>
+        </li>
+      </ul>
+    </main>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const projectItems = document.querySelectorAll('.projects li');
+
+    searchInput.addEventListener('input', function() {
+      const filter = searchInput.value.toLowerCase();
+      projectItems.forEach(item => {
+        const text = item.querySelector('.sys-name').textContent.toLowerCase();
+        if (text.includes(filter)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

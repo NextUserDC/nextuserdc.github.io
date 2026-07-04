@@ -1189,3 +1189,23 @@ body {
         width: 100%;
     }
 }
+
+/* Super Skinny Scrollbar with Theme Colors */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0a0c; 
+}
+::-webkit-scrollbar-thumb {
+  background: #ff65a3; 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00d2ff; 
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ff65a3 #0b0a0c;
+}

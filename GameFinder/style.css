@@ -535,3 +535,23 @@ header {
         gap: 0.75rem;
     }
 }
+
+/* Super Skinny Scrollbar with Theme Colors */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a14; 
+}
+::-webkit-scrollbar-thumb {
+  background: #6d28d9; 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7c3aed; 
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #6d28d9 #0a0a14;
+}

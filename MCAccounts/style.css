@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html {
+    background-color: #6a5acd;
+}
+
 body {
     font-family: 'Inter', Arial, sans-serif;
     background: radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 30%),
@@ -316,4 +320,24 @@ button {
     .account-field {
         text-align: center;
     }
+}
+
+/* Super Skinny Scrollbar with Theme Colors */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+::-webkit-scrollbar-thumb {
+  background: #7b68ee; 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8e7df0; 
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #7b68ee transparent;
 }
