@@ -6,13 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¿26/05/26?</title>
-    <link rel="stylesheet" href="index.css?v=2">
+    <link rel="stylesheet" href="style.css?v=2">
     <meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
     <meta name="robots" content="noimageindex">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Metal+Mania&family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" defer></script>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
@@ -39,21 +38,21 @@
                 </div>
             </div>
             <div class="icono-guitarra">
-                <i data-lucide="flower" class="icono-brillo girasol-color"></i>
-                <i data-lucide="flower-2" class="icono-brillo tulipan-color"></i>
+                <svg class="icono-brillo girasol-color" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/><path d="M12 7.5V9"/><path d="M7.5 12H9"/><path d="M16.5 12H15"/><path d="M12 16.5V15"/><path d="m8 8 1.88 1.88"/><path d="M14.12 9.88 16 8"/><path d="m8 16 1.88-1.88"/><path d="M14.12 14.12 16 16"/></svg>
+                <svg class="icono-brillo tulipan-color" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"/><circle cx="12" cy="8" r="2"/><path d="M12 10v12"/><path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"/><path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"/></svg>
             </div>
 
             <div class="acciones-contador">
                 <div class="fila-acceso">
                     <button id="btn-key" class="btn-juego btn-key">🔑</button>
                     <button id="btn-jugar-wordle" class="btn-juego">
-                        <i data-lucide="gamepad-2"></i> Jugar Wordle
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg> Jugar Wordle
                     </button>
                     <div id="password-group" style="display: none;">
                         <div class="fila-password">
                             <input type="password" id="password-input" placeholder="Contraseña">
                             <button id="btn-acceder" class="btn-juego btn-enviar-password">
-                                <i data-lucide="arrow-right"></i>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                             </button>
                         </div>
                         <div id="password-error" class="oculto">Contraseña incorrecta</div>
@@ -67,7 +66,7 @@
 
         <div id="wordle-modal" class="oculto">
             <div class="wordle-contenedor">
-                <button id="btn-cerrar-wordle"><i data-lucide="x"></i></button>
+                <button id="btn-cerrar-wordle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
                 <h2>Adivina la palabra clave</h2>
                 <p id="wordle-info-dinamico" class="wordle-info">Tendrás 1 intento de 5 turnos por día</p>
                 <div id="wordle-grid"></div>
@@ -79,11 +78,11 @@
 
     <div id="contenido-principal" class="oculto">
         <nav class="barra-navegacion">
-            <a href="#historia" class="item-navegacion activo" title="Nuestra Historia"><i data-lucide="heart"></i></a>
-            <a href="#recuerdos" class="item-navegacion" title="Momentos"><i data-lucide="sparkles"></i></a>
-            <a href="#album" class="item-navegacion" title="Álbum"><i data-lucide="image"></i></a>
-            <a href="#sentimientos" class="item-navegacion" title="Lo Que Siento"><i data-lucide="flower-2"></i></a>
-            <a href="#musica" class="item-navegacion" title="Música"><i data-lucide="music"></i></a>
+            <a href="#historia" class="item-navegacion activo" title="Nuestra Historia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></a>
+            <a href="#recuerdos" class="item-navegacion" title="Momentos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg></a>
+            <a href="#album" class="item-navegacion" title="Álbum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></a>
+            <a href="#sentimientos" class="item-navegacion" title="Lo Que Siento"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"/><circle cx="12" cy="8" r="2"/><path d="M12 10v12"/><path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"/><path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"/></svg></a>
+            <a href="#musica" class="item-navegacion" title="Música"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></a>
         </nav>
 
         <section id="historia" class="seccion">
@@ -199,8 +198,8 @@
                 <div class="cuadricula-sentimientos">
                     <div class="contenedor-texto-sentimientos">
                         <div class="envoltura-icono-sentimientos">
-                            <i data-lucide="flower" class="corazon-sentimientos girasol-color"></i>
-                            <i data-lucide="flower-2" class="corazon-sentimientos tulipan-color"></i>
+                            <svg class="corazon-sentimientos girasol-color" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/><path d="M12 7.5V9"/><path d="M7.5 12H9"/><path d="M16.5 12H15"/><path d="M12 16.5V15"/><path d="m8 8 1.88 1.88"/><path d="M14.12 9.88 16 8"/><path d="m8 16 1.88-1.88"/><path d="M14.12 14.12 16 16"/></svg>
+                            <svg class="corazon-sentimientos tulipan-color" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"/><circle cx="12" cy="8" r="2"/><path d="M12 10v12"/><path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"/><path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"/></svg>
                         </div>
                         <h2 class="encabezado-seccion">¿Qué siento por ti? </h2>
                         <div class="texto-sentimientos">
@@ -243,7 +242,7 @@
         </section>
     </div>
 
-    <script src="app.js" defer></script>
+    <script src="app.js?v=3" defer></script>
 
 </body>
 </html>

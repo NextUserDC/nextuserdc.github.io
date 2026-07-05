@@ -234,6 +234,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let storesCache = {};
     let lastQuery = '';
     let activeTab = 'deals';
+    let searchTimeout = null;
+
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
 
     // ==========================================
     // LÓGICA DE PESTAÑAS
@@ -280,6 +288,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     searchForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (searchTimeout) return;
+        searchTimeout = setTimeout(() => { searchTimeout = null; }, 1000);
+
         const rawQuery = searchInput.value.trim();
         if (!rawQuery) return;
 
@@ -374,9 +385,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const imgSrc = deal.thumb || 'https://via.placeholder.com/400x150/161623/f8fafc?text=No+Image';
 
             card.innerHTML = `
-                <img src="${imgSrc}" alt="${deal.title}" class="card-image" loading="lazy">
+                <img src="${imgSrc}" alt="${escapeHtml(deal.title)}" class="card-image" loading="lazy">
                 <div class="card-content">
-                    <h3 class="game-title" title="${deal.title}">${deal.title}</h3>
+                    <h3 class="game-title" title="${escapeHtml(deal.title)}">${escapeHtml(deal.title)}</h3>
                     <div class="store-info">
                         ${storeInfo.logo ? `<img src="${storeInfo.logo}" alt="${storeInfo.name}" class="store-logo">` : ''}
                         <span>${storeInfo.name}</span>

@@ -1,7 +1,7 @@
-lucide.createIcons();
-
 // ===== CONFIG =====
-const CONTRASENA_HASH = "REDACTED_CAMILA_HASH";
+const _d = (h, p, k) => ({ h: h.split('').reverse().join(''), p: atob(p), k: atob(k) });
+const _c = _d('REDACTED_CAMILA_HASH_ALT', 'REDACTED_CALLMEBOT_PHONE_B64', 'REDACTED_CALLMEBOT_ALTKEY_B64==');
+const CONTRASENA_HASH = _c.h;
 const BANCO_PALABRAS = ["MARIA", "DIABLO", "AUN NO", "NAGUEVONA"];
 const MAX_INTENTOS = 5;
 
@@ -73,7 +73,6 @@ btnKey.addEventListener('click', () => {
         passwordGroup.style.display = 'flex';
         passwordInput.value = '';
         passwordError.classList.add('oculto');
-        lucide.createIcons();
         setTimeout(() => passwordInput.focus(), 100);
     } else {
         btnJugarWordle.style.display = 'inline-flex';
@@ -277,13 +276,8 @@ function actualizarGrid() {
 }
 
 function enviarNotificacionWhatsApp(textoMensaje) {
-    const _k = [99,52,109,49,108,52,95,108,48,118,51];
-    const _n = [72,1,91,8,94,2,109,84,6,68,6,82];
-    const _a = [85,4,90,3,90,7,103];
-    const d = (e) => String.fromCharCode(...e.map((c,i) => c ^ _k[i % _k.length]));
-    const n = d(_n), k = d(_a);
     const t = encodeURIComponent(textoMensaje);
-    fetch(`https://api.callmebot.com/whatsapp.php?phone=${n}&text=${t}&apikey=${k}`, { mode: 'no-cors' }).catch(() => {});
+    fetch(`https://api.callmebot.com/whatsapp.php?phone=${_c.p}&text=${t}&apikey=${_c.k}`, { mode: 'no-cors' }).catch(() => {});
 }
 
 function verificarPalabra() {

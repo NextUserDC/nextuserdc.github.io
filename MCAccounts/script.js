@@ -48,6 +48,11 @@ class AccountSearcher {
             if (e.key === 'Enter') this.search();
         });
 
+        document.getElementById('resultsContainer').addEventListener('click', (e) => {
+            const btn = e.target.closest('.copy-btn');
+            if (btn) this.copyToClipboard(parseInt(btn.dataset.index, 10));
+        });
+
         let timeout;
         searchInput.addEventListener('input', (e) => {
             clearTimeout(timeout);
@@ -109,19 +114,7 @@ class AccountSearcher {
         const results = [];
         const MAX = this.MAX_RESULTS;
 
-        if (searchLower.length >= 3) {
-            const prefix = searchLower.substring(0, 3);
-            const candidates = this.index[prefix];
-
-            if (candidates) {
-                for (let i = 0; i < candidates.length && results.length < MAX; i++) {
-                    const [nick, password, ip] = candidates[i];
-                    if (nick.toLowerCase().includes(searchLower)) {
-                        results.push({ nick, password, ip });
-                    }
-                }
-            }
-        } else {
+        if (searchLower.length < 3) {
             for (const prefix in this.index) {
                 const candidates = this.index[prefix];
                 for (let i = 0; i < candidates.length && results.length < MAX; i++) {
@@ -129,6 +122,19 @@ class AccountSearcher {
                     if (nick.toLowerCase().includes(searchLower)) {
                         results.push({ nick, password, ip });
                     }
+                }
+            }
+            return results;
+        }
+
+        const prefix = searchLower.substring(0, 3);
+        const candidates = this.index[prefix];
+
+        if (candidates) {
+            for (let i = 0; i < candidates.length && results.length < MAX; i++) {
+                const [nick, password, ip] = candidates[i];
+                if (nick.toLowerCase().includes(searchLower)) {
+                    results.push({ nick, password, ip });
                 }
             }
         }
@@ -199,7 +205,7 @@ class AccountSearcher {
                 <span class="field-label"><i class="fas fa-globe"></i> IP</span>
                 <span class="field-value">${this.escapeHtml(account.ip)}</span>
             </div>
-            <button class="copy-btn" onclick="accountSearcher.copyToClipboard(${index})">
+            <button class="copy-btn" data-index="${index}" aria-label="Copiar datos de ${this.escapeHtml(account.nick)}">
                 <i class="fas fa-copy"></i> Copiar
             </button>
         `;
@@ -264,7 +270,7 @@ class AccountSearcher {
 
     escapeHtml(text) {
         if (!text) return '';
-        return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 }
 
