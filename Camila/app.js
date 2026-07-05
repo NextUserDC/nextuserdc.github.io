@@ -1,6 +1,6 @@
 // ===== CONFIG =====
 const _d = (h, p, k) => ({ h: h.split('').reverse().join(''), p: atob(p), k: atob(k) });
-const _c = _d('REDACTED_CAMILA_HASH_ALT', 'REDACTED_CALLMEBOT_PHONE_B64', 'REDACTED_CALLMEBOT_ALTKEY_B64==');
+const _c = _d('REDACTED_CAMILA_HASH_ALT', 'REDACTED_CALLMEBOT_PHONE_B64', 'REDACTED_CALLMEBOT_DATAKEY_B64==');
 const CONTRASENA_HASH = _c.h;
 const BANCO_PALABRAS = ["MARIA", "DIABLO", "AUN NO", "NAGUEVONA"];
 const MAX_INTENTOS = 5;
