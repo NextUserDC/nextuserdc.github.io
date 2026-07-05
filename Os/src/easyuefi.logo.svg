@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+  <!-- L -->
+  <path d="M18 16V48H46"/>
+  <!-- H: Verticales de 24 a 46 para separar de la base en 48. Barra central en 36. -->
+  <path d="M32 24V46 M32 36H46 M46 24V46"/>
+</svg>
