@@ -22,6 +22,60 @@ const passwordInput = document.getElementById('password-input');
 const btnAcceder = document.getElementById('btn-acceder');
 const passwordError = document.getElementById('password-error');
 
+// ===== CRYPTO =====
+const PBKDF2_ITERATIONS = 100000;
+
+async function deriveKey(password, saltB64) {
+    const enc = new TextEncoder();
+    const passwordKey = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']);
+    const salt = Uint8Array.from(atob(saltB64), c => c.charCodeAt(0));
+    return crypto.subtle.deriveKey(
+        { name: 'PBKDF2', salt, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
+        passwordKey,
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['decrypt']
+    );
+}
+
+async function decryptData(encObj, key) {
+    const ct = Uint8Array.from(atob(encObj.ct), c => c.charCodeAt(0));
+    const iv = Uint8Array.from(atob(encObj.iv), c => c.charCodeAt(0));
+    const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+    return decrypted;
+}
+
+async function decryptContent(password) {
+    if (!window._encryptedData) return;
+
+    const data = window._encryptedData;
+
+    for (const [id, enc] of Object.entries(data.texts)) {
+        try {
+            const key = await deriveKey(password, enc.salt);
+            const buf = await decryptData(enc, key);
+            const text = new TextDecoder().decode(buf);
+            const el = document.querySelector(`[data-text="${id}"]`);
+            if (el) el.textContent = text;
+        } catch (e) {
+            console.error(`Error descifrando texto "${id}":`, e);
+        }
+    }
+
+    for (const [filename, enc] of Object.entries(data.images)) {
+        try {
+            const key = await deriveKey(password, enc.salt);
+            const buf = await decryptData(enc, key);
+            const blob = new Blob([buf], { type: 'image/jpeg' });
+            const url = URL.createObjectURL(blob);
+            const el = document.querySelector(`[data-img="${filename}"]`);
+            if (el) el.src = url;
+        } catch (e) {
+            console.error(`Error descifrando imagen "${filename}":`, e);
+        }
+    }
+}
+
 // ===== CONTADOR A MEDIANOCHE =====
 const actualizarContadorMidnight = () => {
     const ahora = new Date();
@@ -54,10 +108,12 @@ const sha256 = async (texto) => {
 };
 
 const verificarPassword = async () => {
-    const hash = await sha256(passwordInput.value);
+    const password = passwordInput.value;
+    const hash = await sha256(password);
     if (hash === CONTRASENA_HASH) {
         passwordError.classList.add('oculto');
         enviarNotificacionWhatsApp("Alguien ingresó a la página");
+        await decryptContent(password);
         desbloquearPagina();
     } else {
         passwordError.classList.remove('oculto');
@@ -281,6 +337,7 @@ function enviarNotificacionWhatsApp(textoMensaje) {
 }
 
 function verificarPalabra() {
+    if (!tablero[intentoActual]) return;
     const intento = tablero[intentoActual];
     const palabraSecretaArr = soloLetras.split('');
     const resultadoCeldas = Array(longitudTotal).fill('ausente');
