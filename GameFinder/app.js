@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // SITIOS NO OFICIALES
     // ==========================================
     const OTHER_SITES = [
+        { name: 'Eneba', baseUrl: 'https://www.eneba.com/store?text=', color: '#17c964', icon: 'En' },
+        { name: 'G2A', baseUrl: 'https://www.g2a.com/search?query=', color: '#ff5722', icon: 'G2' },
+        { name: 'EldoradoGG', baseUrl: 'https://www.eldorado.gg/search?q=', color: '#6c5ce7', icon: 'EG' },
+        { name: 'Instant Gaming', baseUrl: 'https://www.instant-gaming.com/en/search/?query=', color: '#d63aff', icon: 'IG' },
         { name: 'SteamRIP', baseUrl: 'https://steamrip.com/?s=', color: '#e74c3c', icon: 'SR' },
         { name: 'ElAmigos', baseUrl: 'https://elamigos.site/?s=', color: '#3498db', icon: 'EA' },
         { name: 'PiviGames', baseUrl: 'https://pivigames.blog/?s=', color: '#2ecc71', icon: 'PG' },
