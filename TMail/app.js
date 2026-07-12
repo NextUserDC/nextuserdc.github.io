@@ -16,7 +16,75 @@
     return (await hashPassword(pw)) === _hash;
   }
 
-  // ===== DOM =====
+  // ===== HTML SANITIZER (XSS Prevention) =====
+  function sanitizeHtml(html) {
+    if (!html) return '';
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const dangerousTags = ['script', 'iframe', 'object', 'embed', 'form', 'base', 'meta', 'link'];
+    const dangerousAttrs = /^on\w+$/i;
+    const dangerousProtocols = /^javascript:/i;
+
+    function walk(node) {
+      const children = Array.from(node.childNodes);
+      for (const child of children) {
+        if (child.nodeType === 1) {
+          const tag = child.tagName.toLowerCase();
+          if (dangerousTags.includes(tag)) {
+            child.remove();
+            continue;
+          }
+          for (const attr of Array.from(child.attributes)) {
+            if (dangerousAttrs.test(attr.name)) {
+              child.removeAttribute(attr.name);
+            } else if ((attr.name === 'href' || attr.name === 'src' || attr.name === 'action') && dangerousProtocols.test(attr.value)) {
+              child.removeAttribute(attr.name);
+            } else if (attr.name === 'style' && /expression\s*\(/i.test(attr.value)) {
+              child.removeAttribute(attr.name);
+            }
+          }
+          walk(child);
+        }
+      }
+    }
+    walk(doc.body);
+    return doc.body.innerHTML;
+  }
+
+  // ===== LOCALSTORAGE INTEGRITY =====
+  const _hmacKey = 'REDACTED_TMAIL_HMAC_KEY';
+
+  async function _computeHmac(value) {
+    const enc = new TextEncoder();
+    const key = await crypto.subtle.importKey('raw', enc.encode(_hmacKey), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+    const sig = await crypto.subtle.sign('HMAC', key, enc.encode(value));
+    return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function storeSecure(key, value) {
+    const hmac = await _computeHmac(value);
+    localStorage.setItem(key, value);
+    localStorage.setItem(key + '_h', hmac);
+  }
+
+  async function readSecure(key) {
+    const value = localStorage.getItem(key);
+    const storedHmac = localStorage.getItem(key + '_h');
+    if (!value || !storedHmac) return null;
+    const computed = await _computeHmac(value);
+    if (computed !== storedHmac) {
+      localStorage.removeItem(key);
+      localStorage.removeItem(key + '_h');
+      return null;
+    }
+    return value;
+  }
+
+  function clearSecure(key) {
+    localStorage.removeItem(key);
+    localStorage.removeItem(key + '_h');
+  }
+
+  // ===== DOM (Cached) =====
   const $ = id => document.getElementById(id);
   const loginGate = $('login-gate');
   const loginPassword = $('login-password');
@@ -74,6 +142,10 @@
   const composeStatus = $('compose-status');
   const composeTitle = $('compose-title');
 
+  // Cached frequently-queried elements
+  const customSection = document.querySelector('.custom-section');
+  const emailSection = document.querySelector('.email-section');
+
   let currentAddress = null;
   let currentSecret = null;
   let endAt = null;
@@ -83,6 +155,7 @@
   let isCustomMode = false;
   let selectedHours = 24;
   let tokenRevealed = false;
+  let isPaused = false;
 
   function show(el) { el.classList.remove('hidden'); }
   function hide(el) { el.classList.add('hidden'); }
@@ -151,12 +224,26 @@
     });
   });
 
-  // ===== API CALLS =====
+  // ===== API CALLS (with res.ok check + secret support) =====
   async function apiCall(method, path, body) {
     const opts = { method, headers: { 'Content-Type': 'application/json' } };
     if (body) opts.body = JSON.stringify(body);
     const res = await fetch(`${API}${path}`, opts);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+      return { code: res.status, error: err.error || 'Error del servidor', data: null };
+    }
     return res.json();
+  }
+
+  function inboxPath() {
+    const sep = currentSecret ? (currentAddress.includes('?') ? '&' : '?') : '';
+    return `/api/inbox/${encodeURIComponent(currentAddress)}${currentSecret ? `${sep}secret=${encodeURIComponent(currentSecret)}` : ''}`;
+  }
+
+  function messagePath(id) {
+    const sep = currentSecret ? '?' : '';
+    return `/api/message/${id}${currentSecret ? `${sep}secret=${encodeURIComponent(currentSecret)}` : ''}`;
   }
 
   // ===== TOKEN DISPLAY =====
@@ -207,18 +294,22 @@
         if (error === 'Address already in use') {
           generateBtn.textContent = 'Direccion en uso';
           setTimeout(() => { generateBtn.textContent = 'Generar direccion'; }, 2000);
+        } else {
+          generateBtn.textContent = error || 'Error';
+          setTimeout(() => { generateBtn.textContent = 'Generar direccion'; }, 2000);
         }
         return;
       }
 
       currentAddress = data.address;
       currentSecret = data.secret;
-      endAt = new Date(data.endAt).getTime();
+      const parsedEnd = new Date(data.endAt).getTime();
+      endAt = isNaN(parsedEnd) ? Date.now() + 24 * 3600000 : parsedEnd;
       tokenRevealed = true;
 
-      localStorage.setItem('tmail_address', currentAddress);
-      localStorage.setItem('tmail_secret', currentSecret);
-      localStorage.setItem('tmail_endAt', String(endAt));
+      await storeSecure('tmail_address', currentAddress);
+      await storeSecure('tmail_secret', currentSecret);
+      await storeSecure('tmail_endAt', String(endAt));
 
       emailText.textContent = currentAddress;
       updateTokenDisplay();
@@ -227,7 +318,7 @@
       show(emailTimer);
       show(actionBtns);
       hide(generateBtn);
-      hide(document.querySelector('.custom-section'));
+      hide(customSection);
       hide(connectLinkBtn);
       show(inboxSection);
       inboxEmpty.textContent = 'Esperando correos...';
@@ -238,20 +329,22 @@
       startPolling();
     } catch (e) {
       console.error('Generate error:', e);
+      generateBtn.textContent = 'Error de conexion';
+      setTimeout(() => { generateBtn.textContent = 'Generar direccion'; }, 2000);
     } finally {
       generateBtn.disabled = false;
     }
   }
 
   // ===== RESTORE SESSION =====
-  function restoreSession() {
-    const savedAddress = localStorage.getItem('tmail_address');
-    const savedSecret = localStorage.getItem('tmail_secret');
-    const savedEndAt = localStorage.getItem('tmail_endAt');
+  async function restoreSession() {
+    const savedAddress = await readSecure('tmail_address');
+    const savedSecret = await readSecure('tmail_secret');
+    const savedEndAt = await readSecure('tmail_endAt');
 
     if (savedAddress && savedSecret && savedEndAt) {
       const end = parseInt(savedEndAt, 10);
-      if (end > Date.now()) {
+      if (!isNaN(end) && end > Date.now()) {
         currentAddress = savedAddress;
         currentSecret = savedSecret;
         endAt = end;
@@ -262,7 +355,7 @@
         show(emailTimer);
         show(actionBtns);
         hide(generateBtn);
-        hide(document.querySelector('.custom-section'));
+        hide(customSection);
         hide(connectLinkBtn);
         show(inboxSection);
         startTimer();
@@ -281,13 +374,13 @@
     seenIds = new Set();
     if (pollInterval) clearInterval(pollInterval);
     if (timerInterval) clearInterval(timerInterval);
-    localStorage.removeItem('tmail_address');
-    localStorage.removeItem('tmail_secret');
-    localStorage.removeItem('tmail_endAt');
+    clearSecure('tmail_address');
+    clearSecure('tmail_secret');
+    clearSecure('tmail_endAt');
     hide(tokenDisplay);
     hide(actionBtns);
     show(generateBtn);
-    show(document.querySelector('.custom-section'));
+    show(customSection);
     show(connectLinkBtn);
     hide(inboxSection);
     hide(emailPlaceholder);
@@ -321,7 +414,7 @@
       String(s).padStart(2, '0');
   }
 
-  // ===== POLLING =====
+  // ===== POLLING (with visibility pause) =====
   function startPolling() {
     if (pollInterval) clearInterval(pollInterval);
     seenIds = new Set();
@@ -329,18 +422,38 @@
     pollInterval = setInterval(fetchInbox, 5000);
   }
 
+  function stopPolling() {
+    if (pollInterval) clearInterval(pollInterval);
+    pollInterval = null;
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (!currentAddress) return;
+    if (document.hidden) {
+      isPaused = true;
+      stopPolling();
+    } else if (isPaused) {
+      isPaused = false;
+      startPolling();
+    }
+  });
+
   async function fetchInbox() {
     if (!currentAddress) return;
     try {
-      const { data } = await apiCall('GET', `/api/inbox/${encodeURIComponent(currentAddress)}`);
+      const { data, error, code } = await apiCall('GET', inboxPath());
+      if (code !== 0 || !data) {
+        console.error('Inbox error:', error || 'Unknown');
+        return;
+      }
       const rows = data.rows || [];
 
-      // Update real expires_at from DB
+      // Validate and update real expires_at from DB
       if (data.expiresAt) {
         const realEnd = new Date(data.expiresAt).getTime();
-        if (realEnd !== endAt) {
+        if (!isNaN(realEnd) && realEnd !== endAt) {
           endAt = realEnd;
-          localStorage.setItem('tmail_endAt', String(endAt));
+          await storeSecure('tmail_endAt', String(endAt));
         }
       }
 
@@ -360,7 +473,6 @@
           item = document.createElement('div');
           item.id = `msg-${row.id}`;
 
-          // Direction indicator
           const dir = row.direction || 'inbox';
           const dirClass = dir === 'sent' ? 'inbox-item-sent' : (row.subject && row.subject.startsWith('Re:') ? 'inbox-item-reply' : 'inbox-item-inbox');
 
@@ -420,11 +532,14 @@
     composeStatus.classList.add('hidden');
   }
 
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   async function sendEmail() {
     const to = composeTo.value.trim();
     const subject = composeSubject.value.trim();
     const body = composeBody.value.trim();
     if (!to) { composeTo.focus(); return; }
+    if (!EMAIL_REGEX.test(to)) { composeStatus.textContent = 'Email invalido'; composeStatus.className = 'compose-status error'; composeStatus.classList.remove('hidden'); composeTo.focus(); return; }
     if (!subject) { composeSubject.focus(); return; }
     if (!body) { composeBody.focus(); return; }
 
@@ -461,15 +576,20 @@
 
   async function openMessage(id) {
     try {
-      const { data } = await apiCall('GET', `/api/message/${id}`);
+      const { data, error, code } = await apiCall('GET', messagePath(id));
+      if (code !== 0 || !data) {
+        console.error('Message error:', error || 'Unknown');
+        return;
+      }
       viewerFrom.innerHTML = `<img class="viewer-avatar" src="/favicon.svg" alt=""> <span>De: ${esc(data.from)}</span>`;
       viewerSubject.textContent = data.subject;
       viewerDate.textContent = formatDate(data.date);
-      viewerBody.innerHTML = data.html || (data.text ? esc(data.text).replace(/\n/g, '<br>') : '(sin contenido)');
+      // Sanitize HTML to prevent XSS
+      viewerBody.innerHTML = data.html ? sanitizeHtml(data.html) : (data.text ? esc(data.text).replace(/\n/g, '<br>') : '(sin contenido)');
       lastViewerFrom = data.from || '';
       lastViewerSubject = data.subject || '';
 
-      hide(document.querySelector('.email-section'));
+      hide(emailSection);
       hide(inboxSection);
       show(viewer);
     } catch (e) {
@@ -479,18 +599,25 @@
 
   function closeViewer() {
     hide(viewer);
-    show(document.querySelector('.email-section'));
+    show(emailSection);
     show(inboxSection);
   }
 
-  // ===== DELETE =====
+  // ===== DELETE (with error feedback) =====
   async function deleteMailbox() {
     if (!currentAddress || !currentSecret) return;
     if (!confirm('Eliminar este buzon y todos sus correos?')) return;
 
     try {
-      await apiCall('DELETE', `/api/mailbox/${encodeURIComponent(currentAddress)}`, { secret: currentSecret });
-    } catch (e) {}
+      const result = await apiCall('DELETE', `/api/mailbox/${encodeURIComponent(currentAddress)}`, { secret: currentSecret });
+      if (result.code !== 0) {
+        alert('Error al eliminar: ' + (result.error || 'Error desconocido'));
+        return;
+      }
+    } catch (e) {
+      alert('Error de conexion al eliminar');
+      return;
+    }
 
     clearSession();
     inboxList.innerHTML = '';
@@ -530,14 +657,20 @@
         return;
       }
 
+      if (!data || !data.address || !data.secret) {
+        connectError.textContent = 'Respuesta invalida del servidor';
+        return;
+      }
+
       currentAddress = data.address;
       currentSecret = data.secret;
-      endAt = new Date(data.expiresAt).getTime();
+      const parsedEnd = new Date(data.expiresAt).getTime();
+      endAt = isNaN(parsedEnd) ? Date.now() + 24 * 3600000 : parsedEnd;
       tokenRevealed = false;
 
-      localStorage.setItem('tmail_address', currentAddress);
-      localStorage.setItem('tmail_secret', currentSecret);
-      localStorage.setItem('tmail_endAt', String(endAt));
+      await storeSecure('tmail_address', currentAddress);
+      await storeSecure('tmail_secret', currentSecret);
+      await storeSecure('tmail_endAt', String(endAt));
 
       emailText.textContent = currentAddress;
       updateTokenDisplay();
@@ -546,7 +679,7 @@
       show(emailTimer);
       show(actionBtns);
       hide(generateBtn);
-      hide(document.querySelector('.custom-section'));
+      hide(customSection);
       hide(connectLinkBtn);
       show(inboxSection);
       generateBtn.textContent = 'Nueva direccion';
@@ -590,8 +723,11 @@
         return;
       }
 
-      endAt = new Date(data.expiresAt).getTime();
-      localStorage.setItem('tmail_endAt', String(endAt));
+      const parsedEnd = new Date(data.expiresAt).getTime();
+      if (!isNaN(parsedEnd)) {
+        endAt = parsedEnd;
+        await storeSecure('tmail_endAt', String(endAt));
+      }
       startTimer();
       closeExtendModal();
     } catch (e) {
@@ -620,6 +756,7 @@
   function formatDate(iso) {
     if (!iso) return '';
     const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
     return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
   }
 

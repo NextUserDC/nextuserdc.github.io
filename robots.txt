@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nextuser.lat/sitemap.xml

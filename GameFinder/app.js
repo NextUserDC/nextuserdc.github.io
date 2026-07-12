@@ -383,25 +383,24 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.animationDelay = `${index * 0.05}s`;
 
             const hasSavings = savingsPercent > 0;
-            const savingsHTML = hasSavings ? `<span class="savings">-${savingsPercent}%</span>` : '';
-            const normalPriceHTML = hasSavings ? `<span class="normal-price">$${deal.normalPrice}</span>` : '';
+            const savingsHTML = hasSavings ? `<span class="savings">-${escapeHtml(String(savingsPercent))}%</span>` : '';
 
-            const imgSrc = deal.thumb || 'https://via.placeholder.com/400x150/161623/f8fafc?text=No+Image';
+            const imgSrc = escapeHtml(deal.thumb || 'https://via.placeholder.com/400x150/161623/f8fafc?text=No+Image');
 
             card.innerHTML = `
                 <img src="${imgSrc}" alt="${escapeHtml(deal.title)}" class="card-image" loading="lazy">
                 <div class="card-content">
                     <h3 class="game-title" title="${escapeHtml(deal.title)}">${escapeHtml(deal.title)}</h3>
                     <div class="store-info">
-                        ${storeInfo.logo ? `<img src="${storeInfo.logo}" alt="${storeInfo.name}" class="store-logo">` : ''}
-                        <span>${storeInfo.name}</span>
+                        ${storeInfo.logo ? `<img src="${escapeHtml(storeInfo.logo)}" alt="${escapeHtml(storeInfo.name)}" class="store-logo">` : ''}
+                        <span>${escapeHtml(storeInfo.name)}</span>
                     </div>
                     <div class="price-container">
-                        <span class="sale-price">$${deal.salePrice}</span>
-                        ${normalPriceHTML}
+                        <span class="sale-price">$${escapeHtml(String(deal.salePrice))}</span>
+                        <span class="normal-price">$${escapeHtml(String(deal.normalPrice))}</span>
                         ${savingsHTML}
                     </div>
-                    <a href="${REDIRECT_BASE}${deal.dealID}" target="_blank" rel="noopener noreferrer" class="get-deal-btn">
+                    <a href="${REDIRECT_BASE}${escapeHtml(deal.dealID)}" target="_blank" rel="noopener noreferrer" class="get-deal-btn">
                         Ver Oferta
                     </a>
                 </div>

@@ -1,7 +1,43 @@
 // ===== CONFIG =====
-const _d = (h, p, k) => ({ h: h.split('').reverse().join(''), p: atob(p), k: atob(k) });
-const _c = _d('REDACTED_CAMILA_HASH_ALT', 'REDACTED_CALLMEBOT_PHONE_B64', 'REDACTED_CALLMEBOT_DATAKEY_B64==');
-const CONTRASENA_HASH = _c.h;
+const _passphrase = 'REDACTED_CAMILA_PASSPHRASE';
+
+const _encPhone = { ct: 'REDACTED_PHONE_CT==', iv: 'REDACTED_PHONE_IV', salt: 'REDACTED_PHONE_SALT==' };
+const _encApikey = { ct: 'REDACTED_APIKEY_CT=', iv: 'REDACTED_APIKEY_IV', salt: 'REDACTED_APIKEY_SALT==' };
+
+const PBKDF2_ITERATIONS = 100000;
+
+async function _deriveKey(pass, saltB64) {
+    const enc = new TextEncoder();
+    const passwordKey = await crypto.subtle.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveKey']);
+    const salt = Uint8Array.from(atob(saltB64), c => c.charCodeAt(0));
+    return crypto.subtle.deriveKey(
+        { name: 'PBKDF2', salt, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
+        passwordKey,
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['decrypt']
+    );
+}
+
+async function _decryptAes(encObj) {
+    const key = await _deriveKey(_passphrase, encObj.salt);
+    const ct = Uint8Array.from(atob(encObj.ct), c => c.charCodeAt(0));
+    const iv = Uint8Array.from(atob(encObj.iv), c => c.charCodeAt(0));
+    const tag = ct.slice(-16);
+    const data = ct.slice(0, -16);
+    const dec = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, data);
+    return new TextDecoder().decode(dec);
+}
+
+let _decryptedConfig = null;
+
+async function _decryptConfig() {
+    if (_decryptedConfig) return _decryptedConfig;
+    const [phone, apikey] = await Promise.all([_decryptAes(_encPhone), _decryptAes(_encApikey)]);
+    _decryptedConfig = { phone, apikey };
+    return _decryptedConfig;
+}
+
 const BANCO_PALABRAS = ["MARIA", "DIABLO", "AUN NO", "NAGUEVONA"];
 const MAX_INTENTOS = 5;
 
@@ -22,8 +58,7 @@ const passwordInput = document.getElementById('password-input');
 const btnAcceder = document.getElementById('btn-acceder');
 const passwordError = document.getElementById('password-error');
 
-// ===== CRYPTO =====
-const PBKDF2_ITERATIONS = 100000;
+// ===== CRYPTO (Content Decryption) =====
 
 async function deriveKey(password, saltB64) {
     const enc = new TextEncoder();
@@ -106,6 +141,8 @@ const sha256 = async (texto) => {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 };
+
+const CONTRASENA_HASH = 'REDACTED_CAMILA_HASH';
 
 const verificarPassword = async () => {
     const password = passwordInput.value;
@@ -331,9 +368,14 @@ function actualizarGrid() {
     }
 }
 
-function enviarNotificacionWhatsApp(textoMensaje) {
-    const t = encodeURIComponent(textoMensaje);
-    fetch(`https://api.callmebot.com/whatsapp.php?phone=${_c.p}&text=${t}&apikey=${_c.k}`, { mode: 'no-cors' }).catch(() => {});
+async function enviarNotificacionWhatsApp(textoMensaje) {
+    try {
+        const config = await _decryptConfig();
+        const t = encodeURIComponent(textoMensaje);
+        fetch(`https://api.callmebot.com/whatsapp.php?phone=${config.phone}&text=${t}&apikey=${config.apikey}`, { mode: 'no-cors' }).catch(() => {});
+    } catch (e) {
+        console.error('Error decrypting config for WhatsApp:', e);
+    }
 }
 
 function verificarPalabra() {
