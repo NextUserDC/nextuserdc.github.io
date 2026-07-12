@@ -305,7 +305,7 @@
       currentSecret = data.secret;
       const parsedEnd = new Date(data.endAt).getTime();
       endAt = isNaN(parsedEnd) ? Date.now() + 24 * 3600000 : parsedEnd;
-      tokenRevealed = true;
+      tokenRevealed = false;
 
       await storeSecure('tmail_address', currentAddress);
       await storeSecure('tmail_secret', currentSecret);
