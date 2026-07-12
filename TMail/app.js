@@ -155,6 +155,7 @@
   let isCustomMode = false;
   let selectedHours = 24;
   let tokenRevealed = false;
+  let currentIsCustom = false;
   let isPaused = false;
 
   function show(el) { el.classList.remove('hidden'); }
@@ -306,10 +307,12 @@
       const parsedEnd = new Date(data.endAt).getTime();
       endAt = isNaN(parsedEnd) ? Date.now() + 24 * 3600000 : parsedEnd;
       tokenRevealed = false;
+      currentIsCustom = isCustomMode && customName.value.trim().length > 0;
 
       await storeSecure('tmail_address', currentAddress);
       await storeSecure('tmail_secret', currentSecret);
       await storeSecure('tmail_endAt', String(endAt));
+      await storeSecure('tmail_custom', String(currentIsCustom));
 
       emailText.textContent = currentAddress;
       updateTokenDisplay();
@@ -317,6 +320,13 @@
       show(emailAddress);
       show(emailTimer);
       show(actionBtns);
+      if (currentIsCustom) {
+        show(tokenDisplay);
+        show(extendBtn);
+      } else {
+        hide(tokenDisplay);
+        hide(extendBtn);
+      }
       hide(generateBtn);
       hide(customSection);
       hide(connectLinkBtn);
@@ -341,6 +351,7 @@
     const savedAddress = await readSecure('tmail_address');
     const savedSecret = await readSecure('tmail_secret');
     const savedEndAt = await readSecure('tmail_endAt');
+    const savedCustom = await readSecure('tmail_custom');
 
     if (savedAddress && savedSecret && savedEndAt) {
       const end = parseInt(savedEndAt, 10);
@@ -348,12 +359,20 @@
         currentAddress = savedAddress;
         currentSecret = savedSecret;
         endAt = end;
+        currentIsCustom = savedCustom === 'true';
         emailText.textContent = currentAddress;
         updateTokenDisplay();
         hide(emailPlaceholder);
         show(emailAddress);
         show(emailTimer);
         show(actionBtns);
+        if (currentIsCustom) {
+          show(tokenDisplay);
+          show(extendBtn);
+        } else {
+          hide(tokenDisplay);
+          hide(extendBtn);
+        }
         hide(generateBtn);
         hide(customSection);
         hide(connectLinkBtn);
@@ -371,12 +390,14 @@
     currentSecret = null;
     endAt = null;
     tokenRevealed = false;
+    currentIsCustom = false;
     seenIds = new Set();
     if (pollInterval) clearInterval(pollInterval);
     if (timerInterval) clearInterval(timerInterval);
     clearSecure('tmail_address');
     clearSecure('tmail_secret');
     clearSecure('tmail_endAt');
+    clearSecure('tmail_custom');
     hide(tokenDisplay);
     hide(actionBtns);
     show(generateBtn);
@@ -687,10 +708,12 @@
       const parsedEnd = new Date(data.expiresAt).getTime();
       endAt = isNaN(parsedEnd) ? Date.now() + 24 * 3600000 : parsedEnd;
       tokenRevealed = false;
+      currentIsCustom = true;
 
       await storeSecure('tmail_address', currentAddress);
       await storeSecure('tmail_secret', currentSecret);
       await storeSecure('tmail_endAt', String(endAt));
+      await storeSecure('tmail_custom', 'true');
 
       emailText.textContent = currentAddress;
       updateTokenDisplay();
@@ -698,6 +721,8 @@
       show(emailAddress);
       show(emailTimer);
       show(actionBtns);
+      show(tokenDisplay);
+      show(extendBtn);
       hide(generateBtn);
       hide(customSection);
       hide(connectLinkBtn);
