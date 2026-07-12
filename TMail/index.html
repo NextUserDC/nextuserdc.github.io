@@ -46,6 +46,13 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             </button>
           </div>
+          <div class="token-display hidden" id="token-display">
+            <span class="token-label">Token:</span>
+            <span class="token-text" id="token-text"></span>
+            <button class="token-copy-btn" id="token-copy-btn" title="Copiar token">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
           <div class="email-timer hidden" id="email-timer">
             Expira en <span id="timer-text">24:00:00</span>
           </div>
@@ -58,13 +65,25 @@
           </div>
           <input type="text" class="custom-name-input" id="custom-name" placeholder="Escribe tu nombre" maxlength="64" autocomplete="off" spellcheck="false" pattern="[a-z0-9._-]+" title="Solo letras, numeros, puntos o guiones">
           <p class="email-suffix" id="email-suffix">@nextuser.lat</p>
+          <div class="duration-toggle hidden" id="duration-toggle">
+            <button class="dur-btn active" data-hours="24">24h</button>
+            <button class="dur-btn" data-hours="48">48h</button>
+            <button class="dur-btn" data-hours="72">72h</button>
+          </div>
         </div>
 
         <button class="generate-btn" id="generate-btn">Generar direccion</button>
-        <button class="delete-btn hidden" id="delete-btn">Eliminar buzón</button>
+        <div class="action-btns hidden" id="action-btns">
+          <button class="extend-btn" id="extend-btn">Extender tiempo</button>
+          <button class="delete-btn" id="delete-btn">Eliminar buzon</button>
+        </div>
+
+        <div class="connect-link">
+          <button class="connect-link-btn" id="connect-link-btn">Conectar correo existente</button>
+        </div>
       </section>
 
-      <section class="inbox-section" id="inbox-section">
+      <section class="inbox-section hidden" id="inbox-section">
         <div class="inbox-header">
           <h2>Bandeja de entrada</h2>
           <div class="inbox-actions">
@@ -80,6 +99,7 @@
         </div>
       </section>
 
+      <!-- COMPOSE MODAL -->
       <div class="compose-modal hidden" id="compose-modal">
         <div class="compose-card">
           <div class="compose-header">
@@ -116,6 +136,58 @@
         </div>
       </div>
 
+      <!-- CONNECT MODAL -->
+      <div class="connect-modal hidden" id="connect-modal">
+        <div class="connect-card">
+          <div class="connect-header">
+            <h3>Conectar con token existente</h3>
+            <button class="connect-close" id="connect-close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="connect-body">
+            <p>Pega el token de tu correo temporal para acceder desde este navegador.</p>
+            <input type="text" class="connect-token-input" id="connect-token-input" placeholder="Pegar token aqui..." autocomplete="off" spellcheck="false">
+            <div class="connect-error" id="connect-error"></div>
+          </div>
+          <div class="connect-footer">
+            <button class="connect-cancel-btn" id="connect-cancel-btn">Cancelar</button>
+            <button class="connect-submit-btn" id="connect-submit-btn">Conectar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXTEND MODAL -->
+      <div class="extend-modal hidden" id="extend-modal">
+        <div class="extend-card">
+          <div class="extend-header">
+            <h3>Extender tiempo</h3>
+            <button class="extend-close" id="extend-close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="extend-body">
+            <p>Selecciona por cuanto tiempo deseas extender:</p>
+            <div class="extend-options">
+              <button class="extend-option-btn" data-hours="24">
+                <span class="extend-hours">24h</span>
+                <span class="extend-label">1 dia</span>
+              </button>
+              <button class="extend-option-btn" data-hours="48">
+                <span class="extend-hours">48h</span>
+                <span class="extend-label">2 dias</span>
+              </button>
+              <button class="extend-option-btn" data-hours="72">
+                <span class="extend-hours">72h</span>
+                <span class="extend-label">3 dias</span>
+              </button>
+            </div>
+            <div class="extend-error" id="extend-error"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMAIL VIEWER -->
       <div class="email-viewer hidden" id="email-viewer">
         <div class="email-viewer-header">
           <button class="back-btn" id="back-btn">

@@ -13,57 +13,76 @@
   }
 
   async function verifyPassword(pw) {
-    const h = await hashPassword(pw);
-    return h === _hash;
+    return (await hashPassword(pw)) === _hash;
   }
 
   // ===== DOM =====
-  const loginGate = document.getElementById('login-gate');
-  const loginPassword = document.getElementById('login-password');
-  const loginBtn = document.getElementById('login-btn');
-  const loginError = document.getElementById('login-error');
-  const app = document.getElementById('app');
+  const $ = id => document.getElementById(id);
+  const loginGate = $('login-gate');
+  const loginPassword = $('login-password');
+  const loginBtn = $('login-btn');
+  const loginError = $('login-error');
+  const app = $('app');
 
-  const generateBtn = document.getElementById('generate-btn');
-  const deleteBtn = document.getElementById('delete-btn');
-  const emailPlaceholder = document.getElementById('email-placeholder');
-  const emailAddress = document.getElementById('email-address');
-  const emailText = document.getElementById('email-text');
-  const copyBtn = document.getElementById('copy-btn');
-  const emailTimer = document.getElementById('email-timer');
-  const timerText = document.getElementById('timer-text');
-  const modeRandom = document.getElementById('mode-random');
-  const modeCustom = document.getElementById('mode-custom');
-  const customName = document.getElementById('custom-name');
-  const emailSuffix = document.getElementById('email-suffix');
-  const inboxSection = document.getElementById('inbox-section');
-  const inboxList = document.getElementById('inbox-list');
-  const inboxEmpty = document.getElementById('inbox-empty');
-  const inboxCount = document.getElementById('inbox-count');
-  const viewer = document.getElementById('email-viewer');
-  const viewerDate = document.getElementById('viewer-date');
-  const viewerFrom = document.getElementById('viewer-from');
-  const viewerSubject = document.getElementById('viewer-subject');
-  const viewerBody = document.getElementById('viewer-body');
-  const backBtn = document.getElementById('back-btn');
-  const replyBtn = document.getElementById('reply-btn');
-  const composeBtn = document.getElementById('compose-btn');
-  const composeModal = document.getElementById('compose-modal');
-  const composeClose = document.getElementById('compose-close');
-  const composeFrom = document.getElementById('compose-from');
-  const composeTo = document.getElementById('compose-to');
-  const composeSubject = document.getElementById('compose-subject');
-  const composeBody = document.getElementById('compose-body');
-  const composeSend = document.getElementById('compose-send');
-  const composeStatus = document.getElementById('compose-status');
-  const composeTitle = document.getElementById('compose-title');
+  const generateBtn = $('generate-btn');
+  const deleteBtn = $('delete-btn');
+  const extendBtn = $('extend-btn');
+  const actionBtns = $('action-btns');
+  const emailPlaceholder = $('email-placeholder');
+  const emailAddress = $('email-address');
+  const emailText = $('email-text');
+  const copyBtn = $('copy-btn');
+  const emailTimer = $('email-timer');
+  const timerText = $('timer-text');
+  const modeRandom = $('mode-random');
+  const modeCustom = $('mode-custom');
+  const customName = $('custom-name');
+  const emailSuffix = $('email-suffix');
+  const durationToggle = $('duration-toggle');
+  const tokenDisplay = $('token-display');
+  const tokenText = $('token-text');
+  const tokenCopyBtn = $('token-copy-btn');
+  const connectLinkBtn = $('connect-link-btn');
+  const connectModal = $('connect-modal');
+  const connectClose = $('connect-close');
+  const connectTokenInput = $('connect-token-input');
+  const connectError = $('connect-error');
+  const connectSubmitBtn = $('connect-submit-btn');
+  const connectCancelBtn = $('connect-cancel-btn');
+  const extendModal = $('extend-modal');
+  const extendClose = $('extend-close');
+  const extendError = $('extend-error');
+  const inboxSection = $('inbox-section');
+  const inboxList = $('inbox-list');
+  const inboxEmpty = $('inbox-empty');
+  const inboxCount = $('inbox-count');
+  const viewer = $('email-viewer');
+  const viewerDate = $('viewer-date');
+  const viewerFrom = $('viewer-from');
+  const viewerSubject = $('viewer-subject');
+  const viewerBody = $('viewer-body');
+  const backBtn = $('back-btn');
+  const replyBtn = $('reply-btn');
+  const composeBtn = $('compose-btn');
+  const composeModal = $('compose-modal');
+  const composeClose = $('compose-close');
+  const composeFrom = $('compose-from');
+  const composeTo = $('compose-to');
+  const composeSubject = $('compose-subject');
+  const composeBody = $('compose-body');
+  const composeSend = $('compose-send');
+  const composeStatus = $('compose-status');
+  const composeTitle = $('compose-title');
 
   let currentAddress = null;
+  let currentSecret = null;
   let endAt = null;
   let pollInterval = null;
   let timerInterval = null;
   let seenIds = new Set();
   let isCustomMode = false;
+  let selectedHours = 24;
+  let tokenRevealed = false;
 
   function show(el) { el.classList.remove('hidden'); }
   function hide(el) { el.classList.add('hidden'); }
@@ -72,10 +91,8 @@
   async function doLogin() {
     const pw = loginPassword.value.trim();
     if (!pw) return;
-
     loginBtn.disabled = true;
     loginBtn.textContent = '...';
-
     const ok = await verifyPassword(pw);
     if (ok) {
       localStorage.setItem('tmail_auth', String(Date.now() + 15 * 60 * 1000));
@@ -87,7 +104,6 @@
       loginPassword.value = '';
       loginPassword.focus();
     }
-
     loginBtn.disabled = false;
     loginBtn.textContent = 'Entrar';
   }
@@ -112,6 +128,7 @@
     modeCustom.classList.remove('active');
     customName.classList.remove('visible');
     emailSuffix.classList.remove('visible');
+    durationToggle.classList.remove('visible');
     customName.value = '';
   });
 
@@ -121,7 +138,17 @@
     modeRandom.classList.remove('active');
     customName.classList.add('visible');
     emailSuffix.classList.add('visible');
+    durationToggle.classList.add('visible');
     customName.focus();
+  });
+
+  // ===== DURATION TOGGLE =====
+  durationToggle.querySelectorAll('.dur-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      durationToggle.querySelectorAll('.dur-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedHours = parseInt(btn.dataset.hours, 10);
+    });
   });
 
   // ===== API CALLS =====
@@ -132,6 +159,36 @@
     return res.json();
   }
 
+  // ===== TOKEN DISPLAY =====
+  function maskToken(secret) {
+    if (!secret || secret.length < 10) return secret;
+    return secret.slice(0, 6) + '...' + secret.slice(-4);
+  }
+
+  function updateTokenDisplay() {
+    if (currentSecret) {
+      tokenText.textContent = tokenRevealed ? currentSecret : maskToken(currentSecret);
+      show(tokenDisplay);
+    } else {
+      hide(tokenDisplay);
+    }
+  }
+
+  tokenText.addEventListener('click', () => {
+    tokenRevealed = !tokenRevealed;
+    updateTokenDisplay();
+  });
+
+  tokenCopyBtn.addEventListener('click', () => {
+    if (!currentSecret) return;
+    navigator.clipboard.writeText(currentSecret).then(() => {
+      tokenCopyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+      setTimeout(() => {
+        tokenCopyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+      }, 1500);
+    });
+  });
+
   // ===== GENERATE =====
   async function generate() {
     generateBtn.disabled = true;
@@ -141,24 +198,41 @@
       let payload = {};
       if (isCustomMode && customName.value.trim()) {
         payload.username = customName.value.trim();
+        payload.expires_hours = selectedHours;
       }
 
-      const { data } = await apiCall('POST', '/api/generate', payload);
+      const { code, data, error } = await apiCall('POST', '/api/generate', payload);
+
+      if (code !== 0) {
+        if (error === 'Address already in use') {
+          generateBtn.textContent = 'Direccion en uso';
+          setTimeout(() => { generateBtn.textContent = 'Generar direccion'; }, 2000);
+        }
+        return;
+      }
+
       currentAddress = data.address;
+      currentSecret = data.secret;
       endAt = new Date(data.endAt).getTime();
+      tokenRevealed = true;
 
       localStorage.setItem('tmail_address', currentAddress);
+      localStorage.setItem('tmail_secret', currentSecret);
       localStorage.setItem('tmail_endAt', String(endAt));
 
       emailText.textContent = currentAddress;
+      updateTokenDisplay();
       hide(emailPlaceholder);
       show(emailAddress);
       show(emailTimer);
-      show(deleteBtn);
+      show(actionBtns);
+      hide(generateBtn);
+      hide(document.querySelector('.custom-section'));
+      hide(connectLinkBtn);
+      show(inboxSection);
       inboxEmpty.textContent = 'Esperando correos...';
       inboxList.innerHTML = '';
       inboxCount.textContent = '0';
-      generateBtn.textContent = 'Nueva direccion';
 
       startTimer();
       startPolling();
@@ -172,21 +246,25 @@
   // ===== RESTORE SESSION =====
   function restoreSession() {
     const savedAddress = localStorage.getItem('tmail_address');
+    const savedSecret = localStorage.getItem('tmail_secret');
     const savedEndAt = localStorage.getItem('tmail_endAt');
 
-    if (savedAddress && savedEndAt) {
-      const now = Date.now();
+    if (savedAddress && savedSecret && savedEndAt) {
       const end = parseInt(savedEndAt, 10);
-
-      if (end > now) {
+      if (end > Date.now()) {
         currentAddress = savedAddress;
+        currentSecret = savedSecret;
         endAt = end;
         emailText.textContent = currentAddress;
+        updateTokenDisplay();
         hide(emailPlaceholder);
         show(emailAddress);
         show(emailTimer);
-        show(deleteBtn);
-        generateBtn.textContent = 'Nueva direccion';
+        show(actionBtns);
+        hide(generateBtn);
+        hide(document.querySelector('.custom-section'));
+        hide(connectLinkBtn);
+        show(inboxSection);
         startTimer();
         startPolling();
         return;
@@ -197,12 +275,25 @@
 
   function clearSession() {
     currentAddress = null;
+    currentSecret = null;
     endAt = null;
+    tokenRevealed = false;
     seenIds = new Set();
     if (pollInterval) clearInterval(pollInterval);
     if (timerInterval) clearInterval(timerInterval);
     localStorage.removeItem('tmail_address');
+    localStorage.removeItem('tmail_secret');
     localStorage.removeItem('tmail_endAt');
+    hide(tokenDisplay);
+    hide(actionBtns);
+    show(generateBtn);
+    show(document.querySelector('.custom-section'));
+    show(connectLinkBtn);
+    hide(inboxSection);
+    hide(emailPlaceholder);
+    show(emailPlaceholder);
+    hide(emailAddress);
+    hide(emailTimer);
   }
 
   // ===== TIMER =====
@@ -218,10 +309,6 @@
       timerText.textContent = '00:00:00';
       clearInterval(timerInterval);
       clearSession();
-      show(emailPlaceholder);
-      hide(emailAddress);
-      hide(emailTimer);
-      hide(deleteBtn);
       generateBtn.textContent = 'Generar direccion';
       return;
     }
@@ -248,6 +335,15 @@
       const { data } = await apiCall('GET', `/api/inbox/${encodeURIComponent(currentAddress)}`);
       const rows = data.rows || [];
 
+      // Update real expires_at from DB
+      if (data.expiresAt) {
+        const realEnd = new Date(data.expiresAt).getTime();
+        if (realEnd !== endAt) {
+          endAt = realEnd;
+          localStorage.setItem('tmail_endAt', String(endAt));
+        }
+      }
+
       inboxCount.textContent = rows.length;
 
       if (rows.length === 0) {
@@ -263,10 +359,23 @@
         if (!item) {
           item = document.createElement('div');
           item.id = `msg-${row.id}`;
-          item.className = 'inbox-item';
+
+          // Direction indicator
+          const dir = row.direction || 'inbox';
+          const dirClass = dir === 'sent' ? 'inbox-item-sent' : (row.subject && row.subject.startsWith('Re:') ? 'inbox-item-reply' : 'inbox-item-inbox');
+
+          item.className = `inbox-item ${dirClass}`;
           item.style.animationDelay = `${i * 0.05}s`;
+
+          const dirIcon = dir === 'sent'
+            ? '<svg class="inbox-dir-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>'
+            : '<svg class="inbox-dir-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>';
+
           item.innerHTML = `
-            <img class="inbox-item-avatar" src="/favicon.svg" alt="">
+            <div class="inbox-item-avatar-wrap">
+              <img class="inbox-item-avatar" src="/favicon.svg" alt="">
+              <span class="inbox-dir-badge">${dirIcon}</span>
+            </div>
             <div class="inbox-item-content">
               <span class="inbox-item-from">${esc(row.from)}</span>
               <span class="inbox-item-subject">${esc(row.subject)}</span>
@@ -315,7 +424,6 @@
     const to = composeTo.value.trim();
     const subject = composeSubject.value.trim();
     const body = composeBody.value.trim();
-
     if (!to) { composeTo.focus(); return; }
     if (!subject) { composeSubject.focus(); return; }
     if (!body) { composeBody.focus(); return; }
@@ -325,20 +433,16 @@
     composeStatus.classList.add('hidden');
 
     try {
-      const payload = {
-        from: currentAddress,
-        to,
-        subject,
-        text: body,
-      };
-
-      const { code, error } = await apiCall('POST', '/api/send', payload);
+      const { code, error } = await apiCall('POST', '/api/send', {
+        from: currentAddress, to, subject, text: body,
+      });
 
       if (code === 0) {
         composeStatus.textContent = 'Correo enviado exitosamente';
         composeStatus.className = 'compose-status success';
         composeBody.value = '';
         setTimeout(closeCompose, 2000);
+        setTimeout(fetchInbox, 1000);
       } else {
         composeStatus.textContent = error || 'Error al enviar';
         composeStatus.className = 'compose-status error';
@@ -366,6 +470,7 @@
       lastViewerSubject = data.subject || '';
 
       hide(document.querySelector('.email-section'));
+      hide(inboxSection);
       show(viewer);
     } catch (e) {
       console.error('Message error:', e);
@@ -375,15 +480,16 @@
   function closeViewer() {
     hide(viewer);
     show(document.querySelector('.email-section'));
+    show(inboxSection);
   }
 
   // ===== DELETE =====
   async function deleteMailbox() {
-    if (!currentAddress) return;
+    if (!currentAddress || !currentSecret) return;
     if (!confirm('Eliminar este buzon y todos sus correos?')) return;
 
     try {
-      await apiCall('DELETE', `/api/mailbox/${encodeURIComponent(currentAddress)}`);
+      await apiCall('DELETE', `/api/mailbox/${encodeURIComponent(currentAddress)}`, { secret: currentSecret });
     } catch (e) {}
 
     clearSession();
@@ -391,11 +497,106 @@
     inboxCount.textContent = '0';
     inboxEmpty.textContent = 'Genera una direccion para comenzar';
     emailText.textContent = '';
-    show(emailPlaceholder);
-    hide(emailAddress);
-    hide(emailTimer);
-    hide(deleteBtn);
     generateBtn.textContent = 'Generar direccion';
+  }
+
+  // ===== CONNECT =====
+  function openConnectModal() {
+    connectTokenInput.value = '';
+    connectError.textContent = '';
+    show(connectModal);
+    connectTokenInput.focus();
+  }
+
+  function closeConnectModal() {
+    hide(connectModal);
+    connectTokenInput.value = '';
+    connectError.textContent = '';
+  }
+
+  async function connectWithToken() {
+    const token = connectTokenInput.value.trim();
+    if (!token) { connectError.textContent = 'Ingresa un token valido'; return; }
+
+    connectSubmitBtn.disabled = true;
+    connectSubmitBtn.textContent = 'Conectando...';
+    connectError.textContent = '';
+
+    try {
+      const { code, data, error } = await apiCall('POST', '/api/connect', { secret: token });
+
+      if (code !== 0) {
+        connectError.textContent = error || 'Token invalido';
+        return;
+      }
+
+      currentAddress = data.address;
+      currentSecret = data.secret;
+      endAt = new Date(data.expiresAt).getTime();
+      tokenRevealed = false;
+
+      localStorage.setItem('tmail_address', currentAddress);
+      localStorage.setItem('tmail_secret', currentSecret);
+      localStorage.setItem('tmail_endAt', String(endAt));
+
+      emailText.textContent = currentAddress;
+      updateTokenDisplay();
+      hide(emailPlaceholder);
+      show(emailAddress);
+      show(emailTimer);
+      show(actionBtns);
+      hide(generateBtn);
+      hide(document.querySelector('.custom-section'));
+      hide(connectLinkBtn);
+      show(inboxSection);
+      generateBtn.textContent = 'Nueva direccion';
+      inboxEmpty.textContent = 'Esperando correos...';
+      inboxList.innerHTML = '';
+      inboxCount.textContent = '0';
+
+      startTimer();
+      startPolling();
+      closeConnectModal();
+    } catch (e) {
+      connectError.textContent = 'Error de conexion';
+    } finally {
+      connectSubmitBtn.disabled = false;
+      connectSubmitBtn.textContent = 'Conectar';
+    }
+  }
+
+  // ===== EXTEND =====
+  function openExtendModal() {
+    extendError.textContent = '';
+    show(extendModal);
+  }
+
+  function closeExtendModal() {
+    hide(extendModal);
+  }
+
+  async function extendMailbox(hours) {
+    if (!currentAddress || !currentSecret) return;
+
+    try {
+      const { code, data, error } = await apiCall('POST', '/api/extend', {
+        address: currentAddress,
+        secret: currentSecret,
+        hours,
+      });
+
+      if (code !== 0) {
+        extendError.textContent = error || 'Error al extender';
+        return;
+      }
+
+      endAt = new Date(data.expiresAt).getTime();
+      localStorage.setItem('tmail_endAt', String(endAt));
+      startTimer();
+      closeExtendModal();
+    } catch (e) {
+      extendError.textContent = 'Error de conexion';
+    }
   }
 
   // ===== COPY =====
@@ -426,6 +627,7 @@
   generateBtn.addEventListener('click', generate);
   copyBtn.addEventListener('click', copyEmail);
   deleteBtn.addEventListener('click', deleteMailbox);
+  extendBtn.addEventListener('click', openExtendModal);
   backBtn.addEventListener('click', closeViewer);
   composeBtn.addEventListener('click', () => openCompose());
   composeClose.addEventListener('click', closeCompose);
@@ -444,5 +646,22 @@
 
   customName.addEventListener('input', () => {
     customName.value = customName.value.toLowerCase().replace(/[^a-z0-9._-]/g, '');
+  });
+
+  // Connect modal
+  connectLinkBtn.addEventListener('click', openConnectModal);
+  connectClose.addEventListener('click', closeConnectModal);
+  connectCancelBtn.addEventListener('click', closeConnectModal);
+  connectSubmitBtn.addEventListener('click', connectWithToken);
+  connectTokenInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') connectWithToken(); });
+  connectModal.addEventListener('click', (e) => { if (e.target === connectModal) closeConnectModal(); });
+
+  // Extend modal
+  extendClose.addEventListener('click', closeExtendModal);
+  extendModal.addEventListener('click', (e) => { if (e.target === extendModal) closeExtendModal(); });
+  extendModal.querySelectorAll('.extend-option-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      extendMailbox(parseInt(btn.dataset.hours, 10));
+    });
   });
 })();
