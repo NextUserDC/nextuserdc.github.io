@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Temp Mail: genera direcciones de correo temporales gratis para proteger tu privacidad.">
+  <title>Temp Mail</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a78bfa'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/></svg>">
+</head>
+
+<body>
+  <div class="background-animation"></div>
+
+  <!-- LOGIN GATE -->
+  <div class="login-gate" id="login-gate">
+    <div class="login-card">
+      <h2>Temp Mail</h2>
+      <p>Acceso restringido. Ingresa la contraseña para continuar.</p>
+      <div class="login-input-group">
+        <input type="password" class="login-input" id="login-password" placeholder="Contraseña" autocomplete="off">
+        <button class="login-btn" id="login-btn">Entrar</button>
+      </div>
+      <div class="login-error" id="login-error"></div>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div class="container hidden" id="app">
+    <header>
+      <h1 class="logo">Temp<span>Mail</span></h1>
+      <p class="subtitle">Direcciones de correo temporales para proteger tu privacidad</p>
+    </header>
+
+    <main>
+      <section class="email-section">
+        <div class="email-display" id="email-display">
+          <p class="email-placeholder" id="email-placeholder">Genera una direccion para comenzar</p>
+          <div class="email-address hidden" id="email-address">
+            <span id="email-text"></span>
+            <button class="copy-btn" id="copy-btn" title="Copiar al portapapeles">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
+          <div class="email-timer hidden" id="email-timer">
+            Expira en <span id="timer-text">24:00:00</span>
+          </div>
+        </div>
+
+        <div class="custom-section">
+          <div class="name-mode-toggle">
+            <button class="mode-btn active" id="mode-random">Aleatorio</button>
+            <button class="mode-btn" id="mode-custom">Personalizado</button>
+          </div>
+          <input type="text" class="custom-name-input" id="custom-name" placeholder="Escribe tu nombre" maxlength="64" autocomplete="off" spellcheck="false" pattern="[a-z0-9._-]+" title="Solo letras, numeros, puntos o guiones">
+          <p class="email-suffix" id="email-suffix">@nextuser.lat</p>
+        </div>
+
+        <button class="generate-btn" id="generate-btn">Generar direccion</button>
+        <button class="delete-btn hidden" id="delete-btn">Eliminar buzón</button>
+      </section>
+
+      <section class="inbox-section" id="inbox-section">
+        <div class="inbox-header">
+          <h2>Bandeja de entrada</h2>
+          <div class="inbox-actions">
+            <button class="compose-btn" id="compose-btn" title="Redactar correo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              Redactar
+            </button>
+            <span class="inbox-count" id="inbox-count">0</span>
+          </div>
+        </div>
+        <div class="inbox-list" id="inbox-list">
+          <p class="inbox-empty" id="inbox-empty">Esperando correos...</p>
+        </div>
+      </section>
+
+      <div class="compose-modal hidden" id="compose-modal">
+        <div class="compose-card">
+          <div class="compose-header">
+            <h3 id="compose-title">Redactar correo</h3>
+            <button class="compose-close" id="compose-close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="compose-fields">
+            <div class="compose-field">
+              <label>De:</label>
+              <span class="compose-from" id="compose-from"></span>
+            </div>
+            <div class="compose-field">
+              <label for="compose-to">Para:</label>
+              <input type="email" id="compose-to" placeholder="destinatario@ejemplo.com" autocomplete="off">
+            </div>
+            <div class="compose-field">
+              <label for="compose-subject">Asunto:</label>
+              <input type="text" id="compose-subject" placeholder="Asunto del correo" autocomplete="off">
+            </div>
+            <div class="compose-field compose-body-field">
+              <label for="compose-body">Mensaje:</label>
+              <textarea id="compose-body" placeholder="Escribe tu mensaje..." rows="8"></textarea>
+            </div>
+          </div>
+          <div class="compose-footer">
+            <span class="compose-status hidden" id="compose-status"></span>
+            <button class="compose-send-btn" id="compose-send">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Enviar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="email-viewer hidden" id="email-viewer">
+        <div class="email-viewer-header">
+          <button class="back-btn" id="back-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            Volver
+          </button>
+          <button class="reply-btn" id="reply-btn" title="Responder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
+            Responder
+          </button>
+          <span class="email-viewer-date" id="viewer-date"></span>
+        </div>
+        <div class="email-viewer-from" id="viewer-from"></div>
+        <div class="email-viewer-subject" id="viewer-subject"></div>
+        <div class="email-viewer-body" id="viewer-body"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
