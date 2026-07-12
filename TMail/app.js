@@ -443,7 +443,16 @@
     try {
       const { data, error, code } = await apiCall('GET', inboxPath());
       if (code !== 0 || !data) {
-        console.error('Inbox error:', error || 'Unknown');
+        // Mailbox doesn't exist in DB (cleared or expired) — clear local session
+        if (code !== 0) {
+          console.warn('Inbox error, clearing session:', error);
+          clearSession();
+          inboxList.innerHTML = '';
+          inboxCount.textContent = '0';
+          inboxEmpty.textContent = 'Genera una direccion para comenzar';
+          emailText.textContent = '';
+          generateBtn.textContent = 'Generar direccion';
+        }
         return;
       }
       const rows = data.rows || [];
@@ -611,10 +620,21 @@
     try {
       const result = await apiCall('DELETE', `/api/mailbox/${encodeURIComponent(currentAddress)}`, { secret: currentSecret });
       if (result.code !== 0) {
+        // Mailbox already gone from DB — clear local session anyway
+        if (result.error && result.error.includes('not found')) {
+          clearSession();
+          inboxList.innerHTML = '';
+          inboxCount.textContent = '0';
+          inboxEmpty.textContent = 'Genera una direccion para comenzar';
+          emailText.textContent = '';
+          generateBtn.textContent = 'Generar direccion';
+          return;
+        }
         alert('Error al eliminar: ' + (result.error || 'Error desconocido'));
         return;
       }
     } catch (e) {
+      // Connection error — still clear if user wants
       alert('Error de conexion al eliminar');
       return;
     }

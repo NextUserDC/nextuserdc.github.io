@@ -372,7 +372,8 @@ async function enviarNotificacionWhatsApp(textoMensaje) {
     try {
         const config = await _decryptConfig();
         const t = encodeURIComponent(textoMensaje);
-        fetch(`https://api.callmebot.com/whatsapp.php?phone=${config.phone}&text=${t}&apikey=${config.apikey}`, { mode: 'no-cors' }).catch(() => {});
+        const url = `https://api.callmebot.com/whatsapp.php?phone=${config.phone}&text=${t}&apikey=${config.apikey}`;
+        new Image().src = url;
     } catch (e) {
         console.error('Error decrypting config for WhatsApp:', e);
     }
