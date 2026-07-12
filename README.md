@@ -42,20 +42,6 @@ Página web de un restaurante venezolano hecha exclusivamente para un trabajo de
 - 🎨 CSS Grid, Flexbox, Glassmorphism
 - 🖼️ SVG personalizados + imágenes optimizadas
 
-## 📁 Estructura
-
-```
-├── 📄 index.html          # Página principal / hub de proyectos
-├── 🎮 MCAccounts/         # Buscador de cuentas Minecraft
-├── 🕹️ GameFinder/         # Buscador de ofertas de videojuegos
-├── 💕 Camila/             # Página personal dedicada
-├── 📬 TMail/              # Servicio de correos temporales
-├── 💻 Os/                 # Directorio de sistemas operativos
-│   └── 🎨 src/            # Logos SVG de cada SO
-└── 🍽️ Mesa58/             # Sitio de restaurante
-    └── 🖼️ imgs/           # Imágenes del menú
-```
-
 ## 📬 Contacto
 
 Formulario de contacto en [nextuser.lat](https://nextuser.lat)
