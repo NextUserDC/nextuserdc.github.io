@@ -10,7 +10,7 @@ Sitio web estático alojado en GitHub Pages que alberga una colección de proyec
 
 ### 📬 TMail — Correo Temporal
 
-Servicio de correos temporales con dominio `@nextuser.lat`. Generación de direcciones personalizadas o aleatorias, bandeja de entrada en tiempo real, envío de correos, conexión multi-dispositivo mediante token y extensión de tiempo (24/48/72h). Protegido por contraseña verificada server-side via D1.
+Servicio de correos temporales con dominio `@nextuser.lat`. Generación de direcciones personalizadas o aleatorias, bandeja de entrada en tiempo real, envío de correos, conexión multi-dispositivo mediante token y extensión de tiempo (24/48/72h). Incluye NCloud (almacenamiento en la nube) integrado como vista interna.
 
 **Funcionalidades:**
 - Generación de direcciones personalizadas o aleatorias
@@ -19,22 +19,21 @@ Servicio de correos temporales con dominio `@nextuser.lat`. Generación de direc
 - Conexión desde otro dispositivo con token secreto
 - Extensión de tiempo (24/48/72h)
 - Prevención de duplicados
-- Protección XSS server-side
-- HMAC en localStorage para integridad de datos
+- NCloud: subida drag & drop, carpetas, links compartidos temporales, barra de espacio
+- Solo visible para direcciones personalizadas
 - Colores diferenciados: azul (recibidos), naranja (enviados), morado (respuestas)
 
 ### ☁️ NCloud — Almacenamiento en la Nube
 
-Almacenamiento de archivos integrado como vista dentro de TMail (sin páginas separadas). Usa Cloudflare R2 como backend.
+Almacenamiento de archivos integrado como vista dentro de TMail. Permite gestionar archivos desde cualquier dispositivo con la misma sesión.
 
 **Funcionalidades:**
 - Subida de archivos (drag & drop o selector)
 - Carpetas y navegación por breadcrumb
 - Espacio usado con barra de progreso
-- Links temporales compartidos (presigned URLs, 60min, revocables)
+- Links temporales compartidos (60min, revocables)
 - Eliminación de archivos y carpetas
 - Autenticación vinculada al buzón de TMail
-- Solo visible para direcciones personalizadas
 
 ### 🎮 MCAccounts
 
@@ -46,7 +45,7 @@ Motor de búsqueda de ofertas de videojuegos en tiendas legales usando la API de
 
 ### 💕 Camila
 
-Página web personal dedicada con cuenta regresiva, mini-juego Wordle como mecanismo de desbloqueo, álbum de fotos cifrado con AES-256-GCM y lista de Spotify embebida. Contraseña verificada server-side via D1.
+Página web personal dedicada con cuenta regresiva, mini-juego Wordle como mecanismo de desbloqueo, álbum de fotos cifrado con AES-256-GCM y lista de Spotify embebida.
 
 ### 💻 Sistemas Operativos
 
@@ -60,7 +59,4 @@ Página web de un restaurante venezolano con menú completo, sección de cultura
 
 - **Frontend:** HTML5 / CSS3 / JavaScript vanilla
 - **Hosting:** GitHub Pages con dominio personalizado (`nextuser.lat`)
-- **API/Backend:** Cloudflare Workers + D1 + R2
-- **Email:** Resend API (envío de correos)
-- **Seguridad:** SHA-256 server-side, AES-256-GCM (Camila), HMAC localStorage, sanitización XSS, CORS estricto
 - **Diseño:** Glassmorphism, CSS Grid, Flexbox, responsive, SVG personalizados
