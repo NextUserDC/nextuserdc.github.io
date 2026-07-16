@@ -323,9 +323,12 @@
       if (currentIsCustom) {
         show(tokenDisplay);
         show(extendBtn);
+        show(headerNav);
       } else {
         hide(tokenDisplay);
         hide(extendBtn);
+        hide(headerNav);
+        hideNCloud();
       }
       hide(generateBtn);
       hide(customSection);
@@ -369,9 +372,12 @@
         if (currentIsCustom) {
           show(tokenDisplay);
           show(extendBtn);
+          show(headerNav);
         } else {
           hide(tokenDisplay);
           hide(extendBtn);
+          hide(headerNav);
+          hideNCloud();
         }
         hide(generateBtn);
         hide(customSection);
@@ -408,6 +414,10 @@
     show(emailPlaceholder);
     hide(emailAddress);
     hide(emailTimer);
+    hide(headerNav);
+    hide(ncloudView);
+    navTmail.classList.add('active');
+    navNcloud.classList.remove('active');
   }
 
   // ===== TIMER =====
@@ -570,7 +580,6 @@
     const body = composeBody.value.trim();
     if (!to) { composeTo.focus(); return; }
     if (!EMAIL_REGEX.test(to)) { composeStatus.textContent = 'Email invalido'; composeStatus.className = 'compose-status error'; composeStatus.classList.remove('hidden'); composeTo.focus(); return; }
-    if (!subject) { composeSubject.focus(); return; }
     if (!body) { composeBody.focus(); return; }
 
     composeSend.disabled = true;
@@ -579,15 +588,15 @@
 
     try {
       const { code, error } = await apiCall('POST', '/api/send', {
-        from: currentAddress, to, subject, text: body,
+        address: currentAddress, secret: currentSecret, to, subject, text: body,
       });
 
       if (code === 0) {
         composeStatus.textContent = 'Correo enviado exitosamente';
         composeStatus.className = 'compose-status success';
         composeBody.value = '';
-        setTimeout(closeCompose, 2000);
-        setTimeout(fetchInbox, 1000);
+        setTimeout(closeCompose, 500);
+        setTimeout(fetchInbox, 300);
       } else {
         composeStatus.textContent = error || 'Error al enviar';
         composeStatus.className = 'compose-status error';
@@ -723,6 +732,7 @@
       show(actionBtns);
       show(tokenDisplay);
       show(extendBtn);
+      show(headerNav);
       hide(generateBtn);
       hide(customSection);
       hide(connectLinkBtn);
@@ -805,6 +815,392 @@
     return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
   }
 
+  function formatSize(bytes) {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+  }
+
+  function getFileCategory(name) {
+    const ext = name.split('.').pop().toLowerCase();
+    if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'ico'].includes(ext)) return 'image';
+    if (['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(ext)) return 'video';
+    if (['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a'].includes(ext)) return 'audio';
+    if (['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'csv'].includes(ext)) return 'doc';
+    if (['js', 'ts', 'py', 'html', 'css', 'json', 'xml', 'rb', 'go', 'rs', 'sh'].includes(ext)) return 'code';
+    return 'other';
+  }
+
+  function getFileIconSvg(category) {
+    const icons = {
+      folder: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>',
+      image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>',
+      video: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>',
+      audio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
+      doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+      code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+      other: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>',
+    };
+    return icons[category] || icons.other;
+  }
+
+  // ===== NCLOUD =====
+  const headerNav = $('header-nav');
+  const navTmail = $('nav-tmail');
+  const navNcloud = $('nav-ncloud');
+  const ncloudView = $('ncloud-view');
+  const ncloudBreadcrumb = $('ncloud-breadcrumb');
+  const ncloudFiles = $('ncloud-files');
+  const ncloudEmpty = $('ncloud-empty');
+  const ncloudDropzone = $('ncloud-dropzone');
+  const ncloudFileInput = $('ncloud-file-input');
+  const ncloudUploadBtn = $('ncloud-upload-btn');
+  const ncloudRefreshBtn = $('ncloud-refresh');
+  const ncloudSpaceBtn = $('ncloud-space-btn');
+  const ncloudSpaceBar = $('ncloud-space-bar');
+  const ncloudSpaceUsed = $('ncloud-space-used');
+  const ncloudSpaceCount = $('ncloud-space-count');
+  const ncloudSpaceFill = $('ncloud-space-fill');
+  const ncloudProgress = $('ncloud-progress');
+  const ncloudProgressFill = $('ncloud-progress-fill');
+  const ncloudProgressText = $('ncloud-progress-text');
+  const ncloudNewFolderBtn = $('ncloud-new-folder-btn');
+  const ncloudShareModal = $('ncloud-share-modal');
+  const ncloudShareClose = $('ncloud-share-close');
+  const ncloudShareFilename = $('ncloud-share-filename');
+  const ncloudShareLink = $('ncloud-share-link');
+  const ncloudShareCopy = $('ncloud-share-copy');
+  const ncloudSharesModal = $('ncloud-shares-modal');
+  const ncloudSharesClose = $('ncloud-shares-close');
+  const ncloudSharesList = $('ncloud-shares-list');
+  const ncloudFolderModal = $('ncloud-folder-modal');
+  const ncloudFolderClose = $('ncloud-folder-close');
+  const ncloudFolderName = $('ncloud-folder-name');
+  const ncloudFolderCancel = $('ncloud-folder-cancel');
+  const ncloudFolderConfirm = $('ncloud-folder-confirm');
+
+  let ncloudCurrentPath = '';
+  let ncloudSpaceVisible = false;
+
+  function isNCloudView() {
+    return !ncloudView.classList.contains('hidden');
+  }
+
+  function showNCloud() {
+    hide(emailSection);
+    hide(inboxSection);
+    hide(viewer);
+    show(ncloudView);
+    show(headerNav);
+    navNcloud.classList.add('active');
+    navTmail.classList.remove('active');
+    ncloudCurrentPath = '';
+    ncloudRenderBreadcrumb();
+    ncloudListFiles();
+  }
+
+  function hideNCloud() {
+    hide(ncloudView);
+    navTmail.classList.add('active');
+    navNcloud.classList.remove('active');
+    show(emailSection);
+    if (currentAddress) show(inboxSection);
+  }
+
+  function ncloudRenderBreadcrumb() {
+    const parts = ncloudCurrentPath.split('/').filter(Boolean);
+    let html = '<button class="breadcrumb-item' + (parts.length === 0 ? ' active' : '') + '" data-path="">Archivos</button>';
+    let accumulated = '';
+    parts.forEach((part, i) => {
+      accumulated += (i > 0 ? '/' : '') + part;
+      const isLast = i === parts.length - 1;
+      html += '<span class="breadcrumb-sep">/</span>';
+      html += '<button class="breadcrumb-item' + (isLast ? ' active' : '') + '" data-path="' + esc(accumulated) + '">' + esc(part) + '</button>';
+    });
+    ncloudBreadcrumb.innerHTML = html;
+    ncloudBreadcrumb.querySelectorAll('.breadcrumb-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        ncloudCurrentPath = btn.dataset.path;
+        ncloudRenderBreadcrumb();
+        ncloudListFiles();
+      });
+    });
+  }
+
+  async function ncloudListFiles() {
+    if (!currentAddress || !currentSecret) return;
+    try {
+      const res = await fetch(`${API}/ncloud/files?path=${encodeURIComponent(ncloudCurrentPath)}`, {
+        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+      });
+      const data = await res.json();
+      if (!data.folders && !data.files) {
+        ncloudEmpty.classList.remove('hidden');
+        ncloudFiles.innerHTML = '';
+        ncloudFiles.appendChild(ncloudEmpty);
+        return;
+      }
+      const folders = data.folders || [];
+      const files = data.files || [];
+      if (folders.length === 0 && files.length === 0) {
+        ncloudEmpty.classList.remove('hidden');
+        ncloudFiles.innerHTML = '';
+        ncloudFiles.appendChild(ncloudEmpty);
+        return;
+      }
+      let html = '';
+      folders.forEach((f, i) => {
+        html += `<div class="ncloud-file-item" style="animation-delay:${i * 0.03}s" data-type="folder" data-name="${esc(f.name)}">
+          <div class="ncloud-file-icon folder">${getFileIconSvg('folder')}</div>
+          <div class="ncloud-file-info">
+            <div class="ncloud-file-name">${esc(f.name)}</div>
+            <div class="ncloud-file-meta">Carpeta</div>
+          </div>
+          <div class="ncloud-file-actions">
+            <button class="ncloud-file-action delete" title="Eliminar" data-action="delete-folder" data-name="${esc(f.name)}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </div>`;
+      });
+      files.forEach((f, i) => {
+        const cat = getFileCategory(f.name);
+        html += `<div class="ncloud-file-item" style="animation-delay:${(folders.length + i) * 0.03}s" data-type="file" data-key="${esc(f.key)}" data-name="${esc(f.name)}">
+          <div class="ncloud-file-icon ${cat}">${getFileIconSvg(cat)}</div>
+          <div class="ncloud-file-info">
+            <div class="ncloud-file-name">${esc(f.name)}</div>
+            <div class="ncloud-file-meta">${formatSize(f.size)}</div>
+          </div>
+          <div class="ncloud-file-actions">
+            <button class="ncloud-file-action share" title="Compartir" data-action="share" data-key="${esc(f.key)}" data-name="${esc(f.name)}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </button>
+            <button class="ncloud-file-action" title="Descargar" data-action="download" data-key="${esc(f.key)}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+            <button class="ncloud-file-action delete" title="Eliminar" data-action="delete-file" data-key="${esc(f.key)}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </div>`;
+      });
+      ncloudFiles.innerHTML = html;
+      ncloudFiles.querySelectorAll('.ncloud-file-item').forEach(item => {
+        if (item.dataset.type === 'folder') {
+          item.addEventListener('dblclick', () => {
+            const name = item.dataset.name;
+            ncloudCurrentPath = ncloudCurrentPath ? ncloudCurrentPath + '/' + name : name;
+            ncloudRenderBreadcrumb();
+            ncloudListFiles();
+          });
+          item.querySelector('[data-action="delete-folder"]').addEventListener('click', (e) => {
+            e.stopPropagation();
+            ncloudDeleteFolder(item.dataset.name);
+          });
+        } else {
+          item.querySelector('[data-action="download"]').addEventListener('click', (e) => {
+            e.stopPropagation();
+            ncloudDownloadFile(item.dataset.key);
+          });
+          item.querySelector('[data-action="share"]').addEventListener('click', (e) => {
+            e.stopPropagation();
+            ncloudShareFile(item.dataset.key, item.dataset.name);
+          });
+          item.querySelector('[data-action="delete-file"]').addEventListener('click', (e) => {
+            e.stopPropagation();
+            ncloudDeleteFile(item.dataset.key);
+          });
+        }
+      });
+    } catch (e) {
+      console.error('NCloud list error:', e);
+    }
+  }
+
+  async function ncloudUploadFiles(fileList) {
+    if (!currentAddress || !currentSecret || fileList.length === 0) return;
+    show(ncloudProgress);
+    const total = fileList.length;
+    let completed = 0;
+    for (const file of fileList) {
+      try {
+        const key = ncloudCurrentPath ? ncloudCurrentPath + '/' + file.name : file.name;
+        const uploadRes = await fetch(`${API}/ncloud/upload-url`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret },
+          body: JSON.stringify({ key })
+        });
+        const { url } = await uploadRes.json();
+        if (!url) continue;
+        await fetch(url, { method: 'PUT', body: file });
+        completed++;
+        const pct = Math.round((completed / total) * 100);
+        ncloudProgressFill.style.width = pct + '%';
+        ncloudProgressText.textContent = `Subiendo... ${completed}/${total}`;
+      } catch (e) {
+        console.error('Upload error:', e);
+      }
+    }
+    setTimeout(() => {
+      hide(ncloudProgress);
+      ncloudProgressFill.style.width = '0%';
+      ncloudListFiles();
+      ncloudUpdateSpace();
+    }, 500);
+  }
+
+  async function ncloudDownloadFile(key) {
+    if (!currentAddress || !currentSecret) return;
+    try {
+      const res = await fetch(`${API}/ncloud/download-url?key=${encodeURIComponent(key)}`, {
+        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+      });
+      const { url } = await res.json();
+      if (url) window.open(url, '_blank');
+    } catch (e) {
+      console.error('Download error:', e);
+    }
+  }
+
+  async function ncloudDeleteFile(key) {
+    if (!currentAddress || !currentSecret) return;
+    if (!confirm('Eliminar este archivo?')) return;
+    try {
+      await fetch(`${API}/ncloud/file?key=${encodeURIComponent(key)}`, {
+        method: 'DELETE',
+        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+      });
+      ncloudListFiles();
+      ncloudUpdateSpace();
+    } catch (e) {
+      console.error('Delete error:', e);
+    }
+  }
+
+  async function ncloudDeleteFolder(name) {
+    if (!currentAddress || !currentSecret) return;
+    if (!confirm(`Eliminar la carpeta "${name}" y todo su contenido?`)) return;
+    const prefix = ncloudCurrentPath ? ncloudCurrentPath + '/' + name + '/' : name + '/';
+    try {
+      const res = await fetch(`${API}/ncloud/files?path=${encodeURIComponent(prefix)}`, {
+        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+      });
+      const data = await res.json();
+      const allKeys = (data.files || []).map(f => f.key);
+      for (const key of allKeys) {
+        await fetch(`${API}/ncloud/file?key=${encodeURIComponent(key)}`, {
+          method: 'DELETE',
+          headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+        });
+      }
+      ncloudListFiles();
+      ncloudUpdateSpace();
+    } catch (e) {
+      console.error('Delete folder error:', e);
+    }
+  }
+
+  async function ncloudCreateFolder(name) {
+    if (!currentAddress || !currentSecret || !name.trim()) return;
+    try {
+      const path = ncloudCurrentPath ? ncloudCurrentPath + '/' + name.trim() : name.trim();
+      await fetch(`${API}/ncloud/mkdir`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret },
+        body: JSON.stringify({ path })
+      });
+      ncloudListFiles();
+    } catch (e) {
+      console.error('Create folder error:', e);
+    }
+  }
+
+  async function ncloudShareFile(key, name) {
+    if (!currentAddress || !currentSecret) return;
+    try {
+      const res = await fetch(`${API}/ncloud/share`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret },
+        body: JSON.stringify({ key })
+      });
+      const data = await res.json();
+      if (data.url) {
+        ncloudShareFilename.textContent = name;
+        ncloudShareLink.value = data.url;
+        show(ncloudShareModal);
+      }
+    } catch (e) {
+      console.error('Share error:', e);
+    }
+  }
+
+  async function ncloudListShares() {
+    if (!currentAddress || !currentSecret) return;
+    try {
+      const res = await fetch(`${API}/ncloud/shares`, {
+        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+      });
+      const data = await res.json();
+      const shares = data.shares || [];
+      if (shares.length === 0) {
+        ncloudSharesList.innerHTML = '<p class="ncloud-empty">No hay enlaces activos</p>';
+        show(ncloudSharesModal);
+        return;
+      }
+      let html = '';
+      shares.forEach(s => {
+        const fileName = s.file_key.split('/').pop();
+        const expiresAt = new Date(s.expires_at).getTime();
+        const remaining = Math.max(0, Math.round((expiresAt - Date.now()) / 60000));
+        html += `<div class="ncloud-share-item">
+          <div class="ncloud-share-item-info">
+            <div class="ncloud-share-item-name">${esc(fileName)}</div>
+            <div class="ncloud-share-item-expiry">Expira en ${remaining} min</div>
+          </div>
+          <button class="ncloud-share-revoke" data-id="${esc(s.id)}">Revocar</button>
+        </div>`;
+      });
+      ncloudSharesList.innerHTML = html;
+      ncloudSharesList.querySelectorAll('.ncloud-share-revoke').forEach(btn => {
+        btn.addEventListener('click', () => ncloudRevokeShare(btn.dataset.id));
+      });
+      show(ncloudSharesModal);
+    } catch (e) {
+      console.error('List shares error:', e);
+    }
+  }
+
+  async function ncloudRevokeShare(id) {
+    if (!currentAddress || !currentSecret) return;
+    try {
+      await fetch(`${API}/ncloud/share/${id}`, {
+        method: 'DELETE',
+        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+      });
+      ncloudListShares();
+    } catch (e) {
+      console.error('Revoke share error:', e);
+    }
+  }
+
+  async function ncloudUpdateSpace() {
+    if (!currentAddress || !currentSecret) return;
+    try {
+      const res = await fetch(`${API}/ncloud/space`, {
+        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+      });
+      const data = await res.json();
+      ncloudSpaceUsed.textContent = formatSize(data.used || 0);
+      ncloudSpaceCount.textContent = (data.count || 0) + ' archivos';
+      const pct = Math.min(100, ((data.used || 0) / (10 * 1024 * 1024 * 1024)) * 100);
+      ncloudSpaceFill.style.width = pct + '%';
+    } catch (e) {
+      console.error('Space error:', e);
+    }
+  }
+
   // ===== EVENTS =====
   generateBtn.addEventListener('click', generate);
   copyBtn.addEventListener('click', copyEmail);
@@ -845,5 +1241,97 @@
     btn.addEventListener('click', () => {
       extendMailbox(parseInt(btn.dataset.hours, 10));
     });
+  });
+
+  // NCloud nav
+  navTmail.addEventListener('click', () => {
+    hideNCloud();
+  });
+
+  navNcloud.addEventListener('click', () => {
+    showNCloud();
+  });
+
+  // NCloud header actions
+  ncloudRefreshBtn.addEventListener('click', () => {
+    ncloudListFiles();
+    ncloudUpdateSpace();
+  });
+
+  ncloudSpaceBtn.addEventListener('click', () => {
+    ncloudSpaceVisible = !ncloudSpaceVisible;
+    if (ncloudSpaceVisible) {
+      show(ncloudSpaceBar);
+      ncloudUpdateSpace();
+    } else {
+      hide(ncloudSpaceBar);
+    }
+  });
+
+  ncloudNewFolderBtn.addEventListener('click', () => {
+    ncloudFolderName.value = '';
+    show(ncloudFolderModal);
+    ncloudFolderName.focus();
+  });
+
+  ncloudFolderClose.addEventListener('click', () => hide(ncloudFolderModal));
+  ncloudFolderCancel.addEventListener('click', () => hide(ncloudFolderModal));
+  ncloudFolderConfirm.addEventListener('click', () => {
+    ncloudCreateFolder(ncloudFolderName.value);
+    hide(ncloudFolderModal);
+  });
+  ncloudFolderName.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      ncloudCreateFolder(ncloudFolderName.value);
+      hide(ncloudFolderModal);
+    }
+  });
+  ncloudFolderModal.addEventListener('click', (e) => {
+    if (e.target === ncloudFolderModal) hide(ncloudFolderModal);
+  });
+
+  // NCloud upload
+  ncloudUploadBtn.addEventListener('click', () => ncloudFileInput.click());
+  ncloudFileInput.addEventListener('change', () => {
+    if (ncloudFileInput.files.length > 0) {
+      ncloudUploadFiles(ncloudFileInput.files);
+      ncloudFileInput.value = '';
+    }
+  });
+
+  ncloudDropzone.addEventListener('click', () => ncloudFileInput.click());
+  ncloudDropzone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    ncloudDropzone.classList.add('drag-over');
+  });
+  ncloudDropzone.addEventListener('dragleave', () => {
+    ncloudDropzone.classList.remove('drag-over');
+  });
+  ncloudDropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    ncloudDropzone.classList.remove('drag-over');
+    if (e.dataTransfer.files.length > 0) {
+      ncloudUploadFiles(e.dataTransfer.files);
+    }
+  });
+
+  // NCloud share modal
+  ncloudShareClose.addEventListener('click', () => hide(ncloudShareModal));
+  ncloudShareModal.addEventListener('click', (e) => {
+    if (e.target === ncloudShareModal) hide(ncloudShareModal);
+  });
+  ncloudShareCopy.addEventListener('click', () => {
+    navigator.clipboard.writeText(ncloudShareLink.value).then(() => {
+      ncloudShareCopy.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+      setTimeout(() => {
+        ncloudShareCopy.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+      }, 1500);
+    });
+  });
+
+  // NCloud shares list modal
+  ncloudSharesClose.addEventListener('click', () => hide(ncloudSharesModal));
+  ncloudSharesModal.addEventListener('click', (e) => {
+    if (e.target === ncloudSharesModal) hide(ncloudSharesModal);
   });
 })();
