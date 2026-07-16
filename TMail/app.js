@@ -1,19 +1,19 @@
 (() => {
   const API = 'https://api.nextuser.lat';
 
-  // ===== PASSWORD GATE =====
-  const _pepper = atob('REDACTED_TMAIL_PEPPER_B64').split('').reverse().join('');
-  const _hash = 'REDACTED_TMAIL_HASH';
-
-  async function hashPassword(pw) {
-    const enc = new TextEncoder();
-    const data = enc.encode(pw + _pepper);
-    const buf = await crypto.subtle.digest('SHA-256', data);
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-  }
-
+  // ===== PASSWORD GATE (backend) =====
   async function verifyPassword(pw) {
-    return (await hashPassword(pw)) === _hash;
+    try {
+      const res = await fetch(`${API}/api/verify-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ service: 'tmail', password: pw }),
+      });
+      const data = await res.json();
+      return data.code === 0 && data.data?.valid;
+    } catch {
+      return false;
+    }
   }
 
   // ===== HTML SANITIZER (XSS Prevention) =====

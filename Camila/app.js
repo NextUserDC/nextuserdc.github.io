@@ -101,24 +101,25 @@ setInterval(actualizarContadorMidnight, 1000);
 // ===== ACCESO POR CONTRASEÑA =====
 let modoPasswordActivo = false;
 
-const sha256 = async (texto) => {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(texto);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-};
-
-const CONTRASENA_HASH = 'REDACTED_CAMILA_HASH';
-
 const verificarPassword = async () => {
     const password = passwordInput.value;
-    const hash = await sha256(password);
-    if (hash === CONTRASENA_HASH) {
-        passwordError.classList.add('oculto');
-        await decryptContent(password);
-        desbloquearPagina();
-    } else {
+    try {
+        const res = await fetch('https://api.nextuser.lat/api/verify-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ service: 'camila', password }),
+        });
+        const data = await res.json();
+        if (data.code === 0 && data.data?.valid) {
+            passwordError.classList.add('oculto');
+            await decryptContent(password);
+            desbloquearPagina();
+        } else {
+            passwordError.classList.remove('oculto');
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+    } catch {
         passwordError.classList.remove('oculto');
         passwordInput.value = '';
         passwordInput.focus();

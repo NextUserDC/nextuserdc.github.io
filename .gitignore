@@ -11,3 +11,4 @@ Thumbs.db
 .cache/
 Camila/encrypt.js
 AGENTS.md
+.wrangler/
