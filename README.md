@@ -10,30 +10,11 @@ Sitio web estático alojado en GitHub Pages que alberga una colección de proyec
 
 ### 📬 TMail — Correo Temporal
 
-Servicio de correos temporales con dominio `@nextuser.lat`. Generación de direcciones personalizadas o aleatorias, bandeja de entrada en tiempo real, envío de correos, conexión multi-dispositivo mediante token y extensión de tiempo (24/48/72h). Incluye NCloud (almacenamiento en la nube) integrado como vista interna.
-
-**Funcionalidades:**
-- Generación de direcciones personalizadas o aleatorias
-- Bandeja de entrada con polling cada 5 segundos
-- Envío de correos vía Resend API (asunto opcional)
-- Conexión desde otro dispositivo con token secreto
-- Extensión de tiempo (24/48/72h)
-- Prevención de duplicados
-- NCloud: subida drag & drop, carpetas, links compartidos temporales, barra de espacio
-- Solo visible para direcciones personalizadas
-- Colores diferenciados: azul (recibidos), naranja (enviados), morado (respuestas)
+Servicio de correos temporales con dominio `@nextuser.lat`. Generación de direcciones personalizadas o aleatorias, bandeja de entrada en tiempo real, envío de correos, conexión multi-dispositivo y extensión de tiempo. Incluye NCloud (almacenamiento en la nube) integrado como vista interna.
 
 ### ☁️ NCloud — Almacenamiento en la Nube
 
 Almacenamiento de archivos integrado como vista dentro de TMail. Permite gestionar archivos desde cualquier dispositivo con la misma sesión.
-
-**Funcionalidades:**
-- Subida de archivos (drag & drop o selector)
-- Carpetas y navegación por breadcrumb
-- Espacio usado con barra de progreso
-- Links temporales compartidos (60min, revocables)
-- Eliminación de archivos y carpetas
-- Autenticación vinculada al buzón de TMail
 
 ### 🎮 MCAccounts
 
