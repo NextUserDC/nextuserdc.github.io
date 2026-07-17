@@ -51,7 +51,7 @@
   }
 
   // ===== LOCALSTORAGE INTEGRITY =====
-  const _hmacKey = 'REDACTED_TMAIL_HMAC_KEY';
+  const _hmacKey = 'tmail-integrity-k3y-2026';
 
   async function _computeHmac(value) {
     const enc = new TextEncoder();
