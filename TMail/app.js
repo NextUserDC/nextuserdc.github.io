@@ -933,7 +933,7 @@
     if (!currentAddress || !currentSecret) return;
     try {
       const res = await fetch(`${API}/ncloud/files?path=${encodeURIComponent(ncloudCurrentPath)}`, {
-        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
       });
       const data = await res.json();
       if (!data.folders && !data.files) {
@@ -1029,7 +1029,7 @@
         const key = ncloudCurrentPath ? ncloudCurrentPath + '/' + file.name : file.name;
         const uploadRes = await fetch(`${API}/ncloud/upload-url`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret },
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
           body: JSON.stringify({ key })
         });
         const { url } = await uploadRes.json();
@@ -1055,7 +1055,7 @@
     if (!currentAddress || !currentSecret) return;
     try {
       const res = await fetch(`${API}/ncloud/download-url?key=${encodeURIComponent(key)}`, {
-        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
       });
       const { url } = await res.json();
       if (url) window.open(url, '_blank');
@@ -1070,7 +1070,7 @@
     try {
       await fetch(`${API}/ncloud/file?key=${encodeURIComponent(key)}`, {
         method: 'DELETE',
-        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
       });
       ncloudListFiles();
       ncloudUpdateSpace();
@@ -1085,14 +1085,14 @@
     const prefix = ncloudCurrentPath ? ncloudCurrentPath + '/' + name + '/' : name + '/';
     try {
       const res = await fetch(`${API}/ncloud/files?path=${encodeURIComponent(prefix)}`, {
-        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
       });
       const data = await res.json();
       const allKeys = (data.files || []).map(f => f.key);
       for (const key of allKeys) {
         await fetch(`${API}/ncloud/file?key=${encodeURIComponent(key)}`, {
           method: 'DELETE',
-          headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+          headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
         });
       }
       ncloudListFiles();
@@ -1108,7 +1108,7 @@
       const path = ncloudCurrentPath ? ncloudCurrentPath + '/' + name.trim() : name.trim();
       await fetch(`${API}/ncloud/mkdir`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
         body: JSON.stringify({ path })
       });
       ncloudListFiles();
@@ -1122,7 +1122,7 @@
     try {
       const res = await fetch(`${API}/ncloud/share`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
         body: JSON.stringify({ key })
       });
       const data = await res.json();
@@ -1140,7 +1140,7 @@
     if (!currentAddress || !currentSecret) return;
     try {
       const res = await fetch(`${API}/ncloud/shares`, {
-        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
       });
       const data = await res.json();
       const shares = data.shares || [];
@@ -1177,7 +1177,7 @@
     try {
       await fetch(`${API}/ncloud/share/${id}`, {
         method: 'DELETE',
-        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
       });
       ncloudListShares();
     } catch (e) {
@@ -1189,7 +1189,7 @@
     if (!currentAddress || !currentSecret) return;
     try {
       const res = await fetch(`${API}/ncloud/space`, {
-        headers: { 'X-NCloud-Address': currentAddress, 'X-NCloud-Secret': currentSecret }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
       });
       const data = await res.json();
       ncloudSpaceUsed.textContent = formatSize(data.used || 0);
