@@ -53,10 +53,14 @@
   // ===== LOCALSTORAGE INTEGRITY =====
   const _hmacKey = 'tmail-integrity-k3y-2026';
 
+  let _cachedHmacKey = null;
   async function _computeHmac(value) {
+    if (!_cachedHmacKey) {
+      const enc = new TextEncoder();
+      _cachedHmacKey = await crypto.subtle.importKey('raw', enc.encode(_hmacKey), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+    }
     const enc = new TextEncoder();
-    const key = await crypto.subtle.importKey('raw', enc.encode(_hmacKey), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-    const sig = await crypto.subtle.sign('HMAC', key, enc.encode(value));
+    const sig = await crypto.subtle.sign('HMAC', _cachedHmacKey, enc.encode(value));
     return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
   }
 
@@ -149,7 +153,6 @@
   let currentAddress = null;
   let currentSecret = null;
   let endAt = null;
-  let pollInterval = null;
   let timerInterval = null;
   let seenIds = new Set();
   let isCustomMode = false;
@@ -157,6 +160,8 @@
   let tokenRevealed = false;
   let currentIsCustom = false;
   let isPaused = false;
+  let _pollTimer = null;
+  let _pollDelay = 5000;
 
   function show(el) { el.classList.remove('hidden'); }
   function hide(el) { el.classList.add('hidden'); }
@@ -314,32 +319,7 @@
       await storeSecure('tmail_endAt', String(endAt));
       await storeSecure('tmail_custom', String(currentIsCustom));
 
-      emailText.textContent = currentAddress;
-      updateTokenDisplay();
-      hide(emailPlaceholder);
-      show(emailAddress);
-      show(emailTimer);
-      show(actionBtns);
-      if (currentIsCustom) {
-        show(tokenDisplay);
-        show(extendBtn);
-        show(headerNav);
-      } else {
-        hide(tokenDisplay);
-        hide(extendBtn);
-        hide(headerNav);
-        hideNCloud();
-      }
-      hide(generateBtn);
-      hide(customSection);
-      hide(connectLinkBtn);
-      show(inboxSection);
-      inboxEmpty.textContent = 'Esperando correos...';
-      inboxList.innerHTML = '';
-      inboxCount.textContent = '0';
-
-      startTimer();
-      startPolling();
+      activateSession();
     } catch (e) {
       console.error('Generate error:', e);
       generateBtn.textContent = 'Error de conexion';
@@ -363,28 +343,7 @@
         currentSecret = savedSecret;
         endAt = end;
         currentIsCustom = savedCustom === 'true';
-        emailText.textContent = currentAddress;
-        updateTokenDisplay();
-        hide(emailPlaceholder);
-        show(emailAddress);
-        show(emailTimer);
-        show(actionBtns);
-        if (currentIsCustom) {
-          show(tokenDisplay);
-          show(extendBtn);
-          show(headerNav);
-        } else {
-          hide(tokenDisplay);
-          hide(extendBtn);
-          hide(headerNav);
-          hideNCloud();
-        }
-        hide(generateBtn);
-        hide(customSection);
-        hide(connectLinkBtn);
-        show(inboxSection);
-        startTimer();
-        startPolling();
+        activateSession();
         return;
       }
     }
@@ -398,7 +357,7 @@
     tokenRevealed = false;
     currentIsCustom = false;
     seenIds = new Set();
-    if (pollInterval) clearInterval(pollInterval);
+    stopPolling();
     if (timerInterval) clearInterval(timerInterval);
     clearSecure('tmail_address');
     clearSecure('tmail_secret');
@@ -410,7 +369,6 @@
     show(customSection);
     show(connectLinkBtn);
     hide(inboxSection);
-    hide(emailPlaceholder);
     show(emailPlaceholder);
     hide(emailAddress);
     hide(emailTimer);
@@ -447,15 +405,20 @@
 
   // ===== POLLING (with visibility pause) =====
   function startPolling() {
-    if (pollInterval) clearInterval(pollInterval);
+    stopPolling();
     seenIds = new Set();
+    _pollDelay = 5000;
     fetchInbox();
-    pollInterval = setInterval(fetchInbox, 5000);
+    function poll() {
+      fetchInbox().then(() => {
+        _pollTimer = setTimeout(poll, _pollDelay);
+      });
+    }
+    _pollTimer = setTimeout(poll, _pollDelay);
   }
 
   function stopPolling() {
-    if (pollInterval) clearInterval(pollInterval);
-    pollInterval = null;
+    if (_pollTimer) { clearTimeout(_pollTimer); _pollTimer = null; }
   }
 
   document.addEventListener('visibilitychange', () => {
@@ -502,14 +465,17 @@
       if (rows.length === 0) {
         inboxEmpty.textContent = 'Esperando correos...';
         inboxEmpty.classList.remove('hidden');
+        _pollDelay = Math.min(_pollDelay + 2000, 30000);
         return;
       }
 
       inboxEmpty.classList.add('hidden');
 
+      let newCount = 0;
       rows.forEach((row, i) => {
         let item = document.getElementById(`msg-${row.id}`);
         if (!item) {
+          newCount++;
           item = document.createElement('div');
           item.id = `msg-${row.id}`;
 
@@ -540,12 +506,15 @@
 
         if (!seenIds.has(row.id)) {
           seenIds.add(row.id);
-          item.style.animation = 'none';
-          item.offsetHeight;
-          item.style.animation = 'fadeIn 0.4s ease-out backwards';
-          item.style.animationDelay = '0s';
+          item.classList.add('animate-in');
         }
       });
+
+      if (newCount === 0) {
+        _pollDelay = Math.min(_pollDelay + 2000, 30000);
+      } else {
+        _pollDelay = 5000;
+      }
     } catch (e) {
       console.error('Inbox error:', e);
     }
@@ -653,10 +622,7 @@
         // Mailbox already gone from DB — clear local session anyway
         if (result.error && result.error.includes('not found')) {
           clearSession();
-          inboxList.innerHTML = '';
-          inboxCount.textContent = '0';
           inboxEmpty.textContent = 'Genera una direccion para comenzar';
-          emailText.textContent = '';
           generateBtn.textContent = 'Generar direccion';
           return;
         }
@@ -670,10 +636,7 @@
     }
 
     clearSession();
-    inboxList.innerHTML = '';
-    inboxCount.textContent = '0';
     inboxEmpty.textContent = 'Genera una direccion para comenzar';
-    emailText.textContent = '';
     generateBtn.textContent = 'Generar direccion';
   }
 
@@ -724,26 +687,8 @@
       await storeSecure('tmail_endAt', String(endAt));
       await storeSecure('tmail_custom', 'true');
 
-      emailText.textContent = currentAddress;
-      updateTokenDisplay();
-      hide(emailPlaceholder);
-      show(emailAddress);
-      show(emailTimer);
-      show(actionBtns);
-      show(tokenDisplay);
-      show(extendBtn);
-      show(headerNav);
-      hide(generateBtn);
-      hide(customSection);
-      hide(connectLinkBtn);
-      show(inboxSection);
       generateBtn.textContent = 'Nueva direccion';
-      inboxEmpty.textContent = 'Esperando correos...';
-      inboxList.innerHTML = '';
-      inboxCount.textContent = '0';
-
-      startTimer();
-      startPolling();
+      activateSession();
       closeConnectModal();
     } catch (e) {
       connectError.textContent = 'Error de conexion';
@@ -802,11 +747,20 @@
   }
 
   // ===== HELPERS =====
+  const _ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
   function esc(str) {
-    const d = document.createElement('div');
-    d.textContent = str || '';
-    return d.innerHTML;
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, c => _ESC_MAP[c]);
   }
+
+  const _SIZE_UNITS = ['B', 'KB', 'MB', 'GB'];
+  const _FILE_CATEGORIES = {
+    image: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'ico'],
+    video: ['mp4', 'webm', 'mov', 'avi', 'mkv'],
+    audio: ['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a'],
+    doc: ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'csv'],
+    code: ['js', 'ts', 'py', 'html', 'css', 'json', 'xml', 'rb', 'go', 'rs', 'sh']
+  };
 
   function formatDate(iso) {
     if (!iso) return '';
@@ -818,18 +772,15 @@
   function formatSize(bytes) {
     if (bytes === 0) return '0 B';
     const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + _SIZE_UNITS[i];
   }
 
   function getFileCategory(name) {
     const ext = name.split('.').pop().toLowerCase();
-    if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'ico'].includes(ext)) return 'image';
-    if (['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(ext)) return 'video';
-    if (['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a'].includes(ext)) return 'audio';
-    if (['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'csv'].includes(ext)) return 'doc';
-    if (['js', 'ts', 'py', 'html', 'css', 'json', 'xml', 'rb', 'go', 'rs', 'sh'].includes(ext)) return 'code';
+    for (const [cat, exts] of Object.entries(_FILE_CATEGORIES)) {
+      if (exts.includes(ext)) return cat;
+    }
     return 'other';
   }
 
@@ -844,6 +795,24 @@
       other: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>',
     };
     return icons[category] || icons.other;
+  }
+
+  function activateSession() {
+    emailText.textContent = currentAddress;
+    updateTokenDisplay();
+    hide(emailPlaceholder); show(emailAddress); show(emailTimer); show(actionBtns);
+    if (currentIsCustom) {
+      show(tokenDisplay); show(extendBtn); show(headerNav);
+    } else {
+      hide(tokenDisplay); hide(extendBtn); hide(headerNav); hideNCloud();
+    }
+    hide(generateBtn); hide(customSection); hide(connectLinkBtn);
+    show(inboxSection);
+    inboxEmpty.textContent = 'Esperando correos...';
+    inboxList.innerHTML = '';
+    inboxCount.textContent = '0';
+    startTimer();
+    startPolling();
   }
 
   // ===== NCLOUD =====
@@ -987,33 +956,6 @@
         </div>`;
       });
       ncloudFiles.innerHTML = html;
-      ncloudFiles.querySelectorAll('.ncloud-file-item').forEach(item => {
-        if (item.dataset.type === 'folder') {
-          item.addEventListener('dblclick', () => {
-            const name = item.dataset.name;
-            ncloudCurrentPath = ncloudCurrentPath ? ncloudCurrentPath + '/' + name : name;
-            ncloudRenderBreadcrumb();
-            ncloudListFiles();
-          });
-          item.querySelector('[data-action="delete-folder"]').addEventListener('click', (e) => {
-            e.stopPropagation();
-            ncloudDeleteFolder(item.dataset.name);
-          });
-        } else {
-          item.querySelector('[data-action="download"]').addEventListener('click', (e) => {
-            e.stopPropagation();
-            ncloudDownloadFile(item.dataset.key);
-          });
-          item.querySelector('[data-action="share"]').addEventListener('click', (e) => {
-            e.stopPropagation();
-            ncloudShareFile(item.dataset.key, item.dataset.name);
-          });
-          item.querySelector('[data-action="delete-file"]').addEventListener('click', (e) => {
-            e.stopPropagation();
-            ncloudDeleteFile(item.dataset.key);
-          });
-        }
-      });
     } catch (e) {
       console.error('NCloud list error:', e);
     }
@@ -1024,17 +966,35 @@
     show(ncloudProgress);
     const total = fileList.length;
     let completed = 0;
+    let aborted = false;
     for (const file of fileList) {
+      if (aborted) break;
       try {
         const key = ncloudCurrentPath ? ncloudCurrentPath + '/' + file.name : file.name;
         const uploadRes = await fetch(`${API}/ncloud/upload-url`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
-          body: JSON.stringify({ key })
+          body: JSON.stringify({ key, size: file.size })
         });
-        const { url } = await uploadRes.json();
-        if (!url) continue;
-        await fetch(url, { method: 'PUT', body: file });
+        const result = await uploadRes.json();
+        if (result.error) {
+          alert(result.error);
+          aborted = true;
+          break;
+        }
+        if (!result.url) continue;
+        await fetch(result.url, { method: 'PUT', body: file });
+        const confirmRes = await fetch(`${API}/ncloud/confirm-upload`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
+          body: JSON.stringify({ key: result.key })
+        });
+        const confirm = await confirmRes.json();
+        if (confirm.error) {
+          alert(confirm.error);
+          aborted = true;
+          break;
+        }
         completed++;
         const pct = Math.round((completed / total) * 100);
         ncloudProgressFill.style.width = pct + '%';
@@ -1089,12 +1049,11 @@
       });
       const data = await res.json();
       const allKeys = (data.files || []).map(f => f.key);
-      for (const key of allKeys) {
-        await fetch(`${API}/ncloud/file?key=${encodeURIComponent(key)}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
-        });
-      }
+      await fetch(`${API}/ncloud/delete-batch`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
+        body: JSON.stringify({ keys: allKeys })
+      });
       ncloudListFiles();
       ncloudUpdateSpace();
     } catch (e) {
@@ -1250,6 +1209,31 @@
 
   navNcloud.addEventListener('click', () => {
     showNCloud();
+  });
+
+  // NCloud delegated file events
+  ncloudFiles.addEventListener('click', (e) => {
+    const item = e.target.closest('.ncloud-file-item');
+    if (!item) return;
+    const key = item.dataset.key;
+    if (e.target.closest('[data-action="download"]')) {
+      ncloudDownloadFile(key);
+    } else if (e.target.closest('[data-action="share"]')) {
+      ncloudShareFile(key, item.dataset.name);
+    } else if (e.target.closest('[data-action="delete-file"]')) {
+      ncloudDeleteFile(key);
+    } else if (e.target.closest('[data-action="delete-folder"]')) {
+      ncloudDeleteFolder(item.dataset.name);
+    }
+  });
+
+  ncloudFiles.addEventListener('dblclick', (e) => {
+    const item = e.target.closest('.ncloud-file-item[data-type="folder"]');
+    if (!item) return;
+    const name = item.dataset.name;
+    ncloudCurrentPath = ncloudCurrentPath ? ncloudCurrentPath + '/' + name : name;
+    ncloudRenderBreadcrumb();
+    ncloudListFiles();
   });
 
   // NCloud header actions
