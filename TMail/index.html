@@ -305,6 +305,35 @@
         </div>
       </div>
 
+      <!-- NCLOUD TTL MODAL -->
+      <div class="ncloud-modal hidden" id="ncloud-ttl-modal">
+        <div class="ncloud-modal-card ncloud-modal-sm">
+          <div class="ncloud-modal-header">
+            <h3>Tiempo de expiración</h3>
+            <button class="ncloud-modal-close" id="ncloud-ttl-close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="ncloud-modal-body">
+            <p class="ncloud-ttl-info">Selecciona cuánto tiempo vivirá tu archivo:</p>
+            <div class="ncloud-ttl-options">
+              <button class="ncloud-ttl-option" data-ttl="3600">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;margin-bottom:4px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span class="ncloud-ttl-time">1 hora</span>
+              </button>
+              <button class="ncloud-ttl-option" data-ttl="21600">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;margin-bottom:4px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span class="ncloud-ttl-time">6 horas</span>
+              </button>
+              <button class="ncloud-ttl-option" data-ttl="43200">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;margin-bottom:4px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span class="ncloud-ttl-time">12 horas</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- EMAIL VIEWER -->
       <div class="email-viewer hidden" id="email-viewer">
         <div class="email-viewer-header">

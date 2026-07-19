@@ -849,9 +849,12 @@
   const ncloudFolderName = $('ncloud-folder-name');
   const ncloudFolderCancel = $('ncloud-folder-cancel');
   const ncloudFolderConfirm = $('ncloud-folder-confirm');
+  const ncloudTtlModal = $('ncloud-ttl-modal');
+  const ncloudTtlClose = $('ncloud-ttl-close');
 
   let ncloudCurrentPath = '';
   let ncloudSpaceVisible = false;
+  let ncloudPendingFiles = null;
 
   function isNCloudView() {
     return !ncloudView.classList.contains('hidden');
@@ -936,10 +939,23 @@
       });
       files.forEach((f, i) => {
         const cat = getFileCategory(f.name);
+        let ttlBadge = '';
+        if (f.expiresAt) {
+          const remaining = f.expiresAt - Date.now();
+          if (remaining <= 0) {
+            ttlBadge = '<span class="ncloud-ttl-badge expired">Expirado</span>';
+          } else {
+            const mins = Math.floor(remaining / 60000);
+            const hrs = Math.floor(mins / 60);
+            const label = hrs > 0 ? `${hrs}h ${mins % 60}m` : `${mins}m`;
+            const urgentClass = mins < 60 ? ' urgent' : '';
+            ttlBadge = `<span class="ncloud-ttl-badge${urgentClass}">\u23F1 ${label}</span>`;
+          }
+        }
         html += `<div class="ncloud-file-item" style="animation-delay:${(folders.length + i) * 0.03}s" data-type="file" data-key="${esc(f.key)}" data-name="${esc(f.name)}">
           <div class="ncloud-file-icon ${cat}">${getFileIconSvg(cat)}</div>
           <div class="ncloud-file-info">
-            <div class="ncloud-file-name">${esc(f.name)}</div>
+            <div class="ncloud-file-name">${esc(f.name)}${ttlBadge}</div>
             <div class="ncloud-file-meta">${formatSize(f.size)}</div>
           </div>
           <div class="ncloud-file-actions">
@@ -963,6 +979,16 @@
 
   async function ncloudUploadFiles(fileList) {
     if (!currentAddress || !currentSecret || fileList.length === 0) return;
+    ncloudPendingFiles = Array.from(fileList);
+    show(ncloudTtlModal);
+  }
+
+  async function ncloudConfirmTtlUpload(ttl) {
+    hide(ncloudTtlModal);
+    const fileList = ncloudPendingFiles;
+    ncloudPendingFiles = null;
+    if (!fileList || fileList.length === 0) return;
+
     show(ncloudProgress);
     const total = fileList.length;
     let completed = 0;
@@ -974,7 +1000,7 @@
         const uploadRes = await fetch(`${API}/ncloud/upload-url`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
-          body: JSON.stringify({ key, size: file.size })
+          body: JSON.stringify({ key, size: file.size, ttl })
         });
         const result = await uploadRes.json();
         if (result.error) {
@@ -1272,6 +1298,17 @@
   });
   ncloudFolderModal.addEventListener('click', (e) => {
     if (e.target === ncloudFolderModal) hide(ncloudFolderModal);
+  });
+
+  // NCloud TTL modal
+  ncloudTtlClose.addEventListener('click', () => { hide(ncloudTtlModal); ncloudPendingFiles = null; });
+  ncloudTtlModal.addEventListener('click', (e) => {
+    if (e.target === ncloudTtlModal) { hide(ncloudTtlModal); ncloudPendingFiles = null; }
+  });
+  ncloudTtlModal.querySelectorAll('.ncloud-ttl-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      ncloudConfirmTtlUpload(parseInt(btn.dataset.ttl, 10));
+    });
   });
 
   // NCloud upload
