@@ -52,7 +52,7 @@ async function decryptContent(password) {
 
     const data = window._encryptedData;
 
-    for (const [id, enc] of Object.entries(data.texts)) {
+    const textPromises = Object.entries(data.texts).map(async ([id, enc]) => {
         try {
             const key = await deriveKey(password, enc.salt);
             const buf = await decryptData(enc, key);
@@ -62,9 +62,9 @@ async function decryptContent(password) {
         } catch (e) {
             console.error(`Error descifrando texto "${id}":`, e);
         }
-    }
+    });
 
-    for (const [filename, enc] of Object.entries(data.images)) {
+    const imgPromises = Object.entries(data.images).map(async ([filename, enc]) => {
         try {
             const key = await deriveKey(password, enc.salt);
             const buf = await decryptData(enc, key);
@@ -75,7 +75,9 @@ async function decryptContent(password) {
         } catch (e) {
             console.error(`Error descifrando imagen "${filename}":`, e);
         }
-    }
+    });
+
+    await Promise.all([...textPromises, ...imgPromises]);
 }
 
 // ===== CONTADOR A MEDIANOCHE =====
@@ -103,6 +105,10 @@ let modoPasswordActivo = false;
 
 const verificarPassword = async () => {
     const password = passwordInput.value;
+    if (!password) return;
+    btnAcceder.disabled = true;
+    const originalHTML = btnAcceder.innerHTML;
+    btnAcceder.innerHTML = '<svg class="spinner" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg>';
     try {
         const res = await fetch('https://api.nextuser.lat/api/verify-password', {
             method: 'POST',
@@ -118,11 +124,15 @@ const verificarPassword = async () => {
             passwordError.classList.remove('oculto');
             passwordInput.value = '';
             passwordInput.focus();
+            btnAcceder.disabled = false;
+            btnAcceder.innerHTML = originalHTML;
         }
     } catch {
         passwordError.classList.remove('oculto');
         passwordInput.value = '';
         passwordInput.focus();
+        btnAcceder.disabled = false;
+        btnAcceder.innerHTML = originalHTML;
     }
 };
 

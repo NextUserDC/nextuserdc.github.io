@@ -1,126 +1,126 @@
 window._encryptedData = {
     texts: {
-  "REDACTED_CAMILA_KEY": {
+  "story-title": {
     "ct": "EOwFt7/lA7HmrzaGEFhQYdrg7gYvoS5A5w==",
     "iv": "ZS4uQWWYVRNZnjZl",
     "salt": "U/T26fRjcCEIeD9ayvtU9w=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "story-subtitle": {
     "ct": "ET6sfMNsHw3wPte55aYGhrajoRhg+0Tm89x+m0/5XMgun5JDRJV3Bi4g6WEMHH7UrqWAVmSV0hj84Xp0u0am2GCcm3BD7aXrISyre4k6ZBCE",
     "iv": "66DUkBfaqdtb4X71",
     "salt": "6RTdnGA2pWtlF1tlaGbEUg=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "story-text": {
     "ct": "GmI4wsK5nzhmTEcIl5nzSKyMXWPoGkJfGfnZTMBd/En9lRIZIqKCZxVtFfU1OmrYY/roAvx2fQbCZkaDPvPw2IYoN6+N5zLBu4LiVvR7Oi0J36EujXyyLU4mXIqbd9t0l/arHLkX9LVsJPrZsffWzOAyb1N4N/Lc6JrK17fSxPbKyJ++sc/4GoqdOmKDi7AHEoQ7DoDXK7Dnpu4ppQnEUvYWxz+A8xbVNypwu/21/4OjsA44CK+cB08QGdGRTZrOzICWODHgc5iIZiC7MjTb4EjuCn+iCerWMDrYnxaFuCM+96/WAQcEhVmLZkboA3fauSZJ71iecqgo7HhFPDdFPcXLznqnL1YUMGRY826XlhTLQ53Mlb1E+eqa",
     "iv": "knJEWoNl9nPOgmy2",
     "salt": "glvYXdeVInDdUzowC+I8Ow=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "highlights-title": {
     "ct": "3CCDwD3zD3J74xkNpAW3xyLBIspGMKjmI90/6Eek",
     "iv": "BvYej5mhGtinH8ld",
     "salt": "FdNz1Gd6TQbA1ScncME4nQ=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "highlights-intro": {
     "ct": "VE4a0dyhMJBT69UgoBmNsFI22vOwqkpRpC5jCiPnNjxKSi0G13F7E/txl1tD3L9ZQWjCrSQgujRjiS37QX7IssRXP85SFDTluLvz",
     "iv": "FSdEwfI6FP2Ta9Qv",
     "salt": "yIQQHE3mLQme9vRWJdB0Qg=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card1-date": {
     "ct": "ltjzh/myaRmfmE83ljgvlHytdG9vkB4pSIcg5Ow=",
     "iv": "PvZacYPHGrccp79n",
     "salt": "dUIH0nIc9AnmS+v7/J1RYA=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card1-title": {
     "ct": "oC2q3SO4jbUCqleWgTjckRO8UURNEMeN7YFw",
     "iv": "DXCusc8PZ5gZ5ljh",
     "salt": "I/6VXs7oSf8hxAqN7sCymw=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card1-text": {
     "ct": "tay/Shfszkxe0NiWLdryK9HkfUvc54j4cv1Pi3pVliGqF7daKf4vMgkSfI/Zf3X4l04V5iySuFPd0M5+iMLKma950hOBJZe8NH+9jfudfIii1ZTnIAIud7LXBp6+8SYWl+7P851bygyyInUckEF5NVChT0osfoUVDztuGXdSvoiXYQ==",
     "iv": "hbOR8f6LbK7OOzJL",
     "salt": "zIOVD5iao0IK7nQArT1x0Q=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card2-date": {
     "ct": "si3n/Fr5/Hp55RpzIVBdmVLXJ40Yihoqu8yiRIjB+5rUX2tiqrFk",
     "iv": "ogBH/08hcIB4prai",
     "salt": "r9IEl/JN6XTCP/CGzKMeVA=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card2-title": {
     "ct": "2gFZZc7IhMBR7db/kE6esXnxMXrS2uo=",
     "iv": "Gz3aAZ9D/O20WBQ0",
     "salt": "YzoJvororo7zx47UqsyM7w=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card2-text": {
     "ct": "aBpfMW9HYpv0Na6OKbXikGYbHbGWWNmxtJVb23Z65SvF1fAo5p8eL3I609yVCm3NAPGvdLMbaXXVwaI0R6snWomUvYoFEBNQBS4VqdU3GzVPzr/Y01u2R/XIlogP5gJrecYgMBTmyyQAA0RkcikCMMnf9zGOJYg4VpbwApagz7kqTjmwH+HSLMThKf9JhCAFFR2L5A==",
     "iv": "zN7gzRnQtqYyMS5M",
     "salt": "56xQFYViFnpzLLaUIHTYQA=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card3-date": {
     "ct": "dGAsJ8PuqTvPoKXenEbjcXgGzgVvLpbOZNpw",
     "iv": "WfK/5A5MED7CWRGH",
     "salt": "LXznbjtGBLbtYWC+P1srIw=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card3-title": {
     "ct": "7yTsRfcH4yXHZHS1E3DLdn3fdx+bO1Lu4cOozfck",
     "iv": "kI4NZPNk66yXhNyP",
     "salt": "0ZExV0FWc9vh0z4nBcV2FA=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card3-text": {
     "ct": "6M9cqxPm3+mKeo/ZpRemwWpSGzQHyEvnuA/RNdbwwsQWYMvgfeBFhwEGeJlOyhwGouEeJIjQyvVKL8muxSY8ADxd46QjHCvgElJV7TLxtwtfvC/L2YvI0/JLIBcu3OsK4l1Tchr1nDwQMC5FaKwU9ue9DVeN0TB+YojEm0RyHVOHtDDMIYwU",
     "iv": "AB3ivL1yhYn6qFNv",
     "salt": "k0+6MLRrRkY59KRPcwpiFA=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card4-date": {
     "ct": "ZGGRQZXjJEUopLjnvK/wuf512ctTM1jU9vsz",
     "iv": "qyf+xfzEYp9gumDp",
     "salt": "iXUU/xbu02Zf/BPziUCQlQ=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card4-title": {
     "ct": "sBqcEt/4sUK5s66SlXfbRHsGRpokfB7kTQ==",
     "iv": "TL6wDPhTTWRB5sQn",
     "salt": "1QuL8KqsM4EapX+dM+wjvA=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "card4-text": {
     "ct": "YqlGINpZz9ZtZTVKj4Leh6wQCAfxPrK1sLnB0kDFWfRUQmEIPCNuQJF6pFYHwrfg6pAxueF0xJN4tWz9VSsOkmuXzxD+1lKFe8GjIh86MG3QxivOV6xq0RQvgttR/D5rUCZgRdzUnPNq5RghweE=",
     "iv": "IteFXziY7+sHmnp2",
     "salt": "yP499ElaOzqGvw4vKt4Lfg=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "album-title": {
     "ct": "oNMatzJlLGQt62CCOSrIjFit6B60bh8jqfci+ygxvktbcCCSJLQ=",
     "iv": "L+lhiuhmTjA6vaVN",
     "salt": "RyCo6uQZqUF/e1QxtTUrHw=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "album-intro": {
     "ct": "DEAmQvyRMnnqWGXCe9GT7g2X2c9FJfmb6B6JZN8HC89DxA9jUi+wWw==",
     "iv": "SDcUWxWAaFKokngq",
     "salt": "BE4FHxWngBoHn9O36CyEeA=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "feelings-title": {
     "ct": "hOHyuHvhoO5IsuH8cSEeM+8EEzNUHGPnaLh0DVObMfZ6ZHY6hQ==",
     "iv": "lV5rnMun1eP8sfq2",
     "salt": "0X2g0ksq/010kRISJ/RDgg=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "feelings-p1": {
     "ct": "ILNY8XJE7gjvMfY0S9uwucOw9n1YPBvLxrWiBg8xjSwn4dhEG9Ql5ulLMJ5QK7Pv14v83nycC4qGpi/7jQE0Y1Zi4tDbxJokcnB06IyXhA+sdlDk0MNCauZt5DXrAS0Hr1PUn3ELycfxgjyaqyJJITSNcOOtPVtmLuAkoj+KmSvympbjG66XO20+g+U5zBVlWt0+V/TIwZd+VZUiYJukdVarH4l5LRR4TXjcqmkYC9w3aIHzN7qg4LaKV2onFP8yDP3IoowWPEPvmQZzISkBJSsx64EPccvNAg==",
     "iv": "HmfqYmJNgzj0wmZ9",
     "salt": "bAZvj1bTwH3z4qRoh8cs5Q=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "feelings-p2": {
     "ct": "nmk9RY9cX2OjYprJnMoOxmFMK+RBZ2cUJsYnvLZ3NM8WG6q7unrexQDM/26/860eWET6RK+9lx8LHQDB8sIxa3Zw4a8Hk7lKQIHwWA7xYzsZl9ZYJsd34IvZMpyUEwo0zA+69c6p2CJ3zux7Tj/uv2gyKvF2uFQrBXmjD782+Z97GncpwahnBtAur6MjGUR1dCG9Fg9xwwHzl9wqwBuJ4aW0kMj3uQFrgHZk8sZJZiT5ahBzX8v8F6QBLkxUsDhJtlq+vKp5ODUEBMxTT0H0cEU1lWSceKqFYtFylB4fu/gioewN7XYp6bnWFkg+9vUrs51oTfnOQW0PyZhqR6ciPgadZFR7b2tjCzxoB92uqIyH3qSj5dE0fVkd9jOBFwkdRe+BhfOyYtu3+N+Zf/K3Hfp3Ib29hFf09SWi3KeLnm7n+KvuOFbqOFfV+57b5rYKGRAhQoP3SjdPEeJ9lEBCs+tEtNVrkfHoG9UjpcBDUccU/gHAtdRqpcXqZGnWZL9uGO3zU92Ck2k5QyiP//KW4Ra1NYXwgmnRLh0XlgO5czfkQhxcuy1jfi9MNg4LEwvw6NwGyLMKz7XdFLL8ekyWPdWcKdW27HJwXs3GM3y9NcO2YA8ZvPW2tMg77/efCiecZZWiadbVjL0KcOzBH/DqLbmEKgD848RrjUXDto+dipg+tNnHzWeM0rqPsQEpcmr7gaYu0swsPcOu15WwcyuoPKiYveIIlkQI0fEzgBFWf+qlrINg0axduqQvSbxV6Ckqh6g=",
     "iv": "spLwbl8L9LU5tOkI",
     "salt": "YYU++RrVw7jSmv3KN8CrRA=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "feelings-p3": {
     "ct": "b1lM6rN5VldBlTsxNOrlGLGtH7dUwl3xZ7ITkfeeO/ZXXo8FOSe28TgGXtqEbO2ATnQQP0FyGmDvRMaG4CowO8Lvv/Eq58Bo+LCxr6URZxvD4P2XSK9h+k72T87avm9625rRsuIsTx/JWaTt+xfZmcqsWROSsFoZsqxWFaYlEhefDk81uhq+c+9xMLabEcMYoK+X4/CzlmqwFyM=",
     "iv": "Edn1hDk7gPZOE4JK",
     "salt": "NewmerASumdjis6wyGgkSA=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "music-title": {
     "ct": "/4EnwqiFcR1x8k2WyzpTls1Tb4Fq03jE5UKMtwA/GvvH",
     "iv": "UIddnl5lgYz8I7a8",
     "salt": "y92aYd8notJkYuv+kXhQIg=="
   },
-  "REDACTED_CAMILA_KEY": {
+  "music-intro": {
     "ct": "8XbPbvs2qQpav54lccDgN+LbNhW3MeMmGY9ISMbHGpYbc3E/8a2DdfI=",
     "iv": "XUxt9+6TtEXvRVkY",
     "salt": "YRg2SbXm/0YM07UyikamXg=="

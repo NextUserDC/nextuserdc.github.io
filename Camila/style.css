@@ -1154,6 +1154,19 @@ body {
     background: rgba(255, 101, 163, 0.3);
 }
 
+.btn-enviar-password:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-enviar-password .spinner {
+    animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+    to { transform: rotate(360deg); }
+}
+
 #password-error {
     color: var(--accent-secondary);
     font-size: 0.85rem;
