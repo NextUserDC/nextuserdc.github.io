@@ -825,6 +825,7 @@ header { text-align: center; margin-bottom: 2.5rem; animation: fadeInDown 0.8s e
 
 .ncloud-modal-sm { max-width: 380px; }
 
+.ncloud-modal .modal-header { border-bottom: none; }
 .ncloud-modal-body { padding: 1.25rem 1.5rem; }
 
 .ncloud-share-filename {
