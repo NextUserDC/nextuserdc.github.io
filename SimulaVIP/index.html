@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Venta de entradas">
+    <meta name="keywords" content="Venta de entradas, Simulavip, Simulador, VIP, Entradas, Comprar entradas">
+    <meta name="author" content="Elí Nuñez, Camila Aponte, Jade Gomez">
+    <title>SimulaVIP</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');</style>
+</head>
+<body>
+    <main>
+        <section class="login">
+            <header>
+                <h1>SimulaVIP - Login</h1>
+            </header>
+            <div>
+                <form id="formLogin" method="post" action="">
+                    <input id="inpUser" type="text" name="username" placeholder="Usuario" autocomplete="off">
+                    <input id="inpPass" type="password" name="password" placeholder="Contraseña" autocomplete="off">
+                </form>
+                <button id="btnLogin" type="submit">Ingresar</button>
+                <p id="errorLogin"></p>
+            </div>
+        </section>
+        <section class="compra" style="display: none;">
+            <button id="btnCerrar">Cerrar Sesión</button>
+            <header>
+                <h1>SimulaVIP - Compra</h1>
+            </header>
+            <div class="compra-section">
+                <form id="formCompra" action="">
+                    <input id="nombreComprador" type="text" name="nombreComprador" placeholder="Nombre del comprador" autocomplete="off">
+                    <div class="campo-entrada">
+                        <label for="cantidadAdultos">Entradas Adulto - $3.500 c/u</label>
+                        <input id="cantidadAdultos" type="number" name="cantidadAdultos" value="0" step="1" min="0" placeholder="Cantidad" autocomplete="off">
+                    </div>
+                    <div class="campo-entrada">
+                        <label for="cantidadNiños">Entradas Niño - $1.500 c/u</label>
+                        <input id="cantidadNiños" type="number" name="cantidadNiños" value="0" step="1" min="0" placeholder="Cantidad" autocomplete="off">
+                    </div>
+                </form>
+                <button id="btnComprar" type="submit">Comprar</button>
+                <p id="errorCompra"></p>
+            </div>
+            <div class="resultado" style="display: none;">
+                <p id="resComprador"></p>
+                <p id="resAdultos"></p>
+                <p id="resNinos"></p>
+                <p id="resDescuento"></p>
+                <div class="total-fila">
+                    <p id="resTotal"></p>
+                    <button id="btnVolver">Volver</button>
+                </div>
+            </div>
+        </section>
+    </main> 
+    <script src="js/script.js"></script>
+</body>
+</html>
