@@ -106,6 +106,7 @@
   const copyBtn = $('copy-btn');
   const emailTimer = $('email-timer');
   const timerText = $('timer-text');
+  const timerPrefix = $('timer-prefix');
   const modeRandom = $('mode-random');
   const modeCustom = $('mode-custom');
   const customName = $('custom-name');
@@ -386,6 +387,17 @@
   }
 
   function updateTimer() {
+    if (endAt && new Date(endAt).getFullYear() >= 2099) {
+      timerPrefix.textContent = '';
+      timerText.textContent = '\u221E Permanente';
+      timerText.style.color = '#22c55e';
+      hide(extendBtn);
+      clearInterval(timerInterval);
+      return;
+    }
+    timerPrefix.textContent = 'Expira en ';
+    timerText.style.color = '';
+    show(extendBtn);
     const remaining = endAt - Date.now();
     if (remaining <= 0) {
       timerText.textContent = '00:00:00';
@@ -457,6 +469,7 @@
         if (!isNaN(realEnd) && realEnd !== endAt) {
           endAt = realEnd;
           await storeSecure('tmail_endAt', String(endAt));
+          updateTimer();
         }
       }
 
@@ -802,7 +815,7 @@
     updateTokenDisplay();
     hide(emailPlaceholder); show(emailAddress); show(emailTimer); show(actionBtns);
     if (currentIsCustom) {
-      show(tokenDisplay); show(extendBtn); show(headerNav);
+      show(tokenDisplay); show(headerNav);
     } else {
       hide(tokenDisplay); hide(extendBtn); hide(headerNav); hideNCloud();
     }
