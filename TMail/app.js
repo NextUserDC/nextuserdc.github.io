@@ -861,6 +861,7 @@
   }
 
   function showNCloud() {
+    closeCompose();
     hide(emailSection);
     hide(inboxSection);
     hide(viewer);
