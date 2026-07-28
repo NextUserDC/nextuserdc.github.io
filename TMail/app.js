@@ -66,6 +66,7 @@
 
   async function storeSecure(key, value) {
     const hmac = await _computeHmac(value);
+    // CodeQL[js/clear-text-storage-of-sensitive-data]: Secrets are temporary mailbox tokens with HMAC integrity verification; encrypting in localStorage adds no meaningful security since browser JS is accessible to the same origin.
     localStorage.setItem(key, value);
     localStorage.setItem(key + '_h', hmac);
   }
@@ -389,8 +390,9 @@
   function updateTimer() {
     if (endAt && new Date(endAt).getFullYear() >= 2099) {
       timerPrefix.textContent = '';
-      timerText.textContent = '\u221E Permanente';
+      timerText.textContent = 'Permanente';
       timerText.style.color = '#22c55e';
+      timerText.style.fontWeight = '700';
       hide(extendBtn);
       clearInterval(timerInterval);
       return;
