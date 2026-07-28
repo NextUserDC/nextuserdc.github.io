@@ -1195,6 +1195,7 @@
   backBtn.addEventListener('click', closeViewer);
   composeBtn.addEventListener('click', () => openCompose());
   composeClose.addEventListener('click', closeCompose);
+  composeModal.addEventListener('click', (e) => { if (e.target === composeModal) closeCompose(); });
   composeSend.addEventListener('click', sendEmail);
   replyBtn.addEventListener('click', () => {
     openCompose({

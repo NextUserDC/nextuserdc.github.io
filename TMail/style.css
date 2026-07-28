@@ -570,9 +570,28 @@ header { text-align: center; margin-bottom: 2.5rem; animation: fadeInDown 0.8s e
 .compose-modal { animation: fadeIn 0.25s ease-out; }
 
 .compose-card {
-  max-width: 600px; max-height: 90vh; overflow-y: auto;
+  max-width: 700px; max-height: 90vh; overflow-y: auto;
+  background: var(--glass-bg); backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border); border-radius: 16px;
   animation: fadeInUp 0.3s ease-out;
 }
+
+.compose-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 1.5rem 0;
+}
+
+.compose-header h3 { margin: 0; font-size: 1rem; font-weight: 600; color: #f0f0ff; }
+
+.compose-close {
+  background: none; border: none; color: rgba(255,255,255,0.6);
+  cursor: pointer; padding: 0; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; transition: all 0.2s;
+}
+
+.compose-close svg { width: 20px; height: 20px; }
+.compose-close:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
 .compose-fields { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
 
