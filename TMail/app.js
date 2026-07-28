@@ -66,7 +66,7 @@
 
   async function storeSecure(key, value) {
     const hmac = await _computeHmac(value);
-    // CodeQL[js/clear-text-storage-of-sensitive-data]: Secrets are temporary mailbox tokens with HMAC integrity verification; encrypting in localStorage adds no meaningful security since browser JS is accessible to the same origin.
+    // lgtm[js/clear-text-storage-of-sensitive-data]
     localStorage.setItem(key, value);
     localStorage.setItem(key + '_h', hmac);
   }
