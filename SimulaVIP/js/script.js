@@ -59,9 +59,19 @@ btnComprar.addEventListener("click", (e) => {
     let adultos = parseInt(cantidadAdultos.value);
     let niños = parseInt(cantidadNiños.value);
 
-    // Validación de campos vacíos
-    if (comprador.trim() === "" || cantidadAdultos.value.trim() === "" || cantidadNiños.value.trim() === "") {
-        errorCompra.innerText = "Error: Complete todos los campos";
+    // Validación de campos vacíos (uno por uno)
+    if (comprador.trim() === "") {
+        errorCompra.innerText = "Error: Ingrese el nombre del comprador";
+        errorCompra.style.color = "red";
+        setTimeout(() => { errorCompra.innerText = ""; }, 2000);
+        return;
+    } else if (cantidadAdultos.value.trim() === "") {
+        errorCompra.innerText = "Error: Ingrese la cantidad de entradas adulto";
+        errorCompra.style.color = "red";
+        setTimeout(() => { errorCompra.innerText = ""; }, 2000);
+        return;
+    } else if (cantidadNiños.value.trim() === "") {
+        errorCompra.innerText = "Error: Ingrese la cantidad de entradas niño";
         errorCompra.style.color = "red";
         setTimeout(() => { errorCompra.innerText = ""; }, 2000);
         return;
@@ -78,6 +88,14 @@ btnComprar.addEventListener("click", (e) => {
     // Validación de campos negativos
     else if (adultos < 0 || niños < 0) {
         errorCompra.innerText = "Error: Los valores no pueden ser negativos";
+        errorCompra.style.color = "red";
+        setTimeout(() => { errorCompra.innerText = ""; }, 2000);
+        return;
+    }
+
+    // Validación: al menos una entrada debe ser mayor a 0
+    else if (adultos === 0 && niños === 0) {
+        errorCompra.innerText = "Error: Ingrese al menos 1 entrada (adulto o niño)";
         errorCompra.style.color = "red";
         setTimeout(() => { errorCompra.innerText = ""; }, 2000);
         return;
