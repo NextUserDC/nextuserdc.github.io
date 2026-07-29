@@ -41,6 +41,25 @@ btnLogin.addEventListener("click", (e) => {
     let user = inpUser.value;
     let pass = inpPass.value;
 
+    // Validación de campos vacíos en login
+    if (user.trim() === "" && pass.trim() === "") {
+        errorLogin.innerText = "Error: Ingrese usuario y contraseña";
+        errorLogin.style.color = "red";
+        setTimeout(() => { errorLogin.innerText = ""; }, 2000);
+        return;
+    } else if (user.trim() === "") {
+        errorLogin.innerText = "Error: Ingrese el usuario";
+        errorLogin.style.color = "red";
+        setTimeout(() => { errorLogin.innerText = ""; }, 2000);
+        return;
+    } else if (pass.trim() === "") {
+        errorLogin.innerText = "Error: Ingrese la contraseña";
+        errorLogin.style.color = "red";
+        setTimeout(() => { errorLogin.innerText = ""; }, 2000);
+        return;
+    }
+
+    // Validación de credenciales
     if (user == "ventas" && pass == "1234") {
         login[0].style.display = "none";
         compra[0].style.display = "block";
