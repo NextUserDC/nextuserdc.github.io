@@ -315,7 +315,7 @@ function initPanel() {
   initPropertiesPanel(panel.querySelector('[data-section="properties"] .panel__content'));
   initBlendingPanel(panel.querySelector('[data-section="blending"] .panel__content'));
 
-  // History panel is in a separate section
+  
   const historySection = document.createElement('div');
   historySection.className = 'panel__section';
   historySection.setAttribute('data-section', 'history');

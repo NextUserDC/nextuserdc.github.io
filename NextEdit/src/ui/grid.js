@@ -13,8 +13,8 @@ export function initGrid() {
   
   bus.on('canvas:mousemove', (pos) => {
     if (snapEnabled && gridVisible) {
-      // Snap pointer to nearest grid intersection
-      // Applied in tool mouse handlers via bus event
+      
+      
     }
   });
 }
@@ -40,7 +40,7 @@ function drawGrid(canvas) {
   const zoom = canvas.getZoom();
   const vpt = canvas.viewportTransform;
   
-  // Draw grid using a temporary fabric object
+  
   const gridSizeScaled = gridSize * zoom;
   const offsetX = (vpt[4] % gridSizeScaled);
   const offsetY = (vpt[5] % gridSizeScaled);

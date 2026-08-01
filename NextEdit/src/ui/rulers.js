@@ -27,7 +27,7 @@ function createRulers() {
   const canvasArea = document.getElementById('canvas-area');
   if (!canvasArea) return;
   
-  // Horizontal ruler
+  
   rulerH = document.createElement('div');
   rulerH.className = 'canvas-area__ruler-h';
   rulerH.style.cssText = `
@@ -37,7 +37,7 @@ function createRulers() {
   `;
   canvasArea.appendChild(rulerH);
   
-  // Vertical ruler
+  
   rulerV = document.createElement('div');
   rulerV.className = 'canvas-area__ruler-v';
   rulerV.style.cssText = `
@@ -61,7 +61,7 @@ function drawRulers() {
   const canvasW = editor.canvas.getWidth();
   const canvasH = editor.canvas.getHeight();
   
-  // Horizontal ruler ticks
+  
   let hTicks = '';
   const step = calculateTickStep(zoom);
   for (let x = 0; x <= canvasW; x += step) {
@@ -75,7 +75,7 @@ function drawRulers() {
   }
   rulerH.innerHTML = hTicks;
   
-  // Vertical ruler ticks
+  
   let vTicks = '';
   for (let y = 0; y <= canvasH; y += step) {
     const py = y * zoom + vpt[5];

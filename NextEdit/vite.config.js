@@ -5,7 +5,14 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    target: 'es2020'
+    target: 'es2020',
+    rollupOptions: {
+      output: {
+        entryFileNames: 'main.js',
+        chunkFileNames: '[name].js',
+        assetFileNames: '[name].[ext]'
+      }
+    }
   },
   server: {
     port: 3000

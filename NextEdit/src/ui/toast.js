@@ -2,15 +2,22 @@ import { bus } from '../core/events.js';
 
 let container = null;
 
+let toastBound = false;
+
 export function initToast() {
-  container = document.createElement('div');
-  container.className = 'toast-container';
-  container.style.cssText = 'position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;';
-  document.body.appendChild(container);
-  
-  bus.on('toast:show', ({ message, type = 'info', duration = 3000 }) => {
-    showToast(message, type, duration);
-  });
+  if (!container || !container.parentElement) {
+    container = document.createElement('div');
+    container.className = 'toast-container';
+    container.style.cssText = 'position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;';
+    document.body.appendChild(container);
+  }
+
+  if (!toastBound) {
+    toastBound = true;
+    bus.on('toast:show', ({ message, type = 'info', duration = 3000 }) => {
+      showToast(message, type, duration);
+    });
+  }
 }
 
 function showToast(message, type, duration) {
@@ -42,7 +49,10 @@ function removeToast(toast) {
   setTimeout(() => toast.remove(), 250);
 }
 
-// Auto-show errors
-window.addEventListener('error', (e) => {
-  bus.emit('toast:show', { message: e.message, type: 'error' });
-});
+
+if (!window._nexteditErrorBound) {
+  window._nexteditErrorBound = true;
+  window.addEventListener('error', (e) => {
+    bus.emit('toast:show', { message: e.message, type: 'error' });
+  });
+}

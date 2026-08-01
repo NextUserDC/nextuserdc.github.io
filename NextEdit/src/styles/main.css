@@ -1,8 +1,5 @@
-/* ═══════════════════════════════════════════════════════════
-   NextEdit – Dark Theme CSS (Photoshop-like Editor)
-   ═══════════════════════════════════════════════════════════ */
 
-/* ── Variables ──────────────────────────────────────────── */
+
 :root {
   --bg-primary: #1a1a2e;
   --bg-secondary: #16213e;
@@ -23,7 +20,6 @@
   --transition: 0.15s ease;
 }
 
-/* ── Reset ──────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -59,7 +55,6 @@ ol {
   list-style: none;
 }
 
-/* ── Scrollbar ──────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -78,7 +73,6 @@ ol {
   background: var(--border-light);
 }
 
-/* ── Main Layout ────────────────────────────────────────── */
 #app {
   display: grid;
   grid-template-rows: 40px 36px 1fr 28px;
@@ -93,9 +87,6 @@ ol {
   overflow: hidden;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   MENUBAR
-   ═══════════════════════════════════════════════════════════ */
 .menubar {
   grid-area: menubar;
   display: flex;
@@ -133,7 +124,6 @@ ol {
   margin: 0 4px;
 }
 
-/* ── Dropdown Menu ──────────────────────────────────────── */
 .menubar__dropdown {
   display: none;
   position: absolute;
@@ -183,9 +173,6 @@ ol {
   margin: 4px 0;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TOOLBAR
-   ═══════════════════════════════════════════════════════════ */
 .toolbar {
   grid-area: toolbar;
   display: flex;
@@ -233,7 +220,6 @@ ol {
   cursor: pointer;
 }
 
-/* ── CSS-only Tooltip ───────────────────────────────────── */
 .toolbar__btn[data-tooltip]::after {
   content: attr(data-tooltip);
   position: absolute;
@@ -265,9 +251,6 @@ ol {
   margin: 4px 0;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   OPTIONS BAR
-   ═══════════════════════════════════════════════════════════ */
 .optionsbar {
   grid-area: optionsbar;
   display: flex;
@@ -358,9 +341,6 @@ ol {
   flex-shrink: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   CANVAS AREA
-   ═══════════════════════════════════════════════════════════ */
 .canvas-area {
   grid-area: canvas;
   display: flex;
@@ -391,7 +371,6 @@ ol {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
 }
 
-/* ── Drop Zone Overlay ──────────────────────────────────── */
 .canvas-area__dropzone {
   position: absolute;
   inset: 0;
@@ -414,7 +393,6 @@ ol {
   color: var(--accent);
 }
 
-/* ── Rulers ─────────────────────────────────────────────── */
 .canvas-area__ruler-h,
 .canvas-area__ruler-v {
   position: absolute;
@@ -437,9 +415,6 @@ ol {
   border-right: 1px solid var(--border);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   PANEL (Right Sidebar)
-   ═══════════════════════════════════════════════════════════ */
 .panel {
   grid-area: panel;
   display: flex;
@@ -451,7 +426,6 @@ ol {
   z-index: 50;
 }
 
-/* ── Panel Sections ─────────────────────────────────────── */
 .panel__section {
   border-bottom: 1px solid var(--border);
   animation: slideIn 0.15s ease;
@@ -496,7 +470,6 @@ ol {
   display: none;
 }
 
-/* ── Layers Panel ───────────────────────────────────────── */
 .layers__list {
   display: flex;
   flex-direction: column;
@@ -642,7 +615,6 @@ ol {
   height: 16px;
 }
 
-/* ── Color Panel ────────────────────────────────────────── */
 .color-panel__wheel {
   position: relative;
   width: 100%;
@@ -902,7 +874,6 @@ ol {
   border-color: var(--accent);
 }
 
-/* ── Properties Panel ───────────────────────────────────── */
 .properties__row {
   display: flex;
   align-items: center;
@@ -1011,9 +982,6 @@ ol {
   text-align: center;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   STATUSBAR
-   ═══════════════════════════════════════════════════════════ */
 .statusbar {
   grid-area: statusbar;
   display: flex;
@@ -1063,9 +1031,6 @@ ol {
   font-size: 10px;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   MODALS
-   ═══════════════════════════════════════════════════════════ */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1139,7 +1104,6 @@ ol {
   border-top: 1px solid var(--border);
 }
 
-/* ── Form Inputs ────────────────────────────────────────── */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -1189,7 +1153,6 @@ ol {
   border-color: var(--accent);
 }
 
-/* ── Buttons ────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -1250,9 +1213,6 @@ ol {
   font-size: 11px;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   CONTEXT MENU
-   ═══════════════════════════════════════════════════════════ */
 .context-menu {
   position: fixed;
   min-width: 180px;
@@ -1295,9 +1255,6 @@ ol {
   margin-left: 24px;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TOAST / NOTIFICATIONS
-   ═══════════════════════════════════════════════════════════ */
 .toast-container {
   position: fixed;
   bottom: 40px;
@@ -1359,9 +1316,6 @@ ol {
   color: var(--text);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   LOADING / SPINNER
-   ═══════════════════════════════════════════════════════════ */
 .spinner {
   width: 20px;
   height: 20px;
@@ -1377,9 +1331,6 @@ ol {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   PROGRESS BAR
-   ═══════════════════════════════════════════════════════════ */
 .progress {
   width: 100%;
   height: 4px;
@@ -1395,9 +1346,6 @@ ol {
   transition: width 0.3s ease;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TABS
-   ═══════════════════════════════════════════════════════════ */
 .tabs {
   display: flex;
   gap: 0;
@@ -1423,9 +1371,6 @@ ol {
   border-bottom-color: var(--accent);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TOGGLE SWITCH
-   ═══════════════════════════════════════════════════════════ */
 .toggle {
   position: relative;
   width: 36px;
@@ -1467,9 +1412,6 @@ ol {
   transform: translateX(16px);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TOOLTIP (generic)
-   ═══════════════════════════════════════════════════════════ */
 [data-tooltip] {
   position: relative;
 }
@@ -1498,9 +1440,6 @@ ol {
   opacity: 1;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   ANIMATIONS
-   ═══════════════════════════════════════════════════════════ */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -1532,9 +1471,6 @@ ol {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   ZOOM CONTROLS
-   ═══════════════════════════════════════════════════════════ */
 .zoom-controls {
   position: absolute;
   bottom: 12px;
@@ -1585,9 +1521,6 @@ ol {
   color: var(--text);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   HISTORY PANEL (Undo/Redo)
-   ═══════════════════════════════════════════════════════════ */
 .history__list {
   display: flex;
   flex-direction: column;
@@ -1628,9 +1561,6 @@ ol {
   height: 14px;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════════════════════════ */
 @media (max-width: 900px) {
   #app {
     grid-template-columns: 40px 1fr 60px;
@@ -1701,9 +1631,6 @@ ol {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SELECTION / MARQUEE
-   ═══════════════════════════════════════════════════════════ */
 .marquee {
   position: absolute;
   border: 1px dashed #fff;
@@ -1711,7 +1638,6 @@ ol {
   z-index: 100;
 }
 
-/* marching ants animation */
 .marquee--animated {
   background-image: repeating-linear-gradient(
     90deg,
@@ -1730,9 +1656,6 @@ ol {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   GUIDE LINES
-   ═══════════════════════════════════════════════════════════ */
 .guide {
   position: absolute;
   background: var(--accent);
@@ -1752,9 +1675,6 @@ ol {
   width: 1px;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   HIDDEN UTILITY
-   ═══════════════════════════════════════════════════════════ */
 .hidden {
   display: none !important;
 }

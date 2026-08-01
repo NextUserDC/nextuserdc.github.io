@@ -1,5 +1,5 @@
 import * as fabric from 'fabric';
-import { initCanvas, getCanvas, resizeCanvas } from './canvas.js';
+import { initCanvas, getCanvas, resizeCanvas, destroyCanvas } from './canvas.js';
 import { History } from './history.js';
 import { bus } from './events.js';
 
@@ -24,6 +24,16 @@ class Editor {
   constructor() {
     this.canvas = null;
     this.history = null;
+    this.currentTool = 'move';
+    this.activeObject = null;
+    this._initialized = false;
+  }
+
+  reset() {
+    destroyCanvas();
+    this.canvas = null;
+    this.history = null;
+    this._clipboard = null;
     this.currentTool = 'move';
     this.activeObject = null;
     this._initialized = false;

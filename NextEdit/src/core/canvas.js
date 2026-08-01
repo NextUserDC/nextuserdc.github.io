@@ -161,3 +161,11 @@ export function getSnappedPointer(e) {
   }
   return { x: pointer.x, y: pointer.y };
 }
+
+export function destroyCanvas() {
+  if (canvas) {
+    canvas.dispose();
+    canvas = null;
+  }
+  container = null;
+}

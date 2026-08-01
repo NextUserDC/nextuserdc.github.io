@@ -103,7 +103,7 @@ export function initShortcuts() {
       }
     }
 
-    // Arrow keys move selected objects
+    
     if (inFabric && ['arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key)) {
       const active = editor?.canvas?.getActiveObject();
       if (active) {

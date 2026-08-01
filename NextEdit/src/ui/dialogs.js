@@ -145,11 +145,7 @@ function injectKeyframes() {
   document.head.appendChild(style);
 }
 
-/**
- * General dialog function
- * @param {{ title: string, content: string|HTMLElement, buttons?: Array<{label:string, value:any, variant?:string}>, onClose?: Function }} opts
- * @returns {Promise<any>}
- */
+
 export function showDialog({ title, content, buttons = [{ label: 'Cerrar', value: null, variant: 'secondary' }], onClose }) {
   injectKeyframes();
 
@@ -221,9 +217,7 @@ export function showDialog({ title, content, buttons = [{ label: 'Cerrar', value
   });
 }
 
-/**
- * Canvas Size Dialog
- */
+
 export function showCanvasSizeDialog() {
   injectKeyframes();
 
@@ -312,9 +306,7 @@ export function showCanvasSizeDialog() {
   });
 }
 
-/**
- * Shortcuts Dialog
- */
+
 export function showShortcutsDialog() {
   injectKeyframes();
 
@@ -430,9 +422,7 @@ export function showShortcutsDialog() {
   });
 }
 
-/**
- * About Dialog
- */
+
 export function showAboutDialog() {
   injectKeyframes();
 
@@ -484,9 +474,7 @@ export function showAboutDialog() {
   });
 }
 
-/**
- * Filter Dialog (floating panel, stays open)
- */
+
 export function showFilterDialog(filterName, onApply) {
   injectKeyframes();
 
@@ -663,9 +651,7 @@ export function showFilterDialog(filterName, onApply) {
   };
 }
 
-/**
- * Initialize all dialog bus listeners
- */
+
 export function initDialogs() {
   showCanvasSizeDialog();
   showShortcutsDialog();
