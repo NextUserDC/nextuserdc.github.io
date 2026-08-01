@@ -90,12 +90,13 @@ function setupDoubleClickEdit(fabricCanvas) {
 function setupResizeObserver() {
   if (!container) return;
 
-  let resizeTimer = null;
+  let resizing = false;
   const resizeObserver = new ResizeObserver(() => {
-    if (resizeTimer) cancelAnimationFrame(resizeTimer);
-    resizeTimer = requestAnimationFrame(() => {
+    if (resizing) return;
+    resizing = true;
+    requestAnimationFrame(() => {
       resizeCanvas();
-      resizeTimer = null;
+      resizing = false;
     });
   });
   resizeObserver.observe(container);

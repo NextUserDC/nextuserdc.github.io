@@ -12,6 +12,19 @@ import { initLanding } from './landing.js';
 import { saveProject } from './storage.js';
 import { bus } from './core/events.js';
 
+const _origError = window.onerror;
+window.onerror = function(msg) {
+  if (typeof msg === 'string' && msg.toLowerCase().includes('resizeobserver')) return false;
+  if (_origError) return _origError.apply(this, arguments);
+};
+window.addEventListener('error', function(e) {
+  if (e.message && e.message.toLowerCase().includes('resizeobserver')) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    return false;
+  }
+}, true);
+
 let currentProject = null;
 let autoSaveTimer = null;
 
