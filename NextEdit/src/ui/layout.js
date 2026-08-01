@@ -45,7 +45,10 @@ function initMenubar() {
         { action: 'file:save-png', label: 'Guardar PNG', shortcut: 'Ctrl+Shift+S' },
         { action: 'file:save-jpg', label: 'Guardar JPG' },
         { action: 'file:save-webp', label: 'Guardar WebP' },
+        { action: 'file:save-svg', label: 'Guardar SVG' },
+        { action: 'file:copy-clipboard', label: 'Copiar al portapapeles' },
         { separator: true },
+        { action: 'file:open-url', label: 'Abrir desde URL' },
         { action: 'file:close', label: 'Cerrar' }
       ]
     },
@@ -59,7 +62,11 @@ function initMenubar() {
         { action: 'edit:paste', label: 'Pegar', shortcut: 'Ctrl+V' },
         { action: 'edit:delete', label: 'Eliminar', shortcut: 'Del' },
         { separator: true },
-        { action: 'edit:select-all', label: 'Seleccionar Todo', shortcut: 'Ctrl+A' }
+        { action: 'edit:select-all', label: 'Seleccionar Todo', shortcut: 'Ctrl+A' },
+        { separator: true },
+        { action: 'edit:group', label: 'Agrupar', shortcut: 'Ctrl+G' },
+        { action: 'edit:ungroup', label: 'Desagrupar', shortcut: 'Ctrl+Shift+G' },
+        { action: 'edit:free-transform', label: 'Transformación libre', shortcut: 'Ctrl+T' }
       ]
     },
     {
@@ -81,7 +88,9 @@ function initMenubar() {
         { action: 'layer:delete', label: 'Eliminar capa' },
         { separator: true },
         { action: 'layer:merge-down', label: 'Fusionar hacia abajo' },
-        { action: 'layer:flatten', label: 'Aplanar imagen' }
+        { action: 'layer:flatten', label: 'Aplanar imagen' },
+        { separator: true },
+        { action: 'layer:merge-visible', label: 'Fusionar visibles', shortcut: 'Ctrl+E' }
       ]
     },
     {
@@ -216,6 +225,7 @@ function initToolbar() {
     { name: 'paintbucket', label: 'Paint Bucket', key: 'G', icon: `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12.5 2.5l5 5-7 7H5.5v-5l7-7z"/><path d="M5.5 14.5L2 18"/></svg>` },
     { name: 'crop', label: 'Crop', key: 'C', icon: `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3v12h12M3 5h12v12"/></svg>` },
     { name: 'eyedropper', label: 'Eyedropper', key: 'I', icon: `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 2l3 3-5 5-2-2-6 6v2h2l6-6-2-2 5-5z"/><path d="M9 10l-4 4"/></svg>` },
+    { name: 'magicwand', label: 'Magic Wand', key: 'W', icon: `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 18L10 10M10 2l1.5 3.5L15 7l-3.5 1.5L10 12l-1.5-3.5L5 7l3.5-1.5L10 2z"/><path d="M15 14l.7 1.5L17 16.2l-1.3.7L15 18.5l-.7-1.6L13 16.2l1.3-.7z"/></svg>` },
     { name: 'zoom', label: 'Zoom', key: 'Z', icon: `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5L17 17"/><path d="M7 9h4M9 7v4"/></svg>` }
   ];
 
@@ -304,6 +314,28 @@ function initPanel() {
   initColorPanel(panel.querySelector('[data-section="color"] .panel__content'));
   initPropertiesPanel(panel.querySelector('[data-section="properties"] .panel__content'));
   initBlendingPanel(panel.querySelector('[data-section="blending"] .panel__content'));
+
+  // History panel is in a separate section
+  const historySection = document.createElement('div');
+  historySection.className = 'panel__section';
+  historySection.setAttribute('data-section', 'history');
+  historySection.innerHTML = `
+    <div class="panel__header">
+      <span>Historial</span>
+      <span class="panel__header-icon">▾</span>
+    </div>
+    <div class="panel__content"></div>
+  `;
+  panel.appendChild(historySection);
+  
+  historySection.querySelector('.panel__header').addEventListener('click', () => {
+    const content = historySection.querySelector('.panel__content');
+    const icon = historySection.querySelector('.panel__header-icon');
+    const collapsed = content.classList.toggle('panel__content--collapsed');
+    icon.classList.toggle('panel__header-icon--collapsed', collapsed);
+  });
+  
+  import('./panels/history.js').then(m => m.initHistoryPanel(historySection.querySelector('.panel__content')));
 }
 
 function initStatusbar() {
@@ -330,6 +362,7 @@ function initStatusbar() {
       text: 'Texto',
       shapes: 'Formas',
       paintbucket: 'Relleno',
+      magicwand: 'Varita mágica',
       crop: 'Recortar',
       eyedropper: 'Cuentagotas',
       zoom: 'Zoom'

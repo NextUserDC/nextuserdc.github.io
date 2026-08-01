@@ -1,112 +1,120 @@
+import * as fabric from 'fabric';
 import { editor } from '../core/editor.js';
 import { bus } from '../core/events.js';
-import * as fabric from 'fabric';
+
+let isDrawing = false;
+let startX = 0;
+let startY = 0;
+let overlay = null;
+let mode = 'rect';
+
+const OVERLAY_STYLE = {
+  stroke: '#4488ff',
+  strokeWidth: 1,
+  strokeDashArray: [5, 3],
+  fill: 'rgba(68,136,255,0.08)',
+  selectable: false,
+  evented: false,
+  excludeFromExport: true,
+};
+
+function createOverlay(x, y, w, h) {
+  const canvas = editor.canvas;
+  if (overlay) { canvas.remove(overlay); overlay = null; }
+
+  if (mode === 'ellipse') {
+    overlay = new fabric.Ellipse({
+      left: Math.min(x, x + w), top: Math.min(y, y + h),
+      rx: Math.abs(w) / 2, ry: Math.abs(h) / 2,
+      ...OVERLAY_STYLE,
+    });
+  } else {
+    overlay = new fabric.Rect({
+      left: Math.min(x, x + w), top: Math.min(y, y + h),
+      width: Math.abs(w), height: Math.abs(h),
+      ...OVERLAY_STYLE,
+    });
+  }
+  canvas.add(overlay);
+  canvas.renderAll();
+}
+
+function findIntersecting(bounds) {
+  const objects = editor.canvas.getObjects().filter(o => !o.excludeFromExport && o.selectable);
+  return objects.filter(obj => {
+    const b = obj.getBoundingRect();
+    return bounds.left < b.left + b.width && bounds.left + bounds.width > b.left &&
+           bounds.top < b.top + b.height && bounds.top + bounds.height > b.top;
+  });
+}
 
 export default {
   name: 'marquee',
-  icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="0" stroke-dasharray="5 3"/></svg>`,
+  icon: `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"><rect x="3" y="3" width="14" height="14" rx="1"/></svg>`,
   shortcut: 'm',
 
-  _selectionRect: null,
-  _startX: 0,
-  _startY: 0,
-
   activate() {
-    const canvas = editor.canvas;
-    canvas.selection = false;
-    canvas.defaultCursor = 'crosshair';
-    canvas.hoverCursor = 'crosshair';
+    isDrawing = false;
+    overlay = null;
+    editor.canvas.selection = false;
+    editor.canvas.setCursor('crosshair');
   },
 
   deactivate() {
-    this._removeOverlay();
-    const canvas = editor.canvas;
-    canvas.selection = true;
-    canvas.defaultCursor = 'default';
-    canvas.hoverCursor = 'move';
+    isDrawing = false;
+    if (overlay) { editor.canvas.remove(overlay); overlay = null; }
+    editor.canvas.setCursor('default');
   },
 
   onMouseDown(e) {
-    const canvas = editor.canvas;
-    const pointer = canvas.getScenePoint(e.e);
-
-    this._startX = pointer.x;
-    this._startY = pointer.y;
-    this._removeOverlay();
-
-    this._selectionRect = new fabric.Rect({
-      left: pointer.x,
-      top: pointer.y,
-      width: 0,
-      height: 0,
-      stroke: '#00aaff',
-      strokeWidth: 1,
-      strokeDashArray: [5, 3],
-      fill: 'rgba(0,170,255,0.08)',
-      selectable: false,
-      evented: false,
-      excludeFromExport: true,
-    });
-
-    canvas.add(this._selectionRect);
+    const pointer = editor.canvas.getScenePoint(e.e);
+    isDrawing = true;
+    startX = pointer.x;
+    startY = pointer.y;
   },
 
   onMouseMove(e) {
-    if (!this._selectionRect) return;
-    const canvas = editor.canvas;
-    const pointer = canvas.getScenePoint(e.e);
-
-    const left = Math.min(this._startX, pointer.x);
-    const top = Math.min(this._startY, pointer.y);
-    const width = Math.abs(pointer.x - this._startX);
-    const height = Math.abs(pointer.y - this._startY);
-
-    this._selectionRect.set({ left, top, width, height });
-    canvas.renderAll();
+    if (!isDrawing) return;
+    const pointer = editor.canvas.getScenePoint(e.e);
+    createOverlay(startX, startY, pointer.x - startX, pointer.y - startY);
   },
 
   onMouseUp() {
-    if (!this._selectionRect) return;
-    const canvas = editor.canvas;
+    if (!isDrawing) return;
+    isDrawing = false;
+    if (!overlay) return;
 
-    const selBounds = this._selectionRect.getBoundingRect();
-    if (selBounds.width < 2 && selBounds.height < 2) {
-      this._removeOverlay();
+    const bounds = overlay.getBoundingRect();
+    if (bounds.width < 2 && bounds.height < 2) {
+      editor.canvas.remove(overlay); overlay = null;
+      editor.canvas.discardActiveObject(); editor.canvas.renderAll();
       return;
     }
 
-    const intersecting = canvas.getObjects().filter((obj) => {
-      if (obj === this._selectionRect) return false;
-      const objBounds = obj.getBoundingRect();
-      return (
-        objBounds.left < selBounds.left + selBounds.width &&
-        objBounds.left + objBounds.width > selBounds.left &&
-        objBounds.top < selBounds.top + selBounds.height &&
-        objBounds.top + objBounds.height > selBounds.top
-      );
-    });
+    const hits = findIntersecting(bounds);
+    editor.canvas.remove(overlay); overlay = null;
 
-    this._removeOverlay();
-
-    if (intersecting.length > 0) {
-      const selection = new fabric.ActiveSelection(intersecting, { canvas });
-      canvas.setActiveObject(selection);
-      canvas.renderAll();
+    if (hits.length > 0) {
+      editor.canvas.setActiveObject(new fabric.ActiveSelection(hits, { canvas: editor.canvas }));
+    } else {
+      editor.canvas.discardActiveObject();
     }
-
-    canvas.defaultCursor = 'default';
-    canvas.hoverCursor = 'move';
-    bus.emit('tool:select', 'move');
-  },
-
-  _removeOverlay() {
-    if (this._selectionRect) {
-      editor.canvas.remove(this._selectionRect);
-      this._selectionRect = null;
-    }
+    editor.canvas.renderAll();
   },
 
   getOptionsHTML() {
-    return '';
-  },
+    return `
+      <div class="optionsbar__group">
+        <span class="optionsbar__label">Modo</span>
+        <select class="optionsbar__select" data-option="marquee-mode">
+          <option value="rect" ${mode === 'rect' ? 'selected' : ''}>Rectangular</option>
+          <option value="ellipse" ${mode === 'ellipse' ? 'selected' : ''}>Elíptico</option>
+        </select>
+      </div>
+    `;
+  }
 };
+
+bus.on('tool:option', (data) => {
+  if (data.key === 'marquee-mode') mode = data.value;
+});

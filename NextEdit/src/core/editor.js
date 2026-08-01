@@ -13,6 +13,8 @@ import eyedropperTool from '../tools/eyedropper.js';
 import zoomTool from '../tools/zoom.js';
 import marqueeTool from '../tools/marquee.js';
 import paintbucketTool from '../tools/paintbucket.js';
+import lassoTool from '../tools/lasso.js';
+import magicwandTool from '../tools/magicwand.js';
 
 import { registerTool, initToolManager } from '../ui/toolbar.js';
 import { openFileDialog, handleFileImport } from '../io/import.js';
@@ -44,6 +46,8 @@ class Editor {
     registerTool('zoom', zoomTool);
     registerTool('marquee', marqueeTool);
     registerTool('paintbucket', paintbucketTool);
+    registerTool('lasso', lassoTool);
+    registerTool('magicwand', magicwandTool);
 
     initToolManager();
 
@@ -183,6 +187,8 @@ class Editor {
   handleMenuAction(action) {
     switch (action) {
       case 'file:new':
+        this.newDocument(1200, 800, '#ffffff');
+        break;
       case 'file:open':
         openFileDialog();
         break;
@@ -378,12 +384,18 @@ class Editor {
         break;
       }
       case 'layer:new': {
-        const bg = this.canvas.backgroundColor;
-        this.canvas.backgroundColor = 'transparent';
-        const json = this.canvas.toJSON(['globalCompositeOperation']);
-        this.canvas.backgroundColor = bg;
-        const fgObjects = this.canvas.getObjects().filter(o => o.selectable !== false);
-        fgObjects.forEach(o => this.canvas.remove(o));
+        const layer = new fabric.Rect({
+          left: 0, top: 0,
+          width: this.canvas.getWidth(),
+          height: this.canvas.getHeight(),
+          fill: 'transparent',
+          stroke: 'transparent',
+          strokeWidth: 0,
+          selectable: true,
+          evented: true,
+          name: 'Capa vacía'
+        });
+        this.canvas.add(layer);
         this.canvas.renderAll();
         this.saveState();
         break;
@@ -430,6 +442,45 @@ class Editor {
         const active = this.canvas.getActiveObject();
         if (active) {
           this.canvas.sendObjectBackwards(active);
+          this.canvas.renderAll();
+          this.saveState();
+        }
+        break;
+      }
+      case 'edit:group': {
+        const active = this.canvas.getActiveObject();
+        if (active && active.type === 'activeSelection') {
+          active.toGroup();
+          this.canvas.renderAll();
+          this.saveState();
+        }
+        break;
+      }
+      case 'edit:ungroup': {
+        const active = this.canvas.getActiveObject();
+        if (active && active.type === 'group') {
+          active.toActiveSelection();
+          this.canvas.renderAll();
+          this.saveState();
+        }
+        break;
+      }
+      case 'edit:free-transform': {
+        const active = this.canvas.getActiveObject();
+        if (active) {
+          active.set({ selectable: true, evented: true, hasControls: true });
+          this.canvas.setActiveObject(active);
+          this.canvas.renderAll();
+        }
+        break;
+      }
+      case 'layer:merge-visible': {
+        const objects = this.canvas.getObjects().filter(o => o.visible !== false);
+        if (objects.length > 1) {
+          this.canvas.discardActiveObject();
+          const group = new fabric.Group(objects);
+          this.canvas.remove(...objects);
+          this.canvas.add(group);
           this.canvas.renderAll();
           this.saveState();
         }

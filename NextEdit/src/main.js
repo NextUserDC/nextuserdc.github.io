@@ -5,6 +5,9 @@ import { initShortcuts } from './ui/shortcuts.js';
 import { initContextMenu } from './ui/contextmenu.js';
 import { initDialogs } from './ui/dialogs.js';
 import { initFilters } from './filters/index.js';
+import { initToast } from './ui/toast.js';
+import { initGrid } from './ui/grid.js';
+import { initRulers } from './ui/rulers.js';
 import { bus } from './core/events.js';
 
 async function init() {
@@ -14,6 +17,9 @@ async function init() {
   initContextMenu();
   initDialogs();
   initFilters();
+  initToast();
+  initGrid();
+  initRulers();
   bus.emit('app:ready');
 }
 

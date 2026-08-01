@@ -95,6 +95,232 @@ export const FILTER_DEFS = [
     boolean: true,
     default: false,
     param: 'invert'
+  },
+  {
+    name: 'Enfocar',
+    action: 'filter:sharpen',
+    fabricFilter: 'Convolute',
+    min: 0,
+    max: 10,
+    default: 1,
+    step: 0.1,
+    unit: '',
+    param: 'amount',
+    customApply: (image, value) => {
+      const kernel = [
+        0, -1, 0,
+        -1, 5 + value, -1,
+        0, -1, 0
+      ];
+      image.filters.push(new fabric.filters.Convolute({
+        matrix: kernel
+      }));
+    }
+  },
+  {
+    name: 'Posterizar',
+    action: 'filter:posterize',
+    fabricFilter: 'Posterize',
+    min: 2,
+    max: 32,
+    default: 4,
+    step: 1,
+    unit: '',
+    param: 'levels',
+    customApply: (image, value) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = image.width;
+      canvas.height = image.height;
+      ctx.drawImage(image.getElement(), 0, 0);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      const levels = Math.round(value);
+      const step = 255 / (levels - 1);
+      for (let i = 0; i < data.length; i += 4) {
+        data[i] = Math.round(data[i] / step) * step;
+        data[i + 1] = Math.round(data[i + 1] / step) * step;
+        data[i + 2] = Math.round(data[i + 2] / step) * step;
+      }
+      ctx.putImageData(imageData, 0, 0);
+      image._element = canvas;
+    }
+  },
+  {
+    name: 'Umbral',
+    action: 'filter:threshold',
+    fabricFilter: 'BlackWhite',
+    min: 0,
+    max: 255,
+    default: 128,
+    step: 1,
+    unit: '',
+    param: 'threshold',
+    customApply: (image, value) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = image.width;
+      canvas.height = image.height;
+      ctx.drawImage(image.getElement(), 0, 0);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      const threshold = Math.round(value);
+      for (let i = 0; i < data.length; i += 4) {
+        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        const val = avg >= threshold ? 255 : 0;
+        data[i] = val;
+        data[i + 1] = val;
+        data[i + 2] = val;
+      }
+      ctx.putImageData(imageData, 0, 0);
+      image._element = canvas;
+    }
+  },
+  {
+    name: 'Sepia',
+    action: 'filter:sepia',
+    fabricFilter: 'Sepia',
+    boolean: true,
+    default: false,
+    param: 'sepia'
+  },
+  {
+    name: 'Relieve',
+    action: 'filter:emboss',
+    fabricFilter: 'Convolute',
+    boolean: true,
+    default: false,
+    param: 'emboss',
+    customApply: (image) => {
+      image.filters.push(new fabric.filters.Convolute({
+        matrix: [1, 1, 1, 1, 0.7, -1, -1, -1, -1]
+      }));
+    }
+  },
+  {
+    name: 'Detectar bordes',
+    action: 'filter:edge-detect',
+    fabricFilter: 'Convolute',
+    boolean: true,
+    default: false,
+    param: 'edgeDetect',
+    customApply: (image) => {
+      image.filters.push(new fabric.filters.Convolute({
+        matrix: [0, 1, 0, 1, -4, 1, 0, 1, 0]
+      }));
+    }
+  },
+  {
+    name: 'Desenfoque de movimiento',
+    action: 'filter:motion-blur',
+    fabricFilter: 'MotionBlur',
+    min: 0,
+    max: 50,
+    default: 5,
+    step: 1,
+    unit: '',
+    param: 'distance',
+    customApply: (image, value) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = image.width;
+      canvas.height = image.height;
+      ctx.drawImage(image.getElement(), 0, 0);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      const distance = Math.round(value);
+      const copy = new Uint8ClampedArray(data);
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          let r = 0, g = 0, b = 0, count = 0;
+          for (let dx = -distance; dx <= distance; dx++) {
+            const nx = x + dx;
+            if (nx >= 0 && nx < canvas.width) {
+              const idx = (y * canvas.width + nx) * 4;
+              r += copy[idx];
+              g += copy[idx + 1];
+              b += copy[idx + 2];
+              count++;
+            }
+          }
+          const idx = (y * canvas.width + x) * 4;
+          data[idx] = r / count;
+          data[idx + 1] = g / count;
+          data[idx + 2] = b / count;
+        }
+      }
+      ctx.putImageData(imageData, 0, 0);
+      image._element = canvas;
+    }
+  },
+  {
+    name: 'Sobel',
+    action: 'filter:sobel',
+    fabricFilter: 'Sobel',
+    boolean: true,
+    default: false,
+    param: 'sobel',
+    customApply: (image) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = image.width;
+      canvas.height = image.height;
+      ctx.drawImage(image.getElement(), 0, 0);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      const grayscale = new Float32Array(canvas.width * canvas.height);
+      for (let i = 0; i < data.length; i += 4) {
+        grayscale[i / 4] = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+      }
+      const result = new Uint8ClampedArray(data.length);
+      for (let y = 1; y < canvas.height - 1; y++) {
+        for (let x = 1; x < canvas.width - 1; x++) {
+          const idx = y * canvas.width + x;
+          const gx = -grayscale[idx - canvas.width - 1] + grayscale[idx - canvas.width + 1]
+            - 2 * grayscale[idx - 1] + 2 * grayscale[idx + 1]
+            - grayscale[idx + canvas.width - 1] + grayscale[idx + canvas.width + 1];
+          const gy = -grayscale[idx - canvas.width - 1] - 2 * grayscale[idx - canvas.width] - grayscale[idx - canvas.width + 1]
+            + grayscale[idx + canvas.width - 1] + 2 * grayscale[idx + canvas.width] + grayscale[idx + canvas.width + 1];
+          const magnitude = Math.min(255, Math.sqrt(gx * gx + gy * gy));
+          result[idx * 4] = magnitude;
+          result[idx * 4 + 1] = magnitude;
+          result[idx * 4 + 2] = magnitude;
+          result[idx * 4 + 3] = data[idx * 4 + 3];
+        }
+      }
+      const outputData = new ImageData(result, canvas.width, canvas.height);
+      ctx.putImageData(outputData, 0, 0);
+      image._element = canvas;
+    }
+  },
+  {
+    name: 'Vibrance',
+    action: 'filter:vibrance',
+    fabricFilter: 'Vibrance',
+    min: -1,
+    max: 1,
+    default: 0,
+    step: 0.01,
+    unit: '',
+    param: 'vibrance'
+  },
+  {
+    name: 'Mezclar color',
+    action: 'filter:blend-color',
+    fabricFilter: 'BlendColor',
+    min: 0,
+    max: 1,
+    default: 0.5,
+    step: 0.01,
+    unit: '',
+    param: 'alpha',
+    customApply: (image, value) => {
+      image.filters.push(new fabric.filters.BlendColor({
+        color: '#ff0000',
+        mode: 'tint',
+        alpha: value
+      }));
+    }
   }
 ];
 
@@ -125,11 +351,19 @@ export function applyFilterToImage(imageObj, filterName, value) {
     }
   } else {
     if (def.boolean && value) {
-      const newFilter = new fabric.filters[filterName]();
-      filters.push(newFilter);
+      if (def.customApply) {
+        def.customApply(imageObj, value);
+      } else {
+        const newFilter = new fabric.filters[filterName]();
+        filters.push(newFilter);
+      }
     } else if (!def.boolean) {
-      const newFilter = new fabric.filters[filterName]({ [def.param]: value });
-      filters.push(newFilter);
+      if (def.customApply) {
+        def.customApply(imageObj, value);
+      } else {
+        const newFilter = new fabric.filters[filterName]({ [def.param]: value });
+        filters.push(newFilter);
+      }
     }
   }
 
@@ -244,13 +478,21 @@ export function showFilterDialog(filterName) {
     if (isBoolean) {
       removeFiltersFromImage(imageObj, filterName);
       if (currentValue) {
-        const f = new fabric.filters[filterName]();
-        imageObj.filters = [...(imageObj.filters || []), f];
+        if (def.customApply) {
+          def.customApply(imageObj, currentValue);
+        } else {
+          const f = new fabric.filters[filterName]();
+          imageObj.filters = [...(imageObj.filters || []), f];
+        }
       }
     } else {
       removeFiltersFromImage(imageObj, filterName);
-      const f = new fabric.filters[filterName]({ [def.param]: currentValue });
-      imageObj.filters = [...(imageObj.filters || []), f];
+      if (def.customApply) {
+        def.customApply(imageObj, currentValue);
+      } else {
+        const f = new fabric.filters[filterName]({ [def.param]: currentValue });
+        imageObj.filters = [...(imageObj.filters || []), f];
+      }
     }
     imageObj.applyFilters();
     editor.canvas.renderAll();
@@ -314,13 +556,21 @@ export function showFilterDialog(filterName) {
     if (isBoolean) {
       removeFiltersFromImage(imageObj, filterName);
       if (currentValue) {
-        const f = new fabric.filters[filterName]();
-        imageObj.filters = [...(imageObj.filters || []), f];
+        if (def.customApply) {
+          def.customApply(imageObj, currentValue);
+        } else {
+          const f = new fabric.filters[filterName]();
+          imageObj.filters = [...(imageObj.filters || []), f];
+        }
       }
     } else {
       removeFiltersFromImage(imageObj, filterName);
-      const f = new fabric.filters[filterName]({ [def.param]: currentValue });
-      imageObj.filters = [...(imageObj.filters || []), f];
+      if (def.customApply) {
+        def.customApply(imageObj, currentValue);
+      } else {
+        const f = new fabric.filters[filterName]({ [def.param]: currentValue });
+        imageObj.filters = [...(imageObj.filters || []), f];
+      }
     }
     imageObj.applyFilters();
     editor.canvas.renderAll();
@@ -350,8 +600,12 @@ function handleBooleanFilter(filterName) {
   if (existingIdx !== -1) {
     imageObj.filters.splice(existingIdx, 1);
   } else {
-    const f = new fabric.filters[filterName]();
-    imageObj.filters = [...(imageObj.filters || []), f];
+    if (def.customApply) {
+      def.customApply(imageObj, true);
+    } else {
+      const f = new fabric.filters[filterName]();
+      imageObj.filters = [...(imageObj.filters || []), f];
+    }
   }
 
   imageObj.applyFilters();
@@ -379,4 +633,8 @@ export function initFilters() {
 
   bus.on('filter:apply-grayscale', () => handleBooleanFilter('Grayscale'));
   bus.on('filter:apply-invert', () => handleBooleanFilter('Invert'));
+  bus.on('filter:apply-sepia', () => handleBooleanFilter('Sepia'));
+  bus.on('filter:apply-emboss', () => handleBooleanFilter('Convolute'));
+  bus.on('filter:apply-edge-detect', () => handleBooleanFilter('Convolute'));
+  bus.on('filter:apply-sobel', () => handleBooleanFilter('Sobel'));
 }

@@ -1,4 +1,5 @@
 import { bus } from '../core/events.js';
+import { editor } from '../core/editor.js';
 
 function buildShortcutKey(e) {
   const parts = [];
@@ -51,7 +52,18 @@ const shortcuts = {
   'i': 'tool:eyedropper',
   'z': 'tool:zoom',
   'm': 'tool:marquee',
-  'g': 'tool:paintbucket'
+  'g': 'tool:paintbucket',
+  'w': 'tool:magicwand',
+  'ctrl+x': 'edit:cut',
+  'ctrl+d': 'edit:duplicate',
+  'ctrl+t': 'edit:free-transform',
+  'ctrl+g': 'edit:group',
+  'ctrl+shift+g': 'edit:ungroup',
+  'ctrl+shift+n': 'layer:new',
+  'ctrl+j': 'layer:duplicate',
+  'ctrl+[': 'layer:send-back',
+  'ctrl+]': 'layer:bring-front',
+  'ctrl+e': 'layer:merge-visible'
 };
 
 function isFabricTextarea(el) {
@@ -88,6 +100,23 @@ export function initShortcuts() {
         bus.emit('tool:select', action.replace('tool:', ''));
       } else {
         bus.emit('menu:action', action);
+      }
+    }
+
+    // Arrow keys move selected objects
+    if (inFabric && ['arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key)) {
+      const active = editor?.canvas?.getActiveObject();
+      if (active) {
+        const step = e.shiftKey ? 10 : 1;
+        e.preventDefault();
+        switch (key) {
+          case 'arrowup': active.top -= step; break;
+          case 'arrowdown': active.top += step; break;
+          case 'arrowleft': active.left -= step; break;
+          case 'arrowright': active.left += step; break;
+        }
+        active.setCoords();
+        editor.canvas.renderAll();
       }
     }
   });

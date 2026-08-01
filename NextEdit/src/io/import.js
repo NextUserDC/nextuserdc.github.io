@@ -3,16 +3,24 @@ import * as fabric from 'fabric';
 import { bus } from '../core/events.js';
 
 let fileInput = null;
+let importOffset = 0;
 
 function getFileInput() {
   if (!fileInput) {
     fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = 'image/png,image/jpeg,image/webp,image/bmp,image/gif,image/svg+xml';
+    fileInput.multiple = true;
     fileInput.style.display = 'none';
     fileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) handleFileImport(file);
+      const files = Array.from(e.target.files);
+      if (files.length > 0) {
+        if (files.length === 1) {
+          handleFileImport(files[0]);
+        } else {
+          handleMultipleFileImport(files);
+        }
+      }
       fileInput.value = '';
     });
     document.body.appendChild(fileInput);
@@ -34,7 +42,7 @@ export function openFileDialog() {
   getFileInput().click();
 }
 
-export async function handleFileImport(file) {
+export async function handleFileImport(file, options = {}) {
   if (!file) return;
 
   const isSVG = file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg');
@@ -53,9 +61,12 @@ export async function handleFileImport(file) {
       scale = Math.min(maxWidth / group.width, maxHeight / group.height);
     }
 
+    const centerX = options.left ?? (canvas.getWidth() - group.width * scale) / 2;
+    const centerY = options.top ?? (canvas.getHeight() - group.height * scale) / 2;
+
     group.set({
-      left: (canvas.getWidth() - group.width * scale) / 2,
-      top: (canvas.getHeight() - group.height * scale) / 2,
+      left: centerX,
+      top: centerY,
       scaleX: scale,
       scaleY: scale
     });
@@ -84,9 +95,12 @@ export async function handleFileImport(file) {
       scale = Math.min(maxWidth / img.width, maxHeight / img.height);
     }
 
+    const centerX = options.left ?? (canvas.getWidth() - img.width * scale) / 2;
+    const centerY = options.top ?? (canvas.getHeight() - img.height * scale) / 2;
+
     fabricImg.set({
-      left: (canvas.getWidth() - img.width * scale) / 2,
-      top: (canvas.getHeight() - img.height * scale) / 2,
+      left: centerX,
+      top: centerY,
       scaleX: scale,
       scaleY: scale
     });
@@ -99,5 +113,63 @@ export async function handleFileImport(file) {
     URL.revokeObjectURL(url);
   }
 }
+
+function handleMultipleFileImport(files) {
+  const canvas = editor.canvas;
+  importOffset = 0;
+
+  files.forEach((file, index) => {
+    const offsetX = 20 * (index % 5);
+    const offsetY = 20 * Math.floor(index / 5);
+
+    handleFileImport(file, {
+      left: (canvas.getWidth() - canvas.getWidth() * 0.8) / 2 + offsetX,
+      top: (canvas.getHeight() - canvas.getHeight() * 0.8) / 2 + offsetY
+    });
+  });
+}
+
+async function importFromURL(url) {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const ext = url.split('.').pop().toLowerCase();
+    const mimeMap = {
+      'png': 'image/png',
+      'jpg': 'image/jpeg',
+      'jpeg': 'image/jpeg',
+      'webp': 'image/webp',
+      'bmp': 'image/bmp',
+      'gif': 'image/gif',
+      'svg': 'image/svg+xml'
+    };
+    const mime = mimeMap[ext] || blob.type || 'image/png';
+    const filename = url.split('/').pop() || `imagen.${ext || 'png'}`;
+    const file = new File([blob], filename, { type: mime });
+    handleFileImport(file);
+  } catch (err) {
+    console.error('Error al importar desde URL:', err);
+  }
+}
+
+document.addEventListener('paste', (e) => {
+  const items = e.clipboardData?.items;
+  if (!items) return;
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      const blob = item.getAsFile();
+      handleFileImport(blob);
+      e.preventDefault();
+      break;
+    }
+  }
+});
+
+bus.on('menu:action', (action) => {
+  if (action === 'file:open-url') {
+    const url = prompt('URL de la imagen:');
+    if (url) importFromURL(url);
+  }
+});
 
 bus.on('file:import', openFileDialog);

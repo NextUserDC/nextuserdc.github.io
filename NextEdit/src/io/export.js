@@ -3,13 +3,15 @@ import { bus } from '../core/events.js';
 
 let docName = 'documento';
 
-function triggerDownload(dataURL, filename) {
-  const link = document.createElement('a');
-  link.href = dataURL;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 function getDataURL(canvas, format, quality) {
@@ -18,33 +20,58 @@ function getDataURL(canvas, format, quality) {
   return canvas.toDataURL(options);
 }
 
-function getBlob(canvas, format, quality) {
-  return new Promise((resolve) => {
-    const options = { format };
-    if (quality !== undefined) options.quality = quality;
-    canvas.toBlob((blob) => resolve(blob), format, quality);
-  });
-}
-
 export function exportPNG(canvas) {
   canvas = canvas || editor.canvas;
   const dataURL = getDataURL(canvas, 'png');
-  triggerDownload(dataURL, `${docName}.png`);
+  const blob = dataURLToBlob(dataURL);
+  downloadBlob(blob, `${docName}.png`);
   bus.emit('file:exported', { format: 'png' });
 }
 
 export function exportJPG(canvas, quality = 0.92) {
   canvas = canvas || editor.canvas;
   const dataURL = getDataURL(canvas, 'jpeg', quality);
-  triggerDownload(dataURL, `${docName}.jpg`);
+  const blob = dataURLToBlob(dataURL);
+  downloadBlob(blob, `${docName}.jpg`);
   bus.emit('file:exported', { format: 'jpg' });
 }
 
 export function exportWebP(canvas, quality = 0.92) {
   canvas = canvas || editor.canvas;
   const dataURL = getDataURL(canvas, 'webp', quality);
-  triggerDownload(dataURL, `${docName}.webp`);
+  const blob = dataURLToBlob(dataURL);
+  downloadBlob(blob, `${docName}.webp`);
   bus.emit('file:exported', { format: 'webp' });
+}
+
+export function exportSVG(canvas) {
+  canvas = canvas || editor.canvas;
+  const svg = canvas.toSVG();
+  const blob = new Blob([svg], { type: 'image/svg+xml' });
+  downloadBlob(blob, `${docName}.svg`);
+  bus.emit('file:exported', { format: 'svg' });
+}
+
+async function copyToClipboard() {
+  const canvas = editor.canvas;
+  const dataURL = canvas.toDataURL({ format: 'png', multiplier: 1 });
+  const response = await fetch(dataURL);
+  const blob = await response.blob();
+  await navigator.clipboard.write([
+    new ClipboardItem({ 'image/png': blob })
+  ]);
+  bus.emit('file:copied', { format: 'clipboard' });
+}
+
+function dataURLToBlob(dataURL) {
+  const [header, data] = dataURL.split(',');
+  const mime = header.match(/:(.*?);/)[1];
+  const binary = atob(data);
+  const array = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    array[i] = binary.charCodeAt(i);
+  }
+  return new Blob([array], { type: mime });
 }
 
 bus.on('menu:action', (action) => {
@@ -57,6 +84,12 @@ bus.on('menu:action', (action) => {
       break;
     case 'file:save-webp':
       exportWebP();
+      break;
+    case 'file:save-svg':
+      exportSVG();
+      break;
+    case 'file:copy-clipboard':
+      copyToClipboard();
       break;
   }
 });

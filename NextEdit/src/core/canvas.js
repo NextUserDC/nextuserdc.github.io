@@ -1,5 +1,6 @@
 import * as fabric from 'fabric';
 import { bus } from './events.js';
+import { snapToGrid, isGridVisible } from '../ui/grid.js';
 
 let canvas = null;
 let container = null;
@@ -74,6 +75,18 @@ function setupKeyboardListeners() {
   });
 }
 
+function setupDoubleClickEdit(fabricCanvas) {
+  fabricCanvas.on('mouse:dblclick', (e) => {
+    const target = fabricCanvas.findTarget(e.e);
+    if (target && target.type === 'textbox' && target.editable) {
+      fabricCanvas.setActiveObject(target);
+      target.enterEditing();
+      target.selectAll();
+      fabricCanvas.renderAll();
+    }
+  });
+}
+
 function setupResizeObserver() {
   if (!container) return;
 
@@ -116,6 +129,7 @@ export function initCanvas(canvasElId) {
 
   setupMouseWheelZoom(canvas);
   setupPanning(canvas);
+  setupDoubleClickEdit(canvas);
   setupKeyboardListeners();
   resizeCanvas();
   setupResizeObserver();
@@ -138,4 +152,12 @@ export function resizeCanvas() {
 
 export function getCanvas() {
   return canvas;
+}
+
+export function getSnappedPointer(e) {
+  const pointer = canvas.getScenePoint(e.e);
+  if (isGridVisible()) {
+    return snapToGrid(pointer.x, pointer.y);
+  }
+  return { x: pointer.x, y: pointer.y };
 }
