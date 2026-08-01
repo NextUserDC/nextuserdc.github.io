@@ -53,6 +53,7 @@ function removeToast(toast) {
 if (!window._nexteditErrorBound) {
   window._nexteditErrorBound = true;
   window.addEventListener('error', (e) => {
+    if (e.message && e.message.includes('ResizeObserver')) return;
     bus.emit('toast:show', { message: e.message, type: 'error' });
   });
 }
