@@ -13,18 +13,16 @@
 				if(window.location.href.indexOf("file:") === 0) {
 					alert("Abre esta pagina con HTTP, no directamente desde archivos");
 				}else {
-					window.eaglercraftXOpts = {
-						demoMode: false,
-						container: "game_frame",
-						assetsURI: "assets.epk",
-						localesURI: "lang/",
-						worldsDB: "worlds",
-						logInvalidCerts: true,
-						crashOnUncaughtExceptions: true,
-						relays: [
-							{ addr: "wss://sponsored-wild.gl.joinmc.link", comment: "Servidor NextUser", primary: true }
-						]
-					};
+				window.eaglercraftXOpts = {
+					demoMode: true,
+					container: "game_frame",
+					assetsURI: "assets.epk",
+					localesURI: "lang/",
+					worldsDB: "worlds",
+					logInvalidCerts: true,
+					crashOnUncaughtExceptions: true,
+					relays: []
+				};
 					main();
 				}
 			});
