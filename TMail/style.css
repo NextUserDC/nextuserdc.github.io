@@ -35,7 +35,7 @@ body {
   100% { transform: scale(1.1) translate(-2%, -2%); }
 }
 
-.container { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem; }
+.container { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem; overflow-x: hidden; }
 
 header { text-align: center; margin-bottom: 2.5rem; animation: fadeInDown 0.8s ease-out; }
 
@@ -43,6 +43,7 @@ header { text-align: center; margin-bottom: 2.5rem; animation: fadeInDown 0.8s e
   font-size: 3rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.4rem;
   background: linear-gradient(135deg, #fff, #a78bfa);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  text-align: center; display: block; width: 100%;
 }
 
 .logo span { color: var(--accent); background: none; -webkit-text-fill-color: var(--accent); }
@@ -559,6 +560,11 @@ header { text-align: center; margin-bottom: 2.5rem; animation: fadeInDown 0.8s e
 .email-viewer-body img { max-width: 100%; height: auto; border-radius: 8px; }
 .email-viewer-body a { color: #a78bfa; }
 
+.email-viewer-body { overflow-x: hidden; }
+.email-viewer-body table { max-width: 100% !important; width: 100% !important; border-collapse: collapse !important; }
+.email-viewer-body td, .email-viewer-body th { max-width: 100% !important; overflow: hidden; word-break: break-word; }
+.email-viewer-body img { max-width: 100% !important; height: auto !important; }
+
 /* ─── Inbox Actions ─── */
 
 .inbox-actions { display: flex; align-items: center; gap: 0.75rem; }
@@ -1059,11 +1065,12 @@ header { text-align: center; margin-bottom: 2.5rem; animation: fadeInDown 0.8s e
   .login-card { padding: 1.8rem 1.4rem; margin: 0; }
   .login-input { width: 100%; padding: 0.9rem 1rem; }
   .login-btn { width: 100%; padding: 0.9rem; }
-  .compose-card { border-radius: 16px; max-height: 95vh; }
+  .compose-card { border-radius: 16px; max-height: 95vh; width: 95vw; max-width: 100%; }
   .compose-field { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
   .compose-field label { min-width: unset; }
   .compose-field input,
   .compose-field textarea { width: 100%; }
+  .compose-body-field textarea { min-height: 120px; }
   .compose-fields { padding: 1rem; }
   .compose-footer { padding: 0.8rem 1rem; flex-direction: column; gap: 0.75rem; }
   .compose-send-btn { width: 100%; justify-content: center; padding: 0.85rem; }
