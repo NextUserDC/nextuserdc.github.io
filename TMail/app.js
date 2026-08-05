@@ -1373,4 +1373,85 @@
   ncloudSharesModal.addEventListener('click', (e) => {
     if (e.target === ncloudSharesModal) hide(ncloudSharesModal);
   });
+
+  // ===== PWA: Service Worker =====
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/TMail/sw.js').catch(() => {});
+  }
+
+  // ===== PWA: Install Prompt =====
+  let deferredPrompt = null;
+  const installBtn = document.createElement('button');
+  installBtn.className = 'pwa-install-btn hidden';
+  installBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Instalar';
+  document.body.appendChild(installBtn);
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.classList.remove('hidden');
+  });
+
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    installBtn.classList.add('hidden');
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    installBtn.classList.add('hidden');
+  });
+
+  // ===== PWA: Web Share API para archivos =====
+  if (typeof navigator.share === 'undefined') {
+    navigator.share = null;
+  }
+
+  // Exponer funcion de share global
+  window.shareNcloudLink = function(url, name) {
+    if (navigator.share) {
+      navigator.share({ title: name || 'TMail', text: 'Archivo compartido via TMail', url }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(url);
+    }
+  };
+
+  // Integrar Web Share en el dropzone: si el navegador soporta share de archivos
+  ncloudDropzone.addEventListener('click', () => {
+    if (typeof Share !== 'undefined' && navigator.canShare && navigator.canShare({ files: [] })) {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.multiple = true;
+      input.onchange = () => {
+        if (input.files.length > 0) ncloudUploadFiles(input.files);
+      };
+      input.click();
+    }
+  });
+
+  // ===== PWA: Share Target (recibir archivos desde share del sistema) =====
+  async function handleShareTarget() {
+    if ('launchQueue' in window) {
+      window.launchQueue.setConsumer(async (launchParams) => {
+        const files = launchParams.files;
+        if (files && files.length > 0) {
+          const fileList = await Promise.all(files.map(async (f) => {
+            const blob = await f.getFile();
+            return new File([blob], f.name, { type: f.type });
+          }));
+          // Esperar a que el usuario este logueado
+          const waitForAuth = setInterval(() => {
+            if (currentAddress && currentSecret) {
+              clearInterval(waitForAuth);
+              ncloudUploadFiles(fileList);
+            }
+          }, 500);
+        }
+      });
+    }
+  }
+  handleShareTarget();
 })();
