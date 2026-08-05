@@ -1084,13 +1084,14 @@
   async function ncloudDeleteFolder(name) {
     if (!currentAddress || !currentSecret) return;
     if (!confirm(`Eliminar la carpeta "${name}" y todo su contenido?`)) return;
-    const prefix = ncloudCurrentPath ? ncloudCurrentPath + '/' + name + '/' : name + '/';
+    const prefix = ncloudCurrentPath ? ncloudCurrentPath + '/' + name : name;
     try {
       const res = await fetch(`${API}/ncloud/files?path=${encodeURIComponent(prefix)}`, {
         headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
       });
       const data = await res.json();
       const allKeys = (data.files || []).map(f => f.key);
+      allKeys.push(`${currentAddress}/${prefix}/.keep`);
       await fetch(`${API}/ncloud/delete-batch`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
