@@ -1295,7 +1295,12 @@
     const item = btn.closest('.inbox-item');
     if (!confirm('Eliminar este correo?')) return;
     try {
-      await apiCall('DELETE', messagePath(msgId), { secret: currentSecret });
+      const result = await apiCall('DELETE', messagePath(msgId), { secret: currentSecret });
+      if (result.code !== 0) {
+        console.error('Delete failed:', result.error);
+        alert('Error al eliminar: ' + (result.error || 'Error desconocido'));
+        return;
+      }
       if (item) {
         item.style.opacity = '0';
         item.style.transform = 'translateX(30px)';
