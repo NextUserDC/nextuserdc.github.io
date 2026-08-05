@@ -514,8 +514,14 @@
               <span class="inbox-item-subject">${esc(row.subject)}</span>
             </div>
             <span class="inbox-item-date">${formatDate(row.date)}</span>
+            <button class="inbox-delete-btn" title="Eliminar" data-msg-id="${row.id}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
           `;
-          item.addEventListener('click', () => openMessage(row.id));
+          item.addEventListener('click', (e) => {
+            if (e.target.closest('.inbox-delete-btn')) return;
+            openMessage(row.id);
+          });
           inboxList.appendChild(item);
         }
 
@@ -1278,6 +1284,27 @@
     ncloudCurrentPath = ncloudCurrentPath ? ncloudCurrentPath + '/' + name : name;
     ncloudRenderBreadcrumb();
     ncloudListFiles();
+  });
+
+  // Inbox delete button
+  inboxList.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.inbox-delete-btn');
+    if (!btn) return;
+    e.stopPropagation();
+    const msgId = btn.dataset.msgId;
+    const item = btn.closest('.inbox-item');
+    if (!confirm('Eliminar este correo?')) return;
+    try {
+      await apiCall('DELETE', messagePath(msgId), { secret: currentSecret });
+      if (item) {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(30px)';
+        item.style.transition = 'all 0.3s ease';
+        setTimeout(() => { item.remove(); const items = inboxList.querySelectorAll('.inbox-item'); inboxCount.textContent = items.length; }, 300);
+      }
+    } catch (err) {
+      console.error('Delete message error:', err);
+    }
   });
 
   // NCloud header actions

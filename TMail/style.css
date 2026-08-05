@@ -518,9 +518,20 @@ header { text-align: center; margin-bottom: 2.5rem; animation: fadeInDown 0.8s e
 
 .inbox-item-date { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
 
+.inbox-delete-btn {
+  background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border);
+  border-radius: 8px; padding: 6px; cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease; color: var(--text-muted); opacity: 0;
+}
+
+.inbox-delete-btn svg { width: 14px; height: 14px; }
+.inbox-delete-btn:hover { background: rgba(239, 68, 68, 0.8); border-color: rgba(239, 68, 68, 0.8); color: white; }
+.inbox-item:hover .inbox-delete-btn { opacity: 1; }
+
 /* ─── Email Viewer ─── */
 
-.email-viewer { margin-top: 1.5rem; text-align: left; animation: fadeIn 0.4s ease-out; }
+.email-viewer { margin-top: 1.5rem; text-align: left; animation: fadeIn 0.4s ease-out; max-width: 100%; overflow: hidden; }
 
 .email-viewer-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -560,10 +571,11 @@ header { text-align: center; margin-bottom: 2.5rem; animation: fadeInDown 0.8s e
 .email-viewer-body img { max-width: 100%; height: auto; border-radius: 8px; }
 .email-viewer-body a { color: #a78bfa; }
 
-.email-viewer-body { overflow-x: hidden; }
+.email-viewer-body { overflow-x: hidden; width: 100%; }
 .email-viewer-body table { max-width: 100% !important; width: 100% !important; border-collapse: collapse !important; }
 .email-viewer-body td, .email-viewer-body th { max-width: 100% !important; overflow: hidden; word-break: break-word; }
-.email-viewer-body img { max-width: 100% !important; height: auto !important; }
+.email-viewer-body img { display: block; max-width: 100% !important; height: auto !important; }
+.email-viewer-body div, .email-viewer-body video, .email-viewer-body svg { max-width: 100% !important; }
 
 /* ─── Inbox Actions ─── */
 
@@ -1080,6 +1092,7 @@ header { text-align: center; margin-bottom: 2.5rem; animation: fadeInDown 0.8s e
   .inbox-item-avatar { width: 32px; height: 32px; }
   .inbox-item-subject { font-size: 0.88rem; }
   .inbox-item-date { font-size: 0.7rem; }
+  .inbox-delete-btn { opacity: 1; }
   .action-btns { flex-direction: column; }
   .extend-btn, .delete-btn { width: 100%; text-align: center; }
   .connect-card, .extend-card { border-radius: 16px; }
