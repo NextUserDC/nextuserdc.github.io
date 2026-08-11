@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Inventario</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+
+    <div class="contenedor">
+    <h1>Sistema de Inventario</h1>
+
+
+    <div id="login">
+
+
+        <h2>Iniciar Sesión</h2>
+        <input type="text" id="usuario" placeholder="usuario">
+        <input type="password" id="clave" placeholder="contraseña">
+        <button id="btnLogin">Ingresar</button>
+
+
+        <p id="mensajeLogin"></p>
+
+
+    </div>
+
+
+    <div id="inventario" style="display: none;">
+
+
+     <h2>Panel de Inventario</h2>
+ 
+     <input type="text" id="material" placeholder="Nombre del Material">
+     <input type="number" id="cantidad" placeholder="cantidad">
+     <input type="number" id="precio" placeholder="Precio Unitario">
+     <button id="btnCalcular">Calcular</button>
+
+
+     <p id="resultado"></p>
+     
+     <p id="stock"></p>
+
+
+      </div>
+
+
+    </div>
+    <script src="js/script.js"></script>
+
+
+</body>
+</html>
+
