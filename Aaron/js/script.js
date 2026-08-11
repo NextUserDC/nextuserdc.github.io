@@ -11,23 +11,43 @@ const stock = document.getElementById("stock");
 // revisa si el usuario y la clave son correctos
 btnLogin.addEventListener("click", function () {
 
-    if (usuario.value === "bodega" && clave.value === "1234") {
+    let u = usuario.value.trim();
+    let c = clave.value.trim();
 
-        // cambia el fondo a verde y muestra el panel
-        document.body.style.background = "green";
-        mensajeLogin.textContent = "Bienvenido.";
-        mensajeLogin.style.color = "white";
-        login.style.display = "none";
-        inventario.style.display = "block";
-
-    }
-    else {
-
-        // muestra error si no coincide
-        mensajeLogin.textContent = "Usuario o contraseña incorrectos.";
+    if (u === "" && c === "") {
+        mensajeLogin.textContent = "Ingrese usuario y contraseña.";
         mensajeLogin.style.color = "red";
-
+        return;
     }
+
+    if (u === "") {
+        mensajeLogin.textContent = "Ingrese el usuario.";
+        mensajeLogin.style.color = "red";
+        return;
+    }
+
+    if (c === "") {
+        mensajeLogin.textContent = "Ingrese la contraseña.";
+        mensajeLogin.style.color = "red";
+        return;
+    }
+
+    if (u !== "bodega") {
+        mensajeLogin.textContent = "Usuario incorrecto.";
+        mensajeLogin.style.color = "red";
+        return;
+    }
+
+    if (c !== "1234") {
+        mensajeLogin.textContent = "Contraseña incorrecta.";
+        mensajeLogin.style.color = "red";
+        return;
+    }
+
+    // cambia el fondo a verde y muestra el panel
+    document.body.style.background = "green";
+    login.style.display = "none";
+    inventario.style.display = "block";
 
 });
 
