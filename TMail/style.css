@@ -537,9 +537,9 @@ header { text-align: center; margin-bottom: 2.5rem; animation: fadeInDown 0.8s e
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 1.2rem;
 }
-.email-viewer-header > .back-btn { flex: 1; }
-.email-viewer-header > .reply-btn { flex: 1; justify-content: center; }
-.email-viewer-header > .email-viewer-date { flex: 1; text-align: right; }
+.email-viewer-header > .back-btn { flex: 0 1 auto; max-width: 160px; }
+.email-viewer-header > .reply-btn { flex: 0 1 auto; max-width: 160px; justify-content: center; }
+.email-viewer-header > .email-viewer-date { flex: 1 1 auto; text-align: right; }
 
 .back-btn {
   background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border);
