@@ -263,7 +263,15 @@
           </div>
           <div class="ncloud-modal-body">
             <p class="ncloud-share-filename" id="ncloud-share-filename"></p>
-            <div class="ncloud-share-link-box">
+            <div style="margin-bottom:0.6rem">
+              <label style="font-size:0.78rem;color:var(--text-muted);display:block;margin-bottom:0.3rem">URL personalizada (opcional)</label>
+              <div style="display:flex;align-items:center;gap:4px;font-size:0.85rem;color:var(--text-muted)">
+                <span style="white-space:nowrap">/ncloud/shared/</span>
+                <input type="text" id="ncloud-share-slug" placeholder="mi-enlace" style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 10px;color:var(--text-main);font-family:inherit;font-size:0.85rem;outline:none" autocomplete="off" maxlength="30">
+              </div>
+            </div>
+            <button id="ncloud-share-create" style="width:100%;background:rgba(109,40,217,0.3);border:1px solid rgba(109,40,217,0.5);border-radius:10px;padding:8px;color:var(--text-main);font-family:inherit;font-weight:600;font-size:0.85rem;cursor:pointer;margin-bottom:0.8rem;transition:all .2s">Crear enlace</button>
+            <div class="ncloud-share-link-box" id="ncloud-share-link-box" style="display:none">
               <input type="text" id="ncloud-share-link" readonly>
               <button class="ncloud-share-copy" id="ncloud-share-copy">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>

@@ -862,6 +862,10 @@
   const ncloudShareFilename = $('ncloud-share-filename');
   const ncloudShareLink = $('ncloud-share-link');
   const ncloudShareCopy = $('ncloud-share-copy');
+  const ncloudShareSlug = $('ncloud-share-slug');
+  const ncloudShareCreateBtn = $('ncloud-share-create');
+  const ncloudShareLinkBox = $('ncloud-share-link-box');
+  let ncloudSharePendingKey = null;
   const ncloudSharesModal = $('ncloud-shares-modal');
   const ncloudSharesClose = $('ncloud-shares-close');
   const ncloudSharesList = $('ncloud-shares-list');
@@ -973,6 +977,8 @@
             const urgentClass = mins < 60 ? ' urgent' : '';
             ttlBadge = `<span class="ncloud-ttl-badge${urgentClass}">\u23F1 ${label}</span>`;
           }
+        } else {
+          ttlBadge = '<span class="ncloud-ttl-badge" style="background:rgba(34,197,94,0.15);color:#22c55e">\u2714 Permanente</span>';
         }
         html += `<div class="ncloud-file-item" style="animation-delay:${(folders.length + i) * 0.03}s" data-type="file" data-key="${esc(f.key)}" data-name="${esc(f.name)}">
           <div class="ncloud-file-icon ${cat}">${getFileIconSvg(cat)}</div>
@@ -1002,7 +1008,12 @@
   async function ncloudUploadFiles(fileList) {
     if (!currentAddress || !currentSecret || fileList.length === 0) return;
     ncloudPendingFiles = Array.from(fileList);
-    show(ncloudTtlModal);
+    const isPermanent = endAt && new Date(endAt).getFullYear() >= 2099;
+    if (isPermanent) {
+      ncloudConfirmTtlUpload(0);
+    } else {
+      show(ncloudTtlModal);
+    }
   }
 
   async function ncloudConfirmTtlUpload(ttl) {
@@ -1015,6 +1026,7 @@
     const total = fileList.length;
     let completed = 0;
     let aborted = false;
+    ncloudProgressText.textContent = ttl === 0 ? `Subiendo (permanente)... 0/${total}` : `Subiendo... 0/${total}`;
     for (const file of fileList) {
       if (aborted) break;
       try {
@@ -1046,7 +1058,7 @@
         completed++;
         const pct = Math.round((completed / total) * 100);
         ncloudProgressFill.style.width = pct + '%';
-        ncloudProgressText.textContent = `Subiendo... ${completed}/${total}`;
+        ncloudProgressText.textContent = ttl === 0 ? `Subiendo (permanente)... ${completed}/${total}` : `Subiendo... ${completed}/${total}`;
       } catch (e) {
         console.error('Upload error:', e);
       }
@@ -1125,23 +1137,43 @@
     }
   }
 
-  async function ncloudShareFile(key, name) {
-    if (!currentAddress || !currentSecret) return;
+  async function ncloudShareCreate() {
+    if (!ncloudSharePendingKey || !currentAddress || !currentSecret) return;
+    const slug = ncloudShareSlug.value.trim();
+    ncloudShareCreateBtn.disabled = true;
+    ncloudShareCreateBtn.textContent = 'Creando...';
     try {
+      const body = { key: ncloudSharePendingKey };
+      if (slug) body.slug = slug;
       const res = await fetch(`${API}/ncloud/share`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
-        body: JSON.stringify({ key })
+        body: JSON.stringify(body)
       });
       const data = await res.json();
       if (data.url) {
-        ncloudShareFilename.textContent = name;
         ncloudShareLink.value = data.url;
-        show(ncloudShareModal);
+        ncloudShareLinkBox.style.display = '';
+      } else {
+        ncloudShareLink.value = 'Error: ' + (data.error || 'No se pudo crear');
+        ncloudShareLinkBox.style.display = '';
       }
     } catch (e) {
-      console.error('Share error:', e);
+      ncloudShareLink.value = 'Error de conexion';
+      ncloudShareLinkBox.style.display = '';
     }
+    ncloudShareCreateBtn.disabled = false;
+    ncloudShareCreateBtn.textContent = 'Crear enlace';
+  }
+
+  function ncloudShareFile(key, name) {
+    if (!currentAddress || !currentSecret) return;
+    ncloudSharePendingKey = key;
+    ncloudShareSlug.value = '';
+    ncloudShareFilename.textContent = name;
+    ncloudShareLink.value = '';
+    ncloudShareLinkBox.style.display = 'none';
+    show(ncloudShareModal);
   }
 
   async function ncloudListShares() {
@@ -1387,10 +1419,12 @@
   });
 
   // NCloud share modal
-  ncloudShareClose.addEventListener('click', () => hide(ncloudShareModal));
+  ncloudShareClose.addEventListener('click', () => { hide(ncloudShareModal); ncloudSharePendingKey = null; });
   ncloudShareModal.addEventListener('click', (e) => {
-    if (e.target === ncloudShareModal) hide(ncloudShareModal);
+    if (e.target === ncloudShareModal) { hide(ncloudShareModal); ncloudSharePendingKey = null; }
   });
+  ncloudShareCreateBtn.addEventListener('click', ncloudShareCreate);
+  ncloudShareSlug.addEventListener('keydown', (e) => { if (e.key === 'Enter') ncloudShareCreate(); });
   ncloudShareCopy.addEventListener('click', () => {
     navigator.clipboard.writeText(ncloudShareLink.value).then(() => {
       ncloudShareCopy.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
