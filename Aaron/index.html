@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<!-- === INICIO: Botones de visor de código (sección independiente, sin relación al funcionamiento de la web) === -->
 <div style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:5px">
   <a href="#" onclick="viewSrc('index.html');return false" title="index.html" style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(22,22,35,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;font-family:monospace;font-size:9px;font-weight:600;text-decoration:none;cursor:pointer" onmouseover="this.style.background='rgba(109,40,217,0.4)';this.style.color='#f8fafc'" onmouseout="this.style.background='rgba(22,22,35,0.6)';this.style.color='#94a3b8'">HTML</a>
   <a href="#" onclick="viewSrc('css/style.css');return false" title="style.css" style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(22,22,35,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;font-family:monospace;font-size:9px;font-weight:600;text-decoration:none;cursor:pointer" onmouseover="this.style.background='rgba(109,40,217,0.4)';this.style.color='#f8fafc'" onmouseout="this.style.background='rgba(22,22,35,0.6)';this.style.color='#94a3b8'">CSS</a>
@@ -22,6 +23,7 @@ function viewSrc(file){
   });
 }
 </script>
+<!-- === FIN: Botones de visor de código (sección independiente) === -->
 
     <div class="contenedor">
     <h1>Sistema de Inventario</h1>
