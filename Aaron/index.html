@@ -1,72 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Inventario</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Inventario</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-<!-- === INICIO: Botones de visor de código (sección independiente, sin relación al funcionamiento de la web) === -->
-<div style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:5px">
-  <a href="#" onclick="viewSrc('index.html');return false" title="index.html" style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(22,22,35,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;font-family:monospace;font-size:9px;font-weight:600;text-decoration:none;cursor:pointer" onmouseover="this.style.background='rgba(109,40,217,0.4)';this.style.color='#f8fafc'" onmouseout="this.style.background='rgba(22,22,35,0.6)';this.style.color='#94a3b8'">HTML</a>
-  <a href="#" onclick="viewSrc('css/style.css');return false" title="style.css" style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(22,22,35,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;font-family:monospace;font-size:9px;font-weight:600;text-decoration:none;cursor:pointer" onmouseover="this.style.background='rgba(109,40,217,0.4)';this.style.color='#f8fafc'" onmouseout="this.style.background='rgba(22,22,35,0.6)';this.style.color='#94a3b8'">CSS</a>
-  <a href="#" onclick="viewSrc('js/script.js');return false" title="script.js" style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(22,22,35,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;font-family:monospace;font-size:9px;font-weight:600;text-decoration:none;cursor:pointer" onmouseover="this.style.background='rgba(109,40,217,0.4)';this.style.color='#f8fafc'" onmouseout="this.style.background='rgba(22,22,35,0.6)';this.style.color='#94a3b8'">JS</a>
-</div>
-<script>
-function viewSrc(file){
-  fetch(file).then(function(r){return r.text()}).then(function(code){
-    var w=window.open('','_blank');
-    w.document.write('<html><head><title>'+file+'</title><style>body{margin:0;background:#0a0a14;color:#f8fafc;font-family:Consolas,Monaco,monospace;font-size:13px;padding:16px;white-space:pre-wrap;word-break:break-all}h3{color:#94a3b8;font-size:12px;margin:0 0 12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px}</style></head><body><h3>'+file+'</h3>'+code.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</body></html>');
-    w.document.close();
-  });
-}
-</script>
-<!-- === FIN: Botones de visor de código (sección independiente) === -->
+  <!-- === INICIO: Botones de visor de código (sección independiente, sin relación al funcionamiento de la web) === -->
+  <div style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:5px">
+    <a href="#" onclick="viewSrc('index.html');return false" title="index.html"
+      style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(22,22,35,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;font-family:monospace;font-size:9px;font-weight:600;text-decoration:none;cursor:pointer"
+      onmouseover="this.style.background='rgba(109,40,217,0.4)';this.style.color='#f8fafc'"
+      onmouseout="this.style.background='rgba(22,22,35,0.6)';this.style.color='#94a3b8'">HTML</a>
+    <a href="#" onclick="viewSrc('css/style.css');return false" title="style.css"
+      style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(22,22,35,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;font-family:monospace;font-size:9px;font-weight:600;text-decoration:none;cursor:pointer"
+      onmouseover="this.style.background='rgba(109,40,217,0.4)';this.style.color='#f8fafc'"
+      onmouseout="this.style.background='rgba(22,22,35,0.6)';this.style.color='#94a3b8'">CSS</a>
+    <a href="#" onclick="viewSrc('js/script.js');return false" title="script.js"
+      style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(22,22,35,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;font-family:monospace;font-size:9px;font-weight:600;text-decoration:none;cursor:pointer"
+      onmouseover="this.style.background='rgba(109,40,217,0.4)';this.style.color='#f8fafc'"
+      onmouseout="this.style.background='rgba(22,22,35,0.6)';this.style.color='#94a3b8'">JS</a>
+  </div>
+  <script>
+    function viewSrc(file) {
+      fetch(file).then(function (r) { return r.text() }).then(function (code) {
+        var w = window.open('', '_blank');
+        w.document.write('<html><head><title>' + file + '</title><style>body{margin:0;background:#0a0a14;color:#f8fafc;font-family:Consolas,Monaco,monospace;font-size:13px;padding:16px;white-space:pre-wrap;word-break:break-all}h3{color:#94a3b8;font-size:12px;margin:0 0 12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px}</style></head><body><h3>' + file + '</h3>' + code.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</body></html>');
+        w.document.close();
+      });
+    }
+  </script>
+  <!-- === FIN: Botones de visor de código (sección independiente) === -->
 
-    <div class="contenedor">
+  <div class="contenedor">
     <h1>Sistema de Inventario</h1>
-
 
     <div id="login">
 
+      <h2>Iniciar Sesión</h2>
+      <input type="text" id="usuario" placeholder="usuario">
+      <input type="password" id="clave" placeholder="contraseña">
+      <button id="btnLogin">Ingresar</button>
 
-        <h2>Iniciar Sesión</h2>
-        <input type="text" id="usuario" placeholder="usuario">
-        <input type="password" id="clave" placeholder="contraseña">
-        <button id="btnLogin">Ingresar</button>
-
-
-        <p id="mensajeLogin"></p>
-
+      <p id="mensajeLogin"></p>
 
     </div>
-
 
     <div id="inventario" style="display: none;">
 
+      <h2>Panel de Inventario</h2>
 
-     <h2>Panel de Inventario</h2>
- 
-     <input type="text" id="material" placeholder="Nombre del Material">
-     <input type="number" id="cantidad" placeholder="cantidad">
-     <input type="number" id="precio" placeholder="Precio Unitario">
-     <button id="btnCalcular">Calcular</button>
+      <input type="text" id="material" placeholder="Nombre del Material">
+      <input type="number" id="cantidad" placeholder="cantidad">
+      <input type="number" id="precio" placeholder="Precio Unitario">
+      <button id="btnCalcular">Calcular</button>
 
+      <p id="resultado"></p>
 
-     <p id="resultado"></p>
-     
-     <p id="stock"></p>
-
-
-      </div>
-
+      <p id="stock"></p>
 
     </div>
-    <script src="js/script.js"></script>
 
+  </div>
+  <script src="js/script.js"></script>
 
 </body>
-</html>
 
+</html>
