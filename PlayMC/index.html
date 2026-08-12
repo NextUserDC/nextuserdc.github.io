@@ -15,14 +15,18 @@
 					alert("Abre esta pagina con HTTP, no directamente desde archivos");
 				}else {
 				window.eaglercraftXOpts = {
-					demoMode: true,
+					demoMode: false,
 					container: "game_frame",
 					assetsURI: "assets.epk",
 					localesURI: "lang/",
 					worldsDB: "worlds",
 					logInvalidCerts: true,
 					crashOnUncaughtExceptions: true,
-					relays: []
+					relays: [
+						"wss://relay.deev.is/",
+						"wss://relay.lax1dude.net/",
+						"wss://relay.shhnowisnottheti.me/"
+					]
 				};
 					main();
 				}
