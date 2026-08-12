@@ -1,52 +1,115 @@
-# NextUserDC
+<h1 align="center">NextUserDC</h1>
 
-> [nextuser.lat](https://nextuser.lat) — Portfolio de proyectos web
+<p align="center">
+  <a href="https://nextuser.lat">nextuser.lat</a> — Portfolio de proyectos web
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/GitHub_Pages-222222?style=for-the-badge&logo=githubpages&logoColor=white" alt="GitHub Pages">
+</p>
+
+---
 
 ## Descripcion
 
-Sitio web estatico alojado en GitHub Pages que alberga una coleccion de proyectos web personales. Desarrollado con HTML, CSS y JavaScript puro (sin frameworks ni build tools).
+Portfolio web estatico con coleccion de proyectos personales. Todo desarrollado con **HTML, CSS y JavaScript puro** — sin frameworks ni build tools.
+
+---
 
 ## Proyectos
 
-### TMail — Correo Temporal
+<table>
+<tr>
+<td width="50%">
 
-Servicio de correos temporales con dominio `@nextuser.lat`. Generacion de direcciones personalizadas o aleatorias, bandeja de entrada en tiempo real, envio de correos, conexion multi-dispositivo y extension de tiempo. Incluye NCloud (almacenamiento en la nube) integrado como vista interna. PWA completa con service worker y Web Share API.
+### Correo Temporal (TMail)
+Serviço de correos temporales con dominio propio. Generacion de direcciones personalizadas o aleatorias, bandeja de entrada en tiempo real, envio de correos y conexion multi-dispositivo. PWA completa con modo offline.
 
-### NCloud — Almacenamiento en la Nube
+`/TMail/`
 
-Almacenamiento de archivos integrado dentro de TMail. Subida con drag-and-drop, TTL configurable (1h, 6h, 12h), carpetas, enlaces de compartir con expiracion y barra de espacio. Backend en Cloudflare R2.
+</td>
+<td width="50%">
 
 ### MCAccounts
+Buscador de cuentas de Minecraft no premium con base de datos indexada por prefijo, soporte offline e infinite scroll.
 
-Buscador de cuentas de Minecraft no premium con base de datos indexada por prefijo, service worker para soporte offline e infinite scroll.
+`/MCAccounts/`
+
+</td>
+</tr>
+<tr>
+<td>
 
 ### GameFinder
+Motor de busqueda de ofertas de videojuegos en tiendas legales usando la API de CheapShark, con pestaña adicional para marketplaces de claves.
 
-Motor de busqueda de ofertas de videojuegos en tiendas legales usando la API de CheapShark, con pestaña adicional para sitios alternativos y marketplaces de claves.
+`/GameFinder/`
 
-### Eaglercraft (PlayMC)
+</td>
+<td>
 
+### Eaglercraft
 Cliente de Minecraft 1.12.2 que se ejecuta directamente en el navegador web, basado en EaglercraftX.
 
-### Sistemas Operativos
+`/PlayMC/`
 
-Directorio de descargas directas de mas de 30 sistemas operativos y herramientas USB con busqueda en tiempo real y logos SVG personalizados. Organizados por distro base.
+</td>
+</tr>
+<tr>
+<td>
+
+### Sistemas Operativos
+Directorio de descargas directas de mas de 30 sistemas operativos y herramientas USB con busqueda en tiempo real y logos SVG personalizados.
+
+`/Os/`
+
+</td>
+<td>
 
 ### La Mesa 58
-
 Pagina web de un restaurante venezolano con menu completo, seccion de cultura venezolana y diseño responsive.
 
-### SimulaVIP
+`/Mesa58/`
 
-Sistema de venta de entradas para un simulador VIP con login, calculo de precios y diseño responsive.
+</td>
+</tr>
+<tr>
+<td>
+
+### SimulaVIP
+Sistema de venta de entradas para un simulador VIP con login y calculo de precios.
+
+`/SimulaVIP/`
+
+</td>
+<td>
 
 ### Camila
+Pagina web personal dedicada con cuenta regresiva, mini-juego Wordle y album de fotos.
 
-Pagina web personal dedicada con cuenta regresiva, mini-juego Wordle como mecanismo de desbloqueo, album de fotos cifrado con AES-256-GCM y lista de Spotify embebida.
+`/Camila/`
 
-## Stack Tecnico
+</td>
+</tr>
+</table>
 
-- **Frontend:** HTML5 / CSS3 / JavaScript vanilla
-- **Backend:** Cloudflare Workers + D1 + R2 (TMail/NCloud)
-- **Hosting:** GitHub Pages con dominio personalizado (`nextuser.lat`)
-- **Diseno:** Glassmorphism, CSS Grid, Flexbox, responsive, SVG personalizados
+---
+
+## Stack
+
+| Tecnologia | Uso |
+|:---:|:---:|
+| HTML5 | Estructura y contenido |
+| CSS3 | Glassmorphism, Grid, Flexbox, responsive |
+| JavaScript vanilla | Logica, interaccion, animaciones |
+| GitHub Pages | Hosting con dominio personalizado |
+| Cloudflare | DNS y redirecciones |
+
+---
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Siguiente_user-NextUserDC-6d28d9?style=for-the-badge&logo=github&logoColor=white" alt="NextUserDC">
+</p>
