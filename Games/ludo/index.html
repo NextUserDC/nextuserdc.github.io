@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a14">
+  <title>Ludo - Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
+</head>
+<body>
+  <div class="background-animation">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <a href="/Games/" class="back-link">&larr; Games</a>
+      <h1 class="logo">Ludo</h1>
+    </header>
+
+    <div id="setup-screen" class="screen active">
+      <div class="setup-card">
+        <h2>Modo de juego</h2>
+        <div class="mode-buttons">
+          <button class="mode-btn selected" data-mode="local">
+            <span class="mode-icon">🎲</span>
+            <span class="mode-label">Local</span>
+            <span class="mode-desc">Juega en el mismo dispositivo</span>
+          </button>
+          <button class="mode-btn" data-mode="online">
+            <span class="mode-icon">🌐</span>
+            <span class="mode-label">Online</span>
+            <span class="mode-desc">Juega con codigo de sala</span>
+          </button>
+        </div>
+
+        <div id="local-options">
+          <div class="setup-section">
+            <label class="setup-label">Cantidad de jugadores</label>
+            <div class="player-count-btns">
+              <button class="count-btn active" data-count="2">2</button>
+              <button class="count-btn" data-count="3">3</button>
+              <button class="count-btn" data-count="4">4</button>
+            </div>
+          </div>
+          <div class="setup-section">
+            <label class="setup-label">Colores</label>
+            <div class="color-options" id="color-options">
+              <div class="color-opt selected" data-color="red"><span class="color-dot" style="background:#ef4444"></span> Rojo</div>
+              <div class="color-opt selected" data-color="green"><span class="color-dot" style="background:#22c55e"></span> Verde</div>
+              <div class="color-opt" data-color="yellow"><span class="color-dot" style="background:#eab308"></span> Amarillo</div>
+              <div class="color-opt" data-color="blue"><span class="color-dot" style="background:#3b82f6"></span> Azul</div>
+            </div>
+          </div>
+          <div class="setup-section">
+            <label class="setup-label">Nombres</label>
+            <div id="name-inputs"></div>
+          </div>
+          <button class="start-btn" id="start-game">Jugar</button>
+        </div>
+
+        <div id="online-options" class="hidden">
+          <div id="online-lobby">
+            <div class="online-name-row">
+              <label>Tu nombre</label>
+              <input type="text" id="online-name" value="Jugador" maxlength="15">
+            </div>
+            <div class="online-color-row">
+              <label>Tu color</label>
+              <select id="online-color" class="online-select">
+                <option value="red">Rojo</option>
+                <option value="green">Verde</option>
+                <option value="yellow">Amarillo</option>
+                <option value="blue">Azul</option>
+              </select>
+            </div>
+            <div class="online-actions">
+              <div class="online-action">
+                <button class="start-btn" id="create-ludo-room">Crear sala</button>
+                <p class="online-hint">Crea una sala y comparte el codigo</p>
+              </div>
+              <div class="online-divider">o</div>
+              <div class="online-action">
+                <div class="room-code-input">
+                  <input type="text" id="ludo-room-code-input" maxlength="4" placeholder="----" autocomplete="off" spellcheck="false">
+                </div>
+                <button class="start-btn" id="join-ludo-room">Unirse</button>
+                <p class="online-hint">Ingresa el codigo de 4 caracteres</p>
+              </div>
+            </div>
+            <div id="ludo-online-status" class="online-status hidden"></div>
+          </div>
+          <div id="online-waiting" class="hidden">
+            <div class="room-code-display">
+              <span class="room-code-label">Codigo de sala</span>
+              <span class="room-code" id="ludo-room-code-display">----</span>
+              <button class="copy-code-btn" id="ludo-copy-code" title="Copiar codigo">📋</button>
+            </div>
+            <div class="waiting-info">
+              <div class="waiting-spinner"></div>
+              <p id="ludo-waiting-text">Esperando oponente...</p>
+              <p class="waiting-hint">Comparte este codigo con tu oponente</p>
+            </div>
+          </div>
+          <div id="online-start-area" class="hidden">
+            <p id="online-players-info"></p>
+            <button class="start-btn" id="start-online-ludo">Iniciar partida</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="game-screen" class="screen hidden">
+      <div class="game-layout">
+        <div class="board-wrapper">
+          <div class="board" id="board"></div>
+        </div>
+        <div class="side-panel">
+          <div class="turn-display">
+            <span class="turn-label">Turno de</span>
+            <span class="turn-name" id="turn-name">-</span>
+          </div>
+          <div class="dice-area">
+            <div class="dice" id="dice">
+              <div class="dice-face" id="dice-face">?</div>
+            </div>
+            <button class="roll-btn" id="roll-btn">Tirar dado</button>
+          </div>
+          <div class="players-list" id="players-list"></div>
+          <div class="game-log" id="game-log"></div>
+          <button class="quit-btn" id="quit-btn">Salir</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="win-screen" class="screen hidden">
+      <div class="win-card">
+        <div class="confetti-container" id="confetti"></div>
+        <h2 id="win-title">Ganador!</h2>
+        <div class="win-trophy"></div>
+        <p id="win-message"></p>
+        <div class="results-actions">
+          <button class="start-btn" id="play-again">Jugar de nuevo</button>
+          <a href="/Games/" class="back-btn-results">Volver a Games</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a14">
+  <title>Mecanografia - Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌨️</text></svg>">
+</head>
+<body>
+  <div class="background-animation">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <a href="/Games/" class="back-link">&larr; Games</a>
+      <h1 class="logo">Mecanografia</h1>
+    </header>
+
+    <div id="menu-screen" class="screen active">
+      <div class="menu-card">
+        <h2>Configurar partida</h2>
+        <div class="setup-section">
+          <label class="setup-label">Duracion</label>
+          <div class="duration-buttons">
+            <button class="dur-btn" data-time="30">30s</button>
+            <button class="dur-btn active" data-time="60">60s</button>
+            <button class="dur-btn" data-time="120">120s</button>
+          </div>
+        </div>
+        <button class="start-btn" id="start-solo">Jugar</button>
+      </div>
+    </div>
+
+    <div id="game-screen" class="screen hidden">
+      <div class="game-header">
+        <div class="timer-display" id="timer">60</div>
+      </div>
+      <div class="player-area">
+        <div class="paragraph-display" id="solo-text"></div>
+        <input type="text" id="solo-input" class="typing-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Empieza a escribir...">
+        <div class="stats-bar">
+          <div class="stat"><span class="stat-label">WPM</span><span class="stat-value" id="solo-wpm">0</span></div>
+          <div class="stat"><span class="stat-label">Precision</span><span class="stat-value" id="solo-acc">100%</span></div>
+          <div class="stat"><span class="stat-label">Errores</span><span class="stat-value" id="solo-errors">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="results-screen" class="screen hidden">
+      <div class="results-card">
+        <h2 id="results-title">Resultados</h2>
+        <div id="results-content"></div>
+        <div class="results-actions">
+          <button class="start-btn" id="play-again">Jugar de nuevo</button>
+          <a href="/Games/" class="back-btn-results">Volver a Games</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
