@@ -94,6 +94,17 @@ Pagina web personal dedicada con cuenta regresiva, mini-juego Wordle y album de 
 
 </td>
 </tr>
+<tr>
+<td>
+
+### Games
+Juegos web interactivos: Mecanografia (solitario), Ludo (local 2-4 jugadores + online) y mas en camino.
+
+`/Games/`
+
+</td>
+<td></td>
+</tr>
 </table>
 
 ---
