@@ -357,3 +357,23 @@ body {
   .piece { width: 22px; height: 22px; }
   .side-panel { width: 100%; max-width: 350px; }
 }
+
+@media (max-width: 580px) {
+  :root { --cell: 22px; }
+  .base-slot { width: 20px; height: 20px; }
+  .piece { width: 18px; height: 18px; }
+  .base-zone { gap: 4px; padding: 10px; }
+  .side-panel { min-width: unset; }
+  .setup-card { padding: 1.2rem; }
+  .dice { width: 56px; height: 56px; }
+  .dice-face { font-size: 1.5rem; }
+}
+
+@media (max-width: 420px) {
+  :root { --cell: 18px; }
+  .base-slot { width: 16px; height: 16px; }
+  .piece { width: 14px; height: 14px; border-width: 1px; }
+  .base-zone { gap: 2px; padding: 6px; border-radius: 8px; }
+  .board-wrapper { padding: 0.3rem; border-radius: 10px; }
+  .cell { border-width: 0.5px; }
+}

@@ -39,26 +39,25 @@
     for (let c=9; c<=13; c++) { m[6][c]=1; m[7][c]=1; m[8][c]=1; }
     for (let r=9; r<=13; r++) { m[r][6]=1; m[r][7]=1; m[r][8]=1; }
     for (let c=1; c<=5; c++) { m[6][c]=1; m[7][c]=1; m[8][c]=1; }
-    for (let r=6; r<=8; r++) { m[r][0]=1; }
     for (let c=6; c<=8; c++) { m[0][c]=1; m[14][c]=1; }
     for (let r=6; r<=8; r++) { m[r][14]=1; }
     m[7][7] = 1;
-    m[6][0] = 3; m[1][8] = 4; m[8][13] = 5; m[13][6] = 6;
+    m[6][1] = 3; m[1][8] = 4; m[8][13] = 5; m[13][6] = 6;
     m[6][4] = 2; m[2][8] = 2; m[8][12] = 2; m[12][6] = 2;
     m[6][13] = 2; m[1][6] = 2; m[8][1] = 2; m[13][8] = 2;
     return m;
   })();
 
   const MAIN_TRACK = [
-    [6,0],[7,0],[8,0],[8,1],[8,2],[8,3],[8,4],[8,5],[9,6],[10,6],
-    [11,6],[12,6],[13,6],[14,6],[14,7],[14,8],[13,8],[12,8],[11,8],[10,8],
-    [9,8],[8,9],[8,10],[8,11],[8,12],[8,13],[8,14],[7,14],[6,14],[6,13],
-    [6,12],[6,11],[6,10],[6,9],[6,8],[5,8],[4,8],[3,8],[2,8],[1,8],
-    [0,8],[0,7],[0,6],[1,6],[2,6],[3,6],[4,6],[5,6],[6,6],[6,5],
-    [6,4],[6,3]
+    [6,1],[7,1],[8,1],[8,2],[8,3],[8,4],[8,5],[9,6],[10,6],[11,6],
+    [12,6],[13,6],[14,6],[14,7],[14,8],[13,8],[12,8],[11,8],[10,8],[9,8],
+    [8,9],[8,10],[8,11],[8,12],[8,13],[8,14],[7,14],[6,14],[6,13],[6,12],
+    [6,11],[6,10],[6,9],[6,8],[5,8],[4,8],[3,8],[2,8],[1,8],[0,8],
+    [0,7],[0,6],[1,6],[2,6],[3,6],[4,6],[5,6],[6,6],[6,5],[6,4],
+    [6,3],[6,2]
   ];
 
-  const START_INDEX = { red: 0, green: 39, yellow: 25, blue: 12 };
+  const START_INDEX = { red: 0, green: 38, yellow: 24, blue: 11 };
 
   const HOME_COLUMN = {
     red:    [[7,1],[7,2],[7,3],[7,4],[7,5]],
@@ -149,9 +148,14 @@
 
   function connectWS() {
     return new Promise((resolve, reject) => {
+      if (ws && ws.readyState === WebSocket.OPEN) { resolve(); return; }
       ws = new WebSocket(WS_URL);
-      ws.onopen = () => resolve();
-      ws.onerror = () => reject(new Error('No se pudo conectar al servidor'));
+      const timeout = setTimeout(() => {
+        ws.close();
+        reject(new Error('Tiempo de conexion agotado'));
+      }, 8000);
+      ws.onopen = () => { clearTimeout(timeout); resolve(); };
+      ws.onerror = () => { clearTimeout(timeout); reject(new Error('No se pudo conectar al servidor')); };
       ws.onclose = () => {
         if (isOnline && gameActive) {
           addLog('⚠ Conexion perdida');
@@ -173,8 +177,11 @@
   }
 
   async function createLudoRoom() {
+    const btn = document.getElementById('create-ludo-room');
     const name = document.getElementById('online-name').value.trim() || 'Jugador';
     myColor = document.getElementById('online-color').value;
+    btn.disabled = true;
+    btn.textContent = 'Conectando...';
     try {
       await connectWS();
       ws.send(JSON.stringify({
@@ -184,16 +191,22 @@
       }));
     } catch (err) {
       showOnlineStatus(err.message, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Crear sala';
     }
   }
 
   async function joinLudoRoom() {
+    const btn = document.getElementById('join-ludo-room');
     const code = document.getElementById('ludo-room-code-input').value.trim().toUpperCase();
     const name = document.getElementById('online-name').value.trim() || 'Jugador';
     if (code.length !== 4) {
       showOnlineStatus('El codigo debe tener 4 caracteres', 'error');
       return;
     }
+    btn.disabled = true;
+    btn.textContent = 'Conectando...';
     try {
       await connectWS();
       ws.send(JSON.stringify({
@@ -204,6 +217,9 @@
       }));
     } catch (err) {
       showOnlineStatus(err.message, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Unirse';
     }
   }
 
@@ -830,7 +846,7 @@
   }
 
   function isSafePosition(trackPos) {
-    const safeTrackPositions = [0, 3, 11, 12, 16, 24, 25, 29, 38, 39, 43, 50];
+    const safeTrackPositions = [0, 2, 10, 11, 14, 23, 24, 28, 37, 38, 42, 49];
     return safeTrackPositions.includes(trackPos);
   }
 
