@@ -898,11 +898,24 @@
     screen.classList.add('active');
   }
 
+  function forceFinishGame() {
+    if (!gameActive || !players.length) return;
+    const player = players[currentTurn];
+    for (let i = 0; i < 4; i++) {
+      player.pieces[i] = 57;
+      positionPiece(player, i);
+    }
+    renderPlayersList();
+    gameActive = false;
+    setTimeout(() => showWin(player), 300);
+  }
+
   document.addEventListener('keydown', (e) => {
     if (e.key === ' ' && gameActive && !rollBtn.disabled) {
       e.preventDefault();
       rollDice();
     }
     if (e.key === 'Escape') location.reload();
+    if (e.key === 'f' || e.key === 'F') forceFinishGame();
   });
 })();
