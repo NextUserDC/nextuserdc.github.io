@@ -43,22 +43,22 @@
     for (let c=6; c<=8; c++) { m[0][c]=1; m[14][c]=1; }
     for (let r=6; r<=8; r++) { m[r][14]=1; }
     m[7][7] = 1;
-    m[6][1] = 3; m[1][8] = 4; m[8][13] = 5; m[13][6] = 6;
-    m[6][2] = 2; m[2][8] = 2; m[8][12] = 2; m[12][6] = 2;
+    m[6][0] = 3; m[1][8] = 4; m[8][13] = 5; m[13][6] = 6;
+    m[6][4] = 2; m[2][8] = 2; m[8][12] = 2; m[12][6] = 2;
     m[6][13] = 2; m[1][6] = 2; m[8][1] = 2; m[13][8] = 2;
     return m;
   })();
 
   const MAIN_TRACK = [
-    [6,1],[7,1],[8,1],[8,2],[8,3],[8,4],[8,5],[9,6],[10,6],[11,6],
-    [12,6],[13,6],[14,6],[14,7],[14,8],[13,8],[12,8],[11,8],[10,8],[9,8],
-    [8,9],[8,10],[8,11],[8,12],[8,13],[8,14],[7,14],[6,14],[6,13],[6,12],
-    [6,11],[6,10],[6,9],[6,8],[5,8],[4,8],[3,8],[2,8],[1,8],[0,8],
-    [0,7],[0,6],[1,6],[2,6],[3,6],[4,6],[5,6],[6,6],[6,5],[6,4],
-    [6,3],[6,2]
+    [6,0],[7,0],[8,0],[8,1],[8,2],[8,3],[8,4],[8,5],[9,6],[10,6],
+    [11,6],[12,6],[13,6],[14,6],[14,7],[14,8],[13,8],[12,8],[11,8],[10,8],
+    [9,8],[8,9],[8,10],[8,11],[8,12],[8,13],[8,14],[7,14],[6,14],[6,13],
+    [6,12],[6,11],[6,10],[6,9],[6,8],[5,8],[4,8],[3,8],[2,8],[1,8],
+    [0,8],[0,7],[0,6],[1,6],[2,6],[3,6],[4,6],[5,6],[6,6],[6,5],
+    [6,4],[6,3]
   ];
 
-  const START_INDEX = { red: 0, green: 38, yellow: 24, blue: 11 };
+  const START_INDEX = { red: 0, green: 39, yellow: 25, blue: 12 };
 
   const HOME_COLUMN = {
     red:    [[7,1],[7,2],[7,3],[7,4],[7,5]],
@@ -199,7 +199,8 @@
       ws.send(JSON.stringify({
         type: 'join',
         code,
-        names: { p2: name }
+        name,
+        color: document.getElementById('online-color').value
       }));
     } catch (err) {
       showOnlineStatus(err.message, 'error');
@@ -478,8 +479,7 @@
       const coords = HOME_COLUMN[player.color][homeIdx];
       row = coords[0]; col = coords[1];
     } else if (pos === 57) {
-      const homeColors = {red:[6.5,3], green:[3,6.5], yellow:[6.5,11], blue:[11,6.5]};
-      const hc = homeColors[player.color];
+      const hc = HOME_COLUMN[player.color][4];
       row = hc[0]; col = hc[1];
     }
 
@@ -515,6 +515,13 @@
   rollBtn.addEventListener('click', rollDice);
   diceEl.addEventListener('click', () => { if (rollBtn.disabled === false) rollDice(); });
 
+  function rollDiceValue() {
+    const r = Math.random();
+    if (r < 0.22) return 1;
+    if (r < 0.44) return 6;
+    return Math.floor(Math.random() * 4) + 2;
+  }
+
   function rollDice() {
     if (!gameActive || moveInProgress) return;
     if (isOnline && !isMyTurnOnline) return;
@@ -529,7 +536,7 @@
       if (count > 10) {
         clearInterval(interval);
         diceEl.classList.remove('rolling');
-        diceValue = Math.floor(Math.random()*6)+1;
+        diceValue = rollDiceValue();
         diceFace.textContent = diceValue;
 
         if (isOnline) {
@@ -632,8 +639,7 @@
       const coords = HOME_COLUMN[player.color][homeIdx];
       return { row: coords[0], col: coords[1] };
     } else if (relativePos === 57) {
-      const homeColors = {red:[6.5,3], green:[3,6.5], yellow:[6.5,11], blue:[11,6.5]};
-      const hc = homeColors[player.color];
+      const hc = HOME_COLUMN[player.color][4];
       return { row: hc[0], col: hc[1] };
     }
     return { row: 0, col: 0 };
@@ -824,7 +830,7 @@
   }
 
   function isSafePosition(trackPos) {
-    const safeTrackPositions = [0, 2, 10, 11, 15, 23, 24, 28, 37, 38, 42, 51];
+    const safeTrackPositions = [0, 3, 11, 12, 16, 24, 25, 29, 38, 39, 43, 50];
     return safeTrackPositions.includes(trackPos);
   }
 
