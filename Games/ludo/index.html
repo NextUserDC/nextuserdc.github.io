@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=4">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
 </head>
 <body>
@@ -72,12 +72,19 @@
             </div>
             <div class="online-color-row">
               <label>Tu color</label>
-              <select id="online-color" class="online-select">
-                <option value="red">Rojo</option>
-                <option value="green">Verde</option>
-                <option value="yellow">Amarillo</option>
-                <option value="blue">Azul</option>
-              </select>
+              <div class="ludo-dd" id="online-color-dropdown">
+                <div class="ludo-dd-selected" id="online-color-display">
+                  <span class="color-dot" style="background:#ef4444"></span>
+                  <span class="ludo-dd-selected-text">Rojo</span>
+                  <span class="ludo-dd-arrow">&#9660;</span>
+                </div>
+                <div class="ludo-dd-options" id="online-color-options">
+                  <div class="ludo-dd-option" data-color="red"><span class="color-dot" style="background:#ef4444"></span> Rojo</div>
+                  <div class="ludo-dd-option" data-color="green"><span class="color-dot" style="background:#22c55e"></span> Verde</div>
+                  <div class="ludo-dd-option" data-color="yellow"><span class="color-dot" style="background:#eab308"></span> Amarillo</div>
+                  <div class="ludo-dd-option" data-color="blue"><span class="color-dot" style="background:#3b82f6"></span> Azul</div>
+                </div>
+              </div>
             </div>
             <div class="online-actions">
               <div class="online-action">
@@ -152,6 +159,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>

@@ -20,6 +20,7 @@
   let myPlayerId = null;
   let myColor = null;
   let isOnline = false;
+  let onlineSelectedColor = 'red';
 
   const setupScreen = document.getElementById('setup-screen');
   const gameScreen = document.getElementById('game-screen');
@@ -84,6 +85,32 @@
     });
   });
 
+  const dropdownDisplay = document.getElementById('online-color-display');
+  const dropdownOptions = document.getElementById('online-color-options');
+  const COLOR_DOT_COLORS = { red: '#ef4444', green: '#22c55e', yellow: '#eab308', blue: '#3b82f6' };
+
+  if (dropdownDisplay && dropdownOptions) {
+    dropdownDisplay.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdownOptions.classList.toggle('open');
+    });
+
+    dropdownOptions.querySelectorAll('.ludo-dd-option').forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const color = opt.dataset.color;
+        onlineSelectedColor = color;
+        dropdownDisplay.querySelector('.color-dot').style.background = COLOR_DOT_COLORS[color];
+        dropdownDisplay.querySelector('.ludo-dd-selected-text').textContent = COLOR_NAMES[color];
+        dropdownOptions.classList.remove('open');
+      });
+    });
+
+    document.addEventListener('click', () => {
+      dropdownOptions.classList.remove('open');
+    });
+  }
+
   document.querySelectorAll('.count-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
@@ -97,21 +124,32 @@
   document.querySelectorAll('.color-opt').forEach(opt => {
     opt.addEventListener('click', () => {
       if (opt.classList.contains('disabled')) return;
+      if (!opt.classList.contains('selected')) {
+        const currentSelected = document.querySelectorAll('.color-opt.selected').length;
+        if (currentSelected >= numPlayers) return;
+      }
       opt.classList.toggle('selected');
       updateColorOptions();
-      updateNameInputs();
     });
   });
 
   function updateColorOptions() {
-    const selected = document.querySelectorAll('.color-opt.selected').length;
+    const selected = document.querySelectorAll('.color-opt.selected');
+    const selectedCount = selected.length;
+    if (selectedCount > numPlayers) {
+      for (let i = numPlayers; i < selectedCount; i++) {
+        selected[i].classList.remove('selected');
+      }
+    }
+    const nowSelected = document.querySelectorAll('.color-opt.selected').length;
     document.querySelectorAll('.color-opt').forEach(opt => {
-      if (!opt.classList.contains('selected') && selected >= numPlayers) {
+      if (!opt.classList.contains('selected') && nowSelected >= numPlayers) {
         opt.classList.add('disabled');
       } else {
         opt.classList.remove('disabled');
       }
     });
+    updateNameInputs();
   }
 
   function updateNameInputs() {
@@ -180,7 +218,7 @@
   async function createLudoRoom() {
     const btn = document.getElementById('create-ludo-room');
     const name = document.getElementById('online-name').value.trim() || 'Jugador';
-    myColor = document.getElementById('online-color').value;
+    myColor = onlineSelectedColor;
     btn.disabled = true;
     btn.textContent = 'Conectando...';
     try {
@@ -214,7 +252,7 @@
         type: 'join',
         code,
         name,
-        color: document.getElementById('online-color').value
+        color: onlineSelectedColor
       }));
     } catch (err) {
       showOnlineStatus(err.message, 'error');
@@ -235,6 +273,15 @@
 
       case 'joined':
         myPlayerId = msg.player;
+        if (msg.colorAssigned && msg.colorChanged) {
+          myColor = msg.colorAssigned;
+          onlineSelectedColor = msg.colorAssigned;
+          if (dropdownDisplay) {
+            dropdownDisplay.querySelector('.color-dot').style.background = COLOR_DOT_COLORS[msg.colorAssigned];
+            dropdownDisplay.querySelector('.ludo-dd-selected-text').textContent = COLOR_NAMES[msg.colorAssigned];
+          }
+          showOnlineStatus('Tu color estaba en uso. Se te asigno: ' + COLOR_NAMES[msg.colorAssigned], 'error');
+        }
         document.getElementById('online-lobby').classList.add('hidden');
         document.getElementById('online-waiting').classList.remove('hidden');
         document.getElementById('ludo-room-code-display').textContent = msg.code;
@@ -381,6 +428,9 @@
   function startLocalGame() {
     isOnline = false;
     const selectedColors = [...document.querySelectorAll('.color-opt.selected')].map(o => o.dataset.color);
+    if (selectedColors.length !== numPlayers) {
+      return;
+    }
     if (selectedColors.length < 2) return;
 
     players = selectedColors.map(color => {
@@ -898,24 +948,11 @@
     screen.classList.add('active');
   }
 
-  function forceFinishGame() {
-    if (!gameActive || !players.length) return;
-    const player = players[currentTurn];
-    for (let i = 0; i < 4; i++) {
-      player.pieces[i] = 57;
-      positionPiece(player, i);
-    }
-    renderPlayersList();
-    gameActive = false;
-    setTimeout(() => showWin(player), 300);
-  }
-
   document.addEventListener('keydown', (e) => {
     if (e.key === ' ' && gameActive && !rollBtn.disabled) {
       e.preventDefault();
       rollDice();
     }
     if (e.key === 'Escape') location.reload();
-    if (e.key === 'f' || e.key === 'F') forceFinishGame();
   });
 })();
