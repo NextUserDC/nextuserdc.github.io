@@ -561,9 +561,22 @@
       row.className = 'player-row';
       row.id = `pr-${p.color}`;
       const homeCount = p.pieces.filter(pos => pos === 57).length;
-      row.innerHTML = `<span class="color-dot" style="background:var(--${p.color})"></span>
-        <span class="pname">${p.name}</span>
-        <span class="pscore">${homeCount}/4</span>`;
+
+      const colorDot = document.createElement('span');
+      colorDot.className = 'color-dot';
+      colorDot.style.background = `var(--${p.color})`;
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'pname';
+      nameSpan.textContent = p.name;
+
+      const scoreSpan = document.createElement('span');
+      scoreSpan.className = 'pscore';
+      scoreSpan.textContent = `${homeCount}/4`;
+
+      row.appendChild(colorDot);
+      row.appendChild(nameSpan);
+      row.appendChild(scoreSpan);
       playersList.appendChild(row);
     });
   }
