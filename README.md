@@ -87,6 +87,14 @@ Sistema de venta de entradas para un simulador VIP con login y calculo de precio
 </td>
 <td>
 
+### Photobooth
+Sitio web de arriendo de cabinas fotograficas con login, cotizador, galeria y panel admin.
+
+`/Photobooth/`
+
+</td>
+<td>
+
 ### Camila
 Pagina web personal dedicada con cuenta regresiva, mini-juego Wordle y album de fotos.
 

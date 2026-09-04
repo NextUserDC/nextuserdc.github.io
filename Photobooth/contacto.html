@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Sitio de contacto para Arriendo de PhotoBooth Santiago de Chile.">
+        <meta name="keywords" content="photobooth, contacto, reservar, arriendo, santiago, ubicacion, cabina, fotos">
+        <meta name="author" content="Elí Nuñez">
+        <title>PhotoBooth - Contacto</title>
+        <link rel="shortcut icon" href="src/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="css/styles.css">
+        <style>@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');</style>
+    </head>
+    <body>
+        <header>
+            <img src="src/favicon.png" alt="PhotoBooth - Logo">
+            <h1>Contacto</h1>
+            <nav>
+                <ul>
+                    <li><a href="inicio.html">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="finanzas.html">Finanzas</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="contactoInfo">
+                <h2>Contáctanos</h2>
+                <div class="contactoLayout">
+                    <div>
+                        <div class="mapaContenedor">
+                            <iframe class="mapaIframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.8!2d-70.679!3d-33.456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sAvenida+5+de+Abril+4936,+Estación+Central,+Santiago!5e0!3m2!1ses!2scl" width="100%" height="250" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación PhotoBooth"></iframe>
+                        </div>
+                        <div class="infoContacto">
+                            <p><strong>Dirección:</strong> Avenida 5 de Abril 4936, Estación Central, Santiago, Región Metropolitana</p>
+                            <p><strong>Teléfono:</strong> +56 9 7774 5816</p>
+                            <p><strong>Email:</strong> eli.alexandern11@gmail.com</p>
+                            <p><strong>Horario:</strong> Lunes a Viernes, 9:00 - 18:00</p>
+                        </div>
+                    </div>
+                    <section class="cotizador">
+                        <h2>Envíanos tu consulta</h2>
+                        <form id="formularioContacto" class="formulario">
+                            <label for="inputNombreContacto">Nombre completo</label>
+                            <input type="text" id="inputNombreContacto" placeholder="Ingresa tu nombre">
+                            <label for="inputTelefonoContacto">Teléfono</label>
+                            <input type="text" id="inputTelefonoContacto" placeholder="Ej: 912345678">
+                            <label for="inputEmailContacto">Correo electrónico</label>
+                            <input type="text" id="inputEmailContacto" placeholder="Ej: correo@ejemplo.com">
+                            <label for="inputMensajeContacto">Mensaje</label>
+                            <input type="text" id="inputMensajeContacto" placeholder="Escribe tu consulta aquí">
+                            <p id="errorContacto"></p>
+                            <button type="submit">Enviar Consulta</button>
+                        </form>
+                        <p id="exitoContacto" style="display:none; color:#059669; font-weight:600; margin-top:12px;"></p>
+                    </section>
+                </div>
+            </section>
+            <section class="loginAdmin">
+                <div id="panelAdmin" style="display:none;">
+                    <section class="adminCard">
+                        <h3>Reservas y Compras</h3>
+                        <p>Reservas registradas desde la página de Servicios:</p>
+                        <div class="tablaContenedor">
+                            <table id="tablaReservas">
+                                <thead>
+                                    <tr>
+                                        <th>Servicio</th>
+                                        <th>Horas</th>
+                                        <th>Impresiones</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cuerpoTabla">
+                                </tbody>
+                            </table>
+                        </div>
+                        <button id="btnVaciarReservas" class="btnVaciar">Vaciar Reservas</button>
+                    </section>
+                    <section class="adminCard">
+                        <h3>Consultas de Clientes</h3>
+                        <p>Consultas enviadas desde el formulario de contacto:</p>
+                        <div class="tablaContenedor">
+                            <table id="tablaConsultas">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Teléfono</th>
+                                        <th>Correo</th>
+                                        <th>Mensaje</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cuerpoTablaConsultas">
+                                </tbody>
+                            </table>
+                        </div>
+                        <button id="btnVaciarConsultas" class="btnVaciar">Vaciar Consultas</button>
+                    </section>
+                    <section class="adminCard">
+                        <h3>Usuarios Registrados</h3>
+                        <p>Usuarios registrados en el sistema:</p>
+                        <div class="tablaContenedor">
+                            <table id="tablaUsuarios">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Teléfono</th>
+                                        <th>Correo</th>
+                                        <th>Usuario</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cuerpoTablaUsuarios">
+                                </tbody>
+                            </table>
+                        </div>
+                        <button id="btnVaciarUsuarios" class="btnVaciar">Vaciar Usuarios</button>
+                    </section>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <div class="footerContenido">
+                <div class="footerSeccion">
+                    <h4>PhotoBooth</h4>
+                    <p>&copy; 2026 Todos los derechos reservados.</p>
+                </div>
+                <div class="footerSeccion footerContacto">
+                    <p>Avenida 5 de Abril 4936, Estación Central</p>
+                    <p>+56 9 7774 5816</p>
+                    <p>eli.alexandern11@gmail.com</p>
+                </div>
+            </div>
+            <div class="footerCopyright">
+                <p>&copy; 2026 PhotoBooth - Arriendo de Cabinas Fotográficas. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+        <script src="js/app.js"></script>
+    </body>
+</html>
