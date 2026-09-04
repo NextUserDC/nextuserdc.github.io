@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Sitio para arrendar cabinas de PhotoBooth en Santiago de Chile.">
+        <meta name="keywords" content="arriendo, cabina, fotos, photobooth, santiago, eventos, liceo, fotografia">
+        <meta name="author" content="Elí Nuñez">
+        <title>PhotoBooth</title>
+        <link rel="shortcut icon" href="src/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="css/styles.css">
+        <style>@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');</style>
+    </head>
+    <body>
+        <header>
+            <img src="src/favicon.png" alt="PhotoBooth - Logo">
+            <h1>PhotoBooth</h1>
+            <nav>
+                <ul>
+                    <li><a href="inicio.html">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="finanzas.html">Finanzas</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div id="barraEstado"></div>
+            <section class="heroCarrusel">
+                <div class="carruselContenedor">
+                    <button class="carruselFlecha carruselIzq" aria-label="Imagen anterior">&#10094;</button>
+                    <div class="carruselTrack">
+                        <div class="carruselSlide activo">
+                            <img src="src/slide1.jpg" alt="Cabina fotográfica en boda">
+                            <div class="carruselTexto">
+                                <h2>PhotoBooth</h2>
+                                <p>Arriendo de cabinas fotográficas para bodas y celebraciones</p>
+                                <a href="servicios.html" class="btnCta">¡Reserva Ahora!</a>
+                            </div>
+                        </div>
+                        <div class="carruselSlide">
+                            <img src="src/slide2.jpg" alt="Cabina fotográfica en evento nocturno">
+                            <div class="carruselTexto">
+                                <h2>PhotoBooth</h2>
+                                <p>Iluminación profesional y fondos personalizados para tu evento</p>
+                                <a href="servicios.html" class="btnCta">¡Reserva Ahora!</a>
+                            </div>
+                        </div>
+                        <div class="carruselSlide">
+                            <img src="src/slide3.jpg" alt="PhotoBooth en fiesta de cumpleaños">
+                            <div class="carruselTexto">
+                                <h2>PhotoBooth</h2>
+                                <p>Diversión asegurada en cumpleaños, quinceaños y kermeses</p>
+                                <a href="servicios.html" class="btnCta">¡Reserva Ahora!</a>
+                            </div>
+                        </div>
+                        <div class="carruselSlide">
+                            <img src="src/slide4.jpg" alt="Cabina en salón de eventos">
+                            <div class="carruselTexto">
+                                <h2>PhotoBooth</h2>
+                                <p>Cabinas modernas con operador técnico incluido</p>
+                                <a href="servicios.html" class="btnCta">¡Reserva Ahora!</a>
+                            </div>
+                        </div>
+                        <div class="carruselSlide">
+                            <img src="src/slide5.jpg" alt="PhotoBooth en evento corporativo">
+                            <div class="carruselTexto">
+                                <h2>PhotoBooth</h2>
+                                <p>Impresiones instantáneas en papel fotográfico premium</p>
+                                <a href="servicios.html" class="btnCta">¡Reserva Ahora!</a>
+                            </div>
+                        </div>
+                        <div class="carruselSlide">
+                            <img src="src/photobooth1.jpg" alt="Máquina PhotoBooth profesional">
+                            <div class="carruselTexto">
+                                <h2>PhotoBooth</h2>
+                                <p>Cabinas fotográficas profesionales con tecnología de última generación</p>
+                                <a href="servicios.html" class="btnCta">¡Reserva Ahora!</a>
+                            </div>
+                        </div>
+                        <div class="carruselSlide">
+                            <img src="src/photobooth2.jpg" alt="PhotoBooth en fiesta nocturna">
+                            <div class="carruselTexto">
+                                <h2>PhotoBooth</h2>
+                                <p>Experiencia fotográfica única para eventos nocturnos y celebraciones</p>
+                                <a href="servicios.html" class="btnCta">¡Reserva Ahora!</a>
+                            </div>
+                        </div>
+                        <div class="carruselSlide">
+                            <img src="src/photobooth3.jpg" alt="Evento con PhotoBooth iluminado">
+                            <div class="carruselTexto">
+                                <h2>PhotoBooth</h2>
+                                <p>Iluminación profesional y efectos visuales para cada momento</p>
+                                <a href="servicios.html" class="btnCta">¡Reserva Ahora!</a>
+                            </div>
+                        </div>
+                        <div class="carruselSlide">
+                            <img src="src/photobooth4.jpg" alt="PhotoBooth en conferencia">
+                            <div class="carruselTexto">
+                                <h2>PhotoBooth</h2>
+                                <p>Soluciones fotográficas para conferencias y eventos corporativos</p>
+                                <a href="servicios.html" class="btnCta">¡Reserva Ahora!</a>
+                            </div>
+                        </div>
+                        <div class="carruselSlide">
+                            <img src="src/photobooth5.jpg" alt="PhotoBooth en celebración">
+                            <div class="carruselTexto">
+                                <h2>PhotoBooth</h2>
+                                <p>Captura los mejores momentos de tu celebración con estilo</p>
+                                <a href="servicios.html" class="btnCta">¡Reserva Ahora!</a>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carruselFlecha carruselDer" aria-label="Siguiente imagen">&#10095;</button>
+                    <div class="carruselPuntos">
+                        <span class="carruselPunto activo" data-index="0"></span>
+                        <span class="carruselPunto" data-index="1"></span>
+                        <span class="carruselPunto" data-index="2"></span>
+                        <span class="carruselPunto" data-index="3"></span>
+                        <span class="carruselPunto" data-index="4"></span>
+                        <span class="carruselPunto" data-index="5"></span>
+                        <span class="carruselPunto" data-index="6"></span>
+                        <span class="carruselPunto" data-index="7"></span>
+                        <span class="carruselPunto" data-index="8"></span>
+                        <span class="carruselPunto" data-index="9"></span>
+                    </div>
+                </div>
+            </section>
+            <section class="beneficios">
+                <div class="beneficioCard">
+                    <img src="src/calidad.jpg" alt="Calidad fotográfica">
+                    <h3>Calidad</h3>
+                    <p>Fotografías de alta resolución con iluminación profesional para que cada capture quede perfecta.</p>
+                </div>
+                <div class="beneficioCard">
+                    <img src="src/precio.jpg" alt="Precio accesible">
+                    <h3>Precio</h3>
+                    <p>Desde $8.000 por hora con la mejor relación costo-beneficio del mercado para eventos.</p>
+                </div>
+                <div class="beneficioCard">
+                    <img src="src/impresiones.jpg" alt="Impresiones fotográficas">
+                    <h3>Impresiones</h3>
+                    <p>Opción de impresiones ilimitadas en papel fotográfico premium por un costo adicional de $5.000.</p>
+                </div>
+            </section>
+            <section class="galeria">
+                <h2 class="galeriaTitulo">Nuestras Cabinas en Acción</h2>
+                <div class="galeriaGrid">
+                    <div class="galeriaItem">
+                        <img src="src/boda.jpg" alt="Cabina fotográfica en boda">
+                        <div class="galeriaOverlay">
+                            <p>Bodas</p>
+                        </div>
+                    </div>
+                    <div class="galeriaItem">
+                        <img src="src/corporativo.jpg" alt="Cabina fotográfica en evento corporativo">
+                        <div class="galeriaOverlay">
+                            <p>Eventos Corporativos</p>
+                        </div>
+                    </div>
+                    <div class="galeriaItem">
+                        <img src="src/exterior.jpg" alt="Cabina fotográfica en fiesta exterior">
+                        <div class="galeriaOverlay">
+                            <p>Fiestas</p>
+                        </div>
+                    </div>
+                    <div class="galeriaItem">
+                        <img src="src/parque.jpg" alt="Cabina fotográfica en evento al aire libre">
+                        <div class="galeriaOverlay">
+                            <p>Aire Libre</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <div class="footerContenido">
+                <div class="footerSeccion">
+                    <h4>PhotoBooth</h4>
+                    <p>&copy; 2026 Todos los derechos reservados.</p>
+                </div>
+                <div class="footerSeccion footerContacto">
+                    <p>Avenida 5 de Abril 4936, Estación Central</p>
+                    <p>+56 9 7774 5816</p>
+                    <p>eli.alexandern11@gmail.com</p>
+                </div>
+            </div>
+            <div class="footerCopyright">
+                <p>&copy; 2026 PhotoBooth - Arriendo de Cabinas Fotográficas. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+        <script src="js/app.js"></script>
+    </body>
+</html>

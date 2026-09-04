@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Inicia sesión o regístrate para arriendo de cabinas PhotoBooth en Santiago de Chile.">
+        <meta name="keywords" content="photobooth, login, registro, arriendo, santiago, cabina, fotos">
+        <meta name="author" content="Elí Nuñez">
+        <title>PhotoBooth - Iniciar Sesión</title>
+        <link rel="shortcut icon" href="src/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="css/styles.css">
+        <style>@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');</style>
+    </head>
+    <body>
+        <header>
+            <img src="src/favicon.png" alt="PhotoBooth - Logo">
+            <h1>PhotoBooth</h1>
+        </header>
+        <main>
+            <div class="loginPage">
+                <div class="loginCard">
+                    <h2 id="tituloFormulario">Iniciar Sesión</h2>
+                    <form id="formularioLogin" class="formulario">
+                        <label for="inputLoginUsuario">Usuario</label>
+                        <input type="text" id="inputLoginUsuario" placeholder="Ingresa tu usuario">
+                        <label for="inputLoginPassword">Contraseña</label>
+                        <input type="password" id="inputLoginPassword" placeholder="Ingresa tu contraseña">
+                        <p id="errorLogin"></p>
+                        <button type="submit">Iniciar Sesión</button>
+                    </form>
+                    <form id="formularioRegistro" class="formulario" style="display:none;">
+                        <label for="inputRegNombre">Nombre completo</label>
+                        <input type="text" id="inputRegNombre" placeholder="Ingresa tu nombre">
+                        <label for="inputRegTelefono">Teléfono</label>
+                        <input type="text" id="inputRegTelefono" placeholder="Ej: 912345678">
+                        <label for="inputRegEmail">Correo electrónico</label>
+                        <input type="text" id="inputRegEmail" placeholder="Ej: correo@ejemplo.com">
+                        <label for="inputRegUsuario">Usuario</label>
+                        <input type="text" id="inputRegUsuario" placeholder="Crea un usuario">
+                        <label for="inputRegPassword">Contraseña</label>
+                        <input type="password" id="inputRegPassword" placeholder="Crea una contraseña">
+                        <p id="errorRegistro"></p>
+                        <button type="submit">Registrarse</button>
+                    </form>
+                    <p class="toggleForm">¿No tienes cuenta? <a href="#" id="toggleRegistro">Regístrate aquí</a></p>
+                    <p class="toggleForm" style="display:none;" id="toggleLoginTexto">¿Ya tienes cuenta? <a href="#" id="toggleLogin">Inicia sesión</a></p>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="footerContenido">
+                <div class="footerSeccion">
+                    <h4>PhotoBooth</h4>
+                    <p>&copy; 2026 Todos los derechos reservados.</p>
+                </div>
+                <div class="footerSeccion footerContacto">
+                    <p>Avenida 5 de Abril 4936, Estación Central</p>
+                    <p>+56 9 7774 5816</p>
+                    <p>eli.alexandern11@gmail.com</p>
+                </div>
+            </div>
+            <div class="footerCopyright">
+                <p>&copy; 2026 PhotoBooth - Arriendo de Cabinas Fotográficas. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+        <script src="js/app.js"></script>
+    </body>
+</html>
