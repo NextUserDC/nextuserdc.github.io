@@ -385,26 +385,6 @@ main {
     font-size: 0.95rem;
 }
 
-.barraEstado {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--purple);
-    border-radius: var(--radius-sm);
-    padding: 16px 24px;
-    margin-bottom: 24px;
-    display: none;
-    animation: slideDown 0.4s ease-out;
-}
-
-.barraEstadoActiva {
-    display: block;
-}
-
-.barraEstadoVerde {
-    color: #059669;
-    font-weight: 600;
-}
-
 .nosotrosIntro {
     text-align: center;
     margin-bottom: 50px;
@@ -1473,5 +1453,277 @@ footer {
 
     footer {
         padding: 16px 4%;
+    }
+}
+
+/* =============================================
+   CHATBOT - Estilos generados con IA
+   A partir de aqui comienzan los estilos del chatbot.
+   ============================================= */
+
+.chatBtn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: var(--shadow-purple);
+    z-index: 1000;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chatBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 40px rgba(108, 60, 224, 0.35);
+}
+
+.chatBtn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.chatBadge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ef4444;
+    display: none;
+    border: 2px solid white;
+    animation: chatBadgePulse 2s ease-in-out infinite;
+}
+
+.chatVentana {
+    position: fixed;
+    bottom: 92px;
+    right: 24px;
+    width: 360px;
+    max-height: 480px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chatVentana.chatAbierto {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.chatHeader {
+    background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+    color: white;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.chatCerrar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+    transition: var(--transition);
+}
+
+.chatCerrar:hover {
+    opacity: 0.7;
+    transform: scale(1.1);
+}
+
+.chatMensajes {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px;
+    min-height: 200px;
+    background: #f8f6fc;
+}
+
+.chatMensajes::-webkit-scrollbar {
+    width: 5px;
+}
+
+.chatMensajes::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chatMensajes::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+}
+
+.chatBurbuja {
+    max-width: 82%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+    white-space: pre-line;
+    animation: chatBurbujaIn 0.25s ease-out;
+}
+
+.chatBurbuja.usuario {
+    align-self: flex-end;
+    background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.chatBurbuja.bot {
+    align-self: flex-start;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-bottom-left-radius: 4px;
+}
+
+.chatSugerencias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 16px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.chatSugerencia {
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--surface);
+    color: var(--purple);
+    font-size: 0.72rem;
+    font-family: "Oswald", sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.chatSugerencia:hover {
+    background: var(--purple-soft);
+    border-color: var(--purple-light);
+}
+
+.chatInput {
+    display: flex;
+    padding: 12px;
+    border-top: 1px solid var(--border);
+    gap: 8px;
+    background: var(--surface);
+}
+
+.chatInput input {
+    flex: 1;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    font-family: "Oswald", sans-serif;
+    outline: none;
+    transition: var(--transition);
+}
+
+.chatInput input:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px var(--purple-glow);
+}
+
+.chatInput button {
+    background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 8px 16px;
+    font-size: 0.82rem;
+    font-family: "Oswald", sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.chatInput button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+@keyframes chatBurbujaIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes chatBadgePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+@media (max-width: 768px) {
+    .chatVentana {
+        width: 320px;
+        max-height: 420px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chatBtn {
+        bottom: 16px;
+        right: 16px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .chatBtn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .chatVentana {
+        width: calc(100% - 32px);
+        right: 16px;
+        bottom: 80px;
+        max-height: 70vh;
+    }
+
+    .chatMensajes {
+        max-height: 50vh;
     }
 }
