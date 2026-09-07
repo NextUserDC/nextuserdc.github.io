@@ -223,18 +223,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    var barraEstado = document.getElementById('barraEstado');
-    if (barraEstado) {
-        barraEstado.classList.add('barraEstado');
-        var reservaActiva = localStorage.getItem('reservaActiva');
-
-        if (reservaActiva) {
-            var datos = JSON.parse(reservaActiva);
-            barraEstado.innerHTML = 'Tienes una reserva activa: ' + datos.horas + ' hora(s) por <strong>$' + datos.total.toLocaleString('es-CL') + '</strong>';
-            barraEstado.classList.add('barraEstadoActiva');
-        }
-    }
-
     var equipoContainer = document.getElementById('equipoContainer');
     if (equipoContainer) {
         var equipo = [
@@ -600,6 +588,419 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
         });
+    }
+
+    // =====================================================
+    // CHATBOT - Codigo generado con IA
+    // A partir de aqui comienza el modulo del chatbot.
+    // =====================================================
+
+    if (paginaActual !== 'index.html') {
+
+        var chatRespuestas = [
+            // SALUDOS
+            {
+                keywords: ['hola', 'buenos', 'buenas', 'hey', 'que', 'tal', 'saludos', 'como', 'estas', 'onda', 'wena', 'holaa', 'holi', 'dias', 'tardes', 'noches'],
+                respuesta: 'Hola! Bienvenido a PhotoBooth. Soy tu asistente virtual. Puedo ayudarte con informacion sobre nuestros servicios, precios, horarios, ubicacion y mas. Que te gustaria saber?'
+            },
+            // DESPEDIDAS
+            {
+                keywords: ['chao', 'adios', 'hasta', 'luego', 'nos', 'vemos', 'bye', 'pronto', 'manana'],
+                respuesta: 'Hasta luego! Espero haberte ayudado. Si necesitas algo mas, aqui estare. Que tengas un excelente dia!'
+            },
+            // AGRADECIMIENTOS
+            {
+                keywords: ['gracias', 'agradezco', 'thanks', 'perfecto', 'genial', 'excelente'],
+                respuesta: 'De nada! Me alegra poder ayudarte. Hay algo mas que quieras saber?'
+            },
+            // PRECIOS Y COSTOS
+            {
+                keywords: ['precio', 'precios', 'costo', 'costos', 'cuanto', 'cuesta', 'cuestan', 'valor', 'valores', 'tarifa', 'tarifas', 'cobran', 'cobro', 'cobras', 'dinero', 'plata', 'pesos', 'clp', 'presupuesto', 'cotizar', 'cotizacion', 'cotizo'],
+                respuesta: 'PRECIOS PHOTOBOOTH\n\n- Servicio base: $8.000 CLP por hora\n- Impresiones ilimitadas: +$5.000 CLP (adicional, costo fijo)\n\nEjemplos:\n- 1 hora = $8.000\n- 1 hora + impresiones = $13.000\n- 3 horas = $24.000\n- 3 horas + impresiones = $29.000\n- 5 horas = $40.000\n- 5 horas + impresiones = $45.000\n\nUsa nuestro cotizador en la <a href="servicios.html">pagina de Servicios</a> para calcular el costo exacto de tu evento.'
+            },
+            // SERVICIO/PRODUCTO
+            {
+                keywords: ['servicio', 'servicios', 'cabina', 'cabinas', 'fotografia', 'fotografica', 'totem', 'photo', 'booth', 'photobooth', 'arriendo', 'arrendar', 'alquilar', 'alquilan', 'renta', 'producto', 'productos', 'ofrecen', 'hacen'],
+                respuesta: 'NUESTRO SERVICIO\n\nOfrecemos el arriendo de Cabina Fotografica Totem, que incluye:\n\n- Iluminacion profesional\n- Fondo personalizado a tu gusto\n- Operador tecnico capacitado\n- Impresiones ilimitadas (opcional, +$5.000)\n- Formato Totem vertical moderno\n\nIdeal para bodas, fiestas, eventos corporativos, cumpleanos, graduaciones y mas. Consulta precios en la <a href="servicios.html">pagina de Servicios</a>.'
+            },
+            // IMPRESIONES
+            {
+                keywords: ['impresion', 'impresiones', 'imprimir', 'fotos', 'fotografias', 'cantidad', 'ilimitada', 'ilimitadas', 'copias', 'copia', 'imprime', 'prints'],
+                respuesta: 'IMPRESIONES\n\n- Las impresiones son ILIMITADAS durante todo el evento\n- Costo adicional: $5.000 CLP (se agrega al precio base)\n- Sin impresiones: recibes las fotos en formato digital\n\nSi no agregas impresiones, las fotos se comparten digitalmente despues del evento. Las impresiones ilimitadas permiten que todos los invitados saquen fotos sin limite.'
+            },
+            // HORARIOS
+            {
+                keywords: ['horario', 'horarios', 'hora', 'horas', 'cuando', 'abren', 'cierran', 'atencion', 'disponible', 'disponibilidad', 'tiempo', 'funcionamiento', 'lunes', 'viernes', 'sabado', 'domingo'],
+                respuesta: 'HORARIOS DE ATENCION\n\n- Lunes a Viernes: 9:00 - 18:00\n- Sabados: Solo con cita previa\n- Domingos y festivos: No disponible\n\nLos horarios del servicio de PhotoBooth se coordinan segun tu evento. Te recomendamos agendar con al menos 1 semana de anticipacion.'
+            },
+            // UBICACION/DIRECCION
+            {
+                keywords: ['ubicacion', 'direccion', 'donde', 'local', 'oficina', 'sede', 'mapa', 'location', 'address', 'llegar', 'estacion', 'central', 'avenida', 'calle'],
+                respuesta: 'NUESTRA UBICACION\n\n- Direccion: Avenida 5 de Abril 4936, Estacion Central, Santiago\n- Comuna: Estacion Central\n- Region: Metropolitana\n\nPuedes ver nuestra ubicacion exacta en el mapa interactivo de la <a href="contacto.html">pagina de Contacto</a>.'
+            },
+            // CONTACTO
+            {
+                keywords: ['contacto', 'contactar', 'telefono', 'celular', 'mail', 'correo', 'email', 'whatsapp', 'llamar', 'escribir', 'numero', 'redes', 'social', 'instagram', 'facebook'],
+                respuesta: 'CONTACTO\n\n- Telefono: +56 9 7774 5816\n- Email: Disponible en la <a href="contacto.html">pagina de Contacto</a>\n- Horario de atencion: Lunes a Viernes 9:00 - 18:00\n\nTambien puedes enviarnos un mensaje directo desde la <a href="contacto.html">pagina de Contacto</a>. Si eres usuario registrado, el formulario se auto-completa con tus datos.'
+            },
+            // TIPOS DE EVENTOS
+            {
+                keywords: ['evento', 'eventos', 'boda', 'bodas', 'wedding', 'cumpleanos', 'cumple', 'fiesta', 'fiestas', 'corporativo', 'corporativos', 'empresa', 'empresas', 'graduacion', 'quinceanera', 'kermes', 'aniversario', 'baby', 'shower', 'bautizo', 'comunion', 'navidad'],
+                respuesta: 'TIPOS DE EVENTOS\n\nTrabajamos en todo tipo de eventos:\n\n- Bodas y compromisos\n- Fiestas de cumpleanos\n- Quinceaneras\n- Eventos corporativos y empresariales\n- Graduaciones\n- Kermeses y fiestas comunitarias\n- Baby showers y bautizos\n- Fiestas de aniversario\n- Eventos de ano nuevo y navidad\n- Fiestas privadas y publicas\n\nNuestra cabina se adapta a cualquier celebracion. Contactanos para personalizar tu evento.'
+            },
+            // EQUIPO
+            {
+                keywords: ['equipo', 'personal', 'trabajadores', 'empleados', 'quien', 'quienes', 'fotografo', 'operador', 'operadora', 'iluminacion', 'tecnico', 'staff', 'personas'],
+                respuesta: 'NUESTRO EQUIPO\n\nSomos un equipo de 3 profesionales:\n\n- Eli Nunez - Fotografo Principal (Canon EOS R6)\n- Camila Aponte - Operadora Tecnica (Sony A7 IV)\n- Mateo Rojas - Operador de Iluminacion (Nikon Z6 II)\n\nCada evento cuenta con al menos 1 operador tecnico capacitado. Mas detalles en la <a href="nosotros.html">pagina "Nosotros"</a>.'
+            },
+            // COTIZADOR
+            {
+                keywords: ['cotizar', 'cotizador', 'calcular', 'calculadora', 'estimar', 'estimacion', 'quote', 'calculator', 'suma', 'saldría', 'sale'],
+                respuesta: 'COTIZADOR\n\nPara calcular el costo exacto de tu evento:\n\n1. Ve a la <a href="servicios.html">pagina de Servicios</a>\n2. Ingresa la cantidad de horas (minimo 1, numero entero)\n3. Marca la casilla si deseas impresiones ilimitadas (+$5.000)\n4. Haz clic en "Cotizar"\n\nEl sistema calculara el total automaticamente y podras guardar la reserva.'
+            },
+            // QUE INCLUYE
+            {
+                keywords: ['incluye', 'incluir', 'incluido', 'contiene', 'trae', 'lleva', 'tengo', 'recibimos', 'dan', 'dan', 'ofrece', 'adjunta'],
+                respuesta: 'QUE INCLUYE EL SERVICIO\n\nLa Cabina Fotografica Totem incluye:\n\n- Cabina Totem vertical moderna\n- Iluminacion profesional incluida\n- Fondo personalizado (elegir antes del evento)\n- Operador tecnico durante todo el evento\n- Acceso digital a todas las fotos tomadas\n\nOpcional (+$5.000):\n- Impresiones ilimitadas para todos los invitados\n\nNo incluye: transporte (se coordina segun ubicacion), decoracion adicional del evento.'
+            },
+            // RESERVA
+            {
+                keywords: ['reservar', 'reserva', 'reservacion', 'agendar', 'agenda', 'booking', 'reservo', 'pasos', 'proceso'],
+                respuesta: 'COMO RESERVAR\n\n1. Registrate en <a href="index.html">nuestro sistema</a> (o inicia sesion si ya tienes cuenta)\n2. Cotiza tu evento en la <a href="servicios.html">pagina de Servicios</a>\n3. Contactanos desde la <a href="contacto.html">pagina de Contacto</a> con los detalles de tu evento\n4. Confirmamos la disponibilidad y coordinamos los detalles\n\nTe recomendamos reservar con al menos 1-2 semanas de anticipacion para garantizar disponibilidad.'
+            },
+            // ESPECIFICACIONES TECNICAS
+            {
+                keywords: ['camara', 'calidad', 'resolucion', 'megapixeles', 'formato', 'jpg', 'png', 'jpeg', 'digital', 'video', 'grabar', 'luz', 'flash', 'fondo'],
+                respuesta: 'ESPECIFICACIONES TECNICAS\n\n- Camaras profesionales (Canon, Sony, Nikon)\n- Iluminacion profesional integrada\n- Formato de imagen: Alta resolucion (digital)\n- Fondo personalizable\n- Las fotos se entregan en formato digital\n\nSi agregas impresiones (+$5.000), tambien obtienes copias fisicas durante el evento. La calidad de imagen es profesional, no es una camara de celular o selfie.'
+            },
+            // CANCELACION
+            {
+                keywords: ['cancelar', 'cancelacion', 'modificar', 'cambiar', 'cambio', 'devolver', 'reembolso', 'policy', 'politica', 'reglas', 'terminos', 'condiciones'],
+                respuesta: 'POLITICA DE CAMBIOS Y CANCELACIONES\n\n- Para cambios o cancelaciones, contactanos con al menos 48 horas de anticipacion\n- Cancelaciones con menos de 48 horas pueden tener un cargo\n- Los cambios de fecha estan sujetos a disponibilidad\n\nPara consultas especificas sobre tu reserva, contactanos directamente por telefono o email.'
+            },
+            // ZONA DE COBERTURA
+            {
+                keywords: ['zona', 'cobertura', 'viajar', 'desplazamiento', 'transporte', 'traslado', 'region', 'comuna', 'santiago', 'providencia', 'condes', 'nunoa', 'vitacura'],
+                respuesta: 'ZONA DE COBERTURA\n\n- Principalmente operamos en Santiago y alrededores\n- Estacion Central es nuestra base de operaciones\n- Para eventos en otras comunas, consulta disponibilidad\n\nEl costo de traslado puede variar segun la ubicacion de tu evento. Contactanos para confirmar si podemos cubrir tu zona.'
+            },
+            // CUENTA
+            {
+                keywords: ['cuenta', 'usuario', 'contrasena', 'password', 'login', 'sesion', 'iniciar', 'registrarse', 'registro', 'perfil', 'datos'],
+                respuesta: 'TU CUENTA\n\n- Iniciar sesion: Usa tu usuario y contrasena en la pagina de login\n- Registrarse: Crea una cuenta con nombre, telefono, email, usuario y contrasena\n- Cerrar sesion: Haz clic en "Cerrar Sesion" en la parte superior\n\nSi olvidaste tu contrasena, contacta al administrador.'
+            },
+            // AUTO-AYUDA
+            {
+                keywords: ['ayuda', 'help', 'puedes', 'sabes', 'opciones', 'comandos', 'menu', 'preguntas', 'guia', 'tutorial'],
+                respuesta: 'LO QUE PUEDO RESPONDER\n\nPreguntame sobre:\n\n- Precios y costos\n- Servicios y lo que incluyen\n- Impresiones\n- Horarios de atencion\n- Ubicacion y direccion\n- Informacion de contacto\n- Tipos de eventos que cubrimos\n- Nuestro equipo\n- Como cotizar y reservar\n- Especificaciones tecnicas\n- Politica de cancelaciones\n- Zona de cobertura\n- Tu cuenta de usuario\n\nSolo escribe tu pregunta y hare lo mejor por responderte.'
+            }
+        ];
+
+        var chatAdminRespuestas = [
+            // RESUMEN RESERVAS
+            {
+                keywords: ['resumen', 'reserva', 'reservas', 'cotizacion', 'cotizaciones', 'venta', 'ventas', 'quote'],
+                respuesta: function() {
+                    var reserva = localStorage.getItem('reservaActiva');
+                    if (!reserva) return 'No hay reservas registradas actualmente. Las reservas se guardan cuando un usuario completa una cotizacion en la pagina de Servicios.';
+                    var d = JSON.parse(reserva);
+                    return 'RESUMEN DE RESERVAS\n\n- Servicio: ' + d.servicio + '\n- Horas: ' + d.horas + '\n- Impresiones ilimitadas: ' + (d.impresiones ? 'Si' : 'No') + '\n- Total: $' + d.total.toLocaleString('es-CL');
+                }
+            },
+            // CONSULTAS
+            {
+                keywords: ['consulta', 'consultas', 'mensajes', 'clientes', 'contactos', 'inquiries', 'recibidos'],
+                respuesta: function() {
+                    var consultas = JSON.parse(localStorage.getItem('consultas') || '[]');
+                    if (consultas.length === 0) return 'No hay consultas registradas. Los usuarios envian consultas desde la pagina de Contacto.';
+                    var respuesta = 'CONSULTAS DE CLIENTES (' + consultas.length + ' total)\n\n';
+                    for (var i = 0; i < consultas.length; i++) {
+                        var c = consultas[i];
+                        respuesta += (i + 1) + '. ' + c.nombre + ' - ' + c.mensaje.substring(0, 40) + (c.mensaje.length > 40 ? '...' : '') + ' - ' + c.fecha + '\n';
+                    }
+                    respuesta += '\nSi necesitas ver mas detalles, visita la pagina de Contacto (panel admin).';
+                    return respuesta;
+                }
+            },
+            // USUARIOS
+            {
+                keywords: ['usuarios', 'registrados', 'cuentas', 'lista', 'miembros'],
+                respuesta: function() {
+                    var usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+                    if (usuarios.length === 0) return 'No hay usuarios registrados aparte de la cuenta admin.';
+                    var respuesta = 'USUARIOS REGISTRADOS (' + usuarios.length + ' total)\n\n';
+                    for (var i = 0; i < usuarios.length; i++) {
+                        respuesta += (i + 1) + '. ' + usuarios[i].nombre + ' (' + usuarios[i].usuario + ')\n';
+                    }
+                    respuesta += '\nPara mas detalles, visita la pagina de Contacto (panel admin).';
+                    return respuesta;
+                }
+            },
+            // DASHBOARD
+            {
+                keywords: ['dashboard', 'estadistica', 'estadisticas', 'overview', 'general', 'completo', 'status', 'estado'],
+                respuesta: function() {
+                    var reserva = localStorage.getItem('reservaActiva');
+                    var consultas = JSON.parse(localStorage.getItem('consultas') || '[]');
+                    var usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+                    var respuesta = 'DASHBOARD ADMIN\n\n- Reservas: ' + (reserva ? '1 (Total: $' + JSON.parse(reserva).total.toLocaleString('es-CL') + ')' : '0') + '\n- Consultas: ' + consultas.length + '\n- Usuarios registrados: ' + usuarios.length;
+                    return respuesta;
+                }
+            },
+            // LIMPIAR
+            {
+                keywords: ['vaciar', 'limpiar', 'borrar', 'eliminar', 'clear', 'delete', 'reset'],
+                respuesta: 'Para limpiar datos, usa los botones "Vaciar" en la pagina de Contacto (panel admin). Puedes vaciar reservas, consultas o usuarios por separado. No puedo eliminar datos directamente por seguridad.'
+            },
+            // INFO ADMIN
+            {
+                keywords: ['admin', 'administrador', 'panel', 'acceso', 'puedo', 'hacer'],
+                respuesta: 'PANEL DE ADMINISTRADOR\n\nComo administrador tienes acceso a:\n\n- Ver todas las reservas y cotizaciones\n- Ver todas las consultas de clientes\n- Ver todos los usuarios registrados\n- Vaciar datos por categoria\n\nTodo esto esta disponible en la pagina de Contacto. Ademas, puedes preguntarme directamente: "resumen reservas", "ver consultas", "ver usuarios".'
+            }
+        ];
+
+        var chatStopwords = [
+            'de', 'la', 'el', 'un', 'una', 'los', 'las', 'que', 'en', 'por', 'para', 'con',
+            'es', 'soy', 'hay', 'como', 'cual', 'quiero', 'necesito', 'puedo', 'me', 'tu',
+            'usted', 'ustedes', 'nosotros', 'ellos', 'ella', 'el', 'ello', 'se', 'del', 'al',
+            'lo', 'le', 'les', 'da', 'te', 'mi', 'mis', 'tu', 'tus', 'su', 'sus', 'nos',
+            'ya', 'tambien', 'mas', 'muy', 'si', 'no', 'pero', 'este', 'esta', 'ese', 'esa',
+            'esto', 'eso', 'aquello', 'aqui', 'ahi', 'alla', 'all', 'aun', 'aun', 'aun',
+            'sin', 'sobre', 'tras', 'ante', 'bajo', 'hacia', 'hasta', 'durante', 'mediante',
+            'segun', 'contra', 'entre', 'ante', 'desde', 'donde', 'cuando', 'porque', 'pues',
+            'que', 'cual', 'cuales', 'como', 'cuanto', 'cuantos', 'cuantas', 'otro', 'otra',
+            'otros', 'otras', 'mismo', 'misma', 'mismos', 'mismas', 'todo', 'toda', 'todos',
+            'todas', 'algo', 'nada', 'alguien', 'nadie', 'cada', 'cierto', 'cierta',
+            'mi', 'mia', 'mio', 'mios', 'mias', 'nuestro', 'nuestra', 'nuestros', 'nuestras',
+            'vuestro', 'vuestra', 'vuestros', 'vuestras', 'suyo', 'suya', 'suyos', 'suyas',
+            'ser', 'estar', 'haber', 'tener', 'hacer', 'poder', 'querer', 'saber', 'decir',
+            'ir', 'venir', 'dar', 'ver', 'poner', 'salir', 'llegar', 'pasar', 'seguir',
+            'creer', 'hablar', 'llevar', 'dejar', 'sentir', 'tratar', 'mirar', 'contar',
+            'empezar', 'esperar', 'buscar', 'existir', 'entrar', 'volver', 'tomar', 'conocer',
+            'vivir', 'pensar', 'salir', 'caer', 'encontrar', 'llamar', 'venir', 'decir',
+            'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez'
+        ];
+
+        function normalizarChat(texto) {
+            var t = texto.toLowerCase();
+            t = t.replace(/[áà]/g, 'a').replace(/[éè]/g, 'e').replace(/[íì]/g, 'i');
+            t = t.replace(/[óò]/g, 'o').replace(/[úù]/g, 'u');
+            t = t.replace(/[^a-z0-9\s]/g, '');
+            var palabras = t.split(/\s+/);
+            var filtradas = [];
+            for (var i = 0; i < palabras.length; i++) {
+                var esStopword = false;
+                for (var j = 0; j < chatStopwords.length; j++) {
+                    if (palabras[i] === chatStopwords[j]) {
+                        esStopword = true;
+                        break;
+                    }
+                }
+                if (!esStopword && palabras[i].length > 2) {
+                    filtradas.push(palabras[i]);
+                }
+            }
+            return filtradas.join(' ');
+        }
+
+        function matchPatronChat(textoNormalizado, diccionario) {
+            var mejorMatch = null;
+            var mejorPuntaje = 0;
+            var palabrasInput = textoNormalizado.split(/\s+/).length;
+            var umbral = palabrasInput <= 1 ? 1 : 2;
+            for (var i = 0; i < diccionario.length; i++) {
+                var patron = diccionario[i];
+                var puntaje = 0;
+                for (var j = 0; j < patron.keywords.length; j++) {
+                    if (textoNormalizado.indexOf(patron.keywords[j]) !== -1) {
+                        puntaje++;
+                    }
+                }
+                if (puntaje >= umbral && puntaje > mejorPuntaje) {
+                    mejorPuntaje = puntaje;
+                    mejorMatch = patron;
+                }
+            }
+            return mejorMatch;
+        }
+
+        function obtenerRespuestaChat(texto) {
+            var norm = normalizarChat(texto);
+            if (sesion && sesion.tipo === 'admin') {
+                var adminMatch = matchPatronChat(norm, chatAdminRespuestas);
+                if (adminMatch) {
+                    if (typeof adminMatch.respuesta === 'function') {
+                        return adminMatch.respuesta();
+                    }
+                    return adminMatch.respuesta;
+                }
+            }
+            var generalMatch = matchPatronChat(norm, chatRespuestas);
+            if (generalMatch) {
+                return generalMatch.respuesta;
+            }
+            return 'No estoy seguro de entender tu pregunta. Puedo ayudarte con informacion sobre precios, servicios, horarios, ubicacion, contacto, eventos y mas. Intenta reformular tu pregunta o escribe "ayuda" para ver todo lo que puedo hacer.';
+        }
+
+        function limpiarNotificacionChat() {
+            var consultasActuales = JSON.parse(localStorage.getItem('consultas') || '[]').length;
+            var tieneCotizacion = localStorage.getItem('reservaActiva') ? 1 : 0;
+            localStorage.setItem('chatUltimoVisto', JSON.stringify({
+                consultas: consultasActuales,
+                cotizaciones: tieneCotizacion
+            }));
+            actualizarBadgeChat();
+        }
+
+        function actualizarBadgeChat() {
+            var badge = document.getElementById('chatBadge');
+            if (!badge) return;
+            if (!sesion || sesion.tipo !== 'admin') {
+                badge.style.display = 'none';
+                return;
+            }
+            var ultimoVisto = JSON.parse(localStorage.getItem('chatUltimoVisto') || '{"consultas":0,"cotizaciones":0}');
+            var consultasActuales = JSON.parse(localStorage.getItem('consultas') || '[]').length;
+            var tieneCotizacion = localStorage.getItem('reservaActiva') ? 1 : 0;
+            var hayNuevos = consultasActuales > ultimoVisto.consultas || tieneCotizacion > ultimoVisto.cotizaciones;
+            badge.style.display = hayNuevos ? 'block' : 'none';
+        }
+
+        function crearChatbot() {
+            var chatBtn = document.createElement('button');
+            chatBtn.className = 'chatBtn';
+            chatBtn.id = 'chatBtn';
+            chatBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
+            document.body.appendChild(chatBtn);
+
+            if (sesion && sesion.tipo === 'admin') {
+                var badge = document.createElement('span');
+                badge.className = 'chatBadge';
+                badge.id = 'chatBadge';
+                chatBtn.appendChild(badge);
+                actualizarBadgeChat();
+            }
+
+            var chatVentana = document.createElement('div');
+            chatVentana.className = 'chatVentana';
+            chatVentana.id = 'chatVentana';
+            chatVentana.innerHTML =
+                '<div class="chatHeader">' +
+                    '<span>PhotoBooth Asistente</span>' +
+                    '<button class="chatCerrar" id="chatCerrar">&times;</button>' +
+                '</div>' +
+                '<div class="chatMensajes" id="chatMensajes"></div>' +
+                '<div class="chatSugerencias" id="chatSugerencias"></div>' +
+                '<div class="chatInput">' +
+                    '<input type="text" id="chatInput" placeholder="Escribe tu pregunta..." autocomplete="off">' +
+                    '<button id="chatEnviar">Enviar</button>' +
+                '</div>';
+            document.body.appendChild(chatVentana);
+        }
+
+        function agregarBurbujaChat(texto, tipo) {
+            var mensajes = document.getElementById('chatMensajes');
+            if (!mensajes) return;
+            var burbuja = document.createElement('div');
+            burbuja.className = 'chatBurbuja ' + tipo;
+            burbuja.innerHTML = texto;
+            mensajes.appendChild(burbuja);
+            mensajes.scrollTop = mensajes.scrollHeight;
+        }
+
+        function renderizarSugerenciasChat() {
+            var container = document.getElementById('chatSugerencias');
+            if (!container) return;
+            container.innerHTML = '';
+            var sugerencias;
+            if (sesion && sesion.tipo === 'admin') {
+                sugerencias = ['Reservas', 'Consultas', 'Usuarios'];
+            } else {
+                sugerencias = ['Precios', 'Servicios', 'Horarios', 'Contacto'];
+            }
+            for (var i = 0; i < sugerencias.length; i++) {
+                var btn = document.createElement('button');
+                btn.className = 'chatSugerencia';
+                btn.textContent = sugerencias[i];
+                btn.setAttribute('data-pregunta', sugerencias[i]);
+                container.appendChild(btn);
+            }
+        }
+
+        function initChatbot() {
+            var chatBtn = document.getElementById('chatBtn');
+            var chatVentana = document.getElementById('chatVentana');
+            var chatCerrar = document.getElementById('chatCerrar');
+            var chatInput = document.getElementById('chatInput');
+            var chatEnviar = document.getElementById('chatEnviar');
+            var chatSugerencias = document.getElementById('chatSugerencias');
+
+            var chatAbierto = false;
+
+            chatBtn.addEventListener('click', function() {
+                chatAbierto = !chatAbierto;
+                if (chatAbierto) {
+                    chatVentana.classList.add('chatAbierto');
+                    chatInput.focus();
+
+                    if (sesion && sesion.tipo === 'admin') {
+                        var ultimoVisto = JSON.parse(localStorage.getItem('chatUltimoVisto') || '{"consultas":0,"cotizaciones":0}');
+                        var consultasActuales = JSON.parse(localStorage.getItem('consultas') || '[]').length;
+                        var tieneCotizacion = localStorage.getItem('reservaActiva') ? 1 : 0;
+                        var consultasNuevas = Math.max(0, consultasActuales - ultimoVisto.consultas);
+                        var cotizacionesNuevas = Math.max(0, tieneCotizacion - ultimoVisto.cotizaciones);
+
+                        if (consultasNuevas > 0 || cotizacionesNuevas > 0) {
+                            var partes = [];
+                            if (consultasNuevas > 0) partes.push(consultasNuevas + ' nueva(s) consulta(s) de cliente(s)');
+                            if (cotizacionesNuevas > 0) partes.push('una cotizacion pendiente');
+                            setTimeout(function() {
+                                agregarBurbujaChat('Tienes actualizaciones pendientes: ' + partes.join(' y ') + '.', 'bot');
+                            }, 500);
+                        }
+                    }
+
+                    limpiarNotificacionChat();
+                } else {
+                    chatVentana.classList.remove('chatAbierto');
+                }
+            });
+
+            chatCerrar.addEventListener('click', function() {
+                chatAbierto = false;
+                chatVentana.classList.remove('chatAbierto');
+            });
+
+            function enviarMensaje() {
+                var texto = chatInput.value.trim();
+                if (texto === '') return;
+                agregarBurbujaChat(texto, 'usuario');
+                chatInput.value = '';
+                setTimeout(function() {
+                    var respuesta = obtenerRespuestaChat(texto);
+                    agregarBurbujaChat(respuesta, 'bot');
+                    actualizarBadgeChat();
+                }, 400);
+            }
+
+            chatEnviar.addEventListener('click', enviarMensaje);
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') enviarMensaje();
+            });
+
+            chatSugerencias.addEventListener('click', function(e) {
+                if (e.target.classList.contains('chatSugerencia')) {
+                    var pregunta = e.target.getAttribute('data-pregunta');
+                    chatInput.value = pregunta;
+                    enviarMensaje();
+                }
+            });
+
+            renderizarSugerenciasChat();
+            agregarBurbujaChat('Hola! Soy el asistente de PhotoBooth. Puedo ayudarte con precios, servicios, horarios, ubicacion y mas. Como puedo ayudarte?', 'bot');
+        }
+
+        crearChatbot();
+        initChatbot();
     }
 
 });
