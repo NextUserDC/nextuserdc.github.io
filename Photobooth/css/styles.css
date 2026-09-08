@@ -56,6 +56,18 @@ header {
     -webkit-backdrop-filter: blur(12px);
 }
 
+.headerLogo,
+header > a:first-child {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    gap: 12px;
+}
+
+.headerLogo img,
+header > a > img,
 header > img {
     width: 40px;
     height: 40px;
@@ -65,13 +77,17 @@ header > img {
     filter: drop-shadow(0 0 6px var(--purple-glow));
 }
 
+.headerLogo:hover img,
+header > a:hover > img,
 header > img:hover {
     transform: scale(1.1) rotate(5deg);
     filter: drop-shadow(0 0 12px var(--purple-glow));
 }
 
+.headerLogo h1,
+header > a > h1,
 header > h1 {
-    padding-left: 12px;
+    padding-left: 0;
     font-size: 1.4rem;
     font-weight: 600;
     letter-spacing: 1px;
@@ -79,6 +95,12 @@ header > h1 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    transition: var(--transition);
+}
+
+.headerLogo:hover h1,
+header > a:hover > h1 {
+    opacity: 0.9;
 }
 
 header > nav {
@@ -1279,8 +1301,15 @@ footer {
         padding: 12px 3%;
     }
 
+    .headerLogo,
+    header > a:first-child {
+        gap: 8px;
+    }
+
+    .headerLogo h1,
+    header > a > h1,
     header > h1 {
-        padding-left: 8px;
+        padding-left: 0;
     }
 
     header > nav {
@@ -1361,11 +1390,15 @@ footer {
         padding: 10px 4%;
     }
 
+    .headerLogo img,
+    header > a > img,
     header > img {
         width: 34px;
         height: 34px;
     }
 
+    .headerLogo h1,
+    header > a > h1,
     header > h1 {
         font-size: 1.15rem;
     }
