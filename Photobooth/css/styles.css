@@ -56,15 +56,7 @@ header {
     -webkit-backdrop-filter: blur(12px);
 }
 
-header > a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: inherit;
-}
-
-header > a > img {
+header > img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -73,12 +65,13 @@ header > a > img {
     filter: drop-shadow(0 0 6px var(--purple-glow));
 }
 
-header > a > img:hover {
+header > img:hover {
     transform: scale(1.1) rotate(5deg);
     filter: drop-shadow(0 0 12px var(--purple-glow));
 }
 
-header > a > h1 {
+header > h1 {
+    padding-left: 12px;
     font-size: 1.4rem;
     font-weight: 600;
     letter-spacing: 1px;
@@ -1286,8 +1279,8 @@ footer {
         padding: 12px 3%;
     }
 
-    header > a > h1 {
-        font-size: 1.2rem;
+    header > h1 {
+        padding-left: 8px;
     }
 
     header > nav {
@@ -1368,12 +1361,12 @@ footer {
         padding: 10px 4%;
     }
 
-    header > a > img {
+    header > img {
         width: 34px;
         height: 34px;
     }
 
-    header > a > h1 {
+    header > h1 {
         font-size: 1.15rem;
     }
 
