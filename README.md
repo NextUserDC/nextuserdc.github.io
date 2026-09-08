@@ -26,7 +26,7 @@ Portfolio web estatico con coleccion de proyectos personales. Todo desarrollado 
 <td width="50%">
 
 ### Correo Temporal (TMail)
-Serviço de correos temporales con dominio propio. Generacion de direcciones personalizadas o aleatorias, bandeja de entrada en tiempo real, envio de correos y conexion multi-dispositivo. PWA completa con modo offline.
+Servicio de correos temporales con dominio propio. Generacion de direcciones personalizadas o aleatorias, bandeja de entrada en tiempo real, envio de correos y conexion multi-dispositivo. PWA completa con modo offline.
 
 `/TMail/`
 
@@ -93,6 +93,8 @@ Sitio web de arriendo de cabinas fotograficas con login, cotizador, galeria y pa
 `/Photobooth/`
 
 </td>
+</tr>
+<tr>
 <td>
 
 ### Camila
@@ -101,8 +103,6 @@ Pagina web personal dedicada con cuenta regresiva, mini-juego Wordle y album de 
 `/Camila/`
 
 </td>
-</tr>
-<tr>
 <td>
 
 ### Games
@@ -111,7 +111,6 @@ Juegos web interactivos: Mecanografia (solitario), Ludo (local 2-4 jugadores + o
 `/Games/`
 
 </td>
-<td></td>
 </tr>
 </table>
 
