@@ -36,8 +36,15 @@
             <section class="cotizador">
                 <h2>Cotiza tu Evento</h2>
                 <div class="formulario">
+                    <label for="selectTipoServicio">Tipo de Evento</label>
+                    <select id="selectTipoServicio">
+                        <option value="bodas" data-max-horas="36">Bodas (máx. 36 horas)</option>
+                        <option value="corporativos" data-max-horas="12">Eventos Corporativos (máx. 12 horas)</option>
+                        <option value="fiestas" data-max-horas="12">Fiestas (máx. 12 horas)</option>
+                        <option value="airelibre" data-max-horas="24">Aire Libre (máx. 24 horas)</option>
+                    </select>
                     <label for="inputHoras">Horas de arriendo</label>
-                    <input type="number" id="inputHoras" placeholder="Ingresa las horas">
+                    <input type="number" id="inputHoras" placeholder="Ingresa las horas" min="1">
                     <div class="checkImpresiones">
                         <input type="checkbox" id="checkImpresiones">
                         <label for="checkImpresiones">Impresiones ilimitadas en papel fotográfico (+$5.000)</label>

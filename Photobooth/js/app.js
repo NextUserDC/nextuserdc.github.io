@@ -261,6 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var btnCotizar = document.getElementById('btnCotizar');
     if (btnCotizar) {
         btnCotizar.addEventListener('click', function() {
+            var selectTipoServicio = document.getElementById('selectTipoServicio');
             var inputHoras = document.getElementById('inputHoras');
             var checkImpresiones = document.getElementById('checkImpresiones');
             var errorHoras = document.getElementById('errorHoras');
@@ -291,12 +292,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
+            var optionSeleccionada = selectTipoServicio.options[selectTipoServicio.selectedIndex];
+            var maxHoras = parseInt(optionSeleccionada.getAttribute('data-max-horas'));
+            var tipoServicio = selectTipoServicio.value;
+            var nombreTipoServicio = optionSeleccionada.text.split(' (')[0];
+
+            if (horasNum > maxHoras) {
+                errorHoras.textContent = 'Para ' + nombreTipoServicio + ' el máximo es de ' + maxHoras + ' horas.';
+                return;
+            }
+
             var costoBase = horasNum * 8000;
             var costoImpresiones = checkImpresiones.checked ? 5000 : 0;
             var total = costoBase + costoImpresiones;
 
             var reserva = {
                 servicio: 'Cabina Fotográfica Tótem',
+                tipoServicio: nombreTipoServicio,
+                tipoServicioId: tipoServicio,
                 horas: horasNum,
                 impresiones: checkImpresiones.checked,
                 total: total
@@ -306,6 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
             resumenReserva.innerHTML =
                 '<h3>Resumen de Reserva</h3>' +
                 '<div class="resumenFila"><span>Servicio</span><span>Cabina Fotográfica Tótem</span></div>' +
+                '<div class="resumenFila"><span>Tipo de Evento</span><span>' + nombreTipoServicio + '</span></div>' +
                 '<div class="resumenFila"><span>Horas</span><span>' + horasNum + ' hora(s) × $8.000</span></div>' +
                 '<div class="resumenFila"><span>Costo base</span><span>$' + costoBase.toLocaleString('es-CL') + '</span></div>' +
                 '<div class="resumenFila"><span>Impresiones ilimitadas</span><span>' + (checkImpresiones.checked ? '+ $5.000' : 'No incluido') + '</span></div>' +
@@ -407,13 +421,14 @@ document.addEventListener('DOMContentLoaded', function() {
             var fila = document.createElement('tr');
             fila.innerHTML =
                 '<td>' + datos.servicio + '</td>' +
+                '<td>' + (datos.tipoServicio || 'No especificado') + '</td>' +
                 '<td>' + datos.horas + '</td>' +
                 '<td>' + (datos.impresiones ? 'Sí' : 'No') + '</td>' +
                 '<td>$' + datos.total.toLocaleString('es-CL') + '</td>';
             tablaCuerpo.appendChild(fila);
         } else {
             var filaVacia = document.createElement('tr');
-            filaVacia.innerHTML = '<td colspan="4" style="text-align:center; color: var(--text-muted);">No hay reservas registradas</td>';
+            filaVacia.innerHTML = '<td colspan="5" style="text-align:center; color: var(--text-muted);">No hay reservas registradas</td>';
             tablaCuerpo.appendChild(filaVacia);
         }
 
@@ -616,7 +631,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // PRECIOS Y COSTOS
             {
                 keywords: ['precio', 'precios', 'costo', 'costos', 'cuanto', 'cuesta', 'cuestan', 'valor', 'valores', 'tarifa', 'tarifas', 'cobran', 'cobro', 'cobras', 'dinero', 'plata', 'pesos', 'clp', 'presupuesto', 'cotizar', 'cotizacion', 'cotizo'],
-                respuesta: 'PRECIOS PHOTOBOOTH\n\n- Servicio base: $8.000 CLP por hora\n- Impresiones ilimitadas: +$5.000 CLP (adicional, costo fijo)\n\nEjemplos:\n- 1 hora = $8.000\n- 1 hora + impresiones = $13.000\n- 3 horas = $24.000\n- 3 horas + impresiones = $29.000\n- 5 horas = $40.000\n- 5 horas + impresiones = $45.000\n\nUsa nuestro cotizador en la <a href="servicios.html">pagina de Servicios</a> para calcular el costo exacto de tu evento.'
+                respuesta: 'PRECIOS PHOTOBOOTH\n\n- Servicio base: $8.000 CLP por hora\n- Impresiones ilimitadas: +$5.000 CLP (adicional, costo fijo)\n\nLimites de horas por tipo de evento:\n- Bodas: hasta 36 horas\n- Eventos Corporativos: hasta 12 horas\n- Fiestas: hasta 12 horas\n- Aire Libre: hasta 24 horas\n\nEjemplos:\n- 1 hora = $8.000\n- 3 horas = $24.000\n- 5 horas = $40.000\n- 5 horas + impresiones = $45.000\n\nUsa nuestro cotizador en la <a href="servicios.html">pagina de Servicios</a> para calcular el costo exacto de tu evento.'
             },
             // SERVICIO/PRODUCTO
             {
@@ -646,7 +661,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // TIPOS DE EVENTOS
             {
                 keywords: ['evento', 'eventos', 'boda', 'bodas', 'wedding', 'cumpleanos', 'cumple', 'fiesta', 'fiestas', 'corporativo', 'corporativos', 'empresa', 'empresas', 'graduacion', 'quinceanera', 'kermes', 'aniversario', 'baby', 'shower', 'bautizo', 'comunion', 'navidad'],
-                respuesta: 'TIPOS DE EVENTOS\n\nTrabajamos en todo tipo de eventos:\n\n- Bodas y compromisos\n- Fiestas de cumpleanos\n- Quinceaneras\n- Eventos corporativos y empresariales\n- Graduaciones\n- Kermeses y fiestas comunitarias\n- Baby showers y bautizos\n- Fiestas de aniversario\n- Eventos de ano nuevo y navidad\n- Fiestas privadas y publicas\n\nNuestra cabina se adapta a cualquier celebracion. Contactanos para personalizar tu evento.'
+                respuesta: 'TIPOS DE EVENTOS\n\nTrabajamos en todo tipo de eventos:\n\n- Bodas y compromisos (max. 36 horas)\n- Eventos corporativos y empresariales (max. 12 horas)\n- Fiestas, cumpleanos, quinceaneras (max. 12 horas)\n- Eventos al aire libre (max. 24 horas)\n\nNuestra cabina se adapta a cualquier celebracion. En el cotizador de la pagina de Servicios puedes seleccionar el tipo de evento y las horas (se validan segun el tipo).'
             },
             // EQUIPO
             {
@@ -656,7 +671,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // COTIZADOR
             {
                 keywords: ['cotizar', 'cotizador', 'calcular', 'calculadora', 'estimar', 'estimacion', 'quote', 'calculator', 'suma', 'saldría', 'sale'],
-                respuesta: 'COTIZADOR\n\nPara calcular el costo exacto de tu evento:\n\n1. Ve a la <a href="servicios.html">pagina de Servicios</a>\n2. Ingresa la cantidad de horas (minimo 1, numero entero)\n3. Marca la casilla si deseas impresiones ilimitadas (+$5.000)\n4. Haz clic en "Cotizar"\n\nEl sistema calculara el total automaticamente y podras guardar la reserva.'
+                respuesta: 'COTIZADOR\n\nPara calcular el costo exacto de tu evento:\n\n1. Ve a la <a href="servicios.html">pagina de Servicios</a>\n2. Selecciona el tipo de evento:\n   - Bodas (max. 36 horas)\n   - Eventos Corporativos (max. 12 horas)\n   - Fiestas (max. 12 horas)\n   - Aire Libre (max. 24 horas)\n3. Ingresa la cantidad de horas\n4. Marca la casilla si deseas impresiones ilimitadas (+$5.000)\n5. Haz clic en "Cotizar"\n\nEl sistema calculara el total automaticamente y podras guardar la reserva.'
             },
             // QUE INCLUYE
             {
@@ -703,7 +718,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     var reserva = localStorage.getItem('reservaActiva');
                     if (!reserva) return 'No hay reservas registradas actualmente. Las reservas se guardan cuando un usuario completa una cotizacion en la pagina de Servicios.';
                     var d = JSON.parse(reserva);
-                    return 'RESUMEN DE RESERVAS\n\n- Servicio: ' + d.servicio + '\n- Horas: ' + d.horas + '\n- Impresiones ilimitadas: ' + (d.impresiones ? 'Si' : 'No') + '\n- Total: $' + d.total.toLocaleString('es-CL');
+                    return 'RESUMEN DE RESERVAS\n\n- Servicio: ' + d.servicio + '\n- Tipo de Evento: ' + (d.tipoServicio || 'No especificado') + '\n- Horas: ' + d.horas + '\n- Impresiones ilimitadas: ' + (d.impresiones ? 'Si' : 'No') + '\n- Total: $' + d.total.toLocaleString('es-CL');
                 }
             },
             // CONSULTAS
