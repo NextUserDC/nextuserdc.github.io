@@ -118,9 +118,9 @@ class AccountSearcher {
             for (const prefix in this.index) {
                 const candidates = this.index[prefix];
                 for (let i = 0; i < candidates.length && results.length < MAX; i++) {
-                    const [nick, password, ip] = candidates[i];
+                    const [nick, password] = candidates[i];
                     if (nick.toLowerCase().includes(searchLower)) {
-                        results.push({ nick, password, ip });
+                        results.push({ nick, password });
                     }
                 }
             }
@@ -132,9 +132,9 @@ class AccountSearcher {
 
         if (candidates) {
             for (let i = 0; i < candidates.length && results.length < MAX; i++) {
-                const [nick, password, ip] = candidates[i];
+                const [nick, password] = candidates[i];
                 if (nick.toLowerCase().includes(searchLower)) {
-                    results.push({ nick, password, ip });
+                    results.push({ nick, password });
                 }
             }
         }
@@ -201,10 +201,6 @@ class AccountSearcher {
                 <span class="field-label"><i class="fas fa-key"></i> Contraseña</span>
                 <span class="field-value">${this.escapeHtml(account.password)}</span>
             </div>
-            <div class="account-field">
-                <span class="field-label"><i class="fas fa-globe"></i> IP</span>
-                <span class="field-value">${this.escapeHtml(account.ip)}</span>
-            </div>
             <button class="copy-btn" data-index="${index}" aria-label="Copiar datos de ${this.escapeHtml(account.nick)}">
                 <i class="fas fa-copy"></i> Copiar
             </button>
@@ -216,7 +212,7 @@ class AccountSearcher {
     copyToClipboard(index) {
         if (this.currentResults && this.currentResults[index]) {
             const account = this.currentResults[index];
-            const text = `Usuario: ${account.nick}\nContraseña: ${account.password || 'N/A'}\nIP: ${account.ip || 'N/A'}`;
+            const text = `Usuario: ${account.nick}\nContraseña: ${account.password || 'N/A'}`;
 
             navigator.clipboard.writeText(text).then(() => {
                 this.showToast('✅ Datos copiados al portapapeles');
