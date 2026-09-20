@@ -106,7 +106,7 @@ Pagina web personal dedicada con cuenta regresiva, mini-juego Wordle y album de 
 <td>
 
 ### Six
-Regalo de 6 meses con tema The Simpsons y bioinformativa. Timeline, viñetas, scrapbook y 5 juegos en Krustyland Arcade. Contenido cifrado con AES-256.
+Regalo de 6 meses con tema The Simpsons y bioinformativa. Timeline, viñetas, scrapbook y 5 juegos en Krustyland Arcade.
 
 `/Six/`
 
