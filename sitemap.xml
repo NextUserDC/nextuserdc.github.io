@@ -6,6 +6,16 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://nextuser.lat/TMail/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nextuser.lat/NCloud/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://nextuser.lat/Os/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -21,7 +31,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nextuser.lat/Camila/</loc>
+    <loc>https://nextuser.lat/Photobooth/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nextuser.lat/PlayMC/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -31,18 +46,23 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nextuser.lat/TMail/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://nextuser.lat/SimulaVIP/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nextuser.lat/NextEdit/</loc>
+    <loc>https://nextuser.lat/Games/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nextuser.lat/Camila/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nextuser.lat/Six/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>
