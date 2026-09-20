@@ -105,6 +105,16 @@ Pagina web personal dedicada con cuenta regresiva, mini-juego Wordle y album de 
 </td>
 <td>
 
+### Six
+Regalo de 6 meses con tema The Simpsons y bioinformativa. Timeline, viñetas, scrapbook y 5 juegos en Krustyland Arcade. Contenido cifrado con AES-256.
+
+`/Six/`
+
+</td>
+</tr>
+<tr>
+<td>
+
 ### Games
 Juegos web interactivos: Mecanografia (solitario), Ludo (local 2-4 jugadores + online) y mas en camino.
 
