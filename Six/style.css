@@ -1,0 +1,1905 @@
+/* ==========================================================================
+   Six Meses, casi Seven — style.css
+   Tema: The Simpsons + Bioinformática
+   ========================================================================== */
+
+:root {
+    --amarillo: #FDD835;
+    --naranja: #E65100;
+    --verde: #66BB6A;
+    --rojo: #E53935;
+    --azul-medio: #5C6BC0;
+    --rosa: #FF80AB;
+    --bg-1: #0f0e13;
+    --bg-2: #171420;
+    --bg-3: #1a1810;
+    --bg-card: #1e1a28;
+    --text-primary: #f0e6d6;
+    --text-secondary: #c4b8a0;
+    --text-muted: #8a7e94;
+    --border-color: rgba(253, 216, 53, 0.15);
+    --font-titulos: 'Luckiest Guy', cursive;
+    --font-cuerpo: 'Nunito', sans-serif;
+}
+
+/* --- Reset -------------------------------------------------------------- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    background-color: var(--bg-1);
+    overflow-y: scroll;
+}
+
+body {
+    font-family: var(--font-cuerpo);
+    font-weight: 400;
+    color: var(--text-secondary);
+    background-color: var(--bg-1);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* --- Utilidades --------------------------------------------------------- */
+.oculto {
+    display: none !important;
+}
+
+.texto-centrado {
+    text-align: center;
+}
+
+/* --- Secciones base ----------------------------------------------------- */
+.seccion {
+    min-height: 100vh;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 6rem 2rem 4rem;
+    box-sizing: border-box;
+    contain: layout style;
+    z-index: 1;
+}
+
+.contenido-seccion {
+    max-width: 1100px;
+    width: 100%;
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(25px);
+    will-change: opacity, filter, transform;
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
+                filter 1s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.seccion.activo .contenido-seccion {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+}
+
+.encabezado-seccion {
+    font-family: var(--font-titulos);
+    font-size: 2.2rem;
+    font-weight: 400;
+    letter-spacing: 0.08rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+/* ==========================================================================
+   Hero — Opening Credits
+   ========================================================================== */
+.seccion-hero {
+    background: radial-gradient(ellipse at center top, rgba(253, 216, 53, 0.06) 0%, transparent 60%);
+    flex-direction: column;
+    text-align: center;
+}
+
+.hero-logo-container {
+    margin: 0 auto 1rem;
+    max-width: 420px;
+    animation: fadeIn 1s ease 1.4s both;
+    filter: drop-shadow(0 0 30px rgba(253, 216, 53, 0.3));
+}
+
+.hero-logo-img {
+    width: 100%;
+    height: auto;
+}
+
+.hero-titulo {
+    font-family: var(--font-titulos);
+    font-size: 3.2rem;
+    color: var(--amarillo);
+    text-shadow:
+        0 0 10px rgba(253, 216, 53, 0.4),
+        0 0 40px rgba(253, 216, 53, 0.15),
+        0 2px 0 rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.12rem;
+    margin-bottom: 0.6rem;
+    animation: tituloSlideIn 1s ease 0.6s both;
+    line-height: 1.2;
+}
+
+.hero-subtitulo {
+    font-family: var(--font-cuerpo);
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 0.04rem;
+    animation: heroAparicion 1s ease 1s both;
+    display: inline-block;
+    border: 1px solid rgba(253, 216, 53, 0.35);
+    border-radius: 30px;
+    padding: 0.5rem 1.5rem;
+    background: rgba(253, 216, 53, 0.05);
+}
+
+.dna-decoracion {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    display: flex;
+    gap: 0.3rem;
+    opacity: 0.06;
+    font-family: monospace;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 0.15rem;
+}
+
+.dna-decoracion span:nth-child(1) { color: var(--amarillo); }
+.dna-decoracion span:nth-child(2) { color: var(--rojo); }
+.dna-decoracion span:nth-child(3) { color: var(--azul-medio); }
+.dna-decoracion span:nth-child(4) { color: var(--verde); }
+.dna-decoracion span:nth-child(5) { color: var(--amarillo); }
+.dna-decoracion span:nth-child(6) { color: var(--rojo); }
+.dna-decoracion span:nth-child(7) { color: var(--azul-medio); }
+.dna-decoracion span:nth-child(8) { color: var(--verde); }
+
+/* ==========================================================================
+   Viñetas — Nuestra Historia
+   ========================================================================== */
+.seccion-vinetas {
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-1) 100%);
+}
+
+.vinetas-titulo {
+    text-align: center;
+    color: var(--amarillo);
+}
+
+.vinetas-intro {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vinetas-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.vineta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.vineta.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.vineta-der .vineta-imagen { grid-column: 1; grid-row: 1; }
+.vineta-der .vineta-texto { grid-column: 2; grid-row: 1; }
+
+.vineta-izq .vineta-imagen { grid-column: 2; grid-row: 1; }
+.vineta-izq .vineta-texto { grid-column: 1; grid-row: 1; }
+
+.vineta-imagen {
+    position: relative;
+}
+
+.marco-comic {
+    background: #fafafa;
+    border: 3px solid #222;
+    border-radius: 4px;
+    padding: 8px;
+    position: relative;
+    box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vineta:hover .marco-comic {
+    transform: scale(1.02);
+    box-shadow: 6px 10px 30px rgba(253, 185, 39, 0.15);
+}
+
+.marco-comic img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 2px;
+    display: block;
+}
+
+.cinta-adhesiva {
+    position: absolute;
+    width: 55px;
+    height: 20px;
+    background: rgba(253, 185, 39, 0.35);
+    border: 1px solid rgba(253, 185, 39, 0.18);
+    z-index: 2;
+}
+
+.cinta-1 {
+    top: -8px;
+    left: 30%;
+    transform: rotate(-4deg);
+}
+
+.cinta-2 {
+    top: -8px;
+    right: 25%;
+    transform: rotate(3deg);
+}
+
+.vineta-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bocadillo {
+    position: relative;
+    background: #f5f5f5;
+    border: none;
+    border-radius: 20px;
+    padding: 1rem 1.5rem;
+    font-family: var(--font-cuerpo);
+    font-size: 1rem;
+    font-weight: 700;
+    color: #222;
+    text-align: left;
+    line-height: 1.4;
+    letter-spacing: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.bocadillo::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #f5f5f5;
+}
+
+.bocadillo-izquierda::after {
+    left: 25%;
+}
+
+.bocadillo-derecha::after {
+    right: 25%;
+    left: auto;
+}
+
+.vineta-narracion {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    line-height: 1.7;
+    padding-top: 1rem;
+    border-top: 2px dashed rgba(253, 216, 53, 0.35);
+}
+
+/* ==========================================================================
+   Fechas — Timeline
+   ========================================================================== */
+.seccion-fechas {
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-3) 50%, var(--bg-1) 100%);
+}
+
+.fechas-titulo {
+    text-align: center;
+    color: var(--amarillo);
+}
+
+.fechas-intro {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--border-color) 10%, var(--border-color) 90%, transparent);
+    transform: translateX(-50%);
+}
+
+.timeline-evento {
+    position: relative;
+    width: 50%;
+    padding: 1rem 2.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.timeline-evento.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.evento-izq {
+    left: 0;
+    text-align: right;
+    padding-right: 2.5rem;
+}
+
+.evento-der {
+    left: 50%;
+    text-align: left;
+    padding-left: 2.5rem;
+}
+
+.evento-contenido {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.evento-icono {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    flex-shrink: 0;
+}
+
+.evento-icono svg {
+    width: 100%;
+    height: 100%;
+}
+
+.evento-texto-grupo {
+    flex: 1;
+    min-width: 0;
+}
+
+.evento-fecha {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    margin-bottom: 0.3rem;
+}
+
+.timeline-evento:nth-child(1) .evento-fecha { color: var(--amarillo); }
+.timeline-evento:nth-child(2) .evento-fecha { color: var(--naranja); }
+.timeline-evento:nth-child(3) .evento-fecha { color: var(--verde); }
+.timeline-evento:nth-child(4) .evento-fecha { color: var(--rosa); }
+
+.evento-titulo {
+    font-family: var(--font-titulos);
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.03rem;
+}
+
+.evento-texto {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.evento-dot {
+    position: absolute;
+    top: 1.5rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--amarillo);
+    background: var(--bg-1);
+    z-index: 2;
+}
+
+.evento-izq .evento-dot {
+    right: -6px;
+}
+
+.evento-der .evento-dot {
+    left: -6px;
+}
+
+.timeline-evento:nth-child(1) .evento-dot { border-color: var(--amarillo); }
+.timeline-evento:nth-child(2) .evento-dot { border-color: var(--naranja); }
+.timeline-evento:nth-child(3) .evento-dot { border-color: var(--verde); }
+.timeline-evento:nth-child(4) .evento-dot { border-color: var(--rosa); }
+
+/* ==========================================================================
+   Bio-deco decorations
+   ========================================================================== */
+.bio-deco {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 2.5rem;
+    opacity: 0.4;
+    font-family: monospace;
+}
+
+.bio-codon {
+    font-size: 0.7rem;
+    color: var(--verde);
+    letter-spacing: 0.12rem;
+    text-shadow: 0 0 6px rgba(102, 187, 106, 0.3);
+}
+
+.bio-base {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08rem;
+}
+
+/* ==========================================================================
+   Album — Scrapbook / Polaroid
+   ========================================================================== */
+.seccion-album {
+    background: linear-gradient(180deg, #0a0a0e 0%, var(--bg-2) 50%, #0a0a0e 100%);
+    padding: 5rem 2rem;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 100vh;
+}
+
+.album-titulo {
+    text-align: center;
+    color: var(--amarillo);
+}
+
+.album-intro {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+}
+
+.scrapbook {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.scrapbook-foto {
+    position: relative;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scrapbook-foto.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.marco-polaroid {
+    background: #fafafa;
+    padding: 10px 10px 40px 10px;
+    box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.4);
+    border-radius: 2px;
+}
+
+.marco-polaroid img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 1px;
+}
+
+.foto-1 { transform: rotate(-3deg); }
+.foto-2 { transform: rotate(2deg); }
+.foto-3 { transform: rotate(1.5deg); }
+.foto-4 { transform: rotate(-2deg); }
+
+.foto-1.visible { transform: rotate(-3deg); }
+.foto-2.visible { transform: rotate(2deg); }
+.foto-3.visible { transform: rotate(1.5deg); }
+.foto-4.visible { transform: rotate(-2deg); }
+
+.scrapbook-foto:hover {
+    z-index: 10;
+}
+
+.scrapbook-foto:hover .marco-polaroid {
+    transform: scale(1.05) rotate(0deg);
+    box-shadow: 5px 8px 25px rgba(253, 185, 39, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cinta {
+    position: absolute;
+    width: 50px;
+    height: 18px;
+    background: rgba(253, 185, 39, 0.3);
+    border: 1px solid rgba(253, 185, 39, 0.15);
+    z-index: 2;
+}
+
+.cinta-top {
+    top: -6px;
+    left: 35%;
+    transform: rotate(-3deg);
+}
+
+.cinta-der {
+    top: 10px;
+    right: -10px;
+    transform: rotate(8deg);
+}
+
+.cinta-izq {
+    top: 10px;
+    left: -10px;
+    transform: rotate(-8deg);
+}
+
+/* ==========================================================================
+   Arcade — Krustyland
+   ========================================================================== */
+.seccion-arcade {
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-card) 50%, var(--bg-1) 100%);
+}
+
+.arcade-titulo {
+    text-align: center;
+    color: var(--amarillo);
+}
+
+.arcade-intro {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.arcade-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.maquina-arcade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.maquina-arcade:hover {
+    transform: translateY(-6px);
+}
+
+.maquina-arcade:hover .pantalla-maquina {
+    box-shadow: 0 0 25px rgba(253, 216, 53, 0.2);
+}
+
+.pantalla-maquina {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(145deg, #1a1530, #0d0b18);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.pantalla-verde {
+    border-color: rgba(102, 187, 106, 0.25);
+}
+
+.pantalla-rosa {
+    border-color: rgba(255, 128, 171, 0.25);
+}
+
+.pantalla-morada {
+    border-color: rgba(92, 107, 192, 0.25);
+}
+
+.pantalla-azul {
+    border-color: rgba(92, 107, 192, 0.25);
+}
+
+.pantalla-brillo {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.pantalla-contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    z-index: 1;
+}
+
+.pantalla-contenido svg {
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.maquina-arcade:hover .pantalla-contenido svg {
+    opacity: 1;
+}
+
+.pantalla-contenido span {
+    font-family: var(--font-titulos);
+    font-size: 0.85rem;
+    color: var(--amarillo);
+    letter-spacing: 0.04rem;
+}
+
+.base-maquina {
+    display: none;
+}
+
+.botones-maquina {
+    display: none;
+}
+
+.boton-maquina {
+    display: none;
+}
+
+.etiqueta-maquina {
+    display: none;
+}
+
+/* ==========================================================================
+   Modales — Base
+   ========================================================================== */
+.modal-juego {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 26, 0.92);
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 1rem;
+}
+
+.modal-juego.oculto {
+    display: none;
+}
+
+.modal-contenido {
+    background: linear-gradient(145deg, var(--bg-2), var(--bg-card));
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 550px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.btn-cerrar-modal {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 10;
+}
+
+.btn-cerrar-modal:hover {
+    color: var(--naranja);
+}
+
+.modal-contenido h3 {
+    font-family: var(--font-titulos);
+    font-size: 1.6rem;
+    color: var(--amarillo);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05rem;
+}
+
+/* ==========================================================================
+   Modal — Trivia
+   ========================================================================== */
+.trivia-header {
+    margin-bottom: 1.2rem;
+}
+
+.trivia-header h3 {
+    margin-bottom: 0.5rem;
+}
+
+.trivia-progreso {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 0.4rem;
+}
+
+.trivia-barra {
+    height: 100%;
+    background: linear-gradient(90deg, var(--amarillo), var(--naranja));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.trivia-contador {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: block;
+    text-align: right;
+}
+
+.trivia-pregunta {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    text-align: center;
+    min-height: 2.5em;
+}
+
+.trivia-opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.trivia-opcion {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-family: var(--font-cuerpo);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: left;
+}
+
+.trivia-opcion:hover {
+    background: rgba(253, 185, 39, 0.1);
+    border-color: var(--amarillo);
+}
+
+.trivia-opcion.correcta {
+    background: rgba(102, 187, 106, 0.15);
+    border-color: var(--verde);
+    color: var(--verde);
+}
+
+.trivia-opcion.incorrecta {
+    background: rgba(229, 57, 53, 0.12);
+    border-color: var(--rojo);
+    color: var(--rojo);
+}
+
+.trivia-opcion.deshabilitada {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.trivia-resultado {
+    text-align: center;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.trivia-score {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.trivia-score strong {
+    color: var(--amarillo);
+}
+
+/* ==========================================================================
+   Modal — Adivina el Personaje
+   ========================================================================== */
+.personaje-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.personaje-contador {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.personaje-pista {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+    text-align: center;
+    font-style: italic;
+}
+
+.personaje-opciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+}
+
+.personaje-opcion {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 0.7rem;
+    border-radius: 10px;
+    font-family: var(--font-cuerpo);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+}
+
+.personaje-opcion:hover {
+    background: rgba(253, 185, 39, 0.1);
+    border-color: var(--amarillo);
+}
+
+.personaje-opcion.correcta {
+    background: rgba(91, 154, 77, 0.2);
+    border-color: var(--verde);
+}
+
+.personaje-opcion.incorrecta {
+    background: rgba(204, 0, 0, 0.15);
+    border-color: var(--rojo);
+}
+
+.personaje-feedback {
+    text-align: center;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.personaje-resultado {
+    text-align: center;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.personaje-score {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.personaje-score strong {
+    color: var(--amarillo);
+}
+
+/* ==========================================================================
+   Modal — Wordle Springfield
+   ========================================================================== */
+.wordle-info {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.wordle-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 1.2rem;
+}
+
+.wordle-fila {
+    display: flex;
+    gap: 5px;
+}
+
+.wordle-celda {
+    width: 48px;
+    height: 48px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-titulos);
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.wordle-celda.llena {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.wordle-celda.correcto {
+    background: rgba(102, 187, 106, 0.25);
+    border-color: var(--verde);
+    color: var(--verde);
+}
+
+.wordle-celda.presente {
+    background: rgba(253, 216, 53, 0.2);
+    border-color: var(--amarillo);
+    color: var(--amarillo);
+}
+
+.wordle-celda.ausente {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+}
+
+.wordle-teclado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.teclado-fila {
+    display: flex;
+    gap: 4px;
+}
+
+.tecla {
+    min-width: 32px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    font-family: var(--font-cuerpo);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.tecla:hover {
+    background: rgba(253, 185, 39, 0.15);
+    border-color: var(--amarillo);
+}
+
+.tecla.ancho {
+    min-width: 52px;
+    font-size: 0.7rem;
+}
+
+.tecla.correcto {
+    background: rgba(102, 187, 106, 0.3);
+    border-color: var(--verde);
+    color: var(--verde);
+}
+
+.tecla.presente {
+    background: rgba(253, 216, 53, 0.25);
+    border-color: var(--amarillo);
+    color: var(--amarillo);
+}
+
+.tecla.ausente {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.06);
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+.wordle-mensaje {
+    text-align: center;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-top: 0.8rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+}
+
+.btn-reiniciar-wordle {
+    display: block;
+    margin: 1rem auto 0;
+}
+
+/* ==========================================================================
+   Modal — Memoria Simpson
+   ========================================================================== */
+.memoria-info {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.memoria-info strong {
+    color: var(--amarillo);
+}
+
+.memoria-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.memoria-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.memoria-stats strong {
+    color: var(--amarillo);
+}
+
+.memoria-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.memoria-carta {
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.7rem;
+    color: var(--text-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.memoria-carta::before {
+    content: '?';
+    font-family: var(--font-titulos);
+    font-size: 1.5rem;
+    color: var(--amarillo);
+    opacity: 0.5;
+}
+
+.memoria-carta.volteada::before {
+    content: '';
+}
+
+.memoria-carta.volteada {
+    background: rgba(253, 185, 39, 0.08);
+    border-color: var(--amarillo);
+}
+
+.memoria-carta.emparejada {
+    background: rgba(91, 154, 77, 0.12);
+    border-color: var(--verde);
+    pointer-events: none;
+}
+
+.memoria-carta .carta-contenido {
+    display: none;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.memoria-carta.volteada .carta-contenido,
+.memoria-carta.emparejada .carta-contenido {
+    display: block;
+}
+
+.memoria-carta .carta-personaje {
+    font-size: 1.8rem;
+}
+
+.memoria-carta .carta-frase {
+    font-size: 0.55rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.memoria-resultado {
+    text-align: center;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.memoria-mensaje {
+    text-align: center;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   Modal — Lluvia en Springfield
+   ========================================================================== */
+.modal-lluvia-contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal-lluvia-contenido h3 {
+    margin-bottom: 0;
+}
+
+#canvas-lluvia {
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
+    background: #0a0a2a;
+    display: block;
+}
+
+.lluvia-controles {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.lluvia-controles label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.lluvia-controles input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 120px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    outline: none;
+}
+
+.lluvia-controles input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--amarillo);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.lluvia-controles input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--amarillo);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-torre-nuclear {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+}
+
+.btn-torre-nuclear:hover {
+    background: rgba(102, 187, 106, 0.15);
+    border-color: var(--verde);
+    color: var(--verde);
+}
+
+.btn-torre-nuclear:active {
+    transform: scale(0.95);
+}
+
+.lluvia-homer {
+    text-align: center;
+    font-family: var(--font-titulos);
+    font-size: 2rem;
+    color: var(--amarillo);
+    animation: homerDoh 0.6s ease both;
+    text-shadow: 0 0 20px rgba(253, 216, 53, 0.4);
+    padding: 1rem;
+}
+
+/* ==========================================================================
+   Fondo Decorativo — Background floating elements
+   ========================================================================== */
+.fondo-decorativo {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.bg-donut {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--s);
+    transform: rotate(var(--r));
+    opacity: 0.08;
+    will-change: transform;
+    animation: bgFloat var(--d) ease-in-out var(--dl, 0s) infinite alternate;
+}
+
+.bg-dna-seq {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    font-family: monospace;
+    font-size: 0.65rem;
+    font-weight: bold;
+    letter-spacing: 0.12rem;
+    color: var(--amarillo);
+    opacity: 0.05;
+    transform: rotate(var(--r));
+    will-change: transform;
+    animation: bgFloat var(--d) ease-in-out var(--dl, 0s) infinite alternate;
+}
+
+.bg-molecula {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--s);
+    height: var(--s);
+    opacity: 0.08;
+    will-change: transform;
+    animation: bgFloat var(--d) ease-in-out var(--dl, 0s) infinite alternate;
+}
+
+.bg-torre {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 30px;
+    height: 45px;
+    opacity: 0.1;
+    will-change: transform;
+    animation: bgFloat var(--d) ease-in-out var(--dl, 0s) infinite alternate;
+}
+
+.bg-estrella {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 20px;
+    height: 20px;
+    transform: rotate(var(--r));
+    opacity: 0.1;
+    will-change: transform;
+    animation: bgFloat var(--d) ease-in-out var(--dl, 0s) infinite alternate;
+}
+
+.bg-frase-simpsons {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    font-family: 'Bangers', cursive;
+    font-size: 1rem;
+    color: var(--amarillo);
+    opacity: 0.04;
+    transform: rotate(var(--r));
+    white-space: nowrap;
+    letter-spacing: 0.05rem;
+    will-change: transform;
+    animation: bgFloat var(--d) ease-in-out var(--dl, 0s) infinite alternate;
+}
+
+/* ==========================================================================
+   Keyframe Animations
+   ========================================================================== */
+@keyframes heroAparicion {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tituloSlideIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes homerDoh {
+    0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+    50% { transform: scale(1.2) rotate(5deg); }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes bgFloat {
+    0% {
+        transform: translate(0, 0) rotate(var(--r, 0deg));
+    }
+    100% {
+        transform: translate(15px, -20px) rotate(calc(var(--r, 0deg) + 5deg));
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { opacity: 0.06; }
+    50% { opacity: 0.12; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Responsive — Tablet (768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .seccion {
+        padding: 5rem 1.5rem 3rem;
+    }
+
+    .encabezado-seccion {
+        font-size: 1.8rem;
+    }
+
+    .hero-titulo {
+        font-size: 2.4rem;
+    }
+
+    .hero-subtitulo {
+        font-size: 0.95rem;
+    }
+
+    .hero-logo-container {
+        max-width: 320px;
+    }
+
+    .vineta {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .vineta-izq {
+        direction: ltr;
+    }
+
+    .bocadillo::after {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+
+    .bocadillo-derecha::after {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+
+    .bocadillo-izquierda::after {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+
+    .timeline::before {
+        left: 20px;
+    }
+
+    .timeline-evento {
+        width: 100%;
+        padding-left: 50px;
+        padding-right: 1rem;
+        left: 0;
+        text-align: left;
+    }
+
+    .evento-izq {
+        text-align: left;
+        padding-left: 50px;
+        padding-right: 1rem;
+    }
+
+    .evento-izq .evento-icono {
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .evento-der {
+        left: 0;
+        padding-left: 50px;
+        padding-right: 1rem;
+    }
+
+    .evento-der .evento-icono {
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .evento-izq .evento-dot,
+    .evento-der .evento-dot {
+        left: 14px;
+        right: auto;
+    }
+
+    .arcade-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .pantalla-contenido span {
+        font-size: 0.75rem;
+    }
+
+    .etiqueta-maquina {
+        font-size: 0.6rem;
+    }
+
+    .scrapbook {
+        gap: 1.5rem;
+    }
+
+    .wordle-celda {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .tecla {
+        min-width: 28px;
+        height: 38px;
+        font-size: 0.75rem;
+    }
+
+    .tecla.ancho {
+        min-width: 44px;
+    }
+
+    .bg-donut-centro,
+    .bg-estrella-centro,
+    .bg-frase-centro {
+        display: none;
+    }
+
+    .bg-dna-seq:nth-child(n+4) {
+        display: none;
+    }
+
+    .bg-molecula {
+        display: none;
+    }
+
+    .bg-frase-simpsons:nth-child(n+4) {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   Responsive — Mobile (480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+    .seccion {
+        padding: 4rem 1rem 2.5rem;
+    }
+
+    .encabezado-seccion {
+        font-size: 1.5rem;
+        letter-spacing: 0.04rem;
+    }
+
+    .hero-titulo {
+        font-size: 1.8rem;
+    }
+
+    .hero-subtitulo {
+        font-size: 0.85rem;
+    }
+
+    .hero-logo-container {
+        max-width: 260px;
+    }
+
+    .vinetas-intro,
+    .fechas-intro,
+    .album-intro,
+    .arcade-intro {
+        font-size: 0.85rem;
+    }
+
+    .vinetas-container {
+        gap: 2rem;
+    }
+
+    .bocadillo {
+        font-size: 0.95rem;
+        padding: 0.8rem 1rem;
+    }
+
+    .vineta-narracion {
+        font-size: 0.8rem;
+    }
+
+    .marco-comic img {
+        aspect-ratio: 3/2;
+    }
+
+    .evento-contenido {
+        padding: 1rem;
+    }
+
+    .evento-titulo {
+        font-size: 0.95rem;
+    }
+
+    .evento-texto {
+        font-size: 0.8rem;
+    }
+
+    .scrapbook {
+        gap: 1rem;
+    }
+
+    .marco-polaroid {
+        padding: 6px 6px 30px 6px;
+    }
+
+    .arcade-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+
+    .etiqueta-maquina {
+        font-size: 0.55rem;
+    }
+
+    .modal-contenido {
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+
+    .modal-contenido h3 {
+        font-size: 1.3rem;
+    }
+
+    .personaje-opciones {
+        grid-template-columns: 1fr;
+    }
+
+    .wordle-celda {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+
+    .tecla {
+        min-width: 24px;
+        height: 34px;
+        font-size: 0.7rem;
+    }
+
+    .tecla.ancho {
+        min-width: 38px;
+        font-size: 0.6rem;
+    }
+
+    .memoria-grid {
+        gap: 6px;
+    }
+
+    .memoria-carta .carta-personaje {
+        font-size: 1.4rem;
+    }
+
+    .memoria-carta .carta-frase {
+        font-size: 0.45rem;
+    }
+
+    #canvas-lluvia {
+        height: 220px;
+    }
+
+    .bg-donut:nth-child(n+4) {
+        display: none;
+    }
+
+    .bg-dna-seq:nth-child(n+3) {
+        display: none;
+    }
+
+    .bg-torre {
+        display: none;
+    }
+
+    .bg-estrella {
+        display: none;
+    }
+
+    .bg-frase-simpsons {
+        font-size: 0.75rem;
+    }
+
+    .bg-frase-simpsons:nth-child(n+3) {
+        display: none;
+    }
+
+    .bio-deco {
+        margin-top: 1.5rem;
+    }
+
+    .bio-codon {
+        font-size: 0.6rem;
+    }
+
+    .dna-decoracion {
+        font-size: 0.6rem;
+        bottom: 1rem;
+        left: 1rem;
+    }
+}
+
+/* --- Pantalla de Login -------------------------------------------------- */
+#pantalla-login {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-1);
+    transition: opacity 0.6s ease;
+}
+
+#pantalla-login.desvanecer {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.login-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+.login-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 12px rgba(253, 216, 53, 0.3));
+}
+
+.login-titulo {
+    font-family: var(--font-titulos);
+    font-size: 1.6rem;
+    color: var(--amarillo);
+    margin-bottom: 0.4rem;
+}
+
+.login-subtitulo {
+    font-family: var(--font-cuerpo);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.login-grupo {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+}
+
+#password-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-1);
+    color: var(--text-primary);
+    font-family: var(--font-cuerpo);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#password-input:focus {
+    border-color: var(--amarillo);
+}
+
+#password-input::placeholder {
+    color: var(--text-muted);
+}
+
+#btn-acceder {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--amarillo);
+    border-radius: 12px;
+    background: rgba(253, 216, 53, 0.1);
+    color: var(--amarillo);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.2s;
+}
+
+#btn-acceder:hover {
+    background: rgba(253, 216, 53, 0.2);
+    transform: scale(1.05);
+}
+
+#btn-acceder:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#password-error {
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--rojo);
+    letter-spacing: 0.5px;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- Transición contenido principal ------------------------------------- */
+#contenido-principal.oculto {
+    display: none;
+}
+
+#contenido-principal.aparicion-activa {
+    animation: fadeIn 0.8s ease forwards;
+}
