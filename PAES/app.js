@@ -829,6 +829,20 @@ async function renderSettings(container) {
           </div>
         </div>
 
+        <div class="settings-section animate-in delay-5 danger-zone">
+          <h3>Zona de Peligro</h3>
+          <p class="danger-desc">Eliminar tu cuenta borrará permanentemente todo tu progreso, historial de quizzes y configuración. Esta acción no se puede deshacer.</p>
+          <div class="password-section">
+            <div class="form-group">
+              <label>Contraseña (para confirmar)</label>
+              <input type="password" id="deleteAccountPassword" placeholder="Escribe tu contraseña">
+            </div>
+            <button class="btn btn-danger btn-sm" onclick="window._deleteAccount()">
+              Eliminar mi cuenta
+            </button>
+          </div>
+        </div>
+
         <div style="padding: 16px 0" class="animate-in delay-4">
           <button class="btn btn-primary btn-full" onclick="window._saveSettings()" id="saveSettingsBtn">
             ${saving ? '<span class="spinner"></span>' : 'Guardar Configuración'}
@@ -905,6 +919,30 @@ async function renderSettings(container) {
     }
     changingPassword = false;
     render();
+  };
+
+  window._deleteAccount = async () => {
+    const pw = document.getElementById('deleteAccountPassword')?.value;
+    if (!pw) {
+      showToast('Ingresa tu contraseña para confirmar', 'error');
+      return;
+    }
+    if (!confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es permanente.')) return;
+
+    try {
+      await api('/paes/api/auth/account', {
+        method: 'DELETE',
+        body: JSON.stringify({ password: pw }),
+      });
+      localStorage.removeItem('paes_token');
+      state.token = null;
+      state.user = null;
+      state.settings = null;
+      showToast('Cuenta eliminada', 'success');
+      navigate('#/login');
+    } catch (err) {
+      showToast(err.message || 'Error al eliminar cuenta', 'error');
+    }
   };
 
   render();
@@ -1093,6 +1131,7 @@ async function renderAdmin(container) {
                 <th>Email</th>
                 <th>Rol</th>
                 <th>Registro</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -1102,8 +1141,11 @@ async function renderAdmin(container) {
                   <td>${u.email || '-'}</td>
                   <td><span class="difficulty-badge ${u.role === 'admin' ? 'avanzado' : 'basico'}">${u.role || 'user'}</span></td>
                   <td>${new Date(u.createdAt || u.created_at).toLocaleDateString('es-CL')}</td>
+                  <td>
+                    ${u.role !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="window._deleteUser(${u.id}, '${u.username}')">Eliminar</button>` : ''}
+                  </td>
                 </tr>
-              `).join('') : '<tr><td colspan="4" style="text-align:center;color:var(--text-secondary)">Sin usuarios</td></tr>'}
+              `).join('') : '<tr><td colspan="5" style="text-align:center;color:var(--text-secondary)">Sin usuarios</td></tr>'}
             </tbody>
           </table>
         </div>
@@ -1130,6 +1172,17 @@ async function renderAdmin(container) {
   window._adminPageNav = (p) => {
     state.adminPage = p;
     renderAdmin(container);
+  };
+
+  window._deleteUser = async (userId, username) => {
+    if (!confirm(`¿Eliminar al usuario "${username}"? Esta acción no se puede deshacer.`)) return;
+    try {
+      await api(`/paes/api/admin/user/${userId}`, { method: 'DELETE' });
+      showToast(`Usuario "${username}" eliminado`, 'success');
+      renderAdmin(container);
+    } catch (err) {
+      showToast(err.message || 'Error al eliminar', 'error');
+    }
   };
 }
 

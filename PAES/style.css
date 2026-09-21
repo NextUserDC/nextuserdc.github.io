@@ -1274,6 +1274,22 @@ ul, ol {
   margin-bottom: 12px;
 }
 
+.danger-zone {
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  background: rgba(220, 38, 38, 0.05);
+}
+
+.danger-zone h3 {
+  color: #ef4444;
+}
+
+.danger-desc {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
 /* ---------- History ---------- */
 .history-page {
   padding-top: 24px;
