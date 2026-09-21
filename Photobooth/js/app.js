@@ -937,7 +937,19 @@ document.addEventListener('DOMContentLoaded', function() {
             var burbuja = document.createElement('div');
             burbuja.className = 'chatBurbuja ' + tipo;
             if (tipo === 'bot') {
-                burbuja.innerHTML = texto;
+                var partes = texto.split(/(<a\s[^>]*>.*?<\/a>)/g);
+                partes.forEach(function(parte) {
+                    var match = parte.match(/^<a\s+href="([^"]*)"[^>]*>(.*?)<\/a>$/);
+                    if (match) {
+                        var a = document.createElement('a');
+                        a.href = match[1];
+                        a.textContent = match[2];
+                        a.target = '_blank';
+                        burbuja.appendChild(a);
+                    } else if (parte) {
+                        burbuja.appendChild(document.createTextNode(parte));
+                    }
+                });
             } else {
                 burbuja.textContent = texto;
             }
