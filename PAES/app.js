@@ -13,8 +13,6 @@ let state = {
   timerInterval: null,
   timerSeconds: 0,
   historyPage: 1,
-  adminPage: 1,
-  adminSearch: '',
   mobileMenuOpen: false,
   expandedHistoryId: null,
 };
@@ -67,7 +65,6 @@ const routes = {
   '#/results': renderResults,
   '#/settings': renderSettings,
   '#/history': renderHistory,
-  '#/admin': renderAdmin,
 };
 
 function navigate(hash) {
@@ -109,7 +106,6 @@ window.addEventListener('hashchange', router);
 /* ---------- Navbar Component ---------- */
 function renderNavbar() {
   const hash = getRoute();
-  const isAdmin = state.user && state.user.role === 'admin';
   const themeIcon = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
   return `
     <nav class="navbar">
@@ -123,7 +119,6 @@ function renderNavbar() {
         <a class="nav-link${hash === '#/dashboard' ? ' active' : ''}" onclick="navigate('#/dashboard')">Dashboard</a>
         <a class="nav-link${hash === '#/history' ? ' active' : ''}" onclick="navigate('#/history')">Historial</a>
         <a class="nav-link${hash === '#/settings' ? ' active' : ''}" onclick="navigate('#/settings')">Configuración</a>
-        ${isAdmin ? `<a class="nav-link${hash === '#/admin' ? ' active' : ''}" onclick="navigate('#/admin')">Admin</a>` : ''}
       </div>
       <div class="navbar-actions">
         <button class="theme-toggle-btn" onclick="toggleTheme(); router();">${themeIcon}</button>
@@ -1037,152 +1032,6 @@ async function renderHistory(container) {
 
   window._expandHistory = (id) => {
     showToast('Detalle de sesión: ' + id, 'info');
-  };
-}
-
-/* ---------- Admin ---------- */
-async function renderAdmin(container) {
-  if (!state.user || state.user.role !== 'admin') {
-    container.innerHTML = `
-      ${renderNavbar()}
-      <div class="page">
-        <div class="empty-state">
-          <div class="empty-icon">🔒</div>
-          <h3>Acceso restringido</h3>
-          <p>Solo los administradores pueden ver esta sección.</p>
-          <button class="btn btn-primary" onclick="navigate('#/dashboard')">Volver al Dashboard</button>
-        </div>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = `${renderNavbar()}<div class="page admin-page"><div class="loading-container"><div class="loading-spinner"></div></div></div>`;
-
-  let adminStats = { totalUsers: 0, totalQuizzes: 0, totalQuestions: 0 };
-  let users = [];
-  let usersTotal = 1;
-  let subjectCounts = [];
-
-  try {
-    const data = await api('/paes/api/admin/stats');
-    adminStats = data.stats || data;
-  } catch { /* */ }
-
-  try {
-    const data = await api(`/paes/api/admin/users?page=${state.adminPage}&limit=10&search=${state.adminSearch}`);
-    users = data.users || [];
-    usersTotal = data.totalPages || 1;
-  } catch { /* */ }
-
-  try {
-    const data = await api('/paes/api/admin/subjects');
-    subjectCounts = data.subjects || data.counts || [];
-  } catch { /* */ }
-
-  container.innerHTML = `
-    ${renderNavbar()}
-    <div class="page admin-page">
-      <a class="back-link" onclick="navigate('#/dashboard')">← Volver</a>
-      <div class="page-header animate-in">
-        <h2>Panel de Administración</h2>
-        <p>Gestiona la plataforma PAES Quiz</p>
-      </div>
-
-      <div class="admin-stats animate-in delay-1">
-        <div class="stat-card">
-          <div class="stat-label">Usuarios</div>
-          <div class="stat-value purple">${adminStats.totalUsers || 0}</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Quizzes Completados</div>
-          <div class="stat-value green">${adminStats.totalQuizzes || 0}</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Preguntas Totales</div>
-          <div class="stat-value yellow">${adminStats.totalQuestions || 0}</div>
-        </div>
-      </div>
-
-      <div class="admin-section animate-in delay-2">
-        <h3>Preguntas por Materia</h3>
-        <div class="subjects-grid">
-          ${subjectCounts.length > 0 ? subjectCounts.map(sc => `
-            <div class="subject-card">
-              <div class="subject-header">
-                <span class="subject-name">${sc.name || sc.subject}</span>
-                <span class="subject-count">${sc.count || 0}</span>
-              </div>
-            </div>
-          `).join('') : '<p style="color:var(--text-secondary)">Sin datos disponibles</p>'}
-        </div>
-      </div>
-
-      <div class="admin-section animate-in delay-3">
-        <h3>Usuarios</h3>
-        <div class="admin-search">
-          <input type="text" placeholder="Buscar usuario..." value="${state.adminSearch}" oninput="window._adminSearch(this.value)">
-        </div>
-        <div class="admin-table-wrapper">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Usuario</th>
-                <th>Email</th>
-                <th>Rol</th>
-                <th>Registro</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${users.length > 0 ? users.map(u => `
-                <tr>
-                  <td>${u.username}</td>
-                  <td>${u.email || '-'}</td>
-                  <td><span class="difficulty-badge ${u.role === 'admin' ? 'avanzado' : 'basico'}">${u.role || 'user'}</span></td>
-                  <td>${new Date(u.createdAt || u.created_at).toLocaleDateString('es-CL')}</td>
-                  <td>
-                    ${u.role !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="window._deleteUser(${u.id}, '${u.username}')">Eliminar</button>` : ''}
-                  </td>
-                </tr>
-              `).join('') : '<tr><td colspan="5" style="text-align:center;color:var(--text-secondary)">Sin usuarios</td></tr>'}
-            </tbody>
-          </table>
-        </div>
-        ${usersTotal > 1 ? `
-          <div class="pagination">
-            <button ${state.adminPage <= 1 ? 'disabled' : ''} onclick="window._adminPageNav(${state.adminPage - 1})">← Ant</button>
-            ${Array.from({length: Math.min(usersTotal, 5)}, (_, i) => i + 1).map(p => `
-              <button class="${p === state.adminPage ? 'active' : ''}" onclick="window._adminPageNav(${p})">${p}</button>
-            `).join('')}
-            <button ${state.adminPage >= usersTotal ? 'disabled' : ''} onclick="window._adminPageNav(${state.adminPage + 1})">Sig →</button>
-          </div>
-        ` : ''}
-      </div>
-    </div>
-  `;
-
-  let searchTimeout;
-  window._adminSearch = (val) => {
-    state.adminSearch = val;
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => renderAdmin(container), 400);
-  };
-
-  window._adminPageNav = (p) => {
-    state.adminPage = p;
-    renderAdmin(container);
-  };
-
-  window._deleteUser = async (userId, username) => {
-    if (!confirm(`¿Eliminar al usuario "${username}"? Esta acción no se puede deshacer.`)) return;
-    try {
-      await api(`/paes/api/admin/user/${userId}`, { method: 'DELETE' });
-      showToast(`Usuario "${username}" eliminado`, 'success');
-      renderAdmin(container);
-    } catch (err) {
-      showToast(err.message || 'Error al eliminar', 'error');
-    }
   };
 }
 
