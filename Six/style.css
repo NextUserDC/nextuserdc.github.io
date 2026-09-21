@@ -1502,26 +1502,38 @@ a {
         gap: 1.5rem;
     }
 
-    .vineta-izq {
-        direction: ltr;
+    .vineta-der .vineta-imagen,
+    .vineta-der .vineta-texto,
+    .vineta-izq .vineta-imagen,
+    .vineta-izq .vineta-texto {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .vineta-imagen {
+        order: -1;
+    }
+
+    .vineta-texto {
+        order: 0;
     }
 
     .bocadillo::after {
-        left: 50%;
+        left: 25%;
         right: auto;
-        transform: translateX(-50%);
+        transform: none;
     }
 
     .bocadillo-derecha::after {
-        left: 50%;
+        left: 25%;
         right: auto;
-        transform: translateX(-50%);
+        transform: none;
     }
 
     .bocadillo-izquierda::after {
-        left: 50%;
+        left: 25%;
         right: auto;
-        transform: translateX(-50%);
+        transform: none;
     }
 
     .timeline::before {
@@ -1650,6 +1662,14 @@ a {
 
     .vinetas-container {
         gap: 2rem;
+    }
+
+    .vineta {
+        gap: 1rem;
+    }
+
+    .vineta-imagen {
+        order: -1;
     }
 
     .bocadillo {
