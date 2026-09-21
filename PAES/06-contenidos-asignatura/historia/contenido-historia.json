@@ -1,0 +1,105 @@
+{
+  "asignatura": "Historia y Ciencias Sociales",
+  "codigo": "HIST",
+  "obligatoria": false,
+  "preguntas": 65,
+  "duracion": "2 horas",
+  "formato": "Selección múltiple (4 alternativas)",
+  "descripcion": "Evalúa conocimientos históricos, formación ciudadana, economía y geografía de Chile y el mundo.",
+  "ejesTematicos": {
+    "historiaMundoChile": {
+      "descripcion": "Procesos históricos desde el siglo XIX hasta el presente",
+      "enfoque": "Segunda mitad del siglo XX en Chile y el mundo",
+      "temas": [
+        "Imperialismo y colonialismo",
+        "Guerras Mundiales (Primera y Segunda)",
+        "Guerra Fría",
+        "Historia política y social de Chile",
+        "Dictadura militar (1973-1990)",
+        "Transición democrática",
+        "Independencia de Chile",
+        "Procesos de integración regional"
+      ]
+    },
+    "formacionCiudadana": {
+      "descripcion": "Instituciones, derechos humanos, Estado y participación ciudadana",
+      "temas": [
+        "Constitución Política",
+        "Poder Ejecutivo, Legislativo y Judicial",
+        "Derechos humanos",
+        "Participación ciudadana",
+        "Sistema político chileno"
+      ]
+    },
+    "economiaSociedad": {
+      "descripcion": "Conceptos económicos, mercado, rol del Estado, globalización",
+      "temas": [
+        "Oferta y demanda",
+        "Inflación",
+        "PIB e indicadores económicos",
+        "Modelos económicos en Chile",
+        "Globalización",
+        "Desarrollo sustentable"
+      ]
+    },
+    "geografia": {
+      "temas": [
+        "Geografía humana y física",
+        "Territorio y clima",
+        "Población y riesgos",
+        "Recursos naturales"
+      ]
+    }
+  },
+  "habilidades": [
+    "Análisis de fuentes (textos, mapas, gráficos, infografías, caricaturas)",
+    "Causalidad múltiple",
+    "Pensamiento temporal y espacial",
+    "Argumentación basada en evidencia",
+    "Lectura de gráficos y tablas"
+  ],
+  "recursosEstudio": [
+    {
+      "nombre": "ExamenesGratis - 200+ preguntas Historia",
+      "url": "https://es.open-exam-prep.com/practica/paes-historia-chile",
+      "tipo": "ejercicios",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Ensayo PAES - Banco preguntas Historia (+2500)",
+      "url": "https://ensayopaes.cl/preguntas/historia-ciencias-sociales/",
+      "tipo": "ejercicios",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Filadd - Ensayos Historia",
+      "url": "https://filadd.cl/courses/preuniversitario-pack-completo-egresados-2026/simulations/groups/historia-paes-1",
+      "tipo": "ensayo",
+      "costo": "Gratis (ensayos nacionales)"
+    },
+    {
+      "nombre": "Prueba PAES - Historia contenidos + test",
+      "url": "https://pruebapaes.cl/electivo-historia-paes/",
+      "tipo": "ejercicios",
+      "costo": "Gratis (básico)"
+    },
+    {
+      "nombre": "DEMRE - Pregunta comentada Historia (video)",
+      "url": "https://demre.cl/videos/196-pregunta-comentada-historia-01",
+      "tipo": "video",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "PAES Historia oficial DEMRE (Invierno 2026)",
+      "url": "https://demre.cl/publicaciones/2026/2026-25-06-18-paes-invierno-historia-p2026",
+      "tipo": "prueba-oficial",
+      "costo": "Gratis"
+    }
+  ],
+  "consejos": [
+    "Usa la pauta APE (Autor-Purpose-Evidence) para analizar fuentes",
+    "Practica con gráficos estadísticos y mapas históricos",
+    "Crea líneas de tiempo por unidad temática",
+    "La prueba hace uso intensivo de recursos gráficos - practica con pantalla grande"
+  ]
+}

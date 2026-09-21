@@ -1,0 +1,140 @@
+{
+  "asignatura": "Matemática 1 (M1)",
+  "codigo": "M1",
+  "obligatoria": true,
+  "preguntas": 65,
+  "preguntasCalificables": 60,
+  "preguntasPilotaje": 5,
+  "duracion": "2 horas 20 minutos",
+  "formato": "Selección múltiple (4 alternativas)",
+  "descripcion": "Evalúa competencias matemáticas desde 7° básico hasta 2° medio.",
+  "diferenciaInviernoRegular": "Regular agrega: cilindros y semejanza de figuras planas (4 temas extra de geometría)",
+  "ejesTematicos": {
+    "numeros": {
+      "peso": "26%",
+      "temas": [
+        "Números enteros",
+        "Números racionales",
+        "Fracciones",
+        "Porcentajes",
+        "Potencias y raíces",
+        "Proporcionalidad",
+        "Razón y razón compuesta",
+        "Unidades de medida"
+      ]
+    },
+    "algebra": {
+      "peso": "29%",
+      "temas": [
+        "Ecuaciones lineales",
+        "Ecuaciones cuadráticas",
+        "Inecuaciones",
+        "Sistemas de ecuaciones",
+        "Funciones lineales",
+        "Funciones cuadráticas",
+        "Factorización",
+        "Modelamiento matemático"
+      ]
+    },
+    "geometria": {
+      "peso": "21%",
+      "temas": [
+        "Área de figuras planas",
+        "Perímetro",
+        "Pitágoras",
+        "Semejanza de figuras",
+        "Transformaciones isométricas",
+        "Volumen de paralelepípedos y cubos",
+        "Superficies de paralelepípedos y cubos",
+        "Puntos y vectores en el plano cartesiano",
+        "Rotación, traslación y reflexión"
+      ],
+      "temasSoloRegular": [
+        "Cilindros (área y volumen)",
+        "Semejanza de figuras planas"
+      ]
+    },
+    "probabilidadEstadistica": {
+      "peso": "24%",
+      "temas": [
+        "Gráficos (barras, circulares, histogramas)",
+        "Promedio (media aritmética)",
+        "Mediana",
+        "Cuartiles y percentiles",
+        "Diagrama de cajón",
+        "Probabilidad simple",
+        "Frecuencia absoluta y relativa"
+      ]
+    }
+  },
+  "loQueNoEntra": [
+    "Trigonometría (seno, coseno, tangente) → es M2",
+    "Logaritmos y funciones exponenciales → es M2",
+    "Cálculo diferencial o integral → no viene en PAES",
+    "Conos, esferas, pirámides (en Invierno)",
+    "Moda y medidas de dispersión como rango o desviación estándar"
+  ],
+  "recursosEstudio": [
+    {
+      "nombre": "SimplePAES - Material por eje",
+      "url": "https://simplepaes.cl/blog/material-paes-matematica-2026",
+      "tipo": "ejercicios-interactivos",
+      "costo": "Gratis (básico)"
+    },
+    {
+      "nombre": "SimplePAES - Mini-lecciones",
+      "url": "https://simplepaes.cl/blog/temario-paes-2026",
+      "tipo": "mini-lecciones",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Red de Matemáticas - Guías M1",
+      "url": "https://matematicas.cl/paes-de-matematicas/paes-m1/",
+      "tipo": "guias-pdf",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Taller gratuito PAES M1 (30+ guías)",
+      "url": "https://matematicas.cl/taller-gratuito-paes-m1-ejercicios-matematicas/",
+      "tipo": "taller",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Mates pal Colegio - Resoluciones M1",
+      "url": "https://matespalcolegio.com/paes-m1-resuelta-y-gratis-d/",
+      "tipo": "resoluciones",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "ExamenesGratis - 200+ preguntas M1",
+      "url": "https://es.open-exam-prep.com/practica/paes-matematicas-chile",
+      "tipo": "ejercicios",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Khan Academy - Álgebra",
+      "url": "https://es.khanacademy.org/math/algebra",
+      "tipo": "curso-completo",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Khan Academy - Geometría",
+      "url": "https://es.khanacademy.org/math/geometry",
+      "tipo": "curso-completo",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "PAES M1 oficial DEMRE (Invierno 2026)",
+      "url": "https://demre.cl/publicaciones/2026",
+      "tipo": "prueba-oficial",
+      "costo": "Gratis"
+    }
+  ],
+  "consejos": [
+    "Álgebra es el eje con más peso (29%) - priorízalo",
+    "No hay descuento por respuestas incorrectas - siempre marca algo",
+    "Practica bajo presión de tiempo al menos 2 veces antes del examen",
+    "Domina Pitágoras y áreas - son temas que siempre salen",
+    "Para probabilidad, practica con datos reales y gráficos"
+  ]
+}

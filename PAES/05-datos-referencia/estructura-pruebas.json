@@ -1,0 +1,205 @@
+{
+  "pruebas": {
+    "competencia_lectora": {
+      "nombre": "PAES Competencia Lectora",
+      "tipo": "Obligatoria",
+      "preguntas": 65,
+      "preguntas_calificables": 60,
+      "preguntas_pilotaje": 5,
+      "duracion_minutos": 150,
+      "duracion_formato": "2 horas y 30 minutos",
+      "formato_preguntas": "Selección múltiple con 4 opciones de respuesta única",
+      "textos": 7,
+      "habilidades": [
+        "Localizar",
+        "Interpretar",
+        "Evaluar"
+      ],
+      "tipos_textos": [
+        "Literarios (narraciones)",
+        "No literarios (expositivos y argumentativos)"
+      ],
+      "conocimientos": [
+        "Comprensión literal",
+        "Comprensión inferencial",
+        "Análisis de estructura textual",
+        "Identificación de tesis y argumentos",
+        "Análisis del punto de vista del autor",
+        "Evaluación crítica"
+      ],
+      "escala_puntaje": {
+        "minimo": 100,
+        "maximo": 1000
+      }
+    },
+    "competencia_matematica_m1": {
+      "nombre": "PAES Competencia Matemática 1 (M1)",
+      "tipo": "Obligatoria",
+      "preguntas": 65,
+      "preguntas_calificables": 60,
+      "preguntas_pilotaje": 5,
+      "duracion_minutos": 140,
+      "duracion_formato": "2 horas y 20 minutos",
+      "formato_preguntas": "Selección múltiple con 4 opciones de respuesta única",
+      "ejes_tematicos": [
+        {
+          "nombre": "Números",
+          "porcentaje_estimado": "20-30%"
+        },
+        {
+          "nombre": "Álgebra",
+          "porcentaje_estimado": "30-40%"
+        },
+        {
+          "nombre": "Geometría",
+          "porcentaje_estimado": "20-30%"
+        },
+        {
+          "nombre": "Probabilidad y Datos",
+          "porcentaje_estimado": "15-25%"
+        }
+      ],
+      "nivel": "Básico-intermedio (7° básico a 2° medio)",
+      "habilidades": [
+        "Representar",
+        "Modelar",
+        "Resolver problemas",
+        "Comunicar"
+      ]
+    },
+    "competencia_matematica_m2": {
+      "nombre": "PAES Competencia Matemática 2 (M2)",
+      "tipo": "Electiva (obligatoria para algunas carreras)",
+      "preguntas": 55,
+      "preguntas_calificables": 50,
+      "preguntas_pilotaje": 5,
+      "duracion_minutos": 140,
+      "duracion_formato": "2 horas y 20 minutos",
+      "formato_preguntas": "Selección múltiple con 4 opciones de respuesta única",
+      "ejes_tematicos": [
+        {
+          "nombre": "Álgebra",
+          "porcentaje_estimado": "40-50%"
+        },
+        {
+          "nombre": "Trigonometría",
+          "porcentaje_estimado": "20-30%"
+        },
+        {
+          "nombre": "Funciones",
+          "porcentaje_estimado": "20-30%"
+        }
+      ],
+      "nivel": "Intermedio-avanzado (3° y 4° medio)",
+      "carreras_que_la_solicitan": [
+        "Ingeniería",
+        "Ciencias Físicas",
+        "Matemática",
+        "Pedagogía en Matemática y Ciencias",
+        "Algunas carreras del área de salud",
+        "Carreras del área de tecnología"
+      ],
+      "ponderacion_minima": "5% en carreras que la requieran"
+    },
+    "ciencias": {
+      "nombre": "PAES Ciencias",
+      "tipo": "Electiva",
+      "preguntas_totales": 80,
+      "preguntas_calificables": 75,
+      "preguntas_pilotaje": 5,
+      "duracion_minutos": 160,
+      "duracion_formato": "2 horas y 40 minutos",
+      "formato_preguntas": "Selección múltiple con 4 o 5 opciones de respuesta única",
+      "modulos": {
+        "modulo_comun": {
+          "nombre": "Módulo Común (MC)",
+          "preguntas": 54,
+          "contenidos": ["Biología", "Física", "Química"]
+        },
+        "modulo_electivo": {
+          "nombre": "Módulo Electivo (ME)",
+          "preguntas": 26,
+          "opciones": ["Biología", "Física", "Química"],
+          "nota": "Solo para egresados Humanístico-Científicos"
+        },
+        "modulo_tecnico_profesional": {
+          "nombre": "Módulo Técnico Profesional (MTP)",
+          "preguntas": 26,
+          "contenidos": ["Biología", "Física", "Química"],
+          "nivel_contenidos": "1° y 2° Medio",
+          "nota": "Para egresados de establecimientos Técnico-Profesionales"
+        }
+      },
+      "habilidades_cientificas": [
+        "Observar y plantear preguntas",
+        "Planificar y conducir una investigación",
+        "Procesar y analizar la evidencia",
+        "Evaluar",
+        "Comunicar"
+      ],
+      "ejes": {
+        "biologia": {
+          "areas_tematicas": [
+            "Organización, estructura y actividad celular",
+            "Procesos y funciones biológicas",
+            "Herencia y evolución",
+            "Organismo y ambiente"
+          ]
+        },
+        "fisica": {
+          "areas_tematicas": [
+            "Mecánica",
+            "Energía - Tierra",
+            "Electricidad",
+            "Ondas"
+          ]
+        },
+        "quimica": {
+          "areas_tematicas": [
+            "Estructura atómica",
+            "Química orgánica",
+            "Reacciones químicas y estequiometría"
+          ]
+        }
+      }
+    },
+    "historia_ciencias_sociales": {
+      "nombre": "PAES Historia y Ciencias Sociales",
+      "tipo": "Electiva",
+      "preguntas": 65,
+      "preguntas_calificables": 60,
+      "preguntas_pilotaje": 5,
+      "duracion_minutos": 120,
+      "duracion_formato": "2 horas",
+      "formato_preguntas": "Selección múltiple con 4 opciones de respuesta única",
+      "contenidos": [
+        "Mundo Contemporáneo",
+        "América Latina",
+        "Historia de Chile",
+        "Formación Ciudadana",
+        "Economía y Sociedad"
+      ],
+      "habilidades": [
+        "Comprensión de procesos históricos",
+        "Análisis de fuentes primarias y secundarias",
+        "Relación de causas y consecuencias",
+        "Análisis de institucionalidad"
+      ]
+    }
+  },
+  "puntaje": {
+    "escala": {
+      "minimo": 100,
+      "maximo": 1000
+    },
+    "ejemplo_conversion": {
+      "nota_colegio_60": "~500 puntos PAES",
+      "nota_colegio_70": "~600 puntos PAES"
+    }
+  },
+  "preguntas_pilotaje": {
+    "descripcion": "5 preguntas de experimentación que no son consideradas en el cálculo del puntaje",
+    "no_identificadas": true,
+    "propósito": "Probar nuevas preguntas para futuras versiones"
+  }
+}

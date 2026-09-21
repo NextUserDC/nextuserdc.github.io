@@ -1,0 +1,78 @@
+{
+  "proceso": "Admisión 2027",
+  "año_escolar": 2026,
+  "fechas": {
+    "paes_invierno": {
+      "fecha": "15, 16 y 17 de junio de 2026",
+      "pruebas": {
+        "dia_1_15_junio": "Competencia Matemática 2 (M2) - 15:00",
+        "dia_2_16_junio": [
+          "Competencia Lectora - 09:00",
+          "Prueba electiva de Ciencias - 15:00"
+        ],
+        "dia_3_17_junio": [
+          "Competencia Matemática 1 (M1) - 09:00",
+          "Prueba electiva de Historia y Ciencias Sociales - 15:00"
+        ]
+      },
+      "inscripcion": "4 al 17 de marzo de 2026",
+      "resultados": "17 de julio de 2026"
+    },
+    "paes_regular": {
+      "fecha": "30 de noviembre, 1 y 2 de diciembre de 2026",
+      "pruebas": {
+        "dia_1_30_noviembre": "Reconocimiento de salas 12:00-13:00, Competencia Matemática 2 (M2) - 15:00",
+        "dia_2_1_diciembre": [
+          "Competencia Lectora - 09:00",
+          "Prueba electiva de Ciencias - 15:00"
+        ],
+        "dia_3_2_diciembre": [
+          "Competencia Matemática 1 (M1) - 09:00",
+          "Prueba electiva de Historia y Ciencias Sociales - 15:00"
+        ]
+      },
+      "inscripcion": "1 de junio al 22 de julio de 2026",
+      "resultados": "4 de enero de 2027, 08:00"
+    },
+    "postulacion": {
+      "inicio": "4 de enero de 2027, 09:00",
+      "fin": "7 de enero de 2027, 13:00",
+      "maximo_carreras": 20,
+      "universidades": 47
+    },
+    "seleccion": {
+      "fecha": "18 de enero de 2027, 12:00"
+    },
+    "matricula": {
+      "primer_llamado": "19 al 21 de enero de 2027",
+      "segundo_llamado": "22 al 28 de enero de 2027"
+    }
+  },
+  "puntajes_vigentes": [
+    "PAES de Invierno 2025 (Admisión 2026)",
+    "PAES Regular 2025 (Admisión 2026)",
+    "PAES de Invierno 2026 (Admisión 2027)",
+    "PAES Regular 2026 (Admisión 2027)"
+  ],
+  "instrumentos_acceso": {
+    "obligatorios": [
+      "Puntaje de Notas de Enseñanza Media (NEM)",
+      "Puntaje de Ranking de Notas",
+      "PAES Competencia Lectora",
+      "PAES Competencia Matemática 1 (M1)"
+    ],
+    "electivos": [
+      "PAES Ciencias",
+      "PAES Historia y Ciencias Sociales",
+      "PAES Competencia Matemática 2 (M2) - para carreras que la soliciten"
+    ],
+    "ponderaciones_minimas": {
+      "competencia_lectora": "10%",
+      "competencia_matematica_m1": "10%",
+      "prueba_electiva": "10%",
+      "nem": "10%",
+      "ranking": "10%",
+      "competencia_matematica_m2": "5% (para carreras que la soliciten)"
+    }
+  }
+}

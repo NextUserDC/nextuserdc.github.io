@@ -1,0 +1,320 @@
+{
+  "asignatura": "Ciencias - Química",
+  "totalEjercicios": 15,
+  "niveles": {
+    "basico": {
+      "descripcion": "Conceptos fundamentales de química",
+      "ejercicios": 6
+    },
+    "intermedio": {
+      "descripcion": "Estructura atómica, enlaces, reacciones",
+      "ejercicios": 5
+    },
+    "avanzado": {
+      "descripcion": "Estequiometría y problemas integrados",
+      "ejercicios": 4
+    }
+  },
+  "ejercicios": [
+    {
+      "id": "QUI-BAS-001",
+      "nivel": "basico",
+      "area": "Estructura atómica",
+      "enunciado": "¿Cuántos protones tiene un átomo de carbono?",
+      "opciones": [
+        {"letra": "A", "texto": "6"},
+        {"letra": "B", "texto": "12"},
+        {"letra": "C", "texto": "8"},
+        {"letra": "D", "texto": "4"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El carbono tiene número atómico (Z) = 6, lo que significa que tiene 6 protones. El número másico (A) = 12 indica protones + neutrones.",
+      "explicacionesIncorrectas": {
+        "B": "12 es el número másico (protones + neutrones), no el número de protones.",
+        "C": "8 es el número de neutrones del carbono-12 (12 - 6 = 6, no 8).",
+        "D": "4 es el número de electrones en el nivel más externo (valencia), no el total."
+      },
+      "consejo": "Número atómico (Z) = número de protones = número de electrones (en átomo neutro)."
+    },
+    {
+      "id": "QUI-BAS-002",
+      "nivel": "basico",
+      "area": "Estructura atómica",
+      "enunciado": "¿Qué tipo de enlace se forma entre un metal y un no metal?",
+      "opciones": [
+        {"letra": "A", "texto": "Enlace iónico"},
+        {"letra": "B", "texto": "Enlace covalente"},
+        {"letra": "C", "texto": "Enlace metálico"},
+        {"letra": "D", "texto": "No se forma enlace"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El enlace iónico se forma cuando un metal transfiere electrones a un no metal. El metal se convierte en catión (+) y el no metal en anión (-).",
+      "explicacionesIncorrectas": {
+        "B": "El enlace covalente se forma entre no metales (comparten electrones).",
+        "C": "El enlace metálico se forma entre metales (nube de electrones compartidos).",
+        "D": "Siempre se forman enlaces entre metales y no metales."
+      },
+      "consejo": "Metal + No metal = Iónico. No metal + No metal = Covalente. Metal + Metal = Metálico."
+    },
+    {
+      "id": "QUI-BAS-003",
+      "nivel": "basico",
+      "area": "Tabla periódica",
+      "enunciado": "¿Cuáles son los metales alcalinos en la tabla periódica?",
+      "opciones": [
+        {"letra": "A", "texto": "Grupo 1 (Li, Na, K, Rb, Cs, Fr)"},
+        {"letra": "B", "texto": "Grupo 2 (Be, Mg, Ca, Sr, Ba, Ra)"},
+        {"letra": "C", "texto": "Grupo 17 (F, Cl, Br, I, At)"},
+        {"letra": "D", "texto": "Grupo 18 (He, Ne, Ar, Kr, Xe, Rn)"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Los metales alcalinos pertenecen al Grupo 1 de la tabla periódica (excepto hidrógeno). Son muy reactivos, tienen 1 electrón de valencia y se oxidan fácilmente.",
+      "explicacionesIncorrectas": {
+        "B": "El Grupo 2 son los metales alcalinotérreos, no alcalinos.",
+        "C": "El Grupo 17 son los halógenos (no metales muy reactivos).",
+        "D": "El Grupo 18 son los gases nobles (muy estables, casi no reactivos)."
+      },
+      "consejo": "Grupo 1 = Alcalinos. Grupo 2 = Alcalinotérreos. Grupo 17 = Halógenos. Grupo 18 = Gases nobles."
+    },
+    {
+      "id": "QUI-BAS-004",
+      "nivel": "basico",
+      "area": "Estados de la materia",
+      "enunciado": "¿Qué ocurre con las partículas de la materia cuando se calienta un sólido hasta convertirse en líquido?",
+      "opciones": [
+        {"letra": "A", "texto": "Las partículas ganan energía y se separan más entre sí"},
+        {"letra": "B", "texto": "Las partículas pierden energía y se acercan más"},
+        {"letra": "C", "texto": "Las partículas se destruyen y se forman nuevas"},
+        {"letra": "D", "texto": "Las partículas no cambian su comportamiento"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Al calentar un sólido, las partículas ganan energía cinética, vibran más intensamente y superan parcialmente las fuerzas de atracción, permitiendo que se deslicen unas sobre otras (fusión).",
+      "explicacionesIncorrectas": {
+        "B": "Al calentar las partículas GANAN energía, no pierden. Y se separan, no se acercan.",
+        "C": "Las partículas no se destruyen; la materia se conserva (Primera Ley de la Termodinámica).",
+        "D": "El cambio de estado siempre implica un cambio en la energía y el movimiento de las partículas."
+      },
+      "consejo": "Sólido → Líquido → Gas: Las partículas ganan energía y se separan más. Proceso inverso: pierden energía y se acercan."
+    },
+    {
+      "id": "QUI-BAS-005",
+      "nivel": "basico",
+      "area": "Estructura atómica",
+      "enunciado": "¿Cuántos electrones tiene un ion sodio (Na⁺)?",
+      "opciones": [
+        {"letra": "A", "texto": "10 electrones"},
+        {"letra": "B", "texto": "11 electrones"},
+        {"letra": "C", "texto": "12 electrones"},
+        {"letra": "D", "texto": "23 electrones"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El sodio (Na) tiene Z = 11, es decir 11 protones y 11 electrones neutro. El ion Na⁺ ha perdido 1 electrón, por lo que tiene 11 - 1 = 10 electrones.",
+      "explicacionesIncorrectas": {
+        "B": "11 electrones sería el sodio neutro (Na⁰), no el ion Na⁺.",
+        "C": "12 electrones sería un ion con carga negativa, no positiva.",
+        "D": "23 es el número másico del sodio (protones + neutrones), no el número de electrones."
+      },
+      "consejo": "Ion positivo (catión): pierde electrones. Ion negativo (anión): gana electrones. Electrones = Z - carga."
+    },
+    {
+      "id": "QUI-BAS-006",
+      "nivel": "basico",
+      "area": "Materia",
+      "enunciado": "¿Cuál de los siguientes es un cambio físico y no un cambio químico?",
+      "opciones": [
+        {"letra": "A", "texto": "El hielo se derrite"},
+        {"letra": "B", "texto": "La madera se quema"},
+        {"letra": "C", "texto": "El hierro se oxida"},
+        {"letra": "D", "texto": "Un huevo se cuece"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El derretimiento del hielo es un cambio físico: el agua cambia de estado (sólido a líquido) pero sigue siendo H₂O. No se forman nuevas sustancias.",
+      "explicacionesIncorrectas": {
+        "B": "Quemar la madera es un cambio químico: se forman CO₂, H₂O y cenizas (nuevas sustancias).",
+        "C": "El óxido de hierro es un cambio químico: el hierro reacciona con oxígeno formando Fe₂O₃.",
+        "D": "Cocinar un huevo es un cambio químico: las proteínas se desnaturalizan y coagulan."
+      },
+      "consejo": "Cambio físico: cambia la forma, no la composición (derretir, hervir). Cambio químico: se forman nuevas sustancias (quemar, oxidar)."
+    },
+    {
+      "id": "QUI-INT-001",
+      "nivel": "intermedio",
+      "area": "Reacciones químicas",
+      "enunciado": "Balancea la siguiente ecuación: _H₂ + _O₂ → _H₂O",
+      "opciones": [
+        {"letra": "A", "texto": "2H₂ + O₂ → 2H₂O"},
+        {"letra": "B", "texto": "H₂ + O₂ → H₂O"},
+        {"letra": "C", "texto": "3H₂ + O₂ → 3H₂O"},
+        {"letra": "D", "texto": "2H₂ + 2O₂ → 2H₂O"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Para balancear: Lado izquierdo tiene 2O (de O₂), lado derecho tiene 1O (de H₂O). Ponemos 2 delante de H₂O: 2H₂O. Ahora hay 4H del lado derecho, entonces ponemos 2 delante de H₂: 2H₂ + O₂ → 2H₂O. Verificación: 4H y 2O en ambos lados ✓",
+      "explicacionesIncorrectas": {
+        "B": "No está balanceada: hay 2O a la izquierda y 1O a la derecha.",
+        "C": "No está balanceada: 6H a la izquierda y 4H a la derecha.",
+        "D": "No está balanceada: 4O a la izquierda y 2O a la derecha."
+      },
+      "consejo": "Para balancear: 1) Balancea oxígeno primero, luego hidrógeno. 2) Verifica que ambos lados tengan los mismos átomos."
+    },
+    {
+      "id": "QUI-INT-002",
+      "nivel": "intermedio",
+      "area": "Estructura atómica",
+      "enunciado": "Un átomo tiene 17 protones. ¿De qué elemento se trata?",
+      "opciones": [
+        {"letra": "A", "texto": "Cloro (Cl)"},
+        {"letra": "B", "texto": "Sodio (Na)"},
+        {"letra": "C", "texto": "Oxígeno (O)"},
+        {"letra": "D", "texto": "Carbono (C)"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El número atómico (Z) = 17 corresponde al Cloro (Cl) en la tabla periódica. Cada elemento tiene un número atómico único.",
+      "explicacionesIncorrectas": {
+        "B": "El Sodio (Na) tiene Z = 11.",
+        "C": "El Oxígeno (O) tiene Z = 8.",
+        "D": "El Carbono (C) tiene Z = 6."
+      },
+      "consejo": "Memoriza los primeros 20 elementos de la tabla periódica con sus números atómicos."
+    },
+    {
+      "id": "QUI-INT-003",
+      "nivel": "intermedio",
+      "area": "Estequiometría",
+      "enunciado": "En la reacción: 2H₂ + O₂ → 2H₂O, ¿cuántos moles de agua se producen a partir de 4 moles de H₂ con exceso de O₂?",
+      "opciones": [
+        {"letra": "A", "texto": "4 moles de H₂O"},
+        {"letra": "B", "texto": "2 moles de H₂O"},
+        {"letra": "C", "texto": "8 moles de H₂O"},
+        {"letra": "D", "texto": "1 mol de H₂O"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La estequiometría dice: 2 moles de H₂ producen 2 moles de H₂O (razón 1:1). Entonces 4 moles de H₂ producen 4 moles de H₂O.",
+      "explicacionesIncorrectas": {
+        "B": "2 moles sería si la razón fuera 2:1, pero es 1:1.",
+        "C": "8 moles sería duplicar sin razón, no sigue la estequiometría.",
+        "D": "1 mol sería dividir entre 4, no sigue la estequiometría."
+      },
+      "consejo": "Usa los coeficientes de la ecuación balanceada como ratios molares. 2H₂ : 1O₂ : 2H₂O."
+    },
+    {
+      "id": "QUI-INT-004",
+      "nivel": "intermedio",
+      "area": "Soluciones",
+      "enunciado": "¿Qué es el pH de una solución con concentración de iones H⁺ igual a 10⁻³ M?",
+      "opciones": [
+        {"letra": "A", "texto": "3"},
+        {"letra": "B", "texto": "7"},
+        {"letra": "C", "texto": "10"},
+        {"letra": "D", "texto": "-3"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "pH = -log[H⁺] = -log(10⁻³) = -(-3) = 3. Una solución con pH = 3 es ácida.",
+      "explicacionesIncorrectas": {
+        "B": "pH = 7 es neutro (agua pura), no corresponde a esta concentración.",
+        "C": "pH = 10 es básico, sería una concentración de [H⁺] = 10⁻¹⁰ M.",
+        "D": "El pH no puede ser negativo en soluciones acuosas normales."
+      },
+      "consejo": "pH = -log[H⁺]. pH < 7 = ácido. pH = 7 = neutro. pH > 7 = básico."
+    },
+    {
+      "id": "QUI-INT-005",
+      "nivel": "intermedio",
+      "area": "Química orgánica",
+      "enunciado": "¿Cuál es la fórmula molecular del metano (hidrocarburo más simple)?",
+      "opciones": [
+        {"letra": "A", "texto": "CH₄"},
+        {"letra": "B", "texto": "C₂H₆"},
+        {"letra": "C", "texto": "C₃H₈"},
+        {"letra": "D", "texto": "C₂H₄"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El metano (CH₄) es el hidrocarburo más simple: un átomo de carbono unido a 4 átomos de hidrógeno. Es el componente principal del gas natural.",
+      "explicacionesIncorrectas": {
+        "B": "C₂H₆ es etano, el segundo hidrocarburo más simple de la serie de los alcanos.",
+        "C": "C₃H₈ es propano, el tercer alcano de la serie.",
+        "D": "C₂H₄ es etileno (eteno), un hidrocarburo con doble enlace, no un alcano."
+      },
+      "consejo": "Serie de alcanos: CH₄ (metano), C₂H₆ (etano), C₃H₈ (propano), C₄H₁₀ (butano). Fórmula general: CₙH₂ₙ₊₂."
+    },
+    {
+      "id": "QUI-AVA-001",
+      "nivel": "avanzado",
+      "area": "Reacciones químicas",
+      "enunciado": "¿Cuántos gramos de NaOH se necesitan para preparar 500 mL de una solución 0.2 M? (Na = 23, O = 16, H = 1)",
+      "opciones": [
+        {"letra": "A", "texto": "4 gramos"},
+        {"letra": "B", "texto": "40 gramos"},
+        {"letra": "C", "texto": "2 gramos"},
+        {"letra": "D", "texto": "8 gramos"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Masa molar NaOH = 23 + 16 + 1 = 40 g/mol. M = mol/V → mol = M × V = 0.2 mol/L × 0.5 L = 0.1 mol. Masa = mol × masa molar = 0.1 mol × 40 g/mol = 4 g.",
+      "explicacionesIncorrectas": {
+        "B": "40 g sería la masa para 1 mol (40 g/mol × 1 mol). No consideraste el volumen y la molaridad.",
+        "C": "2 g sería M × V = 0.2 × 0.5 = 0.1, pero no multiplicaste por la masa molar.",
+        "D": "8 g no corresponde a ningún cálculo válido."
+      },
+      "consejo": "Fórmulas clave: M = mol/V → mol = M × V. Masa = mol × masa molar."
+    },
+    {
+      "id": "QUI-AVA-002",
+      "nivel": "avanzado",
+      "area": "Gases",
+      "enunciado": "Un gas ocupa 10 L a 2 atm de presión. ¿Qué volumen ocupará si la presión se duplica a temperatura constante? (Ley de Boyle)",
+      "opciones": [
+        {"letra": "A", "texto": "5 litros"},
+        {"letra": "B", "texto": "20 litros"},
+        {"letra": "C", "texto": "40 litros"},
+        {"letra": "D", "texto": "2.5 litros"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Por la Ley de Boyle: P₁V₁ = P₂V₂ → V₂ = P₁V₁/P₂ = (2 atm × 10 L) / 4 atm = 20/4 = 5 L.",
+      "explicacionesIncorrectas": {
+        "B": "20 L sería P₁ × V₁ = 2 × 10. Estás multiplicando en vez de usar la ley.",
+        "C": "40 L no corresponde a ningún cálculo válido con estos datos.",
+        "D": "2.5 L sería V₁/4 = 10/4. No es la Ley de Boyle."
+      },
+      "consejo": "Ley de Boyle: P₁V₁ = P₂V₂ (a temperatura constante). Si la presión sube, el volumen baja proporcionalmente."
+    },
+    {
+      "id": "QUI-AVA-003",
+      "nivel": "avanzado",
+      "area": "Termoquímica",
+      "enunciado": "En la reacción: C₃H₈ + 5O₂ → 3CO₂ + 4H₂O, ΔH = -2220 kJ. ¿Qué indica el signo negativo de ΔH?",
+      "opciones": [
+        {"letra": "A", "texto": "La reacción es exotérmica (libera calor)"},
+        {"letra": "B", "texto": "La reacción es endotérmica (absorbe calor)"},
+        {"letra": "C", "texto": "La reacción no intercambia energía"},
+        {"letra": "D", "texto": "La reacción es reversible"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Un ΔH negativo indica que la reacción libera energía al ambiente (exotérmica). El sistema pierde calor, por eso ΔH < 0.",
+      "explicacionesIncorrectas": {
+        "B": "Una reacción endotérmica tendría ΔH positivo (absorbe calor del ambiente).",
+        "C": "Toda reacción química intercambia energía (Ley de Hess).",
+        "D": "La reversibilidad depende de las condiciones, no del signo de ΔH."
+      },
+      "consejo": "ΔH < 0 = Exotérmica (libera calor). ΔH > 0 = Endotérmica (absorbe calor)."
+    },
+    {
+      "id": "QUI-AVA-004",
+      "nivel": "avanzado",
+      "area": "Electroquímica",
+      "enunciado": "En una celda galvánica, ¿qué ocurre en el cátodo?",
+      "opciones": [
+        {"letra": "A", "texto": "Ocurre la reducción (ganancia de electrones)"},
+        {"letra": "B", "texto": "Ocurre la oxidación (pérdida de electrones)"},
+        {"letra": "C", "texto": "Se produce hidrógeno gaseoso"},
+        {"letra": "D", "texto": "Se degradan los electrodos"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "En una celda galvánica, el cátodo es el electrodo donde ocurre la reducción (ganancia de electrones). Los iones positivos migran hacia el cátodo para reducirse.",
+      "explicacionesIncorrectas": {
+        "B": "La oxidación ocurre en el ánodo, no en el cátodo.",
+        "C": "La producción de hidrógeno depende de la reacción específica, no es general para todos los cátodos.",
+        "D": "La degradación de electrodos es un fenómeno de desgaste, no el proceso electroquímico fundamental."
+      },
+      "consejo": "En celdas galvánicas: Anodo = Oxidación. Cátodo = Reducción. Mnemotéchnico: 'AN OX' (ÁNodo = OXidación)."
+    }
+  ]
+}

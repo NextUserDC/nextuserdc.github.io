@@ -1,0 +1,480 @@
+{
+  "asignatura": "Competencia Lectora",
+  "totalEjercicios": 20,
+  "niveles": {
+    "basico": {
+      "descripcion": "Comprensión literal y vocabulario básico",
+      "ejercicios": 8
+    },
+    "intermedio": {
+      "descripcion": "Comprensión inferencial y análisis",
+      "ejercicios": 7
+    },
+    "avanzado": {
+      "descripcion": "Evaluación crítica y análisis de fuentes",
+      "ejercicios": 5
+    }
+  },
+  "ejercicios": [
+    {
+      "id": "CL-BAS-001",
+      "nivel": "basico",
+      "habilidad": "Localizar",
+      "tipoTexto": "Expositivo",
+      "titulo": "Texto sobre cambio climático",
+      "texto": "El cambio climático representa uno de los desafíos más urgentes del siglo XXI. Según el Panel Intergubernamental sobre Cambio Climático (IPCC), la temperatura global ha aumentado aproximadamente 1.1°C desde la era preindustrial. Este incremento se debe principalmente a la emisión de gases de efecto invernadero provenientes de actividades humanas como la quema de combustibles fósiles, la deforestación y la agricultura intensiva. Las consecuencias incluyen el aumento del nivel del mar, fenómenos meteorológicos extremos y la pérdida de biodiversidad.",
+      "enunciado": "Según el texto, ¿cuánto ha aumentado la temperatura global desde la era preindustrial?",
+      "opciones": [
+        {"letra": "A", "texto": "Aproximadamente 1.1°C"},
+        {"letra": "B", "texto": "Aproximadamente 2°C"},
+        {"letra": "C", "texto": "Aproximadamente 0.5°C"},
+        {"letra": "D", "texto": "No se especifica"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El texto dice explícitamente: 'la temperatura global ha aumentado aproximadamente 1.1°C desde la era preindustrial'. Es información localizable directamente.",
+      "explicacionesIncorrectas": {
+        "B": "2°C no aparece en el texto. Podría ser una confusión con metas de acuerdos climáticos.",
+        "C": "0.5°C no aparece en el texto.",
+        "D": "Sí se especifica: 1.1°C."
+      },
+      "consejo": "Para preguntas de localizar, busca la información exacta en el texto. No infieras."
+    },
+    {
+      "id": "CL-BAS-002",
+      "nivel": "basico",
+      "habilidad": "Localizar",
+      "tipoTexto": "Expositivo",
+      "titulo": "Texto sobre cambio climático",
+      "texto": "El cambio climático representa uno de los desafíos más urgentes del siglo XXI. Según el Panel Intergubernamental sobre Cambio Climático (IPCC), la temperatura global ha aumentado aproximadamente 1.1°C desde la era preindustrial. Este incremento se debe principalmente a la emisión de gases de efecto invernadero provenientes de actividades humanas como la quema de combustibles fósiles, la deforestación y la agricultura intensiva. Las consecuencias incluyen el aumento del nivel del mar, fenómenos meteorológicos extremos y la pérdida de biodiversidad.",
+      "enunciado": "¿Cuáles son las principales actividades humanas que causan el cambio climático según el texto?",
+      "opciones": [
+        {"letra": "A", "texto": "Quema de combustibles fósiles, deforestación y agricultura intensiva"},
+        {"letra": "B", "texto": "Industria farmacéutica y turismo"},
+        {"letra": "C", "texto": "Transporte aéreo y navegación marítima"},
+        {"letra": "D", "texto": "Producción de energía nuclear"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El texto menciona: 'actividades humanas como la quema de combustibles fósiles, la deforestación y la agricultura intensiva'.",
+      "explicacionesIncorrectas": {
+        "B": "Industria farmacéutica y turismo no se mencionan en el texto.",
+        "C": "Transporte aéreo y navegación no se mencionan específicamente.",
+        "D": "Energía nuclear no se menciona en el texto."
+      },
+      "consejo": "Identifica las enumeraciones en el texto para encontrar listas de elementos."
+    },
+    {
+      "id": "CL-BAS-003",
+      "nivel": "basico",
+      "habilidad": "Localizar",
+      "tipoTexto": "Expositivo",
+      "titulo": "Las abejas y la polinización",
+      "texto": "Las abejas son responsables de polinizar aproximadamente el 75% de los cultivos alimentarios a nivel mundial. Su labor resulta esencial para la producción de frutas, verduras y semillas oleaginosas. Sin la polinización realizada por las abejas, la producción de alimentos como manzanas, almendras, café y chocolate se vería gravemente reducida. Además, las abejas producen miel, cera y jalea real, productos de gran valor económico y nutricional. La disminución de las poblaciones de abejas en los últimos años ha generado una preocupación creciente entre los expertos en seguridad alimentaria.",
+      "enunciado": "Según el texto, ¿qué porcentaje de cultivos alimentarios polinizan las abejas a nivel mundial?",
+      "opciones": [
+        {"letra": "A", "texto": "Aproximadamente el 50%"},
+        {"letra": "B", "texto": "Aproximadamente el 75%"},
+        {"letra": "C", "texto": "Aproximadamente el 90%"},
+        {"letra": "D", "texto": "No se menciona un porcentaje"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "El texto indica claramente: 'Las abejas son responsables de polinizar aproximadamente el 75% de los cultivos alimentarios a nivel mundial'.",
+      "explicacionesIncorrectas": {
+        "A": "El 50% no aparece en el texto. Es un valor menor al real.",
+        "C": "El 90% no aparece en el texto. Es un valor exagerado.",
+        "D": "El porcentaje sí se menciona: 75%."
+      },
+      "consejo": "Busca cifras y porcentajes en el texto. Las preguntas de localizar suelen pedir datos numéricos específicos."
+    },
+    {
+      "id": "CL-BAS-004",
+      "nivel": "basico",
+      "habilidad": "Localizar",
+      "tipoTexto": "Narrativo",
+      "titulo": "El viaje del tren",
+      "texto": "A las seis de la mañana, el tren partió de la estación central con destino a la ciudad costera. Luisa se sentó junto a la ventana y observó cómo los campos verdes se transformaban en paisajes urbanos. Después de tres horas de viaje, el tren atravesó un túnel largo y oscuro que duró exactamente dos minutos. Al salir del túnel, Luisa vio por primera vez el mar. El conductor anunció por el altavoz que la llegada sería en quince minutos. Luisa recogió sus pertenencias y se preparó para bajar.",
+      "enunciado": "¿Cuánto duró el paso del tren por el túnel?",
+      "opciones": [
+        {"letra": "A", "texto": "Tres horas"},
+        {"letra": "B", "texto": "Quince minutos"},
+        {"letra": "C", "texto": "Dos minutos"},
+        {"letra": "D", "texto": "Seis minutos"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "El texto dice: 'un túnel largo y oscuro que duró exactamente dos minutos'.",
+      "explicacionesIncorrectas": {
+        "A": "Tres horas es la duración total del viaje hasta ese momento, no del túnel.",
+        "B": "Quince minutos es el tiempo restante de viaje después del túnel.",
+        "D": "No se mencionan seis minutos en ningún momento."
+      },
+      "consejo": "En textos narrativos, presta atención a las expresiones de tiempo: 'después de', 'durante', 'exactamente'."
+    },
+    {
+      "id": "CL-BAS-005",
+      "nivel": "basico",
+      "habilidad": "Localizar",
+      "tipoTexto": "Expositivo",
+      "titulo": "Los corales y los arrecifes",
+      "texto": "Los arrecifes de coral son ecosistemas marinos de extraordinaria biodiversidad. Aunque ocupan menos del 1% del fondo oceánico, albergan aproximadamente el 25% de todas las especies marinas. Los corales son organismos pequeños denominados pólipos que secretan una estructura de carbonato de calcio. Cuando miles de pólipos crecen juntos, forman las estructuras que conocemos como arrecifes. El blanqueamiento de corales, provocado por el aumento de la temperatura del agua, es una de las principales amenazas para estos ecosistemas.",
+      "enunciado": "¿Qué material secretan los pólipos para formar los arrecifes?",
+      "opciones": [
+        {"letra": "A", "texto": "Silicato de sodio"},
+        {"letra": "B", "texto": "Carbonato de calcio"},
+        {"letra": "C", "texto": "Sulfato de magnesio"},
+        {"letra": "D", "texto": "Cloruro de potasio"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "El texto indica: 'Los corales son organismos pequeños denominados pólipos que secretan una estructura de carbonato de calcio'.",
+      "explicacionesIncorrectas": {
+        "A": "El silicato de sodio no se menciona en el texto.",
+        "C": "El sulfato de magnesio no se menciona en el texto.",
+        "D": "El cloruro de potasio no se menciona en el texto."
+      },
+      "consejo": "En preguntas de localizar sobre sustancias o materiales, busca palabras como 'secretan', 'producen', 'contienen'."
+    },
+    {
+      "id": "CL-BAS-006",
+      "nivel": "basico",
+      "habilidad": "Localizar",
+      "tipoTexto": "Narrativo",
+      "titulo": "La receta de la abuela",
+      "texto": "Cada domingo, la abuela Carmen preparaba su famosa cazuela de vacuno. El primer paso era cortar la carne en trozos medianos y sellarla en una olla de hierro con un chorrito de aceite. Luego agregaba papas, zapallo, zanahoria y porotos granel, siempre en ese orden. La clave, decía ella, era el fuego lento: 'Nada de prisa, que el guiso tiene que cocinarse por lo menos dos horas a fuego bajo'. Al final, añadía cilantro fresco recién cortado del huerto. La familia siempre decía que era la mejor cazuela de todo el valle.",
+      "enunciado": "¿Cuál era el ingrediente que la abuela agregaba al final de la preparación?",
+      "opciones": [
+        {"letra": "A", "texto": "Papas"},
+        {"letra": "B", "texto": "Zapallo"},
+        {"letra": "C", "texto": "Porotos granel"},
+        {"letra": "D", "texto": "Cilantro fresco"}
+      ],
+      "respuestaCorrecta": "D",
+      "explicacionCorrecta": "El texto dice: 'Al final, añadía cilantro fresco recién cortado del huerto'.",
+      "explicacionesIncorrectas": {
+        "A": "Las papas se agregan junto con los otros vegetales, no al final.",
+        "B": "El zapallo se agrega en el paso de los vegetales, no al final.",
+        "C": "Los porotos se agregan con las verduras, no al final."
+      },
+      "consejo": "En textos narrativos sobre procesos, busca marcadores temporales como 'al final', 'luego', 'después'."
+    },
+    {
+      "id": "CL-BAS-007",
+      "nivel": "basico",
+      "habilidad": "Localizar",
+      "tipoTexto": "Expositivo",
+      "titulo": "El cerebro humano",
+      "texto": "El cerebro humano es el órgano más complejo del cuerpo. Pesa aproximadamente 1.4 kilogramos y está compuesto por unos 86 mil millones de neuronas. Estas neuronas se comunican entre sí mediante señales electroquímicas que viajan a velocidades de hasta 430 kilómetros por hora. El cerebro consume aproximadamente el 20% de la energía total del cuerpo, a pesar de representar solo el 2% de su peso. El sueño reparador es fundamental para el correcto funcionamiento cerebral, ya que durante el sueño se consolidan los recuerdos y se eliminan toxinas acumuladas.",
+      "enunciado": "¿Qué porcentaje de la energía total del cuerpo consume el cerebro?",
+      "opciones": [
+        {"letra": "A", "texto": "El 2%"},
+        {"letra": "B", "texto": "El 10%"},
+        {"letra": "C", "texto": "El 20%"},
+        {"letra": "D", "texto": "El 50%"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "El texto indica: 'El cerebro consume aproximadamente el 20% de la energía total del cuerpo'.",
+      "explicacionesIncorrectas": {
+        "A": "El 2% es el peso del cerebro respecto al cuerpo, no su consumo energético.",
+        "B": "El 10% no se menciona en el texto.",
+        "D": "El 50% no se menciona y sería excesivo para un solo órgano."
+      },
+      "consejo": "Cuidado: los textos suelen mencionar varios porcentajes. Identifica cuál se refiere a qué concepto."
+    },
+    {
+      "id": "CL-BAS-008",
+      "nivel": "basico",
+      "habilidad": "Localizar",
+      "tipoTexto": "Expositivo",
+      "titulo": "El ciclo del agua",
+      "texto": "El ciclo del agua es uno de los procesos naturales más importantes para la vida en la Tierra. Comienza con la evaporación del agua de océanos, ríos y lagos debido al calor del sol. El vapor de agua asciende a la atmósfera, donde se enfría y se condensa formando nubes. Cuando las gotas de agua en las nubes se vuelven demasiado grandes, caen como precipitación en forma de lluvia, nieve o granizo. Parte del agua que llega al suelo se infiltra y alimenta los acuíferos subterráneos, mientras que el resto fluye por ríos hasta regresar al mar, completando el ciclo.",
+      "enunciado": "¿Qué sucede con el agua que se infiltra en el suelo según el texto?",
+      "opciones": [
+        {"letra": "A", "texto": "Se evapora inmediatamente"},
+        {"letra": "B", "texto": "Alimenta los acuíferos subterráneos"},
+        {"letra": "C", "texto": "Forma nubes en la atmósfera"},
+        {"letra": "D", "texto": "Fluye directamente al mar"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "El texto dice: 'Parte del agua que llega al suelo se infiltra y alimenta los acuíferos subterráneos'.",
+      "explicacionesIncorrectas": {
+        "A": "La evaporación ocurre antes, en la superficie de cuerpos de agua, no después de la infiltración.",
+        "C": "Las nubes se forman por condensación del vapor en la atmósfera, no por infiltración.",
+        "D": "El agua que fluye al mar es la que NO se infiltra; es el escurrimiento superficial."
+      },
+      "consejo": "En textos sobre procesos, identifica cada etapa y qué sucede en cada una. No mezcles las fases."
+    },
+    {
+      "id": "CL-INT-001",
+      "nivel": "intermedio",
+      "habilidad": "Interpretar",
+      "tipoTexto": "Narrativo",
+      "titulo": "Fragmento literario",
+      "texto": "María caminaba lentamente por la calle empolvada, arrastrando los pies como si el peso del mundo hubiera decidido instalarse en sus hombros. El sol de la tarde pintaba sombras alargadas que parecían extenderse hasta el infinito, como si el tiempo mismo hubiera decidido detenerse para acompañarla en su soledad. Un perro ladró a lo lejos, rompiendo el silencio que solo ella parecía escuchar.",
+      "enunciado": "¿Qué recurso literario predominante utiliza el autor en este fragmento?",
+      "opciones": [
+        {"letra": "A", "texto": "Comparación implícita (metáfora)"},
+        {"letra": "B", "texto": "Pregunta retórica"},
+        {"letra": "C", "texto": "Exclamación emotiva"},
+        {"letra": "D", "texto": "Diálogo entre personajes"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El autor usa metáforas como 'el peso del mundo hubiera decidido instalarse en sus hombros' y 'el tiempo mismo hubiera decidido detenerse'. Son comparaciones implícitas que dan sentido figurado.",
+      "explicacionesIncorrectas": {
+        "B": "No hay preguntas retórica en el texto.",
+        "C": "No hay exclamaciones (¡!) en el fragmento.",
+        "D": "No hay diálogos entre personajes."
+      },
+      "consejo": "Las metáforas son comparaciones sin 'como' o 'igual a'. Identifica expresiones figuradas."
+    },
+    {
+      "id": "CL-INT-002",
+      "nivel": "intermedio",
+      "habilidad": "Interpretar",
+      "tipoTexto": "Argumentativo",
+      "titulo": "Texto sobre educación",
+      "texto": "La educación pública chilena enfrenta una crisis de calidad que no puede resolverse únicamente con más recursos financieros. Si bien la inversión es necesaria, no es suficiente. Un sistema educativo de calidad requiere profesores bien formados y valorados, currículos actualizados que respondan a las necesidades del siglo XXI, y una gestión escolar que fomente la innovación pedagógica. Sin estas tres condiciones, cualquier inversión se diluirá en una estructura que no está diseñada para producir aprendizajes significativos.",
+      "enunciado": "¿Cuál es la tesis principal del autor?",
+      "opciones": [
+        {"letra": "A", "texto": "La educación pública necesita más inversión económica"},
+        {"letra": "B", "texto": "La inversión es necesaria pero no suficiente para mejorar la educación"},
+        {"letra": "C", "texto": "Los profesores son el único factor importante en la educación"},
+        {"letra": "D", "texto": "La gestión escolar es más importante que los currículos"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "El autor dice explícitamente: 'Si bien la inversión es necesaria, no es suficiente'. Su tesis es que se necesitan múltiples condiciones (profesores, currículos, gestión), no solo dinero.",
+      "explicacionesIncorrectas": {
+        "A": "El autor dice que la inversión NO es suficiente, no que es la solución.",
+        "C": "Los profesores son una de tres condiciones, no la única.",
+        "D": "El autor menciona tres condiciones igualmente importantes, no prioriza una."
+      },
+      "consejo": "La tesis generalmente aparece al inicio o al final del texto. Busca la idea principal del autor."
+    },
+    {
+      "id": "CL-INT-003",
+      "nivel": "intermedio",
+      "habilidad": "Interpretar",
+      "tipoTexto": "Argumentativo",
+      "titulo": "Uso del celular en el aula",
+      "texto": "El uso del celular en el aula ha generado un intenso debate entre educadores y padres. Algunos sostienen que los dispositivos móviles son herramientas valiosas para el aprendizaje, ya que permiten acceder a información actualizada y recursos multimedia. Sin embargo, investigaciones recientes muestran que los estudiantes que usan celulares durante la clase retienen menos información que aquellos que toman notas manuscritas. Además, las notificaciones constantes generan interrupciones que fragmentan la atención. Por estos motivos, varios países han prohibido el uso de celulares en horario escolar.",
+      "enunciado": "¿Cuál es la posición del autor respecto al uso del celular en el aula?",
+      "opciones": [
+        {"letra": "A", "texto": "Es completamente a favor del uso del celular"},
+        {"letra": "B", "texto": "Es neutral y no toma partido"},
+        {"letra": "C", "texto": "Es favorable solo si se usa para investigación"},
+        {"letra": "D", "texto": "Es contrario al uso del celular en clase"}
+      ],
+      "respuestaCorrecta": "D",
+      "explicacionCorrecta": "Aunque el autor menciona argumentos a favor, su conclusión ('Por estos motivos, varios países han prohibido el uso de celulares') revela que está en contra. Presenta evidencia negativa y termina con un ejemplo de prohibición.",
+      "explicacionesIncorrectas": {
+        "A": "El autor presenta más argumentos en contra que a favor, y su conclusión apunta a la prohibición.",
+        "B": "No es neutral: su conclusión está sesgada hacia la prohibición.",
+        "C": "El autor no hace excepciones para un uso específico; su postura general es crítica."
+      },
+      "consejo": "La posición del autor no siempre está en la primera oración. Observa la dirección del argumento y la conclusión."
+    },
+    {
+      "id": "CL-INT-004",
+      "nivel": "intermedio",
+      "habilidad": "Interpretar",
+      "tipoTexto": "Expositivo",
+      "titulo": "Estadísticas de lectura en Chile",
+      "texto": "Un informe del Ministerio de Educación revela que el 45% de los estudiantes chilenos de enseñanza media no alcanza el nivel adecuado de comprensión lectora. Entre las causas se señalan: el acceso limitado a libros en el hogar (solo el 38% de las familias tiene más de 10 libros en casa), la falta de hábito de lectura (el promedio de horas semanales dedicadas a leer es de apenas 2.3 horas), y la escasa presencia de programas de fomento lector en las escuelas. El informe recomienda implementar bibliotecas escolares funcionales y promover la lectura desde los primeros años de vida.",
+      "enunciado": "Según el informe, ¿cuántas horas semanales dedican en promedio los estudiantes chilenos a leer?",
+      "opciones": [
+        {"letra": "A", "texto": "Más de 5 horas"},
+        {"letra": "B", "texto": "Entre 3 y 4 horas"},
+        {"letra": "C", "texto": "Apenas 2.3 horas"},
+        {"letra": "D", "texto": "No se especifica"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "El texto dice literalmente: 'el promedio de horas semanales dedicadas a leer es de apenas 2.3 horas'.",
+      "explicacionesIncorrectas": {
+        "A": "Más de 5 horas es significativamente mayor al dato real del texto.",
+        "B": "Entre 3 y 4 horas tampoco coincide con los 2.3 horas mencionados.",
+        "D": "Sí se especifica: 2.3 horas semanales."
+      },
+      "consejo": "En textos con datos estadísticos, localiza la cifra exacta. No redondees ni aproximes si el dato está claro."
+    },
+    {
+      "id": "CL-INT-005",
+      "nivel": "intermedio",
+      "habilidad": "Interpretar",
+      "tipoTexto": "Narrativo",
+      "titulo": "El último viaje",
+      "texto": "Roberto guardó la última caja en el baúl del auto y miró la casa por última vez. Las paredes blancas que alguna vez fueron el escenario de risas familiares ahora mostraban grietas que nadie se había molestado en reparar. Cerró la puerta con llave por primera vez en treinta años y dejó la llave debajo del tapete, como siempre había hecho. Se subió al auto, prendió el motor y, sin mirar atrás, arrancó hacia la carretera. La música que sonaba en la radio parecía contar su historia: una melodía que empezaba suave y terminaba en un silencio insoportable.",
+      "enunciado": "¿Qué se puede inferir sobre la relación de Roberto con la casa?",
+      "opciones": [
+        {"letra": "A", "texto": "Nunca vivió en esa casa"},
+        {"letra": "B", "texto": "Era una casa que alquilaba temporalmente"},
+        {"letra": "C", "texto": "Vivió allí mucho tiempo y tiene apego emocional"},
+        {"letra": "D", "texto": "Estaba Contento de irse"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "Roberto vivió treinta años en la casa ('por primera vez en treinta años'), deja la llave como siempre hizo (costumbre arraigada), y el tono del texto sugiere melancolía y despedida, lo que indica apego emocional.",
+      "explicacionesIncorrectas": {
+        "A": "Vivió treinta años allí, así que claramente sí vivió en la casa.",
+        "B": "Si alquilaba, no tendría treinta años de historia ni costumbres tan arraigadas.",
+        "D": "El tono melancólico ('sin mirar atrás', 'silencio insoportable') sugiere tristeza, no alegría."
+      },
+      "consejo": "La inferencia se construye con varias pistas del texto: datos explícitos + tono emocional + acciones del personaje."
+    },
+    {
+      "id": "CL-INT-006",
+      "nivel": "intermedio",
+      "habilidad": "Interpretar",
+      "tipoTexto": "Argumentativo",
+      "titulo": "Ciudades y espacio verde",
+      "texto": "Las ciudades modernas han sacrificado el espacio verde en favor de la infraestructura urbana. Sin embargo, estudios recientes demuestran que los parques y jardines urbanos no son un lujo, sino una necesidad. Las zonas verdes reducen los niveles de contaminación, disminuyen la temperatura ambiental, proporcionan espacios de recreación y mejoran la salud mental de los habitantes. Un informe de la OMS recomienda que toda ciudadano tenga acceso a un parque a menos de 15 minutos caminando. Implementar esta meta requiere repensar el diseño urbano actual.",
+      "enunciado": "¿Qué relación establece el autor entre espacio verde y salud mental?",
+      "opciones": [
+        {"letra": "A", "texto": "No existe relación entre ambos"},
+        {"letra": "B", "texto": "Los parques mejoran la salud mental de los habitantes"},
+        {"letra": "C", "texto": "El espacio verde solo beneficia la salud física"},
+        {"letra": "D", "texto": "La salud mental depende únicamente del ejercicio"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "El autor menciona explícitamente que 'los parques y jardines urbanos... mejoran la salud mental de los habitantes' como uno de sus beneficios.",
+      "explicacionesIncorrectas": {
+        "A": "El texto sí establece una relación directa entre espacio verde y salud mental.",
+        "C": "El autor menciona tanto beneficios físicos como mentales.",
+        "D": "El autor no afirma que la salud mental dependa solo del ejercicio."
+      },
+      "consejo": "Identifica las relaciones de causa-efecto en textos argumentativos: 'X produce Y', 'X beneficia Z'."
+    },
+    {
+      "id": "CL-INT-007",
+      "nivel": "intermedio",
+      "habilidad": "Interpretar",
+      "tipoTexto": "Expositivo",
+      "titulo": "La nanotecnología en la medicina",
+      "texto": "La nanotecnología aplicada a la medicina ha abierto posibilidades antes impensables. Los科学家 (científicos) han desarrollado nanopartículas capaces de transportar fármacos directamente a células cancerosas, reduciendo los efectos secundarios de la quimioterapia. Estas partículas, de entre 1 y 100 nanómetros de tamaño, pueden programarse para liberar su carga medicamentosa solo cuando detectan el microambiente tumoral. En ensayos clínicos fase III, este enfoque ha mostrado tasas de éxito superiores al 70% en ciertos tipos de cáncer. Sin embargo, los costos de producción siguen siendo elevados, lo que limita su acceso en países en desarrollo.",
+      "enunciado": "¿Cuál es la principal limitación de la nanotecnología médica según el texto?",
+      "opciones": [
+        {"letra": "A", "texto": "No es efectiva contra el cáncer"},
+        {"letra": "B", "texto": "Las partículas son demasiado grandes"},
+        {"letra": "C", "texto": "Los costos de producción elevados limitan su acceso"},
+        {"letra": "D", "texto": "Produce muchos efectos secundarios"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "El texto concluye con la limitación: 'los costos de producción siguen siendo elevados, lo que limita su acceso en países en desarrollo'.",
+      "explicacionesIncorrectas": {
+        "A": "El texto dice que tiene tasas de éxito superiores al 70%, es efectiva.",
+        "B": "Las partículas son de 1-100 nanómetros, extremadamente pequeñas.",
+        "D": "El texto dice que REDUCE los efectos secundarios, no que los produce."
+      },
+      "consejo": "Busca marcadores de contraste: 'sin embargo', 'no obstante', 'a pesar de'. Suelen introducir limitaciones."
+    },
+    {
+      "id": "CL-AVA-001",
+      "nivel": "avanzado",
+      "habilidad": "Evaluar",
+      "tipoTexto": "Argumentativo",
+      "titulo": "Texto sobre redes sociales",
+      "texto": "Las redes sociales han democratizado la información, permitiendo que cualquier persona pueda publicar y compartir contenido. Sin embargo, esta democratización ha generado un problema inesperado: la propagación de desinformación. Un estudio de la Universidad de MIT encontró que las noticias falsas se difunden 6 veces más rápido que las verdaderas. Esto se debe a que el contenido sensacionalista genera más reacciones emocionales, lo que incentivá su compartición. Las plataformas, incentivadas por el engagement, terminan favoreciendo el contenido viral sobre el contenido veraz.",
+      "enunciado": "¿Cuál es la principal debilidad argumentativa del autor?",
+      "opciones": [
+        {"letra": "A", "texto": "No presenta evidencia que respalde su afirmación"},
+        {"letra": "B", "texto": "Usa un solo estudio para generalizar sobre todas las redes sociales"},
+        {"letra": "C", "texto": "El argumento es completamente subjetivo"},
+        {"letra": "D", "texto": "No hay debilidad, el argumento es sólido"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "El autor basa toda su argumentación en UN solo estudio de MIT. Aunque es un estudio válido, generalizar sobre 'todas las redes sociales' a partir de un solo estudio es una debilidad argumentativa.",
+      "explicacionesIncorrectas": {
+        "A": "El autor SÍ presenta evidencia (el estudio de MIT).",
+        "C": "El argumento tiene base empírica (el estudio), no es puramente subjetivo.",
+        "D": "Siempre hay debilidades argumentativas que identificar."
+      },
+      "consejo": "Al evaluar argumentos, pregunta: ¿Cuánta evidencia presenta? ¿Es suficiente para la conclusión?"
+    },
+    {
+      "id": "CL-AVA-002",
+      "nivel": "avanzado",
+      "habilidad": "Evaluar",
+      "tipoTexto": "Expositivo con gráfico",
+      "titulo": "Gráfico de producción de energía",
+      "texto": "El siguiente gráfico muestra la producción de energía renovable en Chile entre 2018 y 2023 (en GWh): 2018: 12.500 | 2019: 15.200 | 2020: 18.900 | 2021: 22.100 | 2022: 26.800 | 2023: 31.500",
+      "enunciado": "¿Cuál es la tendencia de crecimiento de la energía renovable en Chile según los datos?",
+      "opciones": [
+        {"letra": "A", "texto": "Crecimiento sostenido y acelerado"},
+        {"letra": "B", "texto": "Crecimiento constante lineal"},
+        {"letra": "C", "texto": "Decrecimiento constante"},
+        {"letra": "D", "texto": "Sin tendencia clara"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Los datos muestran un crecimiento sostenido: 12.5→15.2→18.9→22.1→26.8→31.5. Además, las diferencias entre años van aumentando (+2.7, +3.7, +3.2, +4.7, +4.7), lo que indica aceleración.",
+      "explicacionesIncorrectas": {
+        "B": "No es lineal porque las diferencias no son constantes (varían entre 2.7 y 4.7).",
+        "C": "Los datos muestran crecimiento, no decrecimiento.",
+        "D": "Hay una tendencia clara de crecimiento."
+      },
+      "consejo": "Al analizar gráficos, calcula las diferencias entre períodos para detectar tendencias."
+    },
+    {
+      "id": "CL-AVA-003",
+      "nivel": "avanzado",
+      "habilidad": "Evaluar",
+      "tipoTexto": "Argumentativo",
+      "titulo": "Inteligencia artificial y empleo",
+      "texto": "La inteligencia artificial transformará el mercado laboral en las próximas décadas. Un informe de McKinsey estima que hasta 800 millones de empleos podrían ser automatizados para 2030. Sin embargo, la historia muestra que la tecnología siempre crea más empleos de los que destruye. La Revolución Industrial eliminó millones de puestos artesanales pero generó fábricas, oficinas y servicios que emplearon a aún más personas. Quienes afirman que la IA causará desempleo masivo ignoran esta evidencia histórica. Por lo tanto, no hay motivo para preocuparse.",
+      "enunciado": "¿Cuál es la falacia lógica principal del argumento del autor?",
+      "opciones": [
+        {"letra": "A", "texto": "Apela a la autoridad sin citar fuentes"},
+        {"letra": "B", "texto": "Asume que lo que ocurrió en el pasado ocurrirá necesariamente en el futuro"},
+        {"letra": "C", "texto": "Usa un ejemplo personal para generalizar"},
+        {"letra": "D", "texto": "Contradice su propia premisa"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "El autor comete la falacia del falso dilema histórico: asume que porque la Revolución Industrial creó empleos, la IA hará lo mismo. Son contextos tecnológicos distintos y la automatización actual tiene un alcance diferente.",
+      "explicacionesIncorrectas": {
+        "A": "Sí cita una fuente: McKinsey. La debilidad no es la autoridad.",
+        "C": "No usa un ejemplo personal; usa un ejemplo histórico (Revolución Industrial).",
+        "D": "No contradice su premisa directamente; su error es la analogía histórica forzada."
+      },
+      "consejo": "Cuidado con argumentos que dicen 'siempre fue así, por tanto será así'. La historia no se repite exactamente."
+    },
+    {
+      "id": "CL-AVA-004",
+      "nivel": "avanzado",
+      "habilidad": "Evaluar",
+      "tipoTexto": "Argumentativo",
+      "titulo": "Veganismo y medio ambiente",
+      "texto": "Varios celebridades han promovido el veganismo como solución al cambio climático, argumentando que la industria ganadera es responsable del 14.5% de las emisiones globales de gases de efecto invernadero. Sin embargo, este porcentaje incluye toda la cadena de producción, desde la deforestación hasta el transporte. Si solo se contabilizan las emisiones directas de los animales, la cifra baja a menos del 5%. Además, la ganadería sustentable puede ser carbono-negativa al capturar CO2 en suelos de pastoreo. Por lo tanto, la solución no está en eliminar la ganadería, sino en mejorarla.",
+      "enunciado": "¿Qué estrategia argumentativa utiliza el autor para rebatir la postura vegana?",
+      "opciones": [
+        {"letra": "A", "texto": "Presenta una definición alternativa para reducir la cifra adversa"},
+        {"letra": "B", "texto": "Cita estudios científicos que desmienten el dato original"},
+        {"letra": "C", "texto": "Usa un argumento emotional para conmover al lector"},
+        {"letra": "D", "texto": "Niega rotundamente que la ganadería contamine"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El autor redefine cómo se mide el porcentaje: pasa del 14.5% (cadena completa) al 5% (emisiones directas). Es una estrategia de redefinición que reduce artificialmente la cifra adversa.",
+      "explicacionesIncorrectas": {
+        "B": "No cita estudios científicos que contradigan el dato; solo lo reinterpreta.",
+        "C": "No apela a emociones; usa argumentos (aunque cuestionables).",
+        "D": "No niega que la ganadería contamine; argumenta que se puede mejorar."
+      },
+      "consejo": "Al evaluar argumentos, detecta cuando un autor redefine un dato para hacerlo parecer menos grave. Pregunta si la redefinición es justa."
+    },
+    {
+      "id": "CL-AVA-005",
+      "nivel": "avanzado",
+      "habilidad": "Evaluar",
+      "tipoTexto": "Expositivo",
+      "titulo": "Fuentes de información sobre vacunas",
+      "texto": "La OMS clasifica la información en tres niveles: fuentes primarias (estudios originales publicados en revistas con revisión de pares), fuentes secundarias (revisiones y meta-análisis que sintetizan múltiples estudios) y fuentes terciarias (artículos de divulgación, periódicos y redes sociales). Un meta-análisis de The Lancet que revisó 10 millones de vacunados confirmó la seguridad de las vacunas contra COVID-19, con una tasa de eventos adversos graves de 0.003%. Sin embargo, las redes sociales han difundido información contradictoria que ha generado dudas en un 30% de la población encuestada.",
+      "enunciado": "Si un ciudadano quiere información más confiable sobre la seguridad de vacunas, ¿qué tipo de fuente debería consultar?",
+      "opciones": [
+        {"letra": "A", "texto": "Artículos de periódicos sobre el tema"},
+        {"letra": "B", "texto": "Publicaciones en redes sociales de médicos"},
+        {"letra": "C", "texto": "Un meta-análisis publicado en una revista con revisión de pares"},
+        {"letra": "D", "texto": "Videos de YouTube de divulgadores científicos"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "El texto clasifica los meta-análisis como fuentes secundarias que sintetizan múltiples estudios, lo que les da mayor validez estadística. El ejemplo de The Lancet (10 millones de vacunados) demuestra su rigor.",
+      "explicacionesIncorrectas": {
+        "A": "Los periódicos son fuentes terciarias: interpretan y simplifican la información original.",
+        "B": "Las redes sociales son fuentes terciarias y pueden contener desinformación, incluso si son de profesionales.",
+        "D": "YouTube es una fuente terciaria: no tiene control de calidad sistemático."
+      },
+      "consejo": "Recuerda la jerarquía de fuentes: primaria > secundaria > terciaria. Para información científica, prioriza fuentes primarias y secundarias revisadas."
+    }
+  ]
+}

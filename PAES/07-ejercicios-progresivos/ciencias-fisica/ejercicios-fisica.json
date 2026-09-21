@@ -1,0 +1,320 @@
+{
+  "asignatura": "Ciencias - Física",
+  "totalEjercicios": 15,
+  "niveles": {
+    "basico": {
+      "descripcion": "Conceptos fundamentales de física",
+      "ejercicios": 6
+    },
+    "intermedio": {
+      "descripcion": "Leyes de Newton, energía, electricidad",
+      "ejercicios": 5
+    },
+    "avanzado": {
+      "descripcion": "Aplicación y problemas integrados",
+      "ejercicios": 4
+    }
+  },
+  "ejercicios": [
+    {
+      "id": "FIS-BAS-001",
+      "nivel": "basico",
+      "area": "Mecánica",
+      "enunciado": "¿Cuál es la unidad de medida de la fuerza en el Sistema Internacional?",
+      "opciones": [
+        {"letra": "A", "texto": "Newton (N)"},
+        {"letra": "B", "texto": "Julio (J)"},
+        {"letra": "C", "texto": "Watio (W)"},
+        {"letra": "D", "texto": "Pascal (Pa)"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El Newton (N) es la unidad de medida de fuerza. Se define como la fuerza necesaria para acelerar 1 kg a 1 m/s²: 1 N = 1 kg × 1 m/s².",
+      "explicacionesIncorrectas": {
+        "B": "El Julio (J) es unidad de energía o trabajo, no de fuerza.",
+        "C": "El Watio (W) es unidad de potencia, no de fuerza.",
+        "D": "El Pascal (Pa) es unidad de presión, no de fuerza."
+      },
+      "consejo": "Memoriza: Fuerza = Newton, Energía = Julio, Potencia = Watio, Presión = Pascal."
+    },
+    {
+      "id": "FIS-BAS-002",
+      "nivel": "basico",
+      "area": "Mecánica",
+      "enunciado": "Un objeto se mueve a velocidad constante de 10 m/s durante 5 segundos. ¿Cuánto recorre?",
+      "opciones": [
+        {"letra": "A", "texto": "50 metros"},
+        {"letra": "B", "texto": "5 metros"},
+        {"letra": "C", "texto": "2 metros"},
+        {"letra": "D", "texto": "15 metros"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Distancia = velocidad × tiempo = 10 m/s × 5 s = 50 metros.",
+      "explicacionesIncorrectas": {
+        "B": "5 metros sería 10/2. No hay justificación para dividir.",
+        "C": "2 metros sería 10/5. No es la fórmula correcta.",
+        "D": "15 metros sería 10 + 5. No se suman magnitudes de diferentes unidades."
+      },
+      "consejo": "Distancia = Velocidad × Tiempo. Las unidades deben ser compatibles."
+    },
+    {
+      "id": "FIS-BAS-003",
+      "nivel": "basico",
+      "area": "Mecánica",
+      "enunciado": "¿Qué tipo de movimiento tiene un objeto que cae libremente desde una altura (sin resistencia del aire)?",
+      "opciones": [
+        {"letra": "A", "texto": "Movimiento uniformemente acelerado (g = 9.8 m/s²)"},
+        {"letra": "B", "texto": "Movimiento uniforme (velocidad constante)"},
+        {"letra": "C", "texto": "Movimiento circular uniforme"},
+        {"letra": "D", "texto": "Movimiento armónico simple"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Un objeto en caída libre experimenta una aceleración constante debida a la gravedad (g ≈ 9.8 m/s²). Su velocidad aumenta linealmente con el tiempo: v = g × t.",
+      "explicacionesIncorrectas": {
+        "B": "El movimiento uniforme tiene velocidad constante (aceleración cero). La caída libre tiene aceleración.",
+        "C": "El movimiento circular uniforme requiere una trayectoria circular, no una vertical descendente.",
+        "D": "El movimiento armónico simple es oscilatorio (como un péndulo), no una caída libre."
+      },
+      "consejo": "Caída libre: a = g = 9.8 m/s² (hacia abajo). v = gt. h = ½gt²."
+    },
+    {
+      "id": "FIS-BAS-004",
+      "nivel": "basico",
+      "area": "Mecánica",
+      "enunciado": "¿Cuál es la fórmula correcta para calcular la densidad de un objeto?",
+      "opciones": [
+        {"letra": "A", "texto": "ρ = m/V (densidad = masa/volumen)"},
+        {"letra": "B", "texto": "ρ = V/m (densidad = volumen/masa)"},
+        {"letra": "C", "texto": "ρ = m × V (densidad = masa × volumen)"},
+        {"letra": "D", "texto": "ρ = F/g (densidad = fuerza/gravedad)"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La densidad (ρ) se define como la masa por unidad de volumen: ρ = m/V. Su unidad en el SI es kg/m³.",
+      "explicacionesIncorrectas": {
+        "B": "Volumen/masa es el inverso de la densidad (volumen específico).",
+        "C": "Masa × volumen no tiene sentido físico para densidad.",
+        "D": "Fuerza/gravedad es igual a la masa (F = mg → m = F/g), no densidad."
+      },
+      "consejo": "Densidad = Masa / Volumen. Si el objeto es más denso que el agua (1000 kg/m³), se hunde."
+    },
+    {
+      "id": "FIS-BAS-005",
+      "nivel": "basico",
+      "area": "Mecánica",
+      "enunciado": "Si un auto parte del reposo y alcanza 60 m/s en 10 segundos, ¿cuál es su aceleración promedio?",
+      "opciones": [
+        {"letra": "A", "texto": "6 m/s²"},
+        {"letra": "B", "texto": "600 m/s²"},
+        {"letra": "C", "texto": "0.17 m/s²"},
+        {"letra": "D", "texto": "70 m/s²"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Aceleración = cambio de velocidad / tiempo = (vf - vi) / t = (60 - 0) / 10 = 6 m/s².",
+      "explicacionesIncorrectas": {
+        "B": "600 m/s² sería vf × t = 60 × 10. Estás multiplicando en vez de dividir.",
+        "C": "0.17 m/s² sería t / vf = 10/60. Invertiste la fórmula.",
+        "D": "70 m/s² sería vf + t = 60 + 10. No se suman magnitudes de diferentes unidades."
+      },
+      "consejo": "Aceleración = Δv / Δt = (velocidad final - velocidad inicial) / tiempo."
+    },
+    {
+      "id": "FIS-BAS-006",
+      "nivel": "basico",
+      "area": "Mecánica",
+      "enunciado": "¿Qué ley de Newton establece que 'por toda acción hay una reacción igual y opuesta'?",
+      "opciones": [
+        {"letra": "A", "texto": "Tercera Ley de Newton"},
+        {"letra": "B", "texto": "Primera Ley de Newton"},
+        {"letra": "C", "texto": "Segunda Ley de Newton"},
+        {"letra": "D", "texto": "Ley de la Gravitación Universal"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La Tercera Ley de Newton establece que las fuerzas de acción y reacción son iguales en magnitud, opuestas en dirección y actúan sobre cuerpos diferentes.",
+      "explicacionesIncorrectas": {
+        "B": "La Primera Ley (inercia) dice que un cuerpo en reposo o movimiento rectilíneo uniforme permanece así si no actúa fuerza neta.",
+        "C": "La Segunda Ley relaciona fuerza, masa y aceleración: F = ma.",
+        "D": "La Ley de Gravitación Universal describe la fuerza de atracción entre masas."
+      },
+      "consejo": "1ª Ley = Inercia. 2ª Ley = F = ma. 3ª Ley = Acción y reacción."
+    },
+    {
+      "id": "FIS-INT-001",
+      "nivel": "intermedio",
+      "area": "Mecánica",
+      "enunciado": "Un bloque de 5 kg se empuja con una fuerza de 20 N en una superficie sin fricción. ¿Cuál es su aceleración?",
+      "opciones": [
+        {"letra": "A", "texto": "4 m/s²"},
+        {"letra": "B", "texto": "100 m/s²"},
+        {"letra": "C", "texto": "0.25 m/s²"},
+        {"letra": "D", "texto": "25 m/s²"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Por la Segunda Ley de Newton: F = m × a → a = F/m = 20 N / 5 kg = 4 m/s².",
+      "explicacionesIncorrectas": {
+        "B": "100 m/s² sería m × F = 5 × 20. Estás multiplicando en vez de dividir.",
+        "C": "0.25 m/s² sería m/F = 5/20. Invertiste la fórmula.",
+        "D": "25 m/s² no corresponde a ningún cálculo válido."
+      },
+      "consejo": "La Segunda Ley de Newton: F = ma. Para hallar aceleración: a = F/m."
+    },
+    {
+      "id": "FIS-INT-002",
+      "nivel": "intermedio",
+      "area": "Energía",
+      "enunciado": "Un objeto de 2 kg se eleva 3 metros. ¿Cuánta energía potencial gravitatoria gana? (g = 10 m/s²)",
+      "opciones": [
+        {"letra": "A", "texto": "60 Julios"},
+        {"letra": "B", "texto": "6 Julios"},
+        {"letra": "C", "texto": "20 Julios"},
+        {"letra": "D", "texto": "30 Julios"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Ep = m × g × h = 2 kg × 10 m/s² × 3 m = 60 Julios.",
+      "explicacionesIncorrectas": {
+        "B": "6 Julios sería m × h = 2 × 3. Olvidaste multiplicar por g.",
+        "C": "20 Julios sería m × g = 2 × 10. Olvidaste multiplicar por h.",
+        "D": "30 Julios sería g × h = 10 × 3. Olvidaste multiplicar por m."
+      },
+      "consejo": "Ep = mgh. Necesitas las tres magnitudes: masa, gravedad y altura."
+    },
+    {
+      "id": "FIS-INT-003",
+      "nivel": "intermedio",
+      "area": "Trabajo y energía",
+      "enunciado": "Se empuja un bloque con una fuerza de 50 N a lo largo de 10 metros en la dirección de la fuerza. ¿Cuánto trabajo se realiza?",
+      "opciones": [
+        {"letra": "A", "texto": "500 Julios"},
+        {"letra": "B", "texto": "5 Julios"},
+        {"letra": "C", "texto": "200 Julios"},
+        {"letra": "D", "texto": "50 Julios"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Trabajo = Fuerza × distancia × cos(θ). Si la fuerza y el desplazamiento son en la misma dirección (θ = 0°, cos = 1): T = 50 N × 10 m = 500 J.",
+      "explicacionesIncorrectas": {
+        "B": "5 J sería F / d = 50/10. Invertiste la fórmula.",
+        "C": "200 J no corresponde a ningún cálculo válido con estos datos.",
+        "D": "50 J sería solo la fuerza sin multiplicar por la distancia."
+      },
+      "consejo": "Trabajo = F × d × cos(θ). Si la fuerza es en la dirección del movimiento: T = F × d."
+    },
+    {
+      "id": "FIS-INT-004",
+      "nivel": "intermedio",
+      "area": "Electricidad",
+      "enunciado": "Un circuito tiene una resistencia de 20 Ω y una corriente de 3 A. ¿Cuál es el voltaje de la fuente?",
+      "opciones": [
+        {"letra": "A", "texto": "60 Voltios"},
+        {"letra": "B", "texto": "6.67 Voltios"},
+        {"letra": "C", "texto": "23 Voltios"},
+        {"letra": "D", "texto": "17 Voltios"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Por la Ley de Ohm: V = I × R = 3 A × 20 Ω = 60 V.",
+      "explicacionesIncorrectas": {
+        "B": "6.67 V sería R/I = 20/3. Invertiste la fórmula.",
+        "C": "23 V sería R + I = 20 + 3. No se suman magnitudes de diferentes unidades.",
+        "D": "17 V sería R - I = 20 - 3. No se restan magnitudes de diferentes unidades."
+      },
+      "consejo": "Ley de Ohm: V = IR. Para voltaje: V = I × R."
+    },
+    {
+      "id": "FIS-INT-005",
+      "nivel": "intermedio",
+      "area": "Ondas",
+      "enunciado": "Una onda tiene una frecuencia de 50 Hz y una longitud de onda de 3.4 m. ¿Cuál es su velocidad? (v = f × λ)",
+      "opciones": [
+        {"letra": "A", "texto": "170 m/s"},
+        {"letra": "B", "texto": "0.068 m/s"},
+        {"letra": "C", "texto": "53.4 m/s"},
+        {"letra": "D", "texto": "150 m/s"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Velocidad = frecuencia × longitud de onda = 50 Hz × 3.4 m = 170 m/s.",
+      "explicacionesIncorrectas": {
+        "B": "0.068 m/s sería λ / f = 3.4/50. Invertiste la fórmula.",
+        "C": "53.4 m/s sería f + λ = 50 + 3.4. No se suman magnitudes de diferentes unidades.",
+        "D": "150 m/s no corresponde a ningún cálculo válido con estos datos."
+      },
+      "consejo": "Velocidad de onda: v = f × λ. Frecuencia en Hz, longitud de onda en metros, velocidad en m/s."
+    },
+    {
+      "id": "FIS-AVA-001",
+      "nivel": "avanzado",
+      "area": "Electricidad",
+      "enunciado": "Una resistencia de 10 Ω se conecta a una batería de 12V. ¿Cuánta corriente circula por ella?",
+      "opciones": [
+        {"letra": "A", "texto": "1.2 Amperios"},
+        {"letra": "B", "texto": "120 Amperios"},
+        {"letra": "C", "texto": "0.83 Amperios"},
+        {"letra": "D", "texto": "22 Amperios"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Por la Ley de Ohm: V = I × R → I = V/R = 12V / 10Ω = 1.2 A.",
+      "explicacionesIncorrectas": {
+        "B": "120 A sería V × R = 12 × 10. Estás multiplicando en vez de dividir.",
+        "C": "0.83 A sería R/V = 10/12. Invertiste la fórmula.",
+        "D": "22 A no corresponde a ningún cálculo válido."
+      },
+      "consejo": "Ley de Ohm: V = IR. Para corriente: I = V/R. Para resistencia: R = V/I."
+    },
+    {
+      "id": "FIS-AVA-002",
+      "nivel": "avanzado",
+      "area": "Termodinámica",
+      "enunciado": "Se calientan 2 kg de agua desde 20°C hasta 80°C. ¿Cuánta energía se necesita? (Calor específico del agua = 4186 J/kg·°C)",
+      "opciones": [
+        {"letra": "A", "texto": "502,320 Julios"},
+        {"letra": "B", "texto": "83,720 Julios"},
+        {"letra": "C", "texto": "167,440 Julios"},
+        {"letra": "D", "texto": "627,900 Julios"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Q = m × c × ΔT = 2 kg × 4186 J/kg·°C × (80 - 20)°C = 2 × 4186 × 60 = 502,320 J ≈ 502.3 kJ.",
+      "explicacionesIncorrectas": {
+        "B": "83,720 J sería c × ΔT = 4186 × 20. Usaste 20°C en vez de ΔT y olvidaste multiplicar por m.",
+        "C": "167,440 J sería m × c × 20 = 2 × 4186 × 20. Usaste la temperatura inicial en vez de ΔT.",
+        "D": "627,900 J no corresponde a ningún cálculo válido."
+      },
+      "consejo": "Calor: Q = mcΔT. ΔT = T_final - T_inicial. El calor específico del agua es 4186 J/kg·°C."
+    },
+    {
+      "id": "FIS-AVA-003",
+      "nivel": "avanzado",
+      "area": "Óptica",
+      "enunciado": "Un rayo de luz incide sobre una superficie con un ángulo de 45° respecto a la normal. Si el índice de refracción del aire es 1.0 y el del vidrio es 1.5, ¿cuál es el ángulo de refracción?",
+      "opciones": [
+        {"letra": "A", "texto": "28.1°"},
+        {"letra": "B", "texto": "45°"},
+        {"letra": "C", "texto": "67.5°"},
+        {"letra": "D", "texto": "15°"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Por la Ley de Snell: n₁ × sin(θ₁) = n₂ × sin(θ₂). 1.0 × sin(45°) = 1.5 × sin(θ₂). sin(θ₂) = sin(45°)/1.5 = 0.707/1.5 = 0.471. θ₂ = arcsin(0.471) ≈ 28.1°.",
+      "explicacionesIncorrectas": {
+        "B": "45° sería el ángulo si no hubiera refracción (mismo medio).",
+        "C": "67.5° no cumple la Ley de Snell con estos valores.",
+        "D": "15° no corresponde a ningún cálculo válido."
+      },
+      "consejo": "Ley de Snell: n₁ sin(θ₁) = n₂ sin(θ₂). La luz se refracta hacia la normal al entrar a un medio más denso."
+    },
+    {
+      "id": "FIS-AVA-004",
+      "nivel": "avanzado",
+      "area": "Problemas integrados",
+      "enunciado": "Un circuito serie tiene dos resistencias: R₁ = 10 Ω y R₂ = 15 Ω. Si la corriente total es 2 A, ¿cuál es el voltaje total de la fuente?",
+      "opciones": [
+        {"letra": "A", "texto": "50 Voltios"},
+        {"letra": "B", "texto": "25 Voltios"},
+        {"letra": "C", "texto": "7.5 Voltios"},
+        {"letra": "D", "texto": "20 Voltios"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "En circuito serie: R_total = R₁ + R₂ = 10 + 15 = 25 Ω. Por Ley de Ohm: V = I × R_total = 2 A × 25 Ω = 50 V.",
+      "explicacionesIncorrectas": {
+        "B": "25 V sería I × R₁ = 2 × 10. Solo consideraste una resistencia.",
+        "C": "7.5 V no corresponde a ningún cálculo válido con estos datos.",
+        "D": "20 V sería I² × R₁ = 4 × 10. No es la fórmula correcta."
+      },
+      "consejo": "Circuito serie: R_total = R₁ + R₂ + ... Luego V = I × R_total."
+    }
+  ]
+}

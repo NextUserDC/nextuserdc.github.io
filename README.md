@@ -121,6 +121,14 @@ Juegos web interactivos: Mecanografia (solitario), Ludo (local 2-4 jugadores + o
 `/Games/`
 
 </td>
+<td>
+
+### PAES Quiz
+Plataforma de estudio para la PAES chilena con 160 ejercicios, quiz adaptativo, modo examen y progreso por asignatura.
+
+`/PAES/`
+
+</td>
 </tr>
 </table>
 

@@ -1,0 +1,69 @@
+{
+  "asignatura": "Ciencias - Módulo Técnico Profesional (MTP)",
+  "codigo": "CI-TP",
+  "obligatoria": false,
+  "requisito": "Solo para egresados de formación Técnico Profesional",
+  "duracion": "2 horas 40 minutos",
+  "formato": "Selección múltiple (4 o 5 alternativas)",
+  "preguntas": 80,
+  "preguntasCalificables": 75,
+  "descripcion": "Módulo adaptado a la formación técnico-profesional, cubriendo Biología, Física y Química de 1° y 2° medio.",
+  "diferenciaConCH": "El MTP es un módulo único y continuo (no tiene módulo común/electivo como CH). Contenido adaptado al currículum TP.",
+  "areasTematicas": {
+    "biologia": {
+      "temas": [
+        "Célula y organelos",
+        "Nutrición y metabolismo",
+        "Reproducción",
+        "Genética básica",
+        "Ecología y medio ambiente",
+        "Enfermedades y prevención"
+      ]
+    },
+    "fisica": {
+      "temas": [
+        "Movimiento y velocidad",
+        "Fuerza y movimiento",
+        "Trabajo y energía",
+        "Electricidad básica",
+        "Ondas y sonido",
+        "Luz y óptica"
+      ]
+    },
+    "quimica": {
+      "temas": [
+        "Materia y clasificación",
+        "Átomos y elementos",
+        "Enlaces químicos",
+        "Reacciones químicas básicas",
+        "Soluciones",
+        "Química en la vida diaria"
+      ]
+    }
+  },
+  "recursosEstudio": [
+    {
+      "nombre": "Filadd - Ensayos Ciencias TP",
+      "url": "https://filadd.cl/courses/preuniversitario-pack-completo-egresados-2026/simulations/groups/ciencias-paes-2023",
+      "tipo": "ensayo",
+      "costo": "Gratis (ensayos nacionales)"
+    },
+    {
+      "nombre": "Prueba PAES - Ensayos Ciencias",
+      "url": "https://pruebapaes.cl/ensayos-paes-gratis/",
+      "tipo": "ensayo",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "PAES Ciencias TP oficial DEMRE (Invierno 2026)",
+      "url": "https://demre.cl/publicaciones/2026",
+      "tipo": "prueba-oficial",
+      "costo": "Gratis"
+    }
+  ],
+  "consejos": [
+    "El MTP es diferente al módulo CH - asegúrate de estudiar el temario específico",
+    "El contenido es de 1° y 2° medio - revisa tus apuntes de esos años",
+    "Practica con los ensayos nacionales de Filadd que incluyen opción TP"
+  ]
+}

@@ -1,0 +1,320 @@
+{
+  "asignatura": "Ciencias - Módulo Técnico Profesional (MTP)",
+  "totalEjercicios": 15,
+  "niveles": {
+    "basico": {
+      "descripcion": "Conceptos fundamentales de ciencias (1° básico - 2° medio)",
+      "ejercicios": 6
+    },
+    "intermedio": {
+      "descripcion": "Aplicación práctica de conceptos",
+      "ejercicios": 5
+    },
+    "avanzado": {
+      "descripcion": "Problemas integrados de las tres áreas",
+      "ejercicios": 4
+    }
+  },
+  "ejercicios": [
+    {
+      "id": "MTP-BAS-001",
+      "nivel": "basico",
+      "area": "Biología",
+      "enunciado": "¿Cuál es la función principal de los glóbulos rojos?",
+      "opciones": [
+        {"letra": "A", "texto": "Transportar oxígeno en la sangre"},
+        {"letra": "B", "texto": "Combatir infecciones"},
+        {"letra": "C", "texto": "Coagular la sangre"},
+        {"letra": "D", "texto": "Transportar hormonas"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Los glóbulos rojos (eritrocitos) contienen hemoglobina, una proteína que se une al oxígeno en los pulmones y lo transporta a todos los tejidos del cuerpo.",
+      "explicacionesIncorrectas": {
+        "B": "Combatir infecciones es función de los glóbulos blancos (leucocitos).",
+        "C": "Coagular la sangre es función de las plaquetas (trombocitos).",
+        "D": "Transportar hormonas es función del plasma sanguíneo."
+      },
+      "consejo": "Glóbulos rojos = oxígeno. Glóbulos blancos = defensa. Plaquetas = coagulación."
+    },
+    {
+      "id": "MTP-BAS-002",
+      "nivel": "basico",
+      "area": "Física",
+      "enunciado": "¿Qué máquina simple es una palanca?",
+      "opciones": [
+        {"letra": "A", "texto": "Máquina simple que multiplica la fuerza"},
+        {"letra": "B", "texto": "Máquina que transforma energía térmica en mecánica"},
+        {"letra": "C", "texto": "Máquina que genera energía eléctrica"},
+        {"letra": "D", "texto": "Máquina que mide la temperatura"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La palanca es una máquina simple que permite multiplicar la fuerza aplicada, cambiando la dirección o magnitud de la fuerza según la posición del fulcro.",
+      "explicacionesIncorrectas": {
+        "B": "Eso describe una máquina térmica (motor), no una palanca.",
+        "C": "Eso describe un generador eléctrico.",
+        "D": "Eso describe un termómetro."
+      },
+      "consejo": "Máquinas simples: palanca, polea, plano inclinado, tornillo, cuña, rosca."
+    },
+    {
+      "id": "MTP-BAS-003",
+      "nivel": "basico",
+      "area": "Química",
+      "enunciado": "¿Qué es una mezcla homogénea?",
+      "opciones": [
+        {"letra": "A", "texto": "Una mezcla donde los componentes no se pueden distinguir a simple vista"},
+        {"letra": "B", "texto": "Una mezcla donde los componentes se pueden separar manualmente"},
+        {"letra": "C", "texto": "Una sustancia pura formada por un solo elemento"},
+        {"letra": "D", "texto": "Una combinación química de dos elementos"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Una mezcla homogénea tiene una composición uniforme en toda su masa. Los componentes están distribuidos uniformemente y no se pueden distinguir (ej: agua con sal, aire).",
+      "explicacionesIncorrectas": {
+        "B": "Eso describe una mezcla heterogénea (ej: agua con arena).",
+        "C": "Eso describe una sustancia pura, no una mezcla.",
+        "D": "Eso describe un compuesto químico, no una mezcla."
+      },
+      "consejo": "Homogénea = uniforme (no se ven los componentes). Heterogénea = no uniforme (se ven los componentes)."
+    },
+    {
+      "id": "MTP-BAS-004",
+      "nivel": "basico",
+      "area": "Biología",
+      "enunciado": "¿Cuál de los siguientes nutrientes es la principal fuente de energía para el cuerpo humano?",
+      "opciones": [
+        {"letra": "A", "texto": "Los carbohidratos"},
+        {"letra": "B", "texto": "Las vitaminas"},
+        {"letra": "C", "texto": "Los minerales"},
+        {"letra": "D", "texto": "El agua"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Los carbohidratos (almidón, azúcares) son la principal fuente de energía del cuerpo. Se descomponen en glucosa, que las células utilizan para producir ATP mediante respiración celular.",
+      "explicacionesIncorrectas": {
+        "B": "Las vitaminas son micronutrientes que regulan procesos metabólicos, pero no aportan energía directamente.",
+        "C": "Los minerales son micronutrientes esenciales para funciones biológicas, pero no aportan energía.",
+        "D": "El agua es esencial para la vida pero no aporta calorías ni energía."
+      },
+      "consejo": "Macronutrientes con energía: carbohidratos (4 kcal/g), grasas (9 kcal/g), proteínas (4 kcal/g)."
+    },
+    {
+      "id": "MTP-BAS-005",
+      "nivel": "basico",
+      "area": "Física",
+      "enunciado": "¿Qué tipo de energía posee un resorte comprimido?",
+      "opciones": [
+        {"letra": "A", "texto": "Energía potencial elástica"},
+        {"letra": "B", "texto": "Energía cinética"},
+        {"letra": "C", "texto": "Energía térmica"},
+        {"letra": "D", "texto": "Energía química"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Un resorte comprimido almacena energía potencial elástica, que es la energía almacenada por un objeto deformado que tiende a recuperar su forma original.",
+      "explicacionesIncorrectas": {
+        "B": "La energía cinética es la energía del movimiento. El resorte comprimido está en reposo.",
+        "C": "La energía térmica se relaciona con la temperatura y el movimiento de partículas.",
+        "D": "La energía química se almacena en enlaces químicos de sustancias."
+      },
+      "consejo": "Energía potencial = almacenada (posición, deformación). Energía cinética = en movimiento."
+    },
+    {
+      "id": "MTP-BAS-006",
+      "nivel": "basico",
+      "area": "Química",
+      "enunciado": "¿Qué propiedad describe la capacidad de un material para conducir la electricidad?",
+      "opciones": [
+        {"letra": "A", "texto": "Conductividad eléctrica"},
+        {"letra": "B", "texto": "Densidad"},
+        {"letra": "C", "texto": "Punto de ebullición"},
+        {"letra": "D", "texto": "Dureza"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La conductividad eléctrica es la capacidad de un material para permitir el flujo de corriente eléctrica. Los metales (como el cobre) son buenos conductores porque tienen electrones libres.",
+      "explicacionesIncorrectas": {
+        "B": "La densidad es la relación entre masa y volumen de un material.",
+        "C": "El punto de ebullición es la temperatura en la que un líquido cambia a gas.",
+        "D": "La dureza es la resistencia de un material a ser rayado o deformado."
+      },
+      "consejo": "Conductores: metales (cobre, aluminio). Aislantes: plástico, caucho, madera."
+    },
+    {
+      "id": "MTP-INT-001",
+      "nivel": "intermedio",
+      "area": "Física",
+      "enunciado": "Un motor eléctrico consume 200W durante 3 horas. ¿Cuánta energía consume en kWh?",
+      "opciones": [
+        {"letra": "A", "texto": "0.6 kWh"},
+        {"letra": "B", "texto": "600 kWh"},
+        {"letra": "C", "texto": "60 kWh"},
+        {"letra": "D", "texto": "0.06 kWh"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Energía = Potencia × Tiempo = 200W × 3h = 600 Wh = 0.6 kWh.",
+      "explicacionesIncorrectas": {
+        "B": "600 kWh sería si la potencia fuera 200kW, no 200W.",
+        "C": "60 kWh no corresponde a ningún cálculo válido.",
+        "D": "0.06 kWh sería si el tiempo fuera 0.3 horas, no 3."
+      },
+      "consejo": "Para convertir W a kW: divide entre 1000. Para convertir horas a segundos: multiplica por 3600."
+    },
+    {
+      "id": "MTP-INT-002",
+      "nivel": "intermedio",
+      "area": "Química",
+      "enunciado": "Un técnico debe identificar un metal desconocido. Al calentarlo, observa que se deforma fácilmente sin romperse. ¿Qué propiedad describe esta característica?",
+      "opciones": [
+        {"letra": "A", "texto": "Ductilidad y maleabilidad"},
+        {"letra": "B", "texto": "Fragilidad"},
+        {"letra": "C", "texto": "Elasticidad"},
+        {"letra": "D", "texto": "Brittleza"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La ductilidad es la capacidad de un material para deformarse bajo tensión (estirarse en hilos), y la maleabilidad es la capacidad para laminarse en láminas. Ambas son propiedades de los metales.",
+      "explicacionesIncorrectas": {
+        "B": "La fragilidad es lo contrario: un material que se rompe fácilmente sin deformarse.",
+        "C": "La elasticidad es la capacidad de recuperar la forma original tras la deformación.",
+        "D": "La brittleza es sinónimo de fragilidad: materiales que se quiebran."
+      },
+      "consejo": "Maleabilidad = láminas. Ductilidad = hilos. Fragilidad = se rompe sin deformarse (vidrio)."
+    },
+    {
+      "id": "MTP-INT-003",
+      "nivel": "intermedio",
+      "area": "Biología",
+      "enunciado": "Un trabajador de una planta de alimentos necesita manipular productos sin contaminarlos. ¿Qué hábito de higiene es MÁS importante?",
+      "opciones": [
+        {"letra": "A", "texto": "Lavarse las manos correctamente antes y durante el trabajo"},
+        {"letra": "B", "texto": "Usar perfume para mantenerse fresco"},
+        {"letra": "C", "texto": "Comer rápidamente antes de entrar a la planta"},
+        {"letra": "D", "texto": "No usar guantes para sentir mejor los alimentos"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El lavado correcto de manos es la medida más efectiva para prevenir la contaminación cruzada en la manipulación de alimentos. Debe realizarse con agua y jabón durante al menos 20 segundos.",
+      "explicacionesIncorrectas": {
+        "B": "Los perfumes pueden contaminar los alimentos y causar alergias en consumidores.",
+        "C": "Comer antes de entrar puede contaminar los productos y violar normas de higiene.",
+        "D": "Los guantes son obligatorios en la manipulación de alimentos para proteger tanto al trabajador como al producto."
+      },
+      "consejo": "En industria alimentaria: manos lavadas, guantes limpios, pelo cubierto, uniforme limpio."
+    },
+    {
+      "id": "MTP-INT-004",
+      "nivel": "intermedio",
+      "area": "Física",
+      "enunciado": "Un circuito eléctrico simple tiene una resistencia de 10 ohmios y una batería de 5 voltios. ¿Cuál es la corriente que circula por el circuito?",
+      "opciones": [
+        {"letra": "A", "texto": "0.5 amperios"},
+        {"letra": "B", "texto": "50 amperios"},
+        {"letra": "C", "texto": "2 amperios"},
+        {"letra": "D", "texto": "0.2 amperios"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Aplicando la Ley de Ohm: I = V/R = 5V / 10Ω = 0.5A. La corriente es igual al voltaje dividido por la resistencia.",
+      "explicacionesIncorrectas": {
+        "B": "50 amperios sería el resultado de multiplicar V × R en lugar de dividir.",
+        "C": "2 amperios sería el resultado de dividir R/V en lugar de V/R.",
+        "D": "0.2 amperios no corresponde a ningún cálculo válido con estos valores."
+      },
+      "consejo": "Ley de Ohm: V = I × R. Despeja lo que necesitas: I = V/R o R = V/I."
+    },
+    {
+      "id": "MTP-INT-005",
+      "nivel": "intermedio",
+      "area": "Química",
+      "enunciado": "En una fábrica de plásticos, ¿qué proceso se utiliza para dar forma a un polímero termoplástico?",
+      "opciones": [
+        {"letra": "A", "texto": "Extrusión o inyección"},
+        {"letra": "B", "texto": "Fusión por arco eléctrico"},
+        {"letra": "C", "texto": "Galvanoplastia"},
+        {"letra": "D", "texto": "Cemento de soldadura"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Los polímeros termoplásticos se ablandan con calor y pueden moldearse mediante extrusión (para perfiles continuos) o inyección (para piezas complejas). Al enfriarse, recuperan su forma sólida.",
+      "explicacionesIncorrectas": {
+        "B": "La fusión por arco eléctrico se usa para soldar metales, no plásticos.",
+        "C": "La galvanoplastia es un proceso de electrodeposición de metales.",
+        "D": "El cemento de soldadura se usa para unir piezas metálicas, no polímeros."
+      },
+      "consejo": "Termoplásticos: se reciclan por calor. Termoestables: no se reciclan (se炭izan)."
+    },
+    {
+      "id": "MTP-AVA-001",
+      "nivel": "avanzado",
+      "area": "Integración",
+      "enunciado": "Un técnico necesita soldar dos piezas de metal. Para ello, debe entender que el calor de la soldadura provoca un cambio en la estructura cristalina del metal. ¿Qué tipo de cambio se produce?",
+      "opciones": [
+        {"letra": "A", "texto": "Cambios físicos y químicos en la estructura del metal"},
+        {"letra": "B", "texto": "Solo cambios físicos reversibles"},
+        {"letra": "C", "texto": "Solo cambios químicos irreversibles"},
+        {"letra": "D", "texto": "No ocurre ningún cambio"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La soldadura provoca cambios tanto físicos (cambio de estado del metal, deformación) como químicos (oxidación superficial, formación de nuevas aleaciones en la zona de unión).",
+      "explicacionesIncorrectas": {
+        "B": "Los cambios son irreversibles (no puedes 'deshacer' una soldadura).",
+        "C": "También hay cambios físicos (deformación, cambio de estado).",
+        "D": "Siempre hay cambios al aplicar calor intenso a un metal."
+      },
+      "consejo": "En procesos industriales, generalmente ocurren cambios físicos Y químicos simultáneamente."
+    },
+    {
+      "id": "MTP-AVA-002",
+      "nivel": "avanzado",
+      "area": "Integración",
+      "enunciado": "Un técnico de mantenimiento detecta que un motor eléctrico está consumiendo más energía de lo normal y se calienta en exceso. ¿Qué relación física-explicaría este fenómeno?",
+      "opciones": [
+        {"letra": "A", "texto": "La resistencia eléctrica interna genera calor (efecto Joule), disminuyendo la eficiencia"},
+        {"letra": "B", "texto": "El motor está generando magnetismo excesivo"},
+        {"letra": "C", "texto": "El voltaje está subiendo por el calor"},
+        {"letra": "D", "texto": "La corriente se está invirtiendo"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El efecto Joule (P = I² × R) explica que parte de la energía eléctrica se transforma en calor al pasar la corriente por la resistencia interna del motor. Si la resistencia aumenta (por desgaste), más calor se disipa y menos energía se usa para trabajo mecánico.",
+      "explicacionesIncorrectas": {
+        "B": "El magnetismo no causa calentamiento directo en condiciones normales de operación.",
+        "C": "El voltaje de la fuente no sube por el calor; si acaso baja por caída de tensión.",
+        "D": "La dirección de la corriente no se invierte por el calor; simplemente se pierde eficiencia."
+      },
+      "consejo": "Efecto Joule: P = I²R. Más resistencia = más calor = menos eficiencia energética."
+    },
+    {
+      "id": "MTP-AVA-003",
+      "nivel": "avanzado",
+      "area": "Integración",
+      "enunciado": "En una planta de reciclaje de plásticos, se observa que al mezclar PET (polietileno tereftalato) con PVC (policloruro de vinilo) en el mismo proceso, el producto final presenta defectos. ¿Por qué?",
+      "opciones": [
+        {"letra": "A", "texto": "Son polímeros incompatibles químicamente y requieren procesos de reciclaje separados"},
+        {"letra": "B", "texto": "Ambos plásticos son idénticos y el problema es la temperatura"},
+        {"letra": "C", "texto": "Solo el PET es reciclable, el PVC no se puede procesar"},
+        {"letra": "D", "texto": "El problema es que ambos se funden a la misma temperatura"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "PET y PVC son polímeros con estructuras químicas diferentes e incompatibles. Al mezclarlos, no forman una mezcla homogénea y el producto resultante tiene propiedades mecánicas deficientes. Además, el PVC libera cloruro de hidrógeno al calentarse, contaminando el PET.",
+      "explicacionesIncorrectas": {
+        "B": "Son polímeros diferentes con puntos de fusión y propiedades distintas.",
+        "C": "Ambos son reciclables, pero deben procesarse por separado.",
+        "D": "El PET se funde a ~260°C y el PVC a ~212°C; sus temperaturas de procesamiento son diferentes."
+      },
+      "consejo": "Reciclaje: identificar el tipo de plástico (código de identificación 1-7) antes de procesarlo."
+    },
+    {
+      "id": "MTP-AVA-004",
+      "nivel": "avanzado",
+      "area": "Integración",
+      "enunciado": "Un técnico ambiental mide la calidad del agua de un río cercano a una fábrica. Encuentra que el pH es 4.5 (muy ácido) y la temperatura es 35°C. ¿Qué impacto ambiental y de seguridad esto representa?",
+      "opciones": [
+        {"letra": "A", "texto": "Contaminación química que afecta la vida acuática y puede dañar equipos de la planta"},
+        {"letra": "B", "texto": "Es normal, el pH del agua siempre es 4.5"},
+        {"letra": "C", "texto": "Solo afecta la temperatura, no hay problema químico"},
+        {"letra": "D", "texto": "El pH ácido beneficia a los peces del río"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Un pH de 4.5 indica contaminación ácida (posiblemente por descarga de desechos industriales). Esto acidifica el agua, matando peces y plantas acuáticas. La temperatura elevada reduce el oxígeno disuelto. Ambos factores violan normas ambientales y de seguridad laboral.",
+      "explicacionesIncorrectas": {
+        "B": "El pH neutro del agua pura es 7. Un pH de 4.5 es significativamente ácido.",
+        "C": "Hay dos problemas: contaminación química (pH bajo) Y térmica (temperatura alta).",
+        "D": "El pH ácido es tóxico para la mayoría de organismos acuáticos."
+      },
+      "consejo": "pH normal del agua: 6.5-8.5. Temperatura máxima para vida acuática: ~30°C. Ambos son indicadores de contaminación."
+    }
+  ]
+}

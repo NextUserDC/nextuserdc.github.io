@@ -1,0 +1,110 @@
+{
+  "asignatura": "Competencia Lectora",
+  "codigo": "CL",
+  "obligatoria": true,
+  "preguntas": 65,
+  "preguntasCalificables": 60,
+  "preguntasPilotaje": 5,
+  "duracion": "2 horas 30 minutos",
+  "formato": "Selección múltiple (4 alternativas)",
+  "descripcion": "Evalúa la capacidad de comprender, interpretar y evaluar distintos tipos de textos.",
+  "estructuraPrueba": {
+    "textos": 7,
+    "tiposTexto": ["Literarios (cuentos, fragmentos de novelas)", "No literarios (prensa, divulgación científica, ensayos, infografías)"],
+    "distribucion": "6-10 preguntas por texto"
+  },
+  "habilidades": {
+    "localizar": {
+      "descripcion": "Encontrar información explícita en el texto",
+      "tareasCognitivas": [
+        "Localizar información específica",
+        "Identificar la idea principal de un párrafo"
+      ],
+      "porcentajeEstimado": "30%"
+    },
+    "interpretar": {
+      "descripcion": "Comprender el sentido global y relaciones en el texto",
+      "tareasCognitivas": [
+        "Inferir información no explícita",
+        "Comprender relaciones causa-efecto",
+        "Identificar la intención del autor",
+        "Comprender vocabulario en contexto"
+      ],
+      "porcentajeEstimado": "45%"
+    },
+    "evaluar": {
+      "descripcion": "Juzgar la calidad, veracidad y pertinencia de la información",
+      "tareasCognitivas": [
+        "Evaluar argumentos",
+        "Distinguir hechos de opiniones",
+        "Calificar la fiabilidad de la fuente",
+        "Analizar el propósito comunicativo"
+      ],
+      "porcentajeEstimado": "25%"
+    }
+  },
+  "temario": {
+    "habilidadesGenerales": [
+      "Comprensión literal",
+      "Comprensión inferencial",
+      "Análisis crítico",
+      "Vocabulario contextual",
+      "Estructura del texto",
+      "Propósito comunicativo"
+    ],
+    "tiposTextoEvaluar": [
+      "Textos narrativos",
+      "Textos expositivos",
+      "Textos argumentativos",
+      "Textos persuasivos",
+      "Infografías",
+      "Gráficos estadísticos"
+    ]
+  },
+  "recursosEstudio": [
+    {
+      "nombre": "Práctica CL - ExamenesGratis (200+ preguntas)",
+      "url": "https://es.open-exam-prep.com/practica/paes-lenguaje-chile",
+      "tipo": "ejercicios",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Guía completa CL 2026",
+      "url": "https://es.open-exam-prep.com/blog/guia-paes-competencia-lectora-chile-2026",
+      "tipo": "guia",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Simulador CL Preuniversitario Cumbre",
+      "url": "https://preuniversitariocumbre.cl/lenguaje/",
+      "tipo": "simulador",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Ensayos CL Filadd (por habilidad)",
+      "url": "https://filadd.cl/courses/preuniversitario-pack-completo-ensenanza-media-2026/simulations/groups/comprensin-lectora--paes",
+      "tipo": "ensayo",
+      "costo": "Gratis (ensayos nacionales)"
+    },
+    {
+      "nombre": "Prueba CL contenidos + test",
+      "url": "https://pruebapaes.cl/competencia-lectora-paes/",
+      "tipo": "ejercicios",
+      "costo": "Gratis (básico)"
+    },
+    {
+      "nombre": "PAES CL oficial DEMRE (Invierno 2026)",
+      "url": "https://demre.cl/publicaciones/2026/2026-25-12-02-paes-regular-competencia-lectora-p2026",
+      "tipo": "prueba-oficial",
+      "costo": "Gratis"
+    }
+  ],
+  "consejos": [
+    "Lee cada texto completo antes de responder las preguntas",
+    "Identifica el tipo de texto (literario/no literario) antes de analizar",
+    "Usa la técnica APE (Autor-Purpose-Evidence) para textos argumentativos",
+    "No te quedes más de 2 minutos por pregunta",
+    "Practica con pruebas cronometradas para ganar velocidad",
+    "Lee la pregunta completa y las 4 alternativas antes de marcar"
+  ]
+}

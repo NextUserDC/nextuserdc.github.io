@@ -1,0 +1,354 @@
+{
+  "metadata": {
+    "title": "Recursos Gratuitos PAES Admisión 2027",
+    "description": "Compilación de recursos gratuitos verificados para preparación de la PAES",
+    "lastUpdated": "2026-09-20",
+    "version": "1.0"
+  },
+  "recursosOficiales": {
+    "demre": {
+      "nombre": "DEMRE - Departamento de Evaluación, Medición y Registro Educacional",
+      "url": "https://demre.cl/paes",
+      "descripcion": "Fuente oficial: temarios, pruebas aplicadas, clavijeros, preguntas comentadas",
+      "recursos": [
+        {
+          "nombre": "Temarios PAES Regular Admisión 2027",
+          "url": "https://demre.cl/la-prueba/pruebas-y-temarios/presentacion-pruebas-temarios-paes-regular",
+          "tipo": "temario",
+          "formato": "PDF"
+        },
+        {
+          "nombre": "Temarios PAES Invierno Admisión 2027",
+          "url": "https://demre.cl/la-prueba/pruebas-y-temarios/presentacion-pruebas-temarios-paes-invierno",
+          "tipo": "temario",
+          "formato": "PDF"
+        },
+        {
+          "nombre": "Pruebas oficiales aplicadas y selección de preguntas",
+          "url": "https://demre.cl/publicaciones/2026/pruebas-oficiales-y-seleccion-preguntas-paes",
+          "tipo": "pruebas",
+          "formato": "PDF"
+        },
+        {
+          "nombre": "Preguntas comentadas PAES (videos)",
+          "url": "https://demre.cl/videos",
+          "tipo": "video",
+          "formato": "MP4"
+        }
+      ]
+    },
+    "accesoMineduc": {
+      "nombre": "Acceso Educación Superior - Mineduc",
+      "url": "https://acceso.mineduc.cl/material-de-preparacion-paes/",
+      "descripcion": "Material de preparación oficial: temarios, pruebas con clavijeros",
+      "recursos": [
+        {
+          "nombre": "Material de preparación PAES (temarios + pruebas)",
+          "url": "https://acceso.mineduc.cl/material-de-preparacion-paes/",
+          "tipo": "compilacion",
+          "formato": "PDF"
+        }
+      ]
+    }
+  },
+  "plataformasEjercicios": {
+    "simplepaes": {
+      "nombre": "SimplePAES",
+      "url": "https://simplepaes.cl",
+      "descripcion": "Ejercicios adaptativos M1/M2, mini-lecciones interactivas, diagnóstico, ensayos",
+      "asignaturas": ["Matemática M1", "Matemática M2"],
+      "costo": "Gratis (versión básica) / $8.000 CLP/mes (premium)",
+      "recursos": [
+        {
+          "nombre": "Material PAES matemática organizado por eje",
+          "url": "https://simplepaes.cl/blog/material-paes-matematica-2026",
+          "tipo": "ejercicios",
+          "temas": ["Números", "Álgebra", "Geometría", "Probabilidad y Estadística"]
+        },
+        {
+          "nombre": "Guía completa preparación PAES M1",
+          "url": "https://simplepaes.cl/blog/paes-2026-guia-preparacion",
+          "tipo": "guia"
+        },
+        {
+          "nombre": "Temario PAES 2026 oficial por eje",
+          "url": "https://simplepaes.cl/blog/temario-paes-2026",
+          "tipo": "temario"
+        },
+        {
+          "nombre": "Ensayos PAES gratis",
+          "url": "https://simplepaes.cl/blog/ensayos-paes-gratis",
+          "tipo": "ensayo"
+        },
+        {
+          "nombre": "Ejercicios PAES matemáticas por eje",
+          "url": "https://simplepaes.cl/blog/ejercicios-paes-matematicas",
+          "tipo": "ejercicios"
+        },
+        {
+          "nombre": "Errores frecuentes por eje",
+          "url": "https://simplepaes.cl/blog/material-paes-matematica-2026",
+          "tipo": "errores-comunes"
+        }
+      ]
+    },
+    "examenesGratis": {
+      "nombre": "ExamenesGratis",
+      "url": "https://es.open-exam-prep.com",
+      "descripcion": "200+ preguntas gratuitas por asignatura con explicaciones detalladas",
+      "asignaturas": ["Competencia Lectora", "Matemática M1", "Ciencias", "Historia"],
+      "costo": "Gratis",
+      "recursos": [
+        {
+          "nombre": "Práctica PAES Matemáticas",
+          "url": "https://es.open-exam-prep.com/practica/paes-matematicas-chile",
+          "tipo": "ejercicios",
+          "preguntas": 200
+        },
+        {
+          "nombre": "Práctica PAES Ciencias",
+          "url": "https://es.open-exam-prep.com/practica/paes-ciencias-chile",
+          "tipo": "ejercicios",
+          "preguntas": 200
+        },
+        {
+          "nombre": "Práctica PAES Historia",
+          "url": "https://es.open-exam-prep.com/practica/paes-historia-chile",
+          "tipo": "ejercicios",
+          "preguntas": 200
+        },
+        {
+          "nombre": "Práctica PAES Comprensión Lectora",
+          "url": "https://es.open-exam-prep.com/practica/paes-lenguaje-chile",
+          "tipo": "ejercicios",
+          "preguntas": 200
+        },
+        {
+          "nombre": "Guía PAES Competencia Lectora 2026",
+          "url": "https://es.open-exam-prep.com/blog/guia-paes-competencia-lectora-chile-2026",
+          "tipo": "guia"
+        }
+      ]
+    },
+    "ensayoPaes": {
+      "nombre": "Ensayo PAES",
+      "url": "https://ensayopaes.cl",
+      "descripcion": "Simuladores por asignatura, +2500 preguntas por materia, retroalimentación",
+      "asignaturas": ["Matemática M1", "Matemática M2", "Competencia Lectora", "Historia", "Biología", "Física", "Química"],
+      "costo": "Gratis",
+      "recursos": [
+        {
+          "nombre": "Simulador PAES por asignatura",
+          "url": "https://ensayopaes.cl/simulador/",
+          "tipo": "simulador"
+        },
+        {
+          "nombre": "Banco de preguntas Biología (+2500)",
+          "url": "https://ensayopaes.cl/preguntas/biologia/",
+          "tipo": "ejercicios"
+        },
+        {
+          "nombre": "Banco de preguntas Historia (+2500)",
+          "url": "https://ensayopaes.cl/preguntas/historia-ciencias-sociales/",
+          "tipo": "ejercicios"
+        }
+      ]
+    },
+    "filadd": {
+      "nombre": "Filadd - Preuniversitario",
+      "url": "https://filadd.cl",
+      "descripcion": "Ensayos nacionales gratuitos, guías por habilidad, material descargable",
+      "asignaturas": ["Competencia Lectora", "Matemática M1", "Matemática M2", "Ciencias", "Historia"],
+      "costo": "Gratis (ensayos nacionales) / Premium (contenido completo)",
+      "recursos": [
+        {
+          "nombre": "Ensayos nacionales gratuitos",
+          "url": "https://filadd.cl/courses/preuniversitario-pack-completo-egresados-2026/simulations/groups/ciencias-paes-2023",
+          "tipo": "ensayo"
+        },
+        {
+          "nombre": "Guías por habilidad CL (Localizar, Interpretar, Evaluar)",
+          "url": "https://filadd.cl/courses/preuniversitario-pack-completo-ensenanza-media-2026/simulations/groups/comprensin-lectora--paes",
+          "tipo": "ejercicios"
+        }
+      ]
+    },
+    "redMatematicas": {
+      "nombre": "Red de Matemáticas",
+      "url": "https://matematicas.cl",
+      "descripcion": "Taller gratuito PAES M1: 30+ guías de ejercicios organizadas por eje",
+      "asignaturas": ["Matemática M1"],
+      "costo": "Gratis",
+      "recursos": [
+        {
+          "nombre": "PAES M1 - Guías de ejercicios",
+          "url": "https://matematicas.cl/paes-de-matematicas/paes-m1/",
+          "tipo": "ejercicios"
+        },
+        {
+          "nombre": "Taller gratuito PAES M1",
+          "url": "https://matematicas.cl/taller-gratuito-paes-m1-ejercicios-matematicas/",
+          "tipo": "taller"
+        }
+      ]
+    },
+    "matesPalColegio": {
+      "nombre": "Mates pal Colegio - Profe Esteban Aros",
+      "url": "https://matespalcolegio.com",
+      "descripcion": "Resoluciones completas PAES M1 y M2 gratis, guías descargables",
+      "asignaturas": ["Matemática M1", "Matemática M2"],
+      "costo": "Gratis",
+      "recursos": [
+        {
+          "nombre": "Resoluciones PAES M1 y M2",
+          "url": "https://matespalcolegio.com/paes-m1-resuelta-y-gratis-d/",
+          "tipo": "resoluciones"
+        }
+      ]
+    },
+    "pruebaPaes": {
+      "nombre": "Prueba PAES",
+      "url": "https://pruebapaes.cl",
+      "descripcion": "Ensayos online gratuitos por asignatura",
+      "asignaturas": ["Competencia Lectora", "Historia", "Ciencias"],
+      "costo": "Gratis (básico) / Premium",
+      "recursos": [
+        {
+          "nombre": "Ensayos PAES gratis online",
+          "url": "https://pruebapaes.cl/ensayos-paes-gratis/",
+          "tipo": "ensayo"
+        },
+        {
+          "nombre": "Historia PAES contenidos + test gratis",
+          "url": "https://pruebapaes.cl/electivo-historia-paes/",
+          "tipo": "ejercicios"
+        },
+        {
+          "nombre": "Competencia Lectora PAES contenidos + test",
+          "url": "https://pruebapaes.cl/competencia-lectora-paes/",
+          "tipo": "ejercicios"
+        }
+      ]
+    },
+    "preuniversitarioCumbre": {
+      "nombre": "Preuniversitario Cumbre",
+      "url": "https://preuniversitariocumbre.cl",
+      "descripcion": "Simulador CL con puntaje proyectado PAES Invierno 2026",
+      "asignaturas": ["Competencia Lectora"],
+      "costo": "Gratis",
+      "recursos": [
+        {
+          "nombre": "Simulador Comprensión Lectora",
+          "url": "https://preuniversitariocumbre.cl/lenguaje/",
+          "tipo": "simulador"
+        }
+      ]
+    }
+  },
+  "preuniversitariosGratuitos": {
+    "preunab": {
+      "nombre": "PreUNAB - Universidad Andrés Bello",
+      "url": "https://proceso-de-admision.unab.cl/como-prepararte-para-la-paes-7-herramientas-gratuitas-de-preunab-para-la-admision-2027/",
+      "descripcion": "Preuniversitario gratuito: diagnóstico, ensayos, ruta personalizada, clases online, videos",
+      "recursos": [
+        {
+          "nombre": "Diagnóstico PAES",
+          "tipo": "diagnostico"
+        },
+        {
+          "nombre": "Ensayos PAES",
+          "tipo": "ensayo"
+        },
+        {
+          "nombre": "Ruta personalizada de estudio",
+          "tipo": "plan"
+        },
+        {
+          "nombre": "Clases online con docentes",
+          "tipo": "clase"
+        },
+        {
+          "nombre": "Quizzes por asignatura",
+          "tipo": "ejercicios"
+        },
+        {
+          "nombre": "Videos explicativos",
+          "tipo": "video"
+        }
+      ]
+    }
+  },
+  "plataformasAprendizaje": {
+    "khanAcademy": {
+      "nombre": "Khan Academy en español",
+      "url": "https://es.khanacademy.org",
+      "descripcion": "Cursos completos de matemáticas y ciencias con videos y ejercicios interactivos",
+      "asignaturas": ["Matemáticas", "Ciencias", "Economía"],
+      "costo": "Gratis",
+      "cursosRecomendados": [
+        {
+          "nombre": "Preparación para la Educación Superior",
+          "url": "https://es.khanacademy.org/preparacion-para-la-educacion-superior"
+        },
+        {
+          "nombre": "Álgebra",
+          "url": "https://es.khanacademy.org/math/algebra"
+        },
+        {
+          "nombre": "Geometría",
+          "url": "https://es.khanacademy.org/math/geometry"
+        },
+        {
+          "nombre": "Trigonometría",
+          "url": "https://es.khanacademy.org/math/trigonometry"
+        },
+        {
+          "nombre": "Estadística y Probabilidad",
+          "url": "https://es.khanacademy.org/math/statistics-probability"
+        },
+        {
+          "nombre": "Biología",
+          "url": "https://es.khanacademy.org/science/biology"
+        },
+        {
+          "nombre": "Química",
+          "url": "https://es.khanacademy.org/science/chemistry"
+        },
+        {
+          "nombre": "Física",
+          "url": "https://es.khanacademy.org/science/physics"
+        }
+      ]
+    }
+  },
+  "canalesYouTube": {
+    "descripcion": "Canales recomendados en YouTube para preparación PAES",
+    "canales": [
+      {
+        "nombre": "Profesor en Short",
+        "descripcion": "Explicaciones rápidas de matemáticas y ciencias",
+        "tipo": "matematicas/ciencias"
+      },
+      {
+        "nombre": "Matemáticas con Profe Alex",
+        "descripcion": "Contenidos M1 y M2 explicados paso a paso",
+        "tipo": "matematicas"
+      },
+      {
+        "nombre": "Química Online",
+        "descripcion": "Contenidos de química para PAES",
+        "tipo": "quimica"
+      },
+      {
+        "nombre": "Biología PAES",
+        "descripcion": "Contenidos de biología para la prueba",
+        "tipo": "biologia"
+      },
+      {
+        "nombre": "Historia Fácil",
+        "descripcion": "Procesos históricos de Chile y el mundo",
+        "tipo": "historia"
+      }
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "asignatura": "Matemática 2 (M2)",
+  "codigo": "M2",
+  "obligatoria": false,
+  "requisito": "Mandatory for STEM careers (Engineering, Medicine, Architecture, etc.)",
+  "preguntas": 55,
+  "duracion": "2 horas 20 minutos",
+  "formato": "Selección múltiple (4 alternativas)",
+  "descripcion": "Evalúa contenidos avanzados de 3° y 4° medio, además de todo lo de M1.",
+  "ejesTematicos": {
+    "numeros": {
+      "temas": [
+        "Números reales",
+        "Matemática financiera",
+        "Logaritmos",
+        "Potenciación y radicación avanzada"
+      ]
+    },
+    "algebra": {
+      "temas": [
+        "Sistemas de ecuaciones no lineales",
+        "Funciones potencia",
+        "Funciones exponenciales",
+        "Funciones logarítmicas",
+        "Funciones trigonométricas",
+        "Ecuaciones trigonométricas"
+      ]
+    },
+    "geometria": {
+      "temas": [
+        "Homotecia",
+        "Trigonometría en el plano",
+        "Circunferencia",
+        "Rectas en el plano (solo Regular)",
+        "Esferas (solo Regular)"
+      ]
+    },
+    "probabilidadEstadistica": {
+      "temas": [
+        "Medidas de dispersión",
+        "Combinatoria",
+        "Probabilidad condicional",
+        "Modelo binomial",
+        "Modelo normal"
+      ]
+    }
+  },
+  "diferenciaConM1": "M2 agrega todo lo de M1 + contenidos de 3° y 4° medio (trigonometría, logaritmos, funciones avanzadas, combinatoria)",
+  "recursosEstudio": [
+    {
+      "nombre": "SimplePAES - Material M2",
+      "url": "https://simplepaes.cl/blog/material-paes-matematica-2026",
+      "tipo": "ejercicios",
+      "costo": "Gratis (básico)"
+    },
+    {
+      "nombre": "Khan Academy - Trigonometría",
+      "url": "https://es.khanacademy.org/math/trigonometry",
+      "tipo": "curso-completo",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Mates pal Colegio - Resoluciones M2",
+      "url": "https://matespalcolegio.com/paes-m1-resuelta-y-gratis-d/",
+      "tipo": "resoluciones",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "PAES M2 oficial DEMRE",
+      "url": "https://demre.cl/publicaciones/2026",
+      "tipo": "prueba-oficial",
+      "costo": "Gratis"
+    }
+  ],
+  "consejos": [
+    "M2 tiene más tiempo por pregunta que M1 (55 preguntas en 140 min)",
+    "Domina trigonometría y logaritmos - son los temas más diferenciadores",
+    "Practica con la prueba oficial de Invierno para familiarizarte"
+  ]
+}

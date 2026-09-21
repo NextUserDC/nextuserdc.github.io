@@ -1,0 +1,440 @@
+{
+  "asignatura": "Matemática 2 (M2)",
+  "totalEjercicios": 20,
+  "niveles": {
+    "basico": {
+      "descripcion": "Funciones, trigonometría y álgebra superior",
+      "ejercicios": 6
+    },
+    "intermedio": {
+      "descripcion": "Logaritmos, combinatoria y geometría analítica",
+      "ejercicios": 8
+    },
+    "avanzado": {
+      "descripcion": "Cálculo, series y problemas integrados",
+      "ejercicios": 6
+    }
+  },
+  "ejercicios": [
+    {
+      "id": "M2-BAS-001",
+      "nivel": "basico",
+      "eje": "Funciones",
+      "tema": "Evaluación de funciones polinómicas",
+      "enunciado": "Si f(x) = 2x² - 3x + 1, ¿cuál es el valor de f(2)?",
+      "opciones": [
+        {"letra": "A", "texto": "3"},
+        {"letra": "B", "texto": "5"},
+        {"letra": "C", "texto": "7"},
+        {"letra": "D", "texto": "11"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Reemplazamos x = 2: f(2) = 2(2²) - 3(2) + 1 = 2(4) - 6 + 1 = 8 - 6 + 1 = 3.",
+      "explicacionesIncorrectas": {
+        "B": "5 correspondería a f(2) = 2(4) - 3(2) + 1 = 3, no 5. Error de cálculo.",
+        "C": "7 correspondería a olvidar el término lineal: 2(4) + 1 = 9, no 7.",
+        "D": "11 correspondería a sumar en vez de restar: 8 + 3 - 1 = 10, no 11."
+      },
+      "consejo": "Reemplaza cada x por el valor dado y respeta el orden de operaciones: primero exponentes, luego multiplicaciones, y finalmente sumas y restas."
+    },
+    {
+      "id": "M2-BAS-002",
+      "nivel": "basico",
+      "eje": "Trigonometría",
+      "tema": "Identidades trigonométricas fundamentales",
+      "enunciado": "¿Cuál es el valor de sin²(30°) + cos²(30°)?",
+      "opciones": [
+        {"letra": "A", "texto": "0"},
+        {"letra": "B", "texto": "1"},
+        {"letra": "C", "texto": "√3/2"},
+        {"letra": "D", "texto": "1/2"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "Por la identidad pitagórica fundamental: sin²θ + cos²θ = 1 para cualquier ángulo θ. Es una identidad que se cumple siempre, sin importar el valor del ángulo.",
+      "explicacionesIncorrectas": {
+        "A": "0 no puede ser resultado de una suma de cuadrados de seno y coseno, que siempre son positivos.",
+        "C": "√3/2 es el valor de cos(30°), no de la suma de cuadrados.",
+        "D": "1/2 es el valor de sin(30°), no de la suma de cuadrados."
+      },
+      "consejo": "La identidad sin²θ + cos²θ = 1 es universal. No necesitas calcular valores individuales si solo te piden la suma."
+    },
+    {
+      "id": "M2-BAS-003",
+      "nivel": "basico",
+      "eje": "Funciones",
+      "tema": "Dominio de funciones con raíz cuadrada",
+      "enunciado": "¿Cuál es el dominio de la función f(x) = √(x - 2)?",
+      "opciones": [
+        {"letra": "A", "texto": "Todos los números reales"},
+        {"letra": "B", "texto": "x ≥ 2"},
+        {"letra": "C", "texto": "x > 2"},
+        {"letra": "D", "texto": "x ≤ 2"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "La expresión dentro de la raíz cuadrada debe ser mayor o igual a cero: x - 2 ≥ 0, por lo tanto x ≥ 2. El dominio incluye el 2 porque √0 = 0 está definido.",
+      "explicacionesIncorrectas": {
+        "A": "Si x = 0, entonces √(0-2) = √(-2), que no es un número real.",
+        "C": "x > 2 excluye innecesariamente al 2, ya que √0 = 0 sí está definido.",
+        "D": "Si x < 2, la expresión bajo la raíz es negativa, lo que no produce un resultado real."
+      },
+      "consejo": "La raíz cuadrada requiere argumento no negativo. Usa ≥ (mayor o igual), no > (estrictamente mayor)."
+    },
+    {
+      "id": "M2-BAS-004",
+      "nivel": "basico",
+      "eje": "Álgebra",
+      "tema": "Logaritmos en base 2",
+      "enunciado": "¿Cuál es el valor de log₂(32)?",
+      "opciones": [
+        {"letra": "A", "texto": "4"},
+        {"letra": "B", "texto": "5"},
+        {"letra": "C", "texto": "6"},
+        {"letra": "D", "texto": "16"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "log₂(32) = x significa 2ˣ = 32. Como 2⁵ = 32, entonces log₂(32) = 5.",
+      "explicacionesIncorrectas": {
+        "A": "2⁴ = 16, no 32.",
+        "C": "2⁶ = 64, no 32.",
+        "D": "16 es el valor de 2⁴, no el logaritmo."
+      },
+      "consejo": "Convierte el logaritmo a su forma exponencial: log_b(a) = c ⟺ bᶜ = a. Memoriza las potencias de 2."
+    },
+    {
+      "id": "M2-BAS-005",
+      "nivel": "basico",
+      "eje": "Funciones",
+      "tema": "Evaluación de funciones lineales",
+      "enunciado": "Si f(x) = 3x - 7, ¿cuál es el valor de f(4)?",
+      "opciones": [
+        {"letra": "A", "texto": "4"},
+        {"letra": "B", "texto": "5"},
+        {"letra": "C", "texto": "12"},
+        {"letra": "D", "texto": "19"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "f(4) = 3(4) - 7 = 12 - 7 = 5.",
+      "explicacionesIncorrectas": {
+        "A": "4 no corresponde a ningún cálculo con esta función.",
+        "C": "12 correspondería a solo calcular 3(4) sin restar el 7.",
+        "D": "19 correspondería a sumar: 3(4) + 7 = 19, en vez de restar."
+      },
+      "consejo": "En funciones lineales f(x) = mx + b, reemplaza x y opera respetando el signo de b."
+    },
+    {
+      "id": "M2-BAS-006",
+      "nivel": "basico",
+      "eje": "Trigonometría",
+      "tema": "Valores notables de funciones trigonométricas",
+      "enunciado": "¿Cuál es el valor de tan(45°)?",
+      "opciones": [
+        {"letra": "A", "texto": "0"},
+        {"letra": "B", "texto": "1/2"},
+        {"letra": "C", "texto": "1"},
+        {"letra": "D", "texto": "√3"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "tan(45°) = sin(45°)/cos(45°) = (√2/2)/(√2/2) = 1. También se puede recordar directamente de la tabla de valores notables.",
+      "explicacionesIncorrectas": {
+        "A": "tan(0°) = 0, no tan(45°).",
+        "B": "1/2 no es el valor de ninguna función trigonométrica en 45°.",
+        "D": "√3 es el valor de tan(60°), no de tan(45°)."
+      },
+      "consejo": "Memoriza los valores notables: tan(30°) = 1/√3, tan(45°) = 1, tan(60°) = √3."
+    },
+    {
+      "id": "M2-INT-001",
+      "nivel": "intermedio",
+      "eje": "Álgebra",
+      "tema": "Propiedades de logaritmos",
+      "enunciado": "Simplifique: log₂(12) - log₂(3)",
+      "opciones": [
+        {"letra": "A", "texto": "log₂(9)"},
+        {"letra": "B", "texto": "2"},
+        {"letra": "C", "texto": "4"},
+        {"letra": "D", "texto": "log₂(4)"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "Por la propiedad de la resta de logaritmos: log₂(12) - log₂(3) = log₂(12/3) = log₂(4) = 2, ya que 2² = 4.",
+      "explicacionesIncorrectas": {
+        "A": "log₂(9) resultaría de multiplicar 12 × 3 en vez de dividir.",
+        "C": "4 es el argumento del logaritmo, no su valor. log₂(4) = 2, no 4.",
+        "D": "log₂(4) es correcto como paso intermedio, pero no es la simplificación final: log₂(4) = 2."
+      },
+      "consejo": "La propiedad clave: log(a) - log(b) = log(a/b). Después evalúa si el resultado es un valor entero."
+    },
+    {
+      "id": "M2-INT-002",
+      "nivel": "intermedio",
+      "eje": "Funciones",
+      "tema": "Composición de funciones",
+      "enunciado": "Si f(x) = 3x² - 2x + 1 y g(x) = x + 5, ¿cuál es f(g(2))?",
+      "opciones": [
+        {"letra": "A", "texto": "37"},
+        {"letra": "B", "texto": "21"},
+        {"letra": "C", "texto": "137"},
+        {"letra": "D", "texto": "150"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "Primero g(2) = 2 + 5 = 7. Luego f(7) = 3(7²) - 2(7) + 1 = 3(49) - 14 + 1 = 147 - 14 + 1 = 137.",
+      "explicacionesIncorrectas": {
+        "A": "37 correspondería a calcular f(2) + g(2) = 11 + 7 = 18, o algún otro error de composición.",
+        "B": "21 correspondería a calcular g(f(2)): f(2) = 11, g(11) = 16, no 21.",
+        "D": "150 correspondería a calcular 3(7²) = 147 sin restar los demás términos."
+      },
+      "consejo": "En composición f(g(x)), primero evalúa g(x) y luego reemplaza ese resultado en f. No revistas el orden."
+    },
+    {
+      "id": "M2-INT-003",
+      "nivel": "intermedio",
+      "eje": "Combinatoria",
+      "tema": "Combinaciones sin repetición",
+      "enunciado": "De un grupo de 10 personas, ¿de cuántas formas se pueden elegir 3 para formar un comité?",
+      "opciones": [
+        {"letra": "A", "texto": "30"},
+        {"letra": "B", "texto": "720"},
+        {"letra": "C", "texto": "120"},
+        {"letra": "D", "texto": "210"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "Se usa combinación (el orden no importa): C(10,3) = 10! / (3! × 7!) = (10 × 9 × 8) / (3 × 2 × 1) = 720 / 6 = 120.",
+      "explicacionesIncorrectas": {
+        "A": "30 correspondería a 10 × 3, una multiplicación simple sin fórmula combinatoria.",
+        "B": "720 es el valor de 6!, no de C(10,3).",
+        "D": "210 correspondería a C(10,4) = 210, no C(10,3)."
+      },
+      "consejo": "Si el orden NO importa (un comité), usa combinaciones: C(n,k) = n! / (k!(n-k)!). Si el orden SÍ importa, usa permutaciones."
+    },
+    {
+      "id": "M2-INT-004",
+      "nivel": "intermedio",
+      "eje": "Geometría Analítica",
+      "tema": "Ecuación de la circunferencia",
+      "enunciado": "¿Cuál es el centro y el radio de la circunferencia definida por x² + y² - 2x + 4y - 11 = 0?",
+      "opciones": [
+        {"letra": "A", "texto": "Centro (1, -2) y radio 4"},
+        {"letra": "B", "texto": "Centro (-1, 2) y radio 4"},
+        {"letra": "C", "texto": "Centro (1, -2) y radio 16"},
+        {"letra": "D", "texto": "Centro (2, -4) y radio √11"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Completamos cuadrados: (x² - 2x + 1) + (y² + 4y + 4) = 11 + 1 + 4 → (x-1)² + (y+2)² = 16 = 4². Centro: (1, -2), radio: 4.",
+      "explicacionesIncorrectas": {
+        "B": "Los signos del centro están invertidos. (-1, 2) sería el resultado si no se cambian los signos al completar cuadrados.",
+        "C": "16 es r², no r. El radio es √16 = 4.",
+        "D": "El centro (2, -4) usa los coeficientes directamente sin completar cuadrados."
+      },
+      "consejo": "Para encontrar centro y radio, completa cuadrados para x e y por separado. El radio siempre es la raíz del término independiente."
+    },
+    {
+      "id": "M2-INT-005",
+      "nivel": "intermedio",
+      "eje": "Trigonometría",
+      "tema": "Fórmulas de resta de ángulos",
+      "enunciado": "¿Cuál es el valor de tan(60° - 30°)?",
+      "opciones": [
+        {"letra": "A", "texto": "√3"},
+        {"letra": "B", "texto": "√3/3"},
+        {"letra": "C", "texto": "1/2"},
+        {"letra": "D", "texto": "2 - √3"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "Usando la fórmula de resta: tan(60° - 30°) = (tan60° - tan30°)/(1 + tan60°·tan30°) = (√3 - 1/√3)/(1 + √3·(1/√3)) = ((3-1)/√3)/2 = (2/√3)/2 = 1/√3 = √3/3.",
+      "explicacionesIncorrectas": {
+        "A": "√3 es tan(60°), no tan(60°-30°). Olvidó aplicar la fórmula.",
+        "C": "1/2 no corresponde a ninguna evaluación directa de esta fórmula.",
+        "D": "2 - √3 es el valor de tan(15°), no de tan(30°)."
+      },
+      "consejo": "Memoriza la fórmula: tan(A-B) = (tanA - tanB)/(1 + tanA·tanB). También verifica: tan(30°) = √3/3, lo que confirma el resultado."
+    },
+    {
+      "id": "M2-INT-006",
+      "nivel": "intermedio",
+      "eje": "Álgebra",
+      "tema": "Sucesiones aritméticas",
+      "enunciado": "Cuál es la suma de los primeros 8 términos de la sucesión aritmética 3, 8, 13, 18, ...?",
+      "opciones": [
+        {"letra": "A", "texto": "120"},
+        {"letra": "B", "texto": "164"},
+        {"letra": "C", "texto": "180"},
+        {"letra": "D", "texto": "200"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "a₁ = 3, d = 5 (diferencia común: 8-3=5). S₈ = n/2 · (2a₁ + (n-1)d) = 8/2 · (2(3) + 7(5)) = 4 · (6 + 35) = 4 · 41 = 164.",
+      "explicacionesIncorrectas": {
+        "A": "120 correspondería a calcular 8/2 · (3 + 38) = 4 · 41 = 164, no 120.",
+        "C": "180 no corresponde a ninguna variación razonable de la fórmula.",
+        "D": "200 correspondería a multiplicar 8 × 25, que no tiene relación con la fórmula."
+      },
+      "consejo": "La fórmula de suma de una AP es Sₙ = n/2 · (2a₁ + (n-1)d). Primero identifica a₁ y d."
+    },
+    {
+      "id": "M2-INT-007",
+      "nivel": "intermedio",
+      "eje": "Geometría Analítica",
+      "tema": "Intersección de curvas",
+      "enunciado": "¿Cuántos puntos de intersección tiene la recta y = 2x + 1 con la parábola y = x²?",
+      "opciones": [
+        {"letra": "A", "texto": "Ninguno"},
+        {"letra": "B", "texto": "Uno"},
+        {"letra": "C", "texto": "Dos"},
+        {"letra": "D", "texto": "Infinitos"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "Igualando: x² = 2x + 1 → x² - 2x - 1 = 0. El discriminante es Δ = (-2)² - 4(1)(-1) = 4 + 4 = 8 > 0, por lo tanto hay 2 soluciones reales (2 puntos de intersección).",
+      "explicacionesIncorrectas": {
+        "A": "Un discriminante positivo indica que SÍ hay intersecciones.",
+        "B": "Un punto de intersección ocurriría si Δ = 0, pero Δ = 8.",
+        "D": "La recta y la parábola solo se intersectan en un máximo de 2 puntos."
+      },
+      "consejo": "Para intersecciones, iguala las ecuaciones y analiza el discriminante: Δ > 0 → 2 puntos, Δ = 0 → 1 punto, Δ < 0 → 0 puntos."
+    },
+    {
+      "id": "M2-INT-008",
+      "nivel": "intermedio",
+      "eje": "Combinatoria",
+      "tema": "Permutaciones con repetición",
+      "enunciado": "¿De cuántas formas se pueden ordenar las letras de la palabra 'MATEMÁTICO'?",
+      "opciones": [
+        {"letra": "A", "texto": "3.628.800"},
+        {"letra": "B", "texto": "45.360"},
+        {"letra": "C", "texto": "151.200"},
+        {"letra": "D", "texto": "302.400"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "MATEMÁTICO tiene 10 letras: M(2), A(3), T(2), E(1), I(1), C(1), O(1). Permutaciones con repetición: 10! / (2!·3!·2!·1!·1!·1!·1!) = 3.628.800 / (2·6·2) = 3.628.800 / 24 = 151.200.",
+      "explicacionesIncorrectas": {
+        "A": "3.628.800 = 10! sin dividir por las repeticiones. Olvidó la fórmula de permutaciones con repetición.",
+        "B": "45.360 correspondería a un cálculo con frecuencias diferentes.",
+        "D": "302.400 correspondería a 10! / (2!·2!) = 3.628.800 / 4 = 907.200, no 302.400."
+      },
+      "consejo": "Cuando hay letras repetidas, usa: n! / (f1!·f2!·...·fk!), donde fi son las frecuencias de cada letra."
+    },
+    {
+      "id": "M2-AVA-001",
+      "nivel": "avanzado",
+      "eje": "Cálculo",
+      "tema": "Límite con función trigonométrica",
+      "enunciado": "¿Cuál es el valor de lim(x→0) sin(3x)/x?",
+      "opciones": [
+        {"letra": "A", "texto": "0"},
+        {"letra": "B", "texto": "1"},
+        {"letra": "C", "texto": "3"},
+        {"letra": "D", "texto": "No existe"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "Usando el límite fundamental lim(θ→0) sin(θ)/θ = 1: lim(x→0) sin(3x)/x = lim(x→0) 3·sin(3x)/(3x) = 3 · 1 = 3.",
+      "explicacionesIncorrectas": {
+        "A": "0 sería el resultado si el numerador tiende a 0 más rápido que el denominador, pero ambos tienden a 0 a la misma velocidad.",
+        "B": "1 correspondería a lim(x→0) sin(x)/x, sin el coeficiente 3.",
+        "D": "El límite sí existe y es 3."
+      },
+      "consejo": "Adapta la expresión al límite estándar sin(θ)/θ = 1 multiplicando y dividiendo por la constante necesaria."
+    },
+    {
+      "id": "M2-AVA-002",
+      "nivel": "avanzado",
+      "eje": "Cálculo",
+      "tema": "Derivadas de polinomios",
+      "enunciado": "¿Cuál es la derivada de f(x) = 3x⁴ - 2x³ + 5x - 7?",
+      "opciones": [
+        {"letra": "A", "texto": "12x³ - 6x² + 5"},
+        {"letra": "B", "texto": "12x⁴ - 6x³ + 5"},
+        {"letra": "C", "texto": "3x³ - 2x² + 5"},
+        {"letra": "D", "texto": "12x³ - 6x² + 5x"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Aplicando la regla de potencia: f'(x) = 3·4x³ - 2·3x² + 5·1 - 0 = 12x³ - 6x² + 5.",
+      "explicacionesIncorrectas": {
+        "B": "Mantiene los exponentes originales en lugar de reducirlos en 1.",
+        "C": "No multiplicó los coeficientes por los exponentes, solo restó 1 al exponente.",
+        "D": "Agrega un término 'x' que no corresponde a la derivada de la constante -7."
+      },
+      "consejo": "Regla de potencia: d/dx(xⁿ) = n·xⁿ⁻¹. La derivada de una constante es 0."
+    },
+    {
+      "id": "M2-AVA-003",
+      "nivel": "avanzado",
+      "eje": "Álgebra",
+      "tema": "Suma de series geométricas infinitas",
+      "enunciado": "¿Cuál es la suma de la serie geométrica infinita 2 + 2/3 + 2/9 + 2/27 + ...?",
+      "opciones": [
+        {"letra": "A", "texto": "2"},
+        {"letra": "B", "texto": "3"},
+        {"letra": "C", "texto": "4"},
+        {"letra": "D", "texto": "La serie diverge"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "Primero término a₁ = 2, razón r = 1/3. Como |r| < 1, la serie converge. S = a₁/(1-r) = 2/(1-1/3) = 2/(2/3) = 2·(3/2) = 3.",
+      "explicacionesIncorrectas": {
+        "A": "2 es solo el primer término, no la suma total.",
+        "C": "4 no corresponde a ninguna variación razonable de la fórmula.",
+        "D": "La serie converge porque |r| = 1/3 < 1."
+      },
+      "consejo": "Una serie geométrica infinita converge solo si |r| < 1. La fórmula es S = a₁/(1-r)."
+    },
+    {
+      "id": "M2-AVA-004",
+      "nivel": "avanzado",
+      "eje": "Geometría Analítica",
+      "tema": "Elipse: focos y distancia focal",
+      "enunciado": "¿Cuál es la distancia entre los focos de la elipse x²/25 + y²/9 = 1?",
+      "opciones": [
+        {"letra": "A", "texto": "4"},
+        {"letra": "B", "texto": "6"},
+        {"letra": "C", "texto": "8"},
+        {"letra": "D", "texto": "10"}
+      ],
+      "respuestaCorrecta": "C",
+      "explicacionCorrecta": "a² = 25, b² = 9. c² = a² - b² = 25 - 9 = 16, c = 4. Los focos están en (±4, 0), por lo que la distancia entre ellos es 2c = 8.",
+      "explicacionesIncorrectas": {
+        "A": "4 es el valor de c (distancia del centro a un foco), no la distancia total entre focos.",
+        "B": "6 correspondería a √(b²) = 3, multiplicado por 2, lo que no tiene sentido geométrico.",
+        "D": "10 correspondería a 2a = 2(5) = 10, que es la longitud del eje mayor, no la distancia focal."
+      },
+      "consejo": "En una elipse, c² = a² - b². La distancia entre focos es 2c, no c ni 2a."
+    },
+    {
+      "id": "M2-AVA-005",
+      "nivel": "avanzado",
+      "eje": "Cálculo",
+      "tema": "Optimización con derivadas",
+      "enunciado": "¿Cuál es el valor mínimo de la función f(x) = x² - 6x + 13?",
+      "opciones": [
+        {"letra": "A", "texto": "3"},
+        {"letra": "B", "texto": "4"},
+        {"letra": "C", "texto": "13"},
+        {"letra": "D", "texto": "La función no tiene mínimo"}
+      ],
+      "respuestaCorrecta": "B",
+      "explicacionCorrecta": "Completando cuadrados: f(x) = (x² - 6x + 9) + 4 = (x-3)² + 4. El mínimo ocurre cuando (x-3)² = 0, es decir x = 3, y f(3) = 4. Alternativamente: f'(x) = 2x - 6 = 0 → x = 3, f(3) = 9 - 18 + 13 = 4.",
+      "explicacionesIncorrectas": {
+        "A": "3 es el valor de x donde ocurre el mínimo, no el valor mínimo de la función.",
+        "C": "13 es f(0), que no es el mínimo.",
+        "D": "La función es una parábola con coeficiente principal positivo, por lo que SÍ tiene un mínimo."
+      },
+      "consejo": "Para encontrar el mínimo de una función cuadrática, completa cuadrados o usa derivada igualada a cero. El resultado es el valor de f(x), no el valor de x."
+    },
+    {
+      "id": "M2-AVA-006",
+      "nivel": "avanzado",
+      "eje": "Cálculo",
+      "tema": "Límites en el infinito",
+      "enunciado": "¿Cuál es el valor de lim(x→∞) (3x² + 2x) / (x² - 1)?",
+      "opciones": [
+        {"letra": "A", "texto": "0"},
+        {"letra": "B", "texto": "1"},
+        {"letra": "C", "texto": "2"},
+        {"letra": "D", "texto": "3"}
+      ],
+      "respuestaCorrecta": "D",
+      "explicacionCorrecta": "Dividiendo numerador y denominador por x² (la mayor potencia): lim(x→∞) (3 + 2/x) / (1 - 1/x²) = (3 + 0) / (1 - 0) = 3/1 = 3.",
+      "explicacionesIncorrectas": {
+        "A": "0 resultaría si el grado del numerador fuera menor que el del denominador.",
+        "B": "1 resultaría si los coeficientes principales fueran iguales.",
+        "C": "2 no corresponde a ninguna variación razonable del cálculo."
+      },
+      "consejo": "Cuando x→∞ en cocientes de polinomios, el límite depende de los coeficientes de mayor grado. Si los grados son iguales, es a_n/b_n."
+    }
+  ]
+}

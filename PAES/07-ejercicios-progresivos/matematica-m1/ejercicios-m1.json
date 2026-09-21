@@ -1,0 +1,860 @@
+{
+  "asignatura": "Matemática 1 (M1)",
+  "totalEjercicios": 40,
+  "niveles": {
+    "basico": {
+      "descripcion": "Fundamentos de 7° y 8° básico",
+      "ejercicios": 15
+    },
+    "intermedio": {
+      "descripcion": "Contenidos de 1° y 2° medio",
+      "ejercicios": 15
+    },
+    "avanzado": {
+      "descripcion": "Nivel PAES - integración de conceptos",
+      "ejercicios": 10
+    }
+  },
+  "ejercicios": [
+    {
+      "id": "M1-BAS-001",
+      "nivel": "basico",
+      "eje": "Números",
+      "tema": "Fracciones",
+      "enunciado": "Simplifica la siguiente fracción: 24/36",
+      "opciones": [
+        {"letra": "A", "texto": "2/3"},
+        {"letra": "B", "texto": "3/4"},
+        {"letra": "C", "texto": "4/6"},
+        {"letra": "D", "texto": "6/8"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Para simplificar 24/36, buscamos el MCD de 24 y 36. El MCD es 12. Dividimos numerador y denominador entre 12: 24÷12 = 2, 36÷12 = 3. Resultado: 2/3.",
+      "explicacionesIncorrectas": {
+        "B": "3/4 sería el resultado si dividieras entre 8 (24÷8=3, 36÷8=4.5). Pero 8 no es divisor de 36, por lo que no es una simplificación correcta.",
+        "C": "4/6 es equivalente a 24/36, pero NO está simplificada. Se puede simplificar más dividiendo entre 2.",
+        "D": "6/8 no es equivalente a 24/36. Si multiplicamos 6/8 × 4/4 = 24/32, no 24/36."
+      },
+      "consejo": "Siempre busca el MCD para simplificar fracciones completamente."
+    },
+    {
+      "id": "M1-BAS-002",
+      "nivel": "basico",
+      "eje": "Números",
+      "tema": "Porcentajes",
+      "enunciado": "Un producto cuesta $45.000 y tiene un descuento del 20%. ¿Cuál es el precio final?",
+      "opciones": [
+        {"letra": "A", "texto": "$36.000"},
+        {"letra": "B", "texto": "$35.000"},
+        {"letra": "C", "texto": "$9.000"},
+        {"letra": "D", "texto": "$54.000"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El descuento es el 20% de $45.000 = 0.20 × 45.000 = $9.000. El precio final es $45.000 - $9.000 = $36.000.",
+      "explicacionesIncorrectas": {
+        "B": "$35.000 no tiene relación directa con el cálculo. Podría ser un error de redondeo.",
+        "C": "$9.000 es SOLO el descuento, no el precio final.",
+        "D": "$54.000 sería el resultado si SUMARAS el 20% en vez de restarlo."
+      },
+      "consejo": "Lee bien si te piden el descuento o el precio final. Son cosas diferentes."
+    },
+    {
+      "id": "M1-BAS-003",
+      "nivel": "basico",
+      "eje": "Álgebra",
+      "tema": "Ecuaciones lineales",
+      "enunciado": "Resuelve para x: 3x + 7 = 22",
+      "opciones": [
+        {"letra": "A", "texto": "x = 5"},
+        {"letra": "B", "texto": "x = 3"},
+        {"letra": "C", "texto": "x = 7"},
+        {"letra": "D", "texto": "x = 15"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "3x + 7 = 22 → 3x = 22 - 7 → 3x = 15 → x = 5. Verificación: 3(5) + 7 = 22 ✓",
+      "explicacionesIncorrectas": {
+        "B": "x = 3 sería correcto si la ecuación fuera 3x + 7 = 16.",
+        "C": "x = 7 sería correcto si olvidaras dividir entre 3 al final.",
+        "D": "x = 15 es el valor de 3x, no de x. Olvidaste dividir entre 3."
+      },
+      "consejo": "Siempre verifica tu respuesta sustituyendo en la ecuación original."
+    },
+    {
+      "id": "M1-BAS-004",
+      "nivel": "basico",
+      "eje": "Geometría",
+      "tema": "Pitágoras",
+      "enunciado": "Un triángulo rectángulo tiene catetos de 6 cm y 8 cm. ¿Cuánto mide la hipotenusa?",
+      "opciones": [
+        {"letra": "A", "texto": "10 cm"},
+        {"letra": "B", "texto": "14 cm"},
+        {"letra": "C", "texto": "48 cm"},
+        {"letra": "D", "texto": "7 cm"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Por Pitágoras: c² = a² + b² = 6² + 8² = 36 + 64 = 100. c = √100 = 10 cm.",
+      "explicacionesIncorrectas": {
+        "B": "14 cm sería 6 + 8 (suma directa de catetos). La hipotenusa NUNCA es la suma de catetos.",
+        "C": "48 cm es 6 × 8 (producto de catetos). No tiene relación con Pitágoras.",
+        "D": "7 cm no tiene relación con ningún cálculo válido."
+      },
+      "consejo": "Memoriza las terna pitagóricas: (3,4,5), (5,12,13), (8,15,17), (6,8,10)."
+    },
+    {
+      "id": "M1-BAS-005",
+      "nivel": "basico",
+      "eje": "Probabilidad y Estadística",
+      "tema": "Promedio",
+      "enunciado": "Las notas de un alumno son: 4, 5, 6, 7, 8. ¿Cuál es su promedio?",
+      "opciones": [
+        {"letra": "A", "texto": "6"},
+        {"letra": "B", "texto": "5"},
+        {"letra": "C", "texto": "7"},
+        {"letra": "D", "texto": "4"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Promedio = (4 + 5 + 6 + 7 + 8) / 5 = 30 / 5 = 6.",
+      "explicacionesIncorrectas": {
+        "B": "5 podría ser la mediana (valor central ordenado), no el promedio.",
+        "C": "7 es la nota más alta, no el promedio.",
+        "D": "4 es la nota más baja, no el promedio."
+      },
+      "consejo": "Promedio = suma de valores / cantidad de valores."
+    },
+    {
+      "id": "M1-BAS-006",
+      "nivel": "basico",
+      "eje": "Números",
+      "tema": "Razones",
+      "enunciado": "En una clase hay 12 hombres y 18 mujeres. ¿Cuál es la razón hombres:mujeres simplificada?",
+      "opciones": [
+        {"letra": "A", "texto": "2:3"},
+        {"letra": "B", "texto": "3:2"},
+        {"letra": "C", "texto": "12:18"},
+        {"letra": "D", "texto": "6:9"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La razón 12:18 se simplifica dividiendo ambos términos entre su MCD (6): 12÷6 = 2, 18÷6 = 3. Razón simplificada: 2:3.",
+      "explicacionesIncorrectas": {
+        "B": "3:2 sería la razón mujeres:hombres, no hombres:mujeres. El orden importa.",
+        "C": "12:18 es la razón original pero NO está simplificada.",
+        "D": "6:9 es equivalente pero no está completamente simplificada (se puede dividir entre 3)."
+      },
+      "consejo": "Las razones se simplifican igual que las fracciones: dividiendo ambos términos por su MCD."
+    },
+    {
+      "id": "M1-BAS-007",
+      "nivel": "basico",
+      "eje": "Números",
+      "tema": "Decimales y fracciones",
+      "enunciado": "¿Cuál es el valor de 3/8 en decimal?",
+      "opciones": [
+        {"letra": "A", "texto": "0.375"},
+        {"letra": "B", "texto": "0.38"},
+        {"letra": "C", "texto": "0.25"},
+        {"letra": "D", "texto": "0.75"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "3 ÷ 8 = 0.375. Podemos verificar: 0.375 × 8 = 3.000 ✓",
+      "explicacionesIncorrectas": {
+        "B": "0.38 es una aproximación de 0.375, pero no es exacta.",
+        "C": "0.25 equivale a 1/4, no a 3/8.",
+        "D": "0.75 equivale a 3/4, no a 3/8."
+      },
+      "consejo": "Para convertir fracción a decimal, divide el numerador entre el denominador."
+    },
+    {
+      "id": "M1-BAS-008",
+      "nivel": "basico",
+      "eje": "Números",
+      "tema": "Valor absoluto",
+      "enunciado": "¿Cuál es el valor de |−7| + |3| − |−2|?",
+      "opciones": [
+        {"letra": "A", "texto": "8"},
+        {"letra": "B", "texto": "−12"},
+        {"letra": "C", "texto": "−2"},
+        {"letra": "D", "texto": "12"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "|−7| = 7, |3| = 3, |−2| = 2. Entonces: 7 + 3 − 2 = 8.",
+      "explicacionesIncorrectas": {
+        "B": "−12 sería el resultado sin valor absoluto: −7 + 3 − 2 = −6, no −12.",
+        "C": "−2 sería el resultado si no aplicaras valor absoluto a −7: −7 + 3 − 2 = −6, no −2.",
+        "D": "12 sería si sumaras todos los valores sin restar: 7 + 3 + 2 = 12."
+      },
+      "consejo": "El valor absoluto convierte todo número negativo en positivo: |−a| = a para a > 0."
+    },
+    {
+      "id": "M1-BAS-009",
+      "nivel": "basico",
+      "eje": "Números",
+      "tema": "Orden de operaciones",
+      "enunciado": "Calcula: (2 + 3) × 4 − 6 ÷ 3",
+      "opciones": [
+        {"letra": "A", "texto": "18"},
+        {"letra": "B", "texto": "16"},
+        {"letra": "C", "texto": "20"},
+        {"letra": "D", "texto": "14"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Primero paréntesis: (2 + 3) = 5. Luego multiplicación: 5 × 4 = 20. Luego división: 6 ÷ 3 = 2. Finalmente resta: 20 − 2 = 18.",
+      "explicacionesIncorrectas": {
+        "B": "16 sería 2 + 3 × 4 − 6 ÷ 3 = 2 + 12 − 2 = 12, no 16.",
+        "C": "20 sería si olvidaras la división 6 ÷ 3 = 2.",
+        "D": "14 no corresponde a ningún cálculo válido con el orden correcto."
+      },
+      "consejo": "Respeta el orden: paréntesis, potencias, multiplicación/división, suma/resta."
+    },
+    {
+      "id": "M1-BAS-010",
+      "nivel": "basico",
+      "eje": "Geometría",
+      "tema": "Área de triángulo",
+      "enunciado": "Un triángulo tiene base de 10 cm y altura de 6 cm. ¿Cuál es su área?",
+      "opciones": [
+        {"letra": "A", "texto": "30 cm²"},
+        {"letra": "B", "texto": "60 cm²"},
+        {"letra": "C", "texto": "16 cm²"},
+        {"letra": "D", "texto": "36 cm²"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Área del triángulo = (base × altura) / 2 = (10 × 6) / 2 = 60 / 2 = 30 cm².",
+      "explicacionesIncorrectas": {
+        "B": "60 cm² sería base × altura sin dividir entre 2. El triángulo es la mitad de un rectángulo.",
+        "C": "16 cm² sería 10 + 6 = 16. Sumar base y altura no da área.",
+        "D": "36 cm² no tiene relación con el cálculo correcto."
+      },
+      "consejo": "El área del triángulo es SIEMPRE la mitad de base × altura."
+    },
+    {
+      "id": "M1-BAS-011",
+      "nivel": "basico",
+      "eje": "Números",
+      "tema": "Porcentajes",
+      "enunciado": "Un arriendo costaba $350.000 e subió un 12%. ¿Cuál es el nuevo valor del arriendo?",
+      "opciones": [
+        {"letra": "A", "texto": "$392.000"},
+        {"letra": "B", "texto": "$385.000"},
+        {"letra": "C", "texto": "$42.000"},
+        {"letra": "D", "texto": "$308.000"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El aumento es 12% de $350.000 = 0.12 × 350.000 = $42.000. El nuevo valor es $350.000 + $42.000 = $392.000. Alternativamente: $350.000 × 1.12 = $392.000.",
+      "explicacionesIncorrectas": {
+        "B": "$385.000 sería un aumento del 10% ($35.000), no del 12%.",
+        "C": "$42.000 es SOLO el aumento, no el nuevo precio.",
+        "D": "$308.000 sería el precio si BAJARA un 12%: $350.000 × 0.88 = $308.000."
+      },
+      "consejo": "Para precio con aumento: multiplica por (1 + porcentaje/100). Para descuento: multiplica por (1 − porcentaje/100)."
+    },
+    {
+      "id": "M1-BAS-012",
+      "nivel": "basico",
+      "eje": "Números",
+      "tema": "MCD y MCM",
+      "enunciado": "¿Cuál es el mínimo común múltiplo (MCM) de 6 y 8?",
+      "opciones": [
+        {"letra": "A", "texto": "24"},
+        {"letra": "B", "texto": "48"},
+        {"letra": "C", "texto": "2"},
+        {"letra": "D", "texto": "14"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Múltiplos de 6: 6, 12, 18, 24, 30... Múltiplos de 8: 8, 16, 24, 32... El primer múltiplo común es 24. Alternativamente: MCM = (6 × 8) / MCD(6,8) = 48/2 = 24.",
+      "explicacionesIncorrectas": {
+        "B": "48 es un múltiplo común pero NO es el mínimo. El MCM es 24.",
+        "C": "2 es el MCD (máximo común divisor), no el MCM.",
+        "D": "14 es 6 + 8, no tiene relación con MCM."
+      },
+      "consejo": "MCD = mayor divisor común. MCM = menor múltiplo común. Son conceptos diferentes."
+    },
+    {
+      "id": "M1-BAS-013",
+      "nivel": "basico",
+      "eje": "Álgebra",
+      "tema": "Proporciones",
+      "enunciado": "Si 3 lapices cuestan $1.500, ¿cuánto costarán 7 lapices?",
+      "opciones": [
+        {"letra": "A", "texto": "$3.500"},
+        {"letra": "B", "texto": "$3.000"},
+        {"letra": "C", "texto": "$5.250"},
+        {"letra": "D", "texto": "$2.500"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Precio por lápiz = $1.500 / 3 = $500. Costo de 7 lápices = $500 × 7 = $3.500. O por regla de tres: 3/1500 = 7/x → x = (7 × 1500)/3 = $3.500.",
+      "explicacionesIncorrectas": {
+        "B": "$3.000 sería 2 × $1.500, no tiene relación con 7 lápices.",
+        "C": "$5.250 sería si el precio por lápiz fuera $750 en vez de $500.",
+        "D": "$2.500 no corresponde a ningún cálculo válido."
+      },
+      "consejo": "En proporciones, primero encuentra la unidad (precio unitario) y luego multiplica."
+    },
+    {
+      "id": "M1-BAS-014",
+      "nivel": "basico",
+      "eje": "Geometría",
+      "tema": "Perímetro de figuras compuestas",
+      "enunciado": "Un rectángulo de 12 cm × 5 cm tiene un cuadrado de 3 cm × 3 cm recortado en una esquina. ¿Cuál es el perímetro de la figura resultante?",
+      "opciones": [
+        {"letra": "A", "texto": "34 cm"},
+        {"letra": "B", "texto": "32 cm"},
+        {"letra": "C", "texto": "36 cm"},
+        {"letra": "D", "texto": "30 cm"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El perímetro del rectángulo original es 2(12 + 5) = 34 cm. Al recortar una esquina, se eliminan 2 lados de 3 cm pero se agregan 2 lados nuevos de 3 cm. El perímetro permanece igual: 34 cm.",
+      "explicacionesIncorrectas": {
+        "B": "32 cm sería el perímetro original menos algo, pero el recorte no reduce el perímetro.",
+        "C": "36 cm sería si sumaras los lados nuevos sin restar los eliminados.",
+        "D": "30 cm no tiene relación con el cálculo correcto."
+      },
+      "consejo": "Al recortar una esquina rectangular, el perímetro NO cambia (se intercambian lados iguales)."
+    },
+    {
+      "id": "M1-BAS-015",
+      "nivel": "basico",
+      "eje": "Números",
+      "tema": "Fracciones operaciones básicas",
+      "enunciado": "Calcula: 1/2 + 1/3",
+      "opciones": [
+        {"letra": "A", "texto": "5/6"},
+        {"letra": "B", "texto": "2/5"},
+        {"letra": "C", "texto": "1/6"},
+        {"letra": "D", "texto": "2/3"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Para sumar fracciones con distinto denominador, busca el MCM de 2 y 3, que es 6. Convertimos: 1/2 = 3/6 y 1/3 = 2/6. Sumamos: 3/6 + 2/6 = 5/6.",
+      "explicacionesIncorrectas": {
+        "B": "2/5 sería sumar numeradores y denominadores por separado: (1+1)/(2+3) = 2/5. Esto es incorrecto.",
+        "C": "1/6 sería 1/2 × 1/3 = 1/6, que es multiplicación, no suma.",
+        "D": "2/3 no corresponde a ninguna operación válida con 1/2 y 1/3."
+      },
+      "consejo": "Para sumar/restar fracciones: primero iguala denominadores (MCM), luego opera numeradores."
+    },
+    {
+      "id": "M1-INT-001",
+      "nivel": "intermedio",
+      "eje": "Álgebra",
+      "tema": "Funciones cuadráticas",
+      "enunciado": "¿Cuáles son las raíces de la ecuación x² − 5x + 6 = 0?",
+      "opciones": [
+        {"letra": "A", "texto": "x = 2 y x = 3"},
+        {"letra": "B", "texto": "x = 1 y x = 6"},
+        {"letra": "C", "texto": "x = −2 y x = −3"},
+        {"letra": "D", "texto": "x = 2 y x = −3"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Factorizamos: x² − 5x + 6 = (x − 2)(x − 3) = 0. Raíces: x = 2 y x = 3. Verificación: 2² − 5(2) + 6 = 0 ✓ y 3² − 5(3) + 6 = 0 ✓",
+      "explicacionesIncorrectas": {
+        "B": "x = 1 y x = 6 serían raíces de x² − 7x + 6 = 0.",
+        "C": "Los signos están invertidos: (−2)² − 5(−2) + 6 = 20 ≠ 0.",
+        "D": "x = 2 es correcta pero x = −3 no: (−3)² − 5(−3) + 6 = 30 ≠ 0."
+      },
+      "consejo": "Busca dos números que multiplicados den +6 y sumados den −5: son −2 y −3."
+    },
+    {
+      "id": "M1-INT-002",
+      "nivel": "intermedio",
+      "eje": "Geometría",
+      "tema": "Área y perímetro",
+      "enunciado": "Un rectángulo tiene un área de 48 cm² y un lado de 6 cm. ¿Cuál es su perímetro?",
+      "opciones": [
+        {"letra": "A", "texto": "28 cm"},
+        {"letra": "B", "texto": "24 cm"},
+        {"letra": "C", "texto": "54 cm"},
+        {"letra": "D", "texto": "14 cm"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Altura = Área/base = 48/6 = 8 cm. Perímetro = 2(6 + 8) = 2(14) = 28 cm.",
+      "explicacionesIncorrectas": {
+        "B": "24 cm no corresponde al cálculo del perímetro.",
+        "C": "54 cm sería 48 + 6 (área + lado). Esta operación no tiene sentido.",
+        "D": "14 cm es solo la suma de los dos lados, pero el perímetro es el doble."
+      },
+      "consejo": "Primero encuentra el lado que falta usando el área, luego calcula el perímetro."
+    },
+    {
+      "id": "M1-INT-003",
+      "nivel": "intermedio",
+      "eje": "Álgebra",
+      "tema": "Sistemas de ecuaciones",
+      "enunciado": "Resuelve el sistema: x + y = 10 y x − y = 4",
+      "opciones": [
+        {"letra": "A", "texto": "x = 7, y = 3"},
+        {"letra": "B", "texto": "x = 6, y = 4"},
+        {"letra": "C", "texto": "x = 5, y = 5"},
+        {"letra": "D", "texto": "x = 8, y = 2"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Sumando: 2x = 14 → x = 7. Sustituyendo: 7 + y = 10 → y = 3. Verificación: 7 + 3 = 10 ✓ y 7 − 3 = 4 ✓",
+      "explicacionesIncorrectas": {
+        "B": "6 + 4 = 10 ✓ pero 6 − 4 = 2 ≠ 4.",
+        "C": "5 + 5 = 10 ✓ pero 5 − 5 = 0 ≠ 4.",
+        "D": "8 + 2 = 10 ✓ pero 8 − 2 = 6 ≠ 4."
+      },
+      "consejo": "El método de eliminación es rápido para sistemas lineales."
+    },
+    {
+      "id": "M1-INT-004",
+      "nivel": "intermedio",
+      "eje": "Probabilidad y Estadística",
+      "tema": "Probabilidad",
+      "enunciado": "Se lanza un dado una vez. ¿Cuál es la probabilidad de obtener un número par?",
+      "opciones": [
+        {"letra": "A", "texto": "1/2"},
+        {"letra": "B", "texto": "1/3"},
+        {"letra": "C", "texto": "1/6"},
+        {"letra": "D", "texto": "2/3"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Pares en un dado: {2, 4, 6} = 3 casos favorables. Total: 6 casos. P = 3/6 = 1/2.",
+      "explicacionesIncorrectas": {
+        "B": "1/3 sería la probabilidad de un número específico (como sacar un 2).",
+        "C": "1/6 es la probabilidad de un número específico (como sacar un 1).",
+        "D": "2/3 no corresponde a la probabilidad de sacar par."
+      },
+      "consejo": "Identifica claramente los casos favorables y los casos totales."
+    },
+    {
+      "id": "M1-INT-005",
+      "nivel": "intermedio",
+      "eje": "Números",
+      "tema": "Proporcionalidad",
+      "enunciado": "Si 5 máquinas producen 100 piezas en 8 horas, ¿cuántas piezas producirán 8 máquinas en 6 horas?",
+      "opciones": [
+        {"letra": "A", "texto": "120 piezas"},
+        {"letra": "B", "texto": "96 piezas"},
+        {"letra": "C", "texto": "160 piezas"},
+        {"letra": "D", "texto": "80 piezas"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Tasa = 100/(5 × 8) = 2.5 piezas/máquina/hora. Producción = 2.5 × 8 × 6 = 120 piezas.",
+      "explicacionesIncorrectas": {
+        "B": "96 piezas sería 2 × 8 × 6. Usaste una tasa incorrecta.",
+        "C": "160 piezas sería 100 × (8/5) = 160. Olvidaste considerar el cambio de horas.",
+        "D": "80 piezas no corresponde a ningún cálculo válido."
+      },
+      "consejo": "Primero calcula la tasa unitaria (piezas/máquina/hora)."
+    },
+    {
+      "id": "M1-INT-006",
+      "nivel": "intermedio",
+      "eje": "Álgebra",
+      "tema": "Funciones lineales",
+      "enunciado": "La función f(x) = 2x − 3 representa el costo de un servicio. ¿Cuál es el costo cuando se usan 7 unidades?",
+      "opciones": [
+        {"letra": "A", "texto": "11"},
+        {"letra": "B", "texto": "17"},
+        {"letra": "C", "texto": "14"},
+        {"letra": "D", "texto": "21"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "f(7) = 2(7) − 3 = 14 − 3 = 11.",
+      "explicacionesIncorrectas": {
+        "B": "17 sería f(10) = 2(10) − 3 = 17, no f(7).",
+        "C": "14 sería solo 2 × 7, olvidaste restar 3.",
+        "D": "21 sería 3 × 7, multiplicaste por 3 en vez de 2."
+      },
+      "consejo": "Para evaluar una función, sustituye el valor de x en la expresión y opera."
+    },
+    {
+      "id": "M1-INT-007",
+      "nivel": "intermedio",
+      "eje": "Álgebra",
+      "tema": "Inecuaciones simples",
+      "enunciado": "Resuelve: 4x + 1 ≤ 13",
+      "opciones": [
+        {"letra": "A", "texto": "x ≤ 3"},
+        {"letra": "B", "texto": "x ≥ 3"},
+        {"letra": "C", "texto": "x ≤ 12"},
+        {"letra": "D", "texto": "x ≥ 12"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "4x + 1 ≤ 13 → 4x ≤ 12 → x ≤ 3.",
+      "explicacionesIncorrectas": {
+        "B": "x ≥ 3 sería si la desigualdad fuera al revés.",
+        "C": "x ≤ 12 sería si olvidaras dividir entre 4.",
+        "D": "x ≥ 12 no tiene relación con el cálculo."
+      },
+      "consejo": "Las inecuaciones se resuelven como ecuaciones, pero respeta el sentido de la desigualdad."
+    },
+    {
+      "id": "M1-INT-008",
+      "nivel": "intermedio",
+      "eje": "Geometría",
+      "tema": "Triángulos semejantes",
+      "enunciado": "Dos triángulos son semejantes con razón de escala 1:3. Si el área del triángulo pequeño es 12 cm², ¿cuál es el área del triángulo grande?",
+      "opciones": [
+        {"letra": "A", "texto": "108 cm²"},
+        {"letra": "B", "texto": "36 cm²"},
+        {"letra": "C", "texto": "48 cm²"},
+        {"letra": "D", "texto": "24 cm²"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Cuando la razón de escala es k, la razón de áreas es k². Aquí k = 3 (de pequeño a grande). Área grande = 12 × 3² = 12 × 9 = 108 cm².",
+      "explicacionesIncorrectas": {
+        "B": "36 cm² sería 12 × 3. Olvidaste elevar al cuadrado la razón de escala.",
+        "C": "48 cm² sería 12 × 4, no tiene relación con la razón de escala.",
+        "D": "24 cm² sería 12 × 2, no tiene relación."
+      },
+      "consejo": "En figuras semejantes: la razón de áreas es el CUADRADO de la razón de escala."
+    },
+    {
+      "id": "M1-INT-009",
+      "nivel": "intermedio",
+      "eje": "Geometría",
+      "tema": "Círculo",
+      "enunciado": "¿Cuánto mide la circunferencia de un círculo con radio 7 cm? (Use π ≈ 22/7)",
+      "opciones": [
+        {"letra": "A", "texto": "44 cm"},
+        {"letra": "B", "texto": "154 cm"},
+        {"letra": "C", "texto": "22 cm"},
+        {"letra": "D", "texto": "49 cm"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Circunferencia = 2πr = 2 × (22/7) × 7 = 2 × 22 = 44 cm.",
+      "explicacionesIncorrectas": {
+        "B": "154 cm sería π × r² = (22/7) × 49 = 154, que es el ÁREA, no la circunferencia.",
+        "C": "22 cm sería π × r = (22/7) × 7 = 22, pero falta el factor 2.",
+        "D": "49 cm sería r² = 7² = 49. No tiene relación con la circunferencia."
+      },
+      "consejo": "Circunferencia = 2πr (perímetro). Área = πr². No las confundas."
+    },
+    {
+      "id": "M1-INT-010",
+      "nivel": "intermedio",
+      "eje": "Probabilidad y Estadística",
+      "tema": "Estadística",
+      "enunciado": "Las edades de un grupo son: 20, 22, 22, 24, 27. ¿Cuál es la moda?",
+      "opciones": [
+        {"letra": "A", "texto": "22"},
+        {"letra": "B", "texto": "23"},
+        {"letra": "C", "texto": "20"},
+        {"letra": "D", "texto": "27"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La moda es el valor que más se repite. El 22 aparece 2 veces, los demás solo 1 vez. Moda = 22.",
+      "explicacionesIncorrectas": {
+        "B": "23 es el promedio: (20+22+22+24+27)/5 = 115/5 = 23, no la moda.",
+        "C": "20 es el valor mínimo, no la moda.",
+        "D": "27 es el valor máximo, no la moda."
+      },
+      "consejo": "Moda = valor que más se repite. Promedio = suma/cantidad. Son diferentes."
+    },
+    {
+      "id": "M1-INT-011",
+      "nivel": "intermedio",
+      "eje": "Álgebra",
+      "tema": "Ecuaciones cuadráticas",
+      "enunciado": "Usa la fórmula general para resolver: x² + 4x − 5 = 0",
+      "opciones": [
+        {"letra": "A", "texto": "x = 1 y x = −5"},
+        {"letra": "B", "texto": "x = −1 y x = 5"},
+        {"letra": "C", "texto": "x = 1 y x = 5"},
+        {"letra": "D", "texto": "x = −1 y x = −5"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Con a=1, b=4, c=−5: x = (−4 ± √(16+20))/2 = (−4 ± √36)/2 = (−4 ± 6)/2. x = (−4+6)/2 = 1 o x = (−4−6)/2 = −5.",
+      "explicacionesIncorrectas": {
+        "B": "Los signos están invertidos.",
+        "C": "x = 5 no cumple: 5² + 4(5) − 5 = 40 ≠ 0.",
+        "D": "x = −1 no cumple: (−1)² + 4(−1) − 5 = −8 ≠ 0."
+      },
+      "consejo": "Fórmula general: x = (−b ± √(b²−4ac)) / 2a. Identifica bien a, b y c."
+    },
+    {
+      "id": "M1-INT-012",
+      "nivel": "intermedio",
+      "eje": "Probabilidad y Estadística",
+      "tema": "Probabilidad compuesta",
+      "enunciado": "Se saca una carta de una baraja francesa (52 cartas) y se lanza una moneda. ¿Cuál es la probabilidad de sacar una carta roja y sacar cara?",
+      "opciones": [
+        {"letra": "A", "texto": "1/4"},
+        {"letra": "B", "texto": "1/2"},
+        {"letra": "C", "texto": "1/8"},
+        {"letra": "D", "texto": "13/52"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "P(roja) = 26/52 = 1/2. P(cara) = 1/2. Como son independientes: P(roja Y cara) = (1/2) × (1/2) = 1/4.",
+      "explicacionesIncorrectas": {
+        "B": "1/2 sería solo la probabilidad de cada evento por separado, no de ambos juntos.",
+        "C": "1/8 no corresponde a ningún cálculo válido.",
+        "D": "13/52 = 1/4 es correcto como número, pero 13/52 representa solo las cartas rojas de un palo, no la combinación."
+      },
+      "consejo": "Para eventos independientes: P(A y B) = P(A) × P(B)."
+    },
+    {
+      "id": "M1-INT-013",
+      "nivel": "intermedio",
+      "eje": "Álgebra",
+      "tema": "Composición de funciones",
+      "enunciado": "Si f(x) = 2x + 1 y g(x) = x², ¿cuál es el valor de f(g(3))?",
+      "opciones": [
+        {"letra": "A", "texto": "19"},
+        {"letra": "B", "texto": "49"},
+        {"letra": "C", "texto": "7"},
+        {"letra": "D", "texto": "37"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Primero g(3) = 3² = 9. Luego f(9) = 2(9) + 1 = 19.",
+      "explicacionesIncorrectas": {
+        "B": "49 sería g(f(3)): f(3) = 7, g(7) = 49. El orden importa.",
+        "C": "7 sería f(3) = 2(3) + 1 = 7, sin aplicar g.",
+        "D": "37 no corresponde a ningún cálculo válido."
+      },
+      "consejo": "f(g(x)) significa: primero aplicar g, luego f al resultado."
+    },
+    {
+      "id": "M1-INT-014",
+      "nivel": "intermedio",
+      "eje": "Geometría",
+      "tema": "Teorema de Thales",
+      "enunciado": "En un triángulo, una línea paralela a un lado corta los otros dos lados en proporción 2:3. Si el lado total mide 15 cm, ¿cuánto mide el segmento mayor?",
+      "opciones": [
+        {"letra": "A", "texto": "9 cm"},
+        {"letra": "B", "texto": "6 cm"},
+        {"letra": "C", "texto": "10 cm"},
+        {"letra": "D", "texto": "7.5 cm"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La proporción 2:3 suma 5 partes. Cada parte = 15/5 = 3 cm. Segmento mayor = 3 partes = 3 × 3 = 9 cm.",
+      "explicacionesIncorrectas": {
+        "B": "6 cm sería el segmento menor: 2 partes × 3 cm = 6 cm.",
+        "C": "10 cm no corresponde al cálculo.",
+        "D": "7.5 cm sería la mitad de 15, no sigue la proporción 2:3."
+      },
+      "consejo": "En proporciones, suma las partes, divide el total entre la suma, y multiplica por cada parte."
+    },
+    {
+      "id": "M1-INT-015",
+      "nivel": "intermedio",
+      "eje": "Probabilidad y Estadística",
+      "tema": "Estadística",
+      "enunciado": "Las ventas mensuales de una tienda son: $2M, $3M, $5M, $4M, $6M. ¿Cuál es la mediana?",
+      "opciones": [
+        {"letra": "A", "texto": "$4M"},
+        {"letra": "B", "texto": "$3M"},
+        {"letra": "C", "texto": "$4.5M"},
+        {"letra": "D", "texto": "$5M"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Ordenamos: $2M, $3M, $4M, $5M, $6M. Con 5 valores (impar), la mediana es el valor central: $4M.",
+      "explicacionesIncorrectas": {
+        "B": "$3M es el segundo valor, no la mediana.",
+        "C": "$4.5M sería la mediana si hubiera 6 valores (promedio de $4M y $5M).",
+        "D": "$5M es el cuarto valor, no la mediana."
+      },
+      "consejo": "La mediana es el valor central de datos ordenados. Si hay cantidad par, promedia los dos centrales."
+    },
+    {
+      "id": "M1-AVA-001",
+      "nivel": "avanzado",
+      "eje": "Álgebra",
+      "tema": "Funciones y modelamiento",
+      "enunciado": "La temperatura de un líquido desciende desde 80°C hasta 20°C en 30 minutos. Si la función es lineal, ¿cuál será la temperatura a los 45 minutos?",
+      "opciones": [
+        {"letra": "A", "texto": "−10°C"},
+        {"letra": "B", "texto": "10°C"},
+        {"letra": "C", "texto": "0°C"},
+        {"letra": "D", "texto": "−5°C"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Pendiente m = (20 − 80)/(30 − 0) = −60/30 = −2°C/min. T(t) = 80 − 2t. T(45) = 80 − 2(45) = 80 − 90 = −10°C.",
+      "explicacionesIncorrectas": {
+        "B": "10°C no sigue la pendiente calculada de −2°C/min.",
+        "C": "0°C no corresponde a la evaluación en t = 45.",
+        "D": "−5°C no sigue la función lineal calculada."
+      },
+      "consejo": "En modelamiento lineal, primero calcula la pendiente (tasa de cambio)."
+    },
+    {
+      "id": "M1-AVA-002",
+      "nivel": "avanzado",
+      "eje": "Geometría",
+      "tema": "Volumen y capacidad",
+      "enunciado": "Un cilindro tiene radio 5 cm y altura 12 cm. ¿Cuál es su volumen? (Use π ≈ 3.14)",
+      "opciones": [
+        {"letra": "A", "texto": "942 cm³"},
+        {"letra": "B", "texto": "376.8 cm³"},
+        {"letra": "C", "texto": "188.4 cm³"},
+        {"letra": "D", "texto": "60 cm³"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "V = π × r² × h = 3.14 × 5² × 12 = 3.14 × 25 × 12 = 3.14 × 300 = 942 cm³.",
+      "explicacionesIncorrectas": {
+        "B": "376.8 cm³ no corresponde al cálculo correcto.",
+        "C": "188.4 cm³ sería π × r × h, olvidando elevar r al cuadrado.",
+        "D": "60 cm³ sería solo r × h, sin π ni r²."
+      },
+      "consejo": "Volumen del cilindro: V = πr²h. Muchos olvidan elevar el radio al cuadrado."
+    },
+    {
+      "id": "M1-AVA-003",
+      "nivel": "avanzado",
+      "eje": "Números",
+      "tema": "Tasa de interés compuesto",
+      "enunciado": "Una inversión de $1.000.000 crece a una tasa del 10% anual compuesto. ¿Cuánto valdrá después de 2 años?",
+      "opciones": [
+        {"letra": "A", "texto": "$1.210.000"},
+        {"letra": "B", "texto": "$1.200.000"},
+        {"letra": "C", "texto": "$1.100.000"},
+        {"letra": "D", "texto": "$1.000.000"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Interés compuesto: A = P(1 + r)ⁿ = 1.000.000 × (1.10)² = 1.000.000 × 1.21 = $1.210.000.",
+      "explicacionesIncorrectas": {
+        "B": "$1.200.000 sería interés simple: 1.000.000 + 2 × 100.000 = 1.200.000. El compuesto genera más.",
+        "C": "$1.100.000 sería el valor después de 1 año, no 2.",
+        "D": "$1.000.000 es el capital inicial sin intereses."
+      },
+      "consejo": "Interés compuesto: A = P(1+r)ⁿ. El interés se calcula sobre el acumulado, no solo sobre el capital."
+    },
+    {
+      "id": "M1-AVA-004",
+      "nivel": "avanzado",
+      "eje": "Probabilidad y Estadística",
+      "tema": "Estadística descriptiva",
+      "enunciado": "En una prueba, las notas de 5 alumnos son: 3, 5, 7, 8, 12. ¿Cuál es la mediana?",
+      "opciones": [
+        {"letra": "A", "texto": "7"},
+        {"letra": "B", "texto": "5"},
+        {"letra": "C", "texto": "7.5"},
+        {"letra": "D", "texto": "3"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Datos ordenados: 3, 5, 7, 8, 12. Con 5 valores (impar), la mediana es el valor central: 7.",
+      "explicacionesIncorrectas": {
+        "B": "5 es el segundo valor, no la mediana.",
+        "C": "7.5 sería la mediana si hubiera 6 valores.",
+        "D": "3 es el valor mínimo."
+      },
+      "consejo": "Para la mediana: ordena los datos y busca el valor central."
+    },
+    {
+      "id": "M1-AVA-005",
+      "nivel": "avanzado",
+      "eje": "Álgebra",
+      "tema": "Inecuaciones",
+      "enunciado": "Resuelve: 2x − 3 > 5x + 9",
+      "opciones": [
+        {"letra": "A", "texto": "x < −4"},
+        {"letra": "B", "texto": "x > −4"},
+        {"letra": "C", "texto": "x < 4"},
+        {"letra": "D", "texto": "x > 4"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "2x − 3 > 5x + 9 → −3x > 12 → x < −4 (al dividir entre −3, se invierte la desigualdad).",
+      "explicacionesIncorrectas": {
+        "B": "x > −4 sería si no invirtieras la desigualdad al dividir entre negativo.",
+        "C": "x < 4 no tiene relación con el cálculo.",
+        "D": "x > 4 no tiene relación con el cálculo."
+      },
+      "consejo": "AL DIVIDIR ENTRE UN NÚMERO NEGATIVO, LA DESIGUALDAD SE INVIERTE."
+    },
+    {
+      "id": "M1-AVA-006",
+      "nivel": "avanzado",
+      "eje": "Geometría",
+      "tema": "Superficie de prismas",
+      "enunciado": "Un prisma rectangular tiene dimensiones 4 cm × 3 cm × 6 cm. ¿Cuál es su superficie total?",
+      "opciones": [
+        {"letra": "A", "texto": "108 cm²"},
+        {"letra": "B", "texto": "72 cm²"},
+        {"letra": "C", "texto": "144 cm²"},
+        {"letra": "D", "texto": "54 cm²"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Superficie = 2(ab + bc + ac) = 2(4×3 + 3×6 + 4×6) = 2(12 + 18 + 24) = 2(54) = 108 cm².",
+      "explicacionesIncorrectas": {
+        "B": "72 cm² sería solo 2(ab + bc) = 2(12 + 18) = 60, no 72.",
+        "C": "144 cm² no corresponde al cálculo correcto.",
+        "D": "54 cm² sería solo la suma de las tres caras sin duplicar: ab + bc + ac = 54."
+      },
+      "consejo": "Superficie del prisma: 2(ab + bc + ac). Son 6 caras: 3 pares iguales."
+    },
+    {
+      "id": "M1-AVA-007",
+      "nivel": "avanzado",
+      "eje": "Números",
+      "tema": "Razones compuestas",
+      "enunciado": "Un auto viaja 180 km en 3 horas. Si mantiene la misma velocidad, ¿cuántos km recorrerá en 5 horas?",
+      "opciones": [
+        {"letra": "A", "texto": "300 km"},
+        {"letra": "B", "texto": "270 km"},
+        {"letra": "C", "texto": "150 km"},
+        {"letra": "D", "texto": "360 km"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Velocidad = 180/3 = 60 km/h. Distancia = 60 × 5 = 300 km.",
+      "explicacionesIncorrectas": {
+        "B": "270 km sería 180 × (3/5) = 108, no 270. Confusión en la proporción.",
+        "C": "150 km sería 180 × (3/5) = 108, no 150.",
+        "D": "360 km sería 180 × 2 = 360. No corresponde a 5 horas."
+      },
+      "consejo": "Velocidad constante: distancia = velocidad × tiempo."
+    },
+    {
+      "id": "M1-AVA-008",
+      "nivel": "avanzado",
+      "eje": "Álgebra",
+      "tema": "Operaciones con polinomios",
+      "enunciado": "Simplifica: (2x² + 3x − 1) − (x² − 2x + 4)",
+      "opciones": [
+        {"letra": "A", "texto": "x² + 5x − 5"},
+        {"letra": "B", "texto": "x² + x + 3"},
+        {"letra": "C", "texto": "3x² + x − 5"},
+        {"letra": "D", "texto": "x² + 5x + 3"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Distribuimos el menos: 2x² + 3x − 1 − x² + 2x − 4 = (2x² − x²) + (3x + 2x) + (−1 − 4) = x² + 5x − 5.",
+      "explicacionesIncorrectas": {
+        "B": "x² + x + 3 no respeta los signos al distribuir el menos.",
+        "C": "3x² + x − 5 sería la suma, no la resta.",
+        "D": "x² + 5x + 3 no respeta el signo del término constante."
+      },
+      "consejo": "Al restar polinomios, distribuye el signo negativo a TODOS los términos del segundo paréntesis."
+    },
+    {
+      "id": "M1-AVA-009",
+      "nivel": "avanzado",
+      "eje": "Álgebra",
+      "tema": "Análisis de funciones cuadráticas",
+      "enunciado": "Para la función f(x) = x² − 4x + 3, ¿cuáles son las coordenadas del vértice?",
+      "opciones": [
+        {"letra": "A", "texto": "(2, −1)"},
+        {"letra": "B", "texto": "(−2, −1)"},
+        {"letra": "C", "texto": "(2, 3)"},
+        {"letra": "D", "texto": "(0, 3)"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El vértice está en x = −b/(2a) = 4/(2×1) = 2. f(2) = 4 − 8 + 3 = −1. Vértice: (2, −1).",
+      "explicacionesIncorrectas": {
+        "B": "(−2, −1) usaría x = b/(2a) en vez de −b/(2a).",
+        "C": "(2, 3) no evalúa correctamente f(2).",
+        "D": "(0, 3) es el corte con el eje Y (f(0) = 3), no el vértice."
+      },
+      "consejo": "Vértice de f(x) = ax² + bx + c: x = −b/(2a), luego evalúa f(x)."
+    },
+    {
+      "id": "M1-AVA-010",
+      "nivel": "avanzado",
+      "eje": "Probabilidad y Estadística",
+      "tema": "Desviación estándar",
+      "enunciado": "Las notas de 4 alumnos son: 6, 8, 10, 12. ¿Cuál es la desviación estándar poblacional?",
+      "opciones": [
+        {"letra": "A", "texto": "√5 ≈ 2.24"},
+        {"letra": "B", "texto": "2"},
+        {"letra": "C", "texto": "√10 ≈ 3.16"},
+        {"letra": "D", "texto": "5"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Promedio = (6+8+10+12)/4 = 9. Varianza = [(6−9)² + (8−9)² + (10−9)² + (12−9)²]/4 = [9+1+1+9]/4 = 20/4 = 5. Desviación = √5 ≈ 2.24.",
+      "explicacionesIncorrectas": {
+        "B": "2 no corresponde a la raíz cuadrada de 5.",
+        "C": "√10 sería si la varianza fuera 10 (dividiendo entre 3 en vez de 4).",
+        "D": "5 es la varianza, no la desviación estándar."
+      },
+      "consejo": "Desviación estándar = √(varianza). Varianza = promedio de las diferencias al cuadrado."
+    }
+  ]
+}

@@ -1,0 +1,420 @@
+{
+  "asignatura": "Ciencias - Biología",
+  "totalEjercicios": 20,
+  "niveles": {
+    "basico": {
+      "descripcion": "Conceptos fundamentales de biología",
+      "ejercicios": 8
+    },
+    "intermedio": {
+      "descripcion": "Procesos biológicos y funciones",
+      "ejercicios": 7
+    },
+    "avanzado": {
+      "descripcion": "Integración de conceptos y aplicación",
+      "ejercicios": 5
+    }
+  },
+  "ejercicios": [
+    {
+      "id": "BIO-BAS-001",
+      "nivel": "basico",
+      "area": "Organización celular",
+      "enunciado": "¿Cuál es la función principal de la mitocondria?",
+      "opciones": [
+        {"letra": "A", "texto": "Producir energía (ATP) para la célula"},
+        {"letra": "B", "texto": "Almacenar información genética"},
+        {"letra": "C", "texto": "Sintetizar proteínas"},
+        {"letra": "D", "texto": "Controlar el transporte de sustancias"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La mitocondria es la 'central energética' de la célula. Realiza la respiración celular aeróbica, convirtiendo glucosa y oxígeno en ATP (energía utilizable).",
+      "explicacionesIncorrectas": {
+        "B": "Almacenar información genética es función del núcleo (ADN).",
+        "C": "Sintetizar proteínas es función de los ribosomas.",
+        "D": "Controlar el transporte de sustancias es función de la membrana plasmática."
+      },
+      "consejo": "Memoriza la función de cada organelo: Mitocondria = energía, Núcleo = información, Ribosoma = proteínas, Membrana = transporte."
+    },
+    {
+      "id": "BIO-BAS-002",
+      "nivel": "basico",
+      "area": "Herencia y evolución",
+      "enunciado": "¿Qué estructura celular contiene la información genética del organismo?",
+      "opciones": [
+        {"letra": "A", "texto": "El núcleo"},
+        {"letra": "B", "texto": "La mitocondria"},
+        {"letra": "C", "texto": "El ribosoma"},
+        {"letra": "D", "texto": "La membrana plasmática"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El núcleo contiene el ADN (ácido desoxirribonucleico), que es la molécula que porta la información genética del organismo.",
+      "explicacionesIncorrectas": {
+        "B": "La mitocondria tiene su propio ADN mitocondrial, pero la información genética principal está en el núcleo.",
+        "C": "El ribosoma sintetiza proteínas, no almacena información genética.",
+        "D": "La membrana plasmática controla el ingreso y salida de sustancias."
+      },
+      "consejo": "Núcleo = Centro de control = Contiene ADN = Información genética."
+    },
+    {
+      "id": "BIO-BAS-003",
+      "nivel": "basico",
+      "area": "Organización celular",
+      "enunciado": "¿Cuál de los siguientes organelos está presente en células vegetales pero NO en células animales?",
+      "opciones": [
+        {"letra": "A", "texto": "La pared celular"},
+        {"letra": "B", "texto": "El núcleo"},
+        {"letra": "C", "texto": "La mitocondria"},
+        {"letra": "D", "texto": "Los ribosomas"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La pared celular es una estructura rígida de celulosa que rodea la membrana plasmática de las células vegetales. Las células animales no la poseen.",
+      "explicacionesIncorrectas": {
+        "B": "El núcleo está presente en ambas células eucariontes (vegetales y animales).",
+        "C": "La mitocondria está presente en ambas células eucariontes para producir ATP.",
+        "D": "Los ribosomas están en todos los tipos de células para sintetizar proteínas."
+      },
+      "consejo": "Células vegetales: pared celular, cloroplastos, gran vacuola. Células animales: centriolos, lisosomas. Ambas: núcleo, mitocondrias, ribosomas."
+    },
+    {
+      "id": "BIO-BAS-004",
+      "nivel": "basico",
+      "area": "Genética básica",
+      "enunciado": "¿Qué es un gen?",
+      "opciones": [
+        {"letra": "A", "texto": "Un segmento de ADN que codifica una proteína"},
+        {"letra": "B", "texto": "Un cromosoma completo"},
+        {"letra": "C", "texto": "Una proteína estructural"},
+        {"letra": "D", "texto": "Un tipo de célula reproductiva"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Un gen es un segmento específico de ADN que contiene la información necesaria para sintetizar una proteína o una molécula funcional (ARN).",
+      "explicacionesIncorrectas": {
+        "B": "Un cromosoma contiene cientos o miles de genes, no es un gen en sí mismo.",
+        "C": "Las proteínas son el producto de la expresión génica, no el gen.",
+        "D": "Las células reproductivas (gametos) son óvulos o espermatozoides, no genes."
+      },
+      "consejo": "ADN → Gen → Proteína. Un gen es la unidad funcional de la herencia."
+    },
+    {
+      "id": "BIO-BAS-005",
+      "nivel": "basico",
+      "area": "Fotosíntesis",
+      "enunciado": "¿Cuáles son los productos de la fotosíntesis?",
+      "opciones": [
+        {"letra": "A", "texto": "Glucosa y oxígeno"},
+        {"letra": "B", "texto": "Dióxido de carbono y agua"},
+        {"letra": "C", "texto": "ATP y NADPH"},
+        {"letra": "D", "texto": "Aminoácidos y lípidos"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "En la fotosíntesis: 6CO₂ + 6H₂O + luz → C₆H₁₂O₆ (glucosa) + 6O₂. La planta obtiene glucosa para energía y libera oxígeno.",
+      "explicacionesIncorrectas": {
+        "B": "CO₂ y H₂O son los reactivos (lo que entra), no los productos.",
+        "C": "ATP y NADPH son intermediarios de la fase luminosa, no productos finales.",
+        "D": "Los aminoácidos y lípidos se sintetizan a partir de la glucosa en procesos metabólicos posteriores."
+      },
+      "consejo": "Fotosíntesis: Reactivos = CO₂ + H₂O + luz. Productos = Glucosa + O₂. Recuerda que es el proceso opuesto a la respiración celular."
+    },
+    {
+      "id": "BIO-BAS-006",
+      "nivel": "basico",
+      "area": "Ecosistemas",
+      "enunciado": "¿Qué nivel trófico ocupan los hongos descomponedores en un ecosistema?",
+      "opciones": [
+        {"letra": "A", "texto": "Descomponedores"},
+        {"letra": "B", "texto": "Productores"},
+        {"letra": "C", "texto": "Consumidores primarios"},
+        {"letra": "D", "texto": "Consumidores secundarios"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Los hongos son descomponedores: descomponen la materia orgánica muerta en nutrientes inorgánicos, devolviéndolos al suelo para que las plantas los reutilicen.",
+      "explicacionesIncorrectas": {
+        "B": "Los productores son las plantas (sintetizan su propio alimento por fotosíntesis).",
+        "C": "Los consumidores primarios son herbívoros que comen plantas.",
+        "D": "Los consumidores secundarios son carnívoros que comen herbívoros."
+      },
+      "consejo": "Cadena trófica completa: Productores → Consumidores primarios → Secundarios → Terciarios → Descomponedores."
+    },
+    {
+      "id": "BIO-BAS-007",
+      "nivel": "basico",
+      "area": "Clasificación de seres vivos",
+      "enunciado": "¿Cuáles son los niveles de clasificación de los seres vivos de mayor a menor rango?",
+      "opciones": [
+        {"letra": "A", "texto": "Reino, filo, clase, orden, familia, género, especie"},
+        {"letra": "B", "texto": "Especie, género, familia, orden, clase, filo, reino"},
+        {"letra": "C", "texto": "Filo, reino, clase, género, familia, orden, especie"},
+        {"letra": "D", "texto": "Clase, filo, reino, familia, orden, género, especie"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La clasificación taxonómica va de mayor a menor: Reino → Filo → Clase → Orden → Familia → Género → Especie. Recuerda con el mnemotéchnico: 'Reina Felisa Ordenó Frijoles Grandes'.",
+      "explicacionesIncorrectas": {
+        "B": "Está ordenado de menor a mayor, no de mayor a menor.",
+        "C": "El orden de filo y reino está intercambiado (reino es mayor que filo).",
+        "D": "La clase no es el nivel más alto (reino lo es)."
+      },
+      "consejo": "Mnemotéchnico: 'Reina Felisa Ordenó Frijoles Grandes' = Reino, Filo, Familia, Orden, Género, Familia, Género, Especie."
+    },
+    {
+      "id": "BIO-BAS-008",
+      "nivel": "basico",
+      "area": "Respiración celular",
+      "enunciado": "¿Cuál es la diferencia principal entre respiración celular y fermentación?",
+      "opciones": [
+        {"letra": "A", "texto": "La respiración celular necesita oxígeno y produce más ATP"},
+        {"letra": "B", "texto": "La fermentación produce más ATP que la respiración"},
+        {"letra": "C", "texto": "Ambas producen la misma cantidad de ATP"},
+        {"letra": "D", "texto": "La respiración celular solo ocurre en plantas"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La respiración celular aeróbica utiliza oxígeno y produce ~36-38 ATP por glucosa. La fermentación (anaeróbica) no usa oxígeno y produce solo 2 ATP por glucosa.",
+      "explicacionesIncorrectas": {
+        "B": "La fermentación produce solo 2 ATP, mucho menos que la respiración aeróbica (~36 ATP).",
+        "C": "La respiración produce aproximadamente 18 veces más ATP que la fermentación.",
+        "D": "La respiración celular ocurre en todos los seres vivos (plantas, animales, hongos, bacterias)."
+      },
+      "consejo": "Respiración aeróbica = con O₂ = ~36 ATP. Fermentación = sin O₂ = 2 ATP. La aeróbica es mucho más eficiente."
+    },
+    {
+      "id": "BIO-INT-001",
+      "nivel": "intermedio",
+      "area": "Procesos biológicos",
+      "enunciado": "¿En qué organela celular se realiza la fotosíntesis?",
+      "opciones": [
+        {"letra": "A", "texto": "Cloroplasto"},
+        {"letra": "B", "texto": "Mitocondria"},
+        {"letra": "C", "texto": "Ribosoma"},
+        {"letra": "D", "texto": "Retículo endoplásmico"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La fotosíntesis se realiza en los cloroplastos, que contienen clorofila (el pigmento verde). Los cloroplastos convierten energía lumínica en energía química (glucosa).",
+      "explicacionesIncorrectas": {
+        "B": "La mitocondria realiza respiración celular (no fotosíntesis).",
+        "C": "El ribosoma sintetiza proteínas.",
+        "D": "El retículo endoplásmico participa en la síntesis de lípidos y proteínas."
+      },
+      "consejo": "Cloroplasto = Clorofila = Fotosíntesis = Plantas = Verde."
+    },
+    {
+      "id": "BIO-INT-002",
+      "nivel": "intermedio",
+      "area": "Organismo y ambiente",
+      "enunciado": "En una cadena alimenticia: planta → insecto → rana → serpiente. ¿Cuál es el productor?",
+      "opciones": [
+        {"letra": "A", "texto": "La planta"},
+        {"letra": "B", "texto": "El insecto"},
+        {"letra": "C", "texto": "La rana"},
+        {"letra": "D", "texto": "La serpiente"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El productor es el organismo que produce su propio alimento mediante fotosíntesis (la planta). Los demás son consumidores: primario (insecto), secundario (rana) y terciario (serpiente).",
+      "explicacionesIncorrectas": {
+        "B": "El insecto es consumidor primario (herbívoro).",
+        "C": "La rana es consumidor secundario (carnívora).",
+        "D": "La serpiente es consumidor terciario (carnívora)."
+      },
+      "consejo": "En cadenas alimenticias: Productor = planta, Consumidores = animales que se alimentan de otros."
+    },
+    {
+      "id": "BIO-INT-003",
+      "nivel": "intermedio",
+      "area": "División celular",
+      "enunciado": "¿En qué fase de la mitosis se alinean los cromosomas en el plano ecuatorial de la célula?",
+      "opciones": [
+        {"letra": "A", "texto": "Metafase"},
+        {"letra": "B", "texto": "Profase"},
+        {"letra": "C", "texto": "Anafase"},
+        {"letra": "D", "texto": "Telofase"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "En la metafase, los cromosomas (ya condensados) se alinean en la placa metafásica (plano ecuatorial) antes de ser separados hacia polos opuestos.",
+      "explicacionesIncorrectas": {
+        "B": "En la profase se condensan los cromosomas y se forma el huso mitótico.",
+        "C": "En la anafase se separan las cromátidas hermanas hacia polos opuestos.",
+        "D": "En la telofase se descondensan los cromosomas y se forman dos núcleos."
+      },
+      "consejo": "Orden de la mitosis: Profase → Metafase → Anafase → Telofase. Mnemotéchnico: 'PMAT'."
+    },
+    {
+      "id": "BIO-INT-004",
+      "nivel": "intermedio",
+      "area": "Genética mendeliana",
+      "enunciado": "Un cruce entre dos plantas heterocigotas (Aa × Aa) produce descendencia. ¿Cuál es la proporción fenotípica esperada si A es dominante?",
+      "opciones": [
+        {"letra": "A", "texto": "3:1 (dominante:recesivo)"},
+        {"letra": "B", "texto": "1:1 (dominante:recesivo)"},
+        {"letra": "C", "texto": "1:2:1 (dominante:intermedio:recesivo)"},
+        {"letra": "D", "texto": "4:0 (todos dominantes)"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "En el cruce Aa × Aa, el cuadro de Punnett da: AA (1), Aa (2), aa (1). Fenotípicamente: 3 dominantes (AA + Aa) : 1 recesivo (aa).",
+      "explicacionesIncorrectas": {
+        "B": "1:1 sería el resultado de un cruce Aa × aa (heterocigoto × homocigoto recesivo).",
+        "C": "1:2:1 es la proporción genotípica, no fenotípica.",
+        "D": "No todos serán dominantes porque ambos padres tienen el alelo recesivo a."
+      },
+      "consejo": "Genotipo: 1 AA : 2 Aa : 1 aa. Fenotipo (dominancia completa): 3 dominante : 1 recesivo."
+    },
+    {
+      "id": "BIO-INT-005",
+      "nivel": "intermedio",
+      "area": "Sistemas del cuerpo humano",
+      "enunciado": "¿Cuál es la función principal del sistema inmunitario del cuerpo humano?",
+      "opciones": [
+        {"letra": "A", "texto": "Defender el organismo contra patógenos y células anormales"},
+        {"letra": "B", "texto": "Transportar oxígeno a los tejidos"},
+        {"letra": "C", "texto": "Regular las hormonas del cuerpo"},
+        {"letra": "D", "texto": "Producir energía para el movimiento"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El sistema inmunitario defiende al organismo contra bacterias, virus, parásitos y células cancerosas mediante glóbulos blancos, anticuerpos y células de memoria.",
+      "explicacionesIncorrectas": {
+        "B": "Transportar oxígeno es función del sistema circulatorio (glóbulos rojos/hemoglobina).",
+        "C": "Regular hormonas es función del sistema endocrino.",
+        "D": "Producir energía es función del sistema respiratorio (O₂) y digestivo (nutrientes)."
+      },
+      "consejo": "Sistema inmunitario = defensa. Inmunidad innata (primera línea) y adaptativa (células de memoria, anticuerpos)."
+    },
+    {
+      "id": "BIO-INT-006",
+      "nivel": "intermedio",
+      "area": "Evolución",
+      "enunciado": "¿Qué concepto propuso Darwin como mecanismo principal de la evolución?",
+      "opciones": [
+        {"letra": "A", "texto": "Selección natural"},
+        {"letra": "B", "texto": "Mutación al azar"},
+        {"letra": "C", "texto": "Lamarckismo"},
+        {"letra": "D", "texto": "Panspermia"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Darwin propuso que los organismos mejor adaptados al ambiente tienen mayor probabilidad de sobrevivir y reproducirse, transmitiendo sus características a la descendencia (selección natural).",
+      "explicacionesIncorrectas": {
+        "B": "Las mutaciones son al azar, pero la selección natural es el mecanismo que actúa sobre la variación.",
+        "C": "El Lamarckismo propone herencia de caracteres adquiridos, teoría descartada.",
+        "D": "La Panspermia es la hipótesis de que la vida llegó del espacio, no es un mecanismo evolutivo."
+      },
+      "consejo": "Darwin: variación → selección natural → adaptación → evolución. Los más aptos sobreviven y se reproducen."
+    },
+    {
+      "id": "BIO-INT-007",
+      "nivel": "intermedio",
+      "area": "Ecología",
+      "enunciado": "¿Qué es una población ecológica?",
+      "opciones": [
+        {"letra": "A", "texto": "Un grupo de individuos de la misma especie que viven en una zona determinada"},
+        {"letra": "B", "texto": "Todos los seres vivos de un ecosistema"},
+        {"letra": "C", "texto": "Un grupo de diferentes especies que interactúan"},
+        {"letra": "D", "texto": "La totalidad de los organismos del planeta"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Una población es un conjunto de individuos de la misma especie que habitan una misma área geográfica en un momento dado y pueden reproducirse entre sí.",
+      "explicacionesIncorrectas": {
+        "B": "Todos los seres vivos de un ecosistema forman una comunidad, no una población.",
+        "C": "Un grupo de diferentes especies que interactúan es una comunidad biológica.",
+        "D": "La totalidad de organismos del planeta se refiere a la biosfera."
+      },
+      "consejo": "Individuo → Población (misma especie) → Comunidad (diferentes especies) → Ecosistema (comunidad + ambiente físico)."
+    },
+    {
+      "id": "BIO-AVA-001",
+      "nivel": "avanzado",
+      "area": "Herencia y evolución",
+      "enunciado": "Un organismo tiene genotipo AaBb. Si se cruza con otro organismo del mismo genotipo, ¿cuál es la probabilidad de que un descendiente sea aabb?",
+      "opciones": [
+        {"letra": "A", "texto": "1/16"},
+        {"letra": "B", "texto": "1/4"},
+        {"letra": "C", "texto": "1/8"},
+        {"letra": "D", "texto": "3/16"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Para obtener aabb, ambos padres deben contribuir 'ab'. La probabilidad de que un padre dé 'ab' es 1/4 (ab es uno de los 4 gametos posibles: AB, Ab, aB, ab). Probabilidad total = 1/4 × 1/4 = 1/16.",
+      "explicacionesIncorrectas": {
+        "B": "1/4 sería la probabilidad de aa o bb individualmente, no de aabb.",
+        "C": "1/8 no corresponde a ningún cálculo válido en este cruce.",
+        "D": "3/16 es la probabilidad de genotipos con al menos un alelo recesivo."
+      },
+      "consejo": "Para cruces de dos genes, multiplica las probabilidades individuales de cada gen."
+    },
+    {
+      "id": "BIO-AVA-002",
+      "nivel": "avanzado",
+      "area": "Organización celular",
+      "enunciado": "Si una célula eucariota animal se coloca en una solución hipertónica, ¿qué ocurrirá?",
+      "opciones": [
+        {"letra": "A", "texto": "La célula se encogerá por salida de agua"},
+        {"letra": "B", "texto": "La célula se hinchará y podría explotar"},
+        {"letra": "C", "texto": "No ocurrirá ningún cambio"},
+        {"letra": "D", "texto": "La célula empezará a dividirse"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "En solución hipertónica, la concentración de solutos es mayor fuera de la célula. Por ósmosis, el agua sale de la célula hacia el exterior, causando que la célula se encogiera (crenación en células animales).",
+      "explicacionesIncorrectas": {
+        "B": "Esto ocurriría en solución hipotónica (menor concentración fuera).",
+        "C": "Siempre hay movimiento de agua por ósmosis cuando hay diferencia de concentración.",
+        "D": "La plasmólisis no causa división celular."
+      },
+      "consejo": "Hipertónica = más soluto fuera = agua sale = célula se encoge. Hipotónica = menos soluto fuera = agua entra = célula se hincha."
+    },
+    {
+      "id": "BIO-AVA-003",
+      "nivel": "avanzado",
+      "area": "Biología molecular",
+      "enunciado": "Durante la replicación del ADN, la enzima principal que sintetiza la nueva cadena de ADN es:",
+      "opciones": [
+        {"letra": "A", "texto": "ADN polimerasa"},
+        {"letra": "B", "texto": "ARN polimerasa"},
+        {"letra": "C", "texto": "Helicasa"},
+        {"letra": "D", "texto": "Ligasa"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La ADN polimerasa es la enzima que agrega nucleótidos complementarios a la cadena molde durante la replicación del ADN, sintetizando la nueva cadena en dirección 5' → 3'.",
+      "explicacionesIncorrectas": {
+        "B": "La ARN polimerasa sintetiza ARN a partir de una plantilla de ADN (transcripción, no replicación).",
+        "C": "La helicasa separa las cadenas del ADN, pero no sintetiza la nueva cadena.",
+        "D": "La ligasa une los fragmentos de Okazaki en la cadena rezagada, pero no sintetiza ADN."
+      },
+      "consejo": "Replicación del ADN: Helicasa separa → Primasa inicia → ADN polimerasa sintetiza → Ligasa une fragmentos."
+    },
+    {
+      "id": "BIO-AVA-004",
+      "nivel": "avanzado",
+      "area": "Genética molecular",
+      "enunciado": "¿En qué dirección se sintetiza el ARN mensajero durante la transcripción?",
+      "opciones": [
+        {"letra": "A", "texto": "De 5' a 3'"},
+        {"letra": "B", "texto": "De 3' a 5'"},
+        {"letra": "C", "texto": "En ambas direcciones simultáneamente"},
+        {"letra": "D", "texto": "Depende del tipo de ARN"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La ARN polimerasa sintetiza el ARN mensajero en dirección 5' → 3', leyendo la plantilla de ADN en dirección 3' → 5'. Esta es la dirección universal de síntesis de ácidos nucleicos.",
+      "explicacionesIncorrectas": {
+        "B": "La plantilla de ADN se lee de 3' a 5', pero el ARN se sintetiza de 5' a 3'.",
+        "C": "La síntesis siempre es unidireccional (5' → 3'), nunca bidireccional.",
+        "D": "Todos los ácidos nucleicos (ADN y ARN) se sintetizan en la misma dirección: 5' → 3'."
+      },
+      "consejo": "Síntesis de ácidos nucleicos: SIEMPRE de 5' a 3'. La plantilla se lee de 3' a 5'."
+    },
+    {
+      "id": "BIO-AVA-005",
+      "nivel": "avanzado",
+      "area": "Biotecnología",
+      "enunciado": "¿Qué es la PCR (Reacción en Cadena de la Polimerasa)?",
+      "opciones": [
+        {"letra": "A", "texto": "Una técnica que amplifica fragmentos específicos de ADN in vitro"},
+        {"letra": "B", "texto": "Un método para separar proteínas por tamaño"},
+        {"letra": "C", "texto": "Una técnica para insertar genes en bacterias"},
+        {"letra": "D", "texto": "Un proceso para cultivar células en laboratorio"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La PCR (desarrollada por Kary Mullis en 1983) amplifica un segmento específico de ADN mediante ciclos repetidos de desnaturalización, hibridización de cebadores y extensión por ADN polimerasa termoestable (Taq).",
+      "explicacionesIncorrectas": {
+        "B": "Separar proteínas por tamaño es electroforesis SDS-PAGE, no PCR.",
+        "C": "Insertar genes en bacterias es clonación molecular o transformación, no PCR.",
+        "D": "Cultivar células en laboratorio es cultivo celular, no PCR."
+      },
+      "consejo": "PCR = Amplificación de ADN. Usa ADN polimerasa termoestable (Taq), cebadores específicos y ciclos de temperatura."
+    }
+  ]
+}

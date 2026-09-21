@@ -1,0 +1,113 @@
+{
+  "asignatura": "Ciencias",
+  "codigo": "CI",
+  "obligatoria": false,
+  "duracion": "2 horas 40 minutos",
+  "formato": "Selección múltiple (4 o 5 alternativas)",
+  "preguntasTotales": 80,
+  "preguntasCalificables": 75,
+  "descripcion": "Evalúa conocimientos de Biología, Física y Química. Para CH: Módulo Común (54) + Módulo Electivo (26). Para TP: Módulo Técnico Profesional.",
+  "estructura": {
+    "cientificoHumanista": {
+      "moduloComun": {
+        "preguntas": 54,
+        "descripcion": "Preguntas de los tres ejes (Biología, Física, Química) hasta nivel 2° medio",
+        "distribucion": "~18 preguntas por ciencia"
+      },
+      "moduloElectivo": {
+        "preguntas": 26,
+        "descripcion": "Elegir UNO: Biología, Física o Química",
+        "opciones": ["Biología", "Física", "Química"]
+      }
+    },
+    "tecnicoProfesional": {
+      "descripcion": "Módulo Técnico Profesional (MTP) - contenido adaptado a formación TP",
+      "preguntas": 80
+    }
+  },
+  "ejesBiologia": {
+    "areasTematicas": [
+      "Organización, estructura y actividad celular",
+      "Procesos y funciones biológicas",
+      "Herencia y evolución",
+      "Organismo y ambiente"
+    ]
+  },
+  "ejesFisica": {
+    "areasTematicas": [
+      "Ondas",
+      "Mecánica",
+      "Energía-Tierra",
+      "Electricidad"
+    ]
+  },
+  "ejesQuimica": {
+    "areasTematicas": [
+      "Estructura atómica",
+      "Química orgánica",
+      "Reacciones químicas y estequiometría"
+    ]
+  },
+  "habilidadesCientificas": [
+    "Observar y plantear preguntas",
+    "Planificar y conducir una investigación",
+    "Procesar y analizar la evidencia",
+    "Evaluar",
+    "Comunicar"
+  ],
+  "recursosEstudio": [
+    {
+      "nombre": "ExamenesGratis - 200+ preguntas Ciencias",
+      "url": "https://es.open-exam-prep.com/practica/paes-ciencias-chile",
+      "tipo": "ejercicios",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Ensayo PAES - Banco preguntas Biología (+2500)",
+      "url": "https://ensayopaes.cl/preguntas/biologia/",
+      "tipo": "ejercicios",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Filadd - Ensayos Ciencias (Bio/Fís/Quím/TP)",
+      "url": "https://filadd.cl/courses/preuniversitario-pack-completo-egresados-2026/simulations/groups/ciencias-paes-2023",
+      "tipo": "ensayo",
+      "costo": "Gratis (ensayos nacionales)"
+    },
+    {
+      "nombre": "Prueba PAES - Ensayos Ciencias",
+      "url": "https://pruebapaes.cl/ensayos-paes-gratis/",
+      "tipo": "ensayo",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Khan Academy - Biología",
+      "url": "https://es.khanacademy.org/science/biology",
+      "tipo": "curso-completo",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Khan Academy - Química",
+      "url": "https://es.khanacademy.org/science/chemistry",
+      "tipo": "curso-completo",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "Khan Academy - Física",
+      "url": "https://es.khanacademy.org/science/physics",
+      "tipo": "curso-completo",
+      "costo": "Gratis"
+    },
+    {
+      "nombre": "PAES Ciencias oficial DEMRE (Invierno 2026)",
+      "url": "https://demre.cl/publicaciones/2026",
+      "tipo": "prueba-oficial",
+      "costo": "Gratis"
+    }
+  ],
+  "consejos": [
+    "Descarga los 3 PDFs de Ciencias (Bio, Fís, Quím) para practicar los módulos comunes de todos",
+    "El módulo común tiene preguntas de las 3 ciencias - domina las bases de cada una",
+    "Si eres TP, tu prueba es diferente - enfócate en el MTP"
+  ]
+}

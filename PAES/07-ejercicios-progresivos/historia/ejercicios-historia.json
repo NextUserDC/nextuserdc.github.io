@@ -1,0 +1,320 @@
+{
+  "asignatura": "Historia y Ciencias Sociales",
+  "totalEjercicios": 15,
+  "niveles": {
+    "basico": {
+      "descripcion": "Conocimientos históricos fundamentales",
+      "ejercicios": 6
+    },
+    "intermedio": {
+      "descripcion": "Análisis de fuentes y causalidad",
+      "ejercicios": 5
+    },
+    "avanzado": {
+      "descripcion": "Análisis crítico y formación ciudadana",
+      "ejercicios": 4
+    }
+  },
+  "ejercicios": [
+    {
+      "id": "HIST-BAS-001",
+      "nivel": "basico",
+      "area": "Historia de Chile",
+      "enunciado": "¿En qué año se firmó el Acta de Independencia de Chile?",
+      "opciones": [
+        {"letra": "A", "texto": "1818"},
+        {"letra": "B", "texto": "1810"},
+        {"letra": "C", "texto": "1823"},
+        {"letra": "D", "texto": "1780"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El 12 de febrero de 1818 se firmó el Acta de Independencia en Talca, declarando formalmente la independencia de Chile de España.",
+      "explicacionesIncorrectas": {
+        "B": "1810 fue el año del Primer Gobierno Patrio (18 de septiembre), pero no la independencia formal.",
+        "C": "1823 fue el año de la abdicación de O'Higgins, no de la independencia.",
+        "D": "1780 no tiene relación con la independencia de Chile."
+      },
+      "consejo": "1810 = Primer Gobierno Patrio. 1818 = Independencia formal. 1833 = Constitución."
+    },
+    {
+      "id": "HIST-BAS-002",
+      "nivel": "basico",
+      "area": "Historia Mundial",
+      "enunciado": "¿Qué acontecimiento marcó el inicio de la Primera Guerra Mundial?",
+      "opciones": [
+        {"letra": "A", "texto": "Asesinato del Archiduque Francisco Fernando"},
+        {"letra": "B", "texto": "Bombardeo de Pearl Harbor"},
+        {"letra": "C", "texto": "Caída del Muro de Berlín"},
+        {"letra": "D", "texto": "Revolución Rusa"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El 28 de junio de 1914, el asesinato del Archiduque Francisco Fernando de Austria en Sarajevo desencadenó la Primera Guerra Mundial.",
+      "explicacionesIncorrectas": {
+        "B": "El bombardeo de Pearl Harbor (1941) marcó la entrada de EE.UU. en la Segunda Guerra Mundial.",
+        "C": "La caída del Muro de Berlín (1989) marcó el fin de la Guerra Fría.",
+        "D": "La Revolución Rusa (1917) ocurrió durante la Primera Guerra Mundial, pero no la causó."
+      },
+      "consejo": "Primera Guerra Mundial (1914-1918): Asesinato de Francisco Fernando. Segunda Guerra Mundial (1939-1945): Invasión de Polonia."
+    },
+    {
+      "id": "HIST-BAS-003",
+      "nivel": "basico",
+      "area": "Historia de Chile",
+      "enunciado": "¿Quién fue el primer presidente de Chile?",
+      "opciones": [
+        {"letra": "A", "texto": "Manuel Blanco Encalada"},
+        {"letra": "B", "texto": "Bernardo O'Higgins"},
+        {"letra": "C", "texto": "Ramón Freire"},
+        {"letra": "D", "texto": "Arturo Prat"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Manuel Blanco Encalada fue el primer presidente constitucional de Chile, asumiendo el cargo el 9 de julio de 1826, tras la renuncia de O'Higgins.",
+      "explicacionesIncorrectas": {
+        "B": "Bernardo O'Higgins fue Director Supremo (1817-1823), no presidente constitucional.",
+        "C": "Ramón Freire fue el segundo presidente constitucional (1827-1829).",
+        "D": "Arturo Prat fue un héroe de la Guerra del Pacífico (1879), no presidente."
+      },
+      "consejo": "Director Supremo = O'Higgins. Primer presidente constitucional = Blanco Encalada (1826)."
+    },
+    {
+      "id": "HIST-BAS-004",
+      "nivel": "basico",
+      "area": "Historia Mundial",
+      "enunciado": "¿En qué año cayó el Muro de Berlín?",
+      "opciones": [
+        {"letra": "A", "texto": "1989"},
+        {"letra": "B", "texto": "1979"},
+        {"letra": "C", "texto": "1991"},
+        {"letra": "D", "texto": "1969"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El 9 de noviembre de 1989 cayó el Muro de Berlín, marcando el fin de la división de Alemania y el inicio del fin de la Guerra Fría.",
+      "explicacionesIncorrectas": {
+        "B": "1979 no tiene relación con eventos relevantes en la Guerra Fría.",
+        "C": "1991 fue el año de la disolución de la Unión Soviética, no la caída del Muro.",
+        "D": "1969 fue el año de la llegada del hombre a la Luna."
+      },
+      "consejo": "1989: Caída del Muro de Berlín. 1990: Reunificación alemana. 1991: Disolución de la URSS."
+    },
+    {
+      "id": "HIST-BAS-005",
+      "nivel": "basico",
+      "area": "Pueblo Mapuche",
+      "enunciado": "¿Cuál fue el principal Tratado de Paz entre el Estado de Chile y el pueblo mapuche durante la llamada 'Pacificación de la Araucanía'?",
+      "opciones": [
+        {"letra": "A", "texto": "Tratado de Tapihue (1825)"},
+        {"letra": "B", "texto": "Tratado de Tordesillas (1494)"},
+        {"letra": "C", "texto": "Tratado de Perquenco (1803)"},
+        {"letra": "D", "texto": "Pacto de Badajoz (1810)"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El Tratado de Tapihue (1825) fue un acuerdo entre el gobierno chileno y caciques mapuches que reconoció la soberanía mapuche sobre territorios al sur del Bío-Bío, estableciendo una frontera temporal.",
+      "explicacionesIncorrectas": {
+        "B": "El Tratado de Tordesillas (1494) fue entre España y Portugal para repartirse el mundo conocido.",
+        "C": "No existe un Tratado de Perquenco relevante en la historia chilena.",
+        "D": "El Pacto de Badajoz no tiene relación con la relación chileno-mapuche."
+      },
+      "consejo": "Tratados chileno-mapuches: Tapihue (1825), Lonquimay (1881) durante la Pacificación."
+    },
+    {
+      "id": "HIST-BAS-006",
+      "nivel": "basico",
+      "area": "Historia de Chile",
+      "enunciado": "¿Qué conflicto armado enfrentó a Chile contra Perú y Bolivia entre 1879 y 1884?",
+      "opciones": [
+        {"letra": "A", "texto": "Guerra del Pacífico"},
+        {"letra": "B", "texto": "Guerra Civil de 1891"},
+        {"letra": "C", "texto": "Guerra de Arauco"},
+        {"letra": "D", "texto": "Revolución de 1859"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La Guerra del Pacífico (1879-1884) fue un conflicto entre Chile contra Perú y Bolivia por el control de los territorios del norte, ricos en recursos minerales (salitre y cobre).",
+      "explicacionesIncorrectas": {
+        "B": "La Guerra Civil de 1891 fue un conflicto interno entre congresistas y el presidente Balmaceda.",
+        "C": "La Guerra de Arauco fue una serie de conflictos entre españoles/mapuche durante la Colonia.",
+        "D": "La Revolución de 1859 fue una rebelión liberal contra el gobierno conservador."
+      },
+      "consejo": "Guerra del Pacífico: Chile vs Perú y Bolivia (1879-1884). Resultado: anexión de Arica, Tacna y Antofagasta."
+    },
+    {
+      "id": "HIST-INT-001",
+      "nivel": "intermedio",
+      "area": "Análisis de fuentes",
+      "enunciado": "Un periódico de 1973 titula: 'Fuerzas Armadas salvan a la Patria del peligro comunista'. ¿Qué sesgo presenta esta fuente?",
+      "opciones": [
+        {"letra": "A", "texto": "Sesgo político a favor del golpe de Estado"},
+        {"letra": "B", "texto": "Sesgo económico a favor de la empresa"},
+        {"letra": "C", "texto": "Sesgo religioso"},
+        {"letra": "D", "texto": "No presenta sesgo, es una información objetiva"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El titular usa un lenguaje valorativo ('salvar', 'peligro comunista') que justifica la acción militar. Esto refleja el sesgo político del periódico a favor del golpe de Estado.",
+      "explicacionesIncorrectas": {
+        "B": "No hay referencia a temas económicos o empresariales.",
+        "C": "No hay referencia a temas religiosos.",
+        "D": "Todo periódico tiene un sesgo, especialmente en contextos políticos convulsos."
+      },
+      "consejo": "Al analizar fuentes: 1) ¿Quién es el autor? 2) ¿Cuándo se escribió? 3) ¿Cuál es su propósito? 4) ¿Qué lenguaje usa?"
+    },
+    {
+      "id": "HIST-INT-002",
+      "nivel": "intermedio",
+      "area": "Formación Ciudadana",
+      "enunciado": "¿Cuál es la función del Poder Judicial en Chile?",
+      "opciones": [
+        {"letra": "A", "texto": "Interpretar y aplicar las leyes"},
+        {"letra": "B", "texto": "Crear nuevas leyes"},
+        {"letra": "C", "texto": "Ejecutar las políticas públicas"},
+        {"letra": "D", "texto": "Representar al país en el extranjero"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "El Poder Judicial interpreta y aplica las leyes a través de los tribunales de justicia. Es el encargado de resolver conflictos y garantizar el Estado de Derecho.",
+      "explicacionesIncorrectas": {
+        "B": "Crear leyes es función del Poder Legislativo (Congreso).",
+        "C": "Ejecutar políticas públicas es función del Poder Ejecutivo (Presidente).",
+        "D": "Representar al país es función del Poder Ejecutivo (Cancillería)."
+      },
+      "consejo": "Poder Legislativo = Crea leyes. Poder Ejecutivo = Ejecuta/políticas. Poder Judicial = Interpreta/aplica leyes."
+    },
+    {
+      "id": "HIST-INT-003",
+      "nivel": "intermedio",
+      "area": "Derechos Humanos",
+      "enunciado": "¿Qué organismo internacional fue creado tras la Segunda Guerra Mundial para promover y proteger los derechos humanos a nivel global?",
+      "opciones": [
+        {"letra": "A", "texto": "La ONU (Organización de las Naciones Unidas)"},
+        {"letra": "B", "texto": "La OEA (Organización de los Estados Americanos)"},
+        {"letra": "C", "texto": "La OTAN (Organización del Tratado del Atlántico Norte)"},
+        {"letra": "D", "texto": "El FMI (Fondo Monetario Internacional)"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La ONU fue fundada en 1945 tras la Segunda Guerra Mundial con el objetivo de mantener la paz internacional y promover los derechos humanos. Su Declaración Universal de los Derechos Humanos (1948) es un documento fundamental.",
+      "explicacionesIncorrectas": {
+        "B": "La OEA (1948) es una organización regional de las Américas, no global.",
+        "C": "La OTAN (1949) es una alianza militar, no un organismo de derechos humanos.",
+        "D": "El FMI (1944) se enfoca en cooperación monetaria y estabilidad económica."
+      },
+      "consejo": "ONU (1945): paz y derechos humanos. Declaración Universal de DDHH: 10 de diciembre de 1948."
+    },
+    {
+      "id": "HIST-INT-004",
+      "nivel": "intermedio",
+      "area": "Globalización",
+      "enunciado": "¿Qué característica principal define al proceso de globalización económica?",
+      "opciones": [
+        {"letra": "A", "texto": "La interconexión e interdependencia de las economías mundiales"},
+        {"letra": "B", "texto": "El aislamiento comercial entre países"},
+        {"letra": "C", "texto": "La eliminación total de las diferencias culturales"},
+        {"letra": "D", "texto": "El fin del comercio internacional"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La globalización económica se caracteriza por la interconexión de mercados, flujos de capitales, intercambio tecnológico y dependencia mutua entre las economías de los países del mundo.",
+      "explicacionesIncorrectas": {
+        "B": "Es lo contrario: la globalización implica apertura comercial, no aislamiento.",
+        "C": "La globalización puede generar homogeneización cultural, pero no elimina las diferencias.",
+        "D": "La globalización fortalece el comercio internacional, no lo elimina."
+      },
+      "consejo": "Globalización: interconexión económica, cultural y tecnológica entre países."
+    },
+    {
+      "id": "HIST-INT-005",
+      "nivel": "intermedio",
+      "area": "Historia de Chile",
+      "enunciado": "Durante la dictadura militar chilena (1973-1990), ¿qué organismo estatal fue responsable de violaciones sistemáticas de derechos humanos?",
+      "opciones": [
+        {"letra": "A", "texto": "La DINA (Dirección de Inteligencia Nacional)"},
+        {"letra": "B", "texto": "El Congreso Nacional"},
+        {"letra": "C", "texto": "La Contraloría General de la República"},
+        {"letra": "D", "texto": "El Banco Central"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La DINA (1973-1977) fue la policía secreta de la dictadura, responsable de torturas, desapariciones forzadas y ejecuciones de opositores. Fue reemplazada por la CNI en 1977.",
+      "explicacionesIncorrectas": {
+        "B": "El Congreso fue cerrado en 1973 y no funcionó durante gran parte de la dictadura.",
+        "C": "La Contraloría es un organismo fiscalizador, no de inteligencia.",
+        "D": "El Banco Central es un organismo económico, no de represión."
+      },
+      "consejo": "DINA (1973-1977) → CNI (1977-1990): policías secretas de la dictadura."
+    },
+    {
+      "id": "HIST-AVA-001",
+      "nivel": "avanzado",
+      "area": "Economía y Sociedad",
+      "enunciado": "Un gráfico muestra que la inflación en Chile subió de 3% a 12% entre 2021 y 2022, mientras que el desempleo subió de 7% a 8%. ¿Qué fenómeno económico se observa?",
+      "opciones": [
+        {"letra": "A", "texto": "Estanflación (inflación + desempleo crecientes)"},
+        {"letra": "B", "texto": "Deflación"},
+        {"letra": "C", "texto": "Crecimiento económico"},
+        {"letra": "D", "texto": "Superávit fiscal"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Estanflación es la combinación de inflación creciente (subida de precios) con desempleo creciente. Es un fenómeno económico problemático porque los precios suben y simultáneamente hay menos empleo.",
+      "explicacionesIncorrectas": {
+        "B": "Deflación es bajada generalizada de precios, lo contrario de inflación.",
+        "C": "El crecimiento económico generalmente se asocia a menor desempleo, no mayor.",
+        "D": "El superávit fiscal es cuando los ingresos del Estado superan los gastos."
+      },
+      "consejo": "Estanflación = Estancamiento (desempleo alto) + Inflación (precios altos). Es una combinación problemática."
+    },
+    {
+      "id": "HIST-AVA-002",
+      "nivel": "avanzado",
+      "area": "Análisis Crítico",
+      "enunciado": "Un estudiante analiza un discurso político de 1811 que habla de 'libertad' e 'igualdad'. ¿Qué movimiento intelectual europeo influyó directamente en estas ideas?",
+      "opciones": [
+        {"letra": "A", "texto": "La Ilustración"},
+        {"letra": "B", "texto": "El Romanticismo"},
+        {"letra": "C", "texto": "El feudalismo"},
+        {"letra": "D", "texto": "La Contrarreforma"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "La Ilustración (siglos XVII-XVIII) promovió ideas de libertad, igualdad, razón y derechos naturales. Pensadores como Rousseau, Voltaire y Montesquieu influyeron directamente en los movimientos independentistas latinoamericanos.",
+      "explicacionesIncorrectas": {
+        "B": "El Romanticismo (siglo XIX) valoraba las emociones y la naturaleza, no fue la fuente directa de las ideas revolucionarias.",
+        "C": "El feudalismo era el sistema social que la Ilustración buscaba superar.",
+        "D": "La Contrarreforma fue la respuesta de la Iglesia Católica a la Reforma Protestante."
+      },
+      "consejo": "Ilustración: razón, libertad, igualdad, derechos naturales. Fuente ideológica de las revoluciones del siglo XVIII."
+    },
+    {
+      "id": "HIST-AVA-003",
+      "nivel": "avanzado",
+      "area": "Movimientos Sociales",
+      "enunciado": "El movimiento por los derechos civiles en Estados Unidos liderado por Martin Luther King Jr. utilizó principalmente la resistencia no violenta. ¿Qué estrategia describía esto?",
+      "opciones": [
+        {"letra": "A", "texto": "Desobediencia civil pacífica y boicots"},
+        {"letra": "B", "texto": "Guerra de guerrillas"},
+        {"letra": "C", "texto": "Revolución armada"},
+        {"letra": "D", "texto": "Colaboración con el gobierno segregacionista"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "Martin Luther King Jr. aplicó los principios de resistencia no violenta de Mahatma Gandhi, incluyendo marchas pacíficas, boicots económicos (como el de los autobuses de Montgomery) y sentadas para protestar contra la segregación racial.",
+      "explicacionesIncorrectas": {
+        "B": "Las guerrillas son tácticas bélicas, opuestas a la filosofía de King.",
+        "C": "King se opuso explícitamente a la violencia como medio para lograr cambios sociales.",
+        "D": "El movimiento buscaba desafiar la segregación, no colaborar con ella."
+      },
+      "consejo": "Martin Luther King Jr.: resistencia no violenta, desobediencia civil pacífica, influencia de Gandhi."
+    },
+    {
+      "id": "HIST-AVA-004",
+      "nivel": "avanzado",
+      "area": "Ciudadanía",
+      "enunciado": "¿Cuál es la diferencia fundamental entre un Estado de Derecho y una dictadura?",
+      "opciones": [
+        {"letra": "A", "texto": "En el Estado de Derecho, las leyes limitan el poder del gobierno y protegen los derechos ciudadanos"},
+        {"letra": "B", "texto": "En la dictadura, las leyes son más estrictas que en el Estado de Derecho"},
+        {"letra": "C", "texto": "Ambos sistemas son iguales, solo cambia el nombre del gobernante"},
+        {"letra": "D", "texto": "En el Estado de Derecho no existen leyes"}
+      ],
+      "respuestaCorrecta": "A",
+      "explicacionCorrecta": "En un Estado de Derecho, el poder está limitado por la ley, existe separación de poderes y los derechos fundamentales están garantizados. En una dictadura, un solo individuo o grupo ejerce poder sin límites legales efectivos.",
+      "explicacionesIncorrectas": {
+        "B": "En una dictadura las leyes se aplicanselectivamente o no existen límites reales al poder.",
+        "C": "Son sistemas opuestos: uno limita el poder, el otro lo concentra.",
+        "D": "El Estado de Derecho se basa precisamente en la existencia y aplicación de leyes."
+      },
+      "consejo": "Estado de Derecho: leyes que limitan al poder + derechos garantizados + separación de poderes."
+    }
+  ]
+}
