@@ -1950,3 +1950,136 @@ select option {
   font-size: 0.82rem;
   color: var(--warning);
 }
+
+/* ---------- Study Tabs ---------- */
+.study-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+.study-tab {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.study-tab:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.study-tab.active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(109, 40, 217, 0.3);
+}
+
+/* ---------- Guide Content ---------- */
+.guide-content {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 800px;
+  line-height: 1.8;
+  color: var(--text-primary);
+}
+
+.guide-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.75rem;
+  color: var(--primary-light);
+}
+
+.guide-content h2:first-child {
+  margin-top: 0;
+}
+
+.guide-content h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.5rem;
+  color: var(--text-primary);
+}
+
+.guide-content p {
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.guide-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.guide-content li {
+  padding: 4px 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.guide-content a {
+  color: var(--primary-light);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.guide-content a:hover {
+  color: var(--primary);
+}
+
+.guide-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.guide-content code {
+  background: rgba(109, 40, 217, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+}
+
+/* ---------- Temario Frame ---------- */
+.temario-frame {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+}
+
+.temario-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .study-tabs {
+    flex-direction: column;
+  }
+
+  .guide-content {
+    padding: 20px;
+  }
+}

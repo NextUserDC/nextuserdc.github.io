@@ -1120,6 +1120,40 @@ const EXERCISE_FILES = {
 state.exercisesCache = {};
 state.studySubject = null;
 state.studyViewed = {};
+state.studyTab = 'guia';
+state.guideCache = {};
+
+const STUDY_RESOURCES = {
+  'competencia-lectora': { guide: '09-guias-estudio/competencia-lectora/guia-completa-cl.md', temario: '01-temarios-oficiales/regular-2027/temario-competencia-lectora-2027.pdf' },
+  'matematica-m1': { guide: '09-guias-estudio/matematica-m1/guia-completa-m1.md', temario: '01-temarios-oficiales/regular-2027/temario-m1-2027.pdf' },
+  'matematica-m2': { guide: '09-guias-estudio/matematica-m2/guia-completa-m2.md', temario: '01-temarios-oficiales/regular-2027/temario-m2-2027.pdf' },
+  'ciencias-biologia': { guide: '09-guias-estudio/ciencias-biologia/guia-completa-biologia.md', temario: '01-temarios-oficiales/regular-2027/temario-ciencias-2027.pdf' },
+  'ciencias-fisica': { guide: '09-guias-estudio/ciencias-fisica/guia-completa-fisica.md', temario: '01-temarios-oficiales/regular-2027/temario-ciencias-2027.pdf' },
+  'ciencias-quimica': { guide: '09-guias-estudio/ciencias-quimica/guia-completa-quimica.md', temario: '01-temarios-oficiales/regular-2027/temario-ciencias-2027.pdf' },
+  'ciencias-tp': { guide: '09-guias-estudio/ciencias-tp/guia-completa-tp.md', temario: '01-temarios-oficiales/regular-2027/temario-ciencias-2027.pdf' },
+  'historia': { guide: '09-guias-estudio/historia/guia-completa-historia.md', temario: '01-temarios-oficiales/regular-2027/temario-historia-2027.pdf' },
+};
+
+function mdToHtml(md) {
+  if (!md) return '';
+  let html = md
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+  html = html.replace(/<\/ul>\s*<ul>/g, '');
+  html = html.split('\n\n').map(p => {
+    const trimmed = p.trim();
+    if (!trimmed) return '';
+    if (/^<[h2h3ul]/.test(trimmed)) return trimmed;
+    return '<p>' + trimmed.replace(/\n/g, '<br>') + '</p>';
+  }).join('\n');
+  return html;
+}
 
 async function loadAllExercises(subjectId) {
   if (state.exercisesCache[subjectId]) return state.exercisesCache[subjectId];
@@ -1149,7 +1183,7 @@ function renderStudy(container) {
       <div class="page study-page">
         <div class="page-header animate-in">
           <h2>Estudiar</h2>
-          <p>Explora ejercicios por materia</p>
+          <p>Explora guías, temarios y ejercicios por materia</p>
         </div>
         <div class="subjects-grid animate-in delay-1">
           ${subjects.map(([id, name]) => `
@@ -1164,48 +1198,88 @@ function renderStudy(container) {
     `;
     window._selectStudySubject = async (id) => {
       state.studySubject = id;
+      state.studyTab = 'guia';
       state.studyViewed[id] = state.studyViewed[id] || {};
       renderStudy(container);
     };
     return;
   }
 
+  const tab = state.studyTab || 'guia';
+  const res = STUDY_RESOURCES[currentSubject] || {};
+
   container.innerHTML = `
     ${renderNavbar()}
     <div class="page study-page">
-      <div class="loading-container"><div class="loading-spinner"></div></div>
+      <a class="back-link" onclick="window._studyBack()">← Volver</a>
+      <div class="page-header animate-in">
+        <h2>${SUBJECT_LABELS[currentSubject] || currentSubject}</h2>
+      </div>
+      <div class="study-tabs animate-in delay-1">
+        <button class="study-tab${tab === 'guia' ? ' active' : ''}" onclick="window._switchStudyTab('guia')">📖 Guía de Estudio</button>
+        <button class="study-tab${tab === 'temario' ? ' active' : ''}" onclick="window._switchStudyTab('temario')">📋 Temario Oficial</button>
+        <button class="study-tab${tab === 'ejercicios' ? ' active' : ''}" onclick="window._switchStudyTab('ejercicios')">✏️ Ejercicios</button>
+      </div>
+      <div class="study-tab-content animate-in delay-2" id="studyTabContent">
+        <div class="loading-container"><div class="loading-spinner"></div></div>
+      </div>
     </div>
   `;
 
-  loadAllExercises(currentSubject).then(exercises => {
-    const byLevel = { basico: [], intermedio: [], avanzado: [] };
-    exercises.forEach(ex => {
-      const lvl = (ex.nivel || ex.difficulty || 'basico').toLowerCase();
-      if (byLevel[lvl]) byLevel[lvl].push(ex);
-      else byLevel.basico.push(ex);
-    });
+  window._switchStudyTab = (t) => {
+    state.studyTab = t;
+    renderStudy(container);
+  };
 
-    const totalExercises = exercises.length;
-    const levelOrder = [
-      { key: 'basico', label: 'Básico', color: 'var(--success)' },
-      { key: 'intermedio', label: 'Intermedio', color: 'var(--warning)' },
-      { key: 'avanzado', label: 'Avanzado', color: 'var(--error)' },
-    ];
+  window._studyBack = () => {
+    state.studySubject = null;
+    state.studyTab = 'guia';
+    renderStudy(container);
+  };
 
-    container.innerHTML = `
-      ${renderNavbar()}
-      <div class="page study-page">
-        <a class="back-link" onclick="window._studyBack()">← Volver</a>
-        <div class="page-header animate-in">
-          <h2>${SUBJECT_LABELS[currentSubject] || currentSubject}</h2>
-          <p>${totalExercises} ejercicios &middot; ${viewedCount}/${totalExercises} vistos</p>
-        </div>
+  const contentEl = document.getElementById('studyTabContent');
 
+  if (tab === 'guia') {
+    if (state.guideCache[currentSubject]) {
+      contentEl.innerHTML = `<div class="guide-content">${state.guideCache[currentSubject]}</div>`;
+    } else {
+      fetch(res.guide)
+        .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+        .then(md => {
+          const html = mdToHtml(md);
+          state.guideCache[currentSubject] = html;
+          contentEl.innerHTML = `<div class="guide-content">${html}</div>`;
+        })
+        .catch(() => {
+          contentEl.innerHTML = `<div class="empty-state"><div class="empty-icon">📄</div><h3>Guía no disponible</h3><p>La guía de estudio para esta materia aún no está disponible.</p></div>`;
+        });
+    }
+  } else if (tab === 'temario') {
+    const encoded = encodeURIComponent(res.temario || '');
+    const url = `https://docs.google.com/gview?url=https://nextuser.lat/PAES/${encoded}&embedded=true`;
+    contentEl.innerHTML = `<div class="temario-frame"><iframe src="${url}" frameborder="0" allowfullscreen></iframe></div>`;
+  } else if (tab === 'ejercicios') {
+    contentEl.innerHTML = `<div class="loading-container"><div class="loading-spinner"></div></div>`;
+    loadAllExercises(currentSubject).then(exercises => {
+      const byLevel = { basico: [], intermedio: [], avanzado: [] };
+      exercises.forEach(ex => {
+        const lvl = (ex.nivel || ex.difficulty || 'basico').toLowerCase();
+        if (byLevel[lvl]) byLevel[lvl].push(ex);
+        else byLevel.basico.push(ex);
+      });
+      const totalExercises = exercises.length;
+      const levelOrder = [
+        { key: 'basico', label: 'Básico', color: 'var(--success)' },
+        { key: 'intermedio', label: 'Intermedio', color: 'var(--warning)' },
+        { key: 'avanzado', label: 'Avanzado', color: 'var(--error)' },
+      ];
+      contentEl.innerHTML = `
+        <p style="margin-bottom:1rem;color:var(--text-secondary)">${totalExercises} ejercicios &middot; ${viewedCount}/${totalExercises} vistos</p>
         ${levelOrder.map(({ key, label, color }) => {
           const items = byLevel[key];
           if (items.length === 0) return '';
           return `
-            <div class="study-level-section animate-in delay-1">
+            <div class="study-level-section">
               <h3 class="study-level-title" style="color:${color}">${label} (${items.length})</h3>
               ${items.map(ex => {
                 const letters = ['A', 'B', 'C', 'D'];
@@ -1250,16 +1324,10 @@ function renderStudy(container) {
             </div>
           `;
         }).join('')}
-      </div>
-    `;
-
-    state.studyViewed[currentSubject] = viewed;
-  });
-
-  window._studyBack = () => {
-    state.studySubject = null;
-    renderStudy(container);
-  };
+      `;
+      state.studyViewed[currentSubject] = viewed;
+    });
+  }
 }
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
