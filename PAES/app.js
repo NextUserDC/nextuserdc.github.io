@@ -29,10 +29,24 @@ async function api(path, options = {}) {
   return json.data || json;
 }
 
+const ALL_SUBJECTS = ['competencia-lectora', 'matematica-m1', 'matematica-m2', 'ciencias-biologia', 'ciencias-fisica', 'ciencias-quimica', 'ciencias-tp', 'historia'];
+
+const SUBJECT_LABELS = {
+  'competencia-lectora': 'Competencia Lectora',
+  'matematica-m1': 'Matemática 1',
+  'matematica-m2': 'Matemática 2',
+  'ciencias-biologia': 'Biología',
+  'ciencias-fisica': 'Física',
+  'ciencias-quimica': 'Química',
+  'ciencias-tp': 'Módulo Técnico Profesional',
+  'historia': 'Historia',
+};
+
 function normalizeSettings(raw) {
   if (!raw) return null;
+  const subjects = typeof raw.subjects === 'string' ? JSON.parse(raw.subjects) : (raw.subjects || []);
   return {
-    subjects: typeof raw.subjects === 'string' ? JSON.parse(raw.subjects) : (raw.subjects || []),
+    subjects: subjects.length > 0 ? subjects : [...ALL_SUBJECTS],
     questions_per_session: raw.questions_per_session || 10,
     difficulty_filter: raw.difficulty_filter || 'all',
     timer_enabled: !!raw.timer_enabled,
@@ -78,6 +92,7 @@ const routes = {
   '#/results': renderResults,
   '#/settings': renderSettings,
   '#/history': renderHistory,
+  '#/study': renderStudy,
 };
 
 function navigate(hash) {
@@ -130,6 +145,7 @@ function renderNavbar() {
       </div>
       <div class="navbar-nav${state.mobileMenuOpen ? ' open' : ''}" id="navbarNav">
         <a class="nav-link${hash === '#/dashboard' ? ' active' : ''}" onclick="navigate('#/dashboard')">Dashboard</a>
+        <a class="nav-link${hash === '#/study' ? ' active' : ''}" onclick="navigate('#/study')">Estudiar</a>
         <a class="nav-link${hash === '#/history' ? ' active' : ''}" onclick="navigate('#/history')">Historial</a>
         <a class="nav-link${hash === '#/settings' ? ' active' : ''}" onclick="navigate('#/settings')">Configuración</a>
       </div>
@@ -306,16 +322,7 @@ async function renderDashboard(container) {
   }
   stats.todaySessions = todaySessions;
 
-  const subjectLabels = {
-    'competencia-lectora': 'Competencia Lectora',
-    'matematica-m1': 'Matemática 1',
-    'matematica-m2': 'Matemática 2',
-    'ciencias-biologia': 'Biología',
-    'ciencias-fisica': 'Física',
-    'ciencias-quimica': 'Química',
-    'ciencias-tp': 'Módulo Técnico Profesional',
-    'historia': 'Historia',
-  };
+  const subjectLabels = SUBJECT_LABELS;
 
   const hasSettings = state.settings && state.settings.subjects && state.settings.subjects.length > 0;
 
@@ -355,12 +362,13 @@ async function renderDashboard(container) {
         <div class="quick-actions animate-in delay-2">
           <button class="btn btn-primary" onclick="startQuickQuiz()">⚡ Quiz Rápido</button>
           <button class="btn btn-secondary" onclick="startDailyQuiz()">📅 Quiz Diario</button>
+          <button class="btn btn-secondary" onclick="navigate('#/study')">📖 Estudiar</button>
         </div>
       `}
 
       <h3 class="section-title animate-in delay-3">Progreso por Materia</h3>
       <div class="subjects-grid animate-in delay-4">
-        ${Object.entries(subjectLabels).map(([id, name]) => {
+        ${Object.entries(subjectLabels).filter(([id]) => (state.settings?.subjects || []).includes(id)).map(([id, name]) => {
           const sub = subjectStats.find(x => x.subject === id);
           const answered = sub?.total || 0;
           const total = sub?.total || 0;
@@ -725,7 +733,7 @@ async function renderSettings(container) {
       state.settings = normalizeSettings(data);
     } catch {
       state.settings = {
-        subjects: [],
+        subjects: [...ALL_SUBJECTS],
         questions_per_session: 10,
         difficulty_filter: 'all',
         timer_enabled: false,
@@ -764,8 +772,8 @@ async function renderSettings(container) {
           <h3>Materias</h3>
           <div class="subject-toggles">
             ${subjectMap.map(sub => `
-              <label class="subject-toggle${s.subjects?.includes(sub.id) ? ' active' : ''}" onclick="window._toggleSubject('${sub.id}')">
-                <input type="checkbox" ${s.subjects?.includes(sub.id) ? 'checked' : ''}>
+              <label class="subject-toggle${s.subjects?.includes(sub.id) ? ' active' : ''}">
+                <input type="checkbox" ${s.subjects?.includes(sub.id) ? 'checked' : ''} onchange="window._toggleSubject('${sub.id}', this.checked)">
                 <span class="check-icon">${s.subjects?.includes(sub.id) ? '✓' : ''}</span>
                 <span>${sub.name}</span>
               </label>
@@ -892,13 +900,12 @@ async function renderSettings(container) {
     `;
   }
 
-  window._toggleSubject = (subject) => {
+  window._toggleSubject = (subject, checked) => {
     if (!s.subjects) s.subjects = [];
-    const idx = s.subjects.indexOf(subject);
-    if (idx >= 0) {
-      s.subjects.splice(idx, 1);
+    if (checked) {
+      if (!s.subjects.includes(subject)) s.subjects.push(subject);
     } else {
-      s.subjects.push(subject);
+      s.subjects = s.subjects.filter(id => id !== subject);
     }
     render();
   };
@@ -1047,7 +1054,7 @@ async function renderHistory(container) {
                 const scoreClass = score >= 70 ? 'high' : score >= 50 ? 'mid' : 'low';
                 let subjs = [];
                 try { subjs = typeof s.subjects === 'string' ? JSON.parse(s.subjects) : (s.subjects || []); } catch { subjs = []; }
-                const subjectsStr = subjs.map(id => subjectLabels[id] || id).join(', ') || 'General';
+                const subjectsStr = subjs.map(id => SUBJECT_LABELS[id] || id).join(', ') || 'General';
                 const totalMs = s.total_time_ms || 0;
                 const tMins = Math.floor(totalMs / 60000);
                 const tSecs = Math.floor((totalMs % 60000) / 1000);
@@ -1090,6 +1097,162 @@ async function renderHistory(container) {
 }
 
 /* ---------- Init ---------- */
+
+const EXERCISE_FILES = {
+  'competencia-lectora': '07-ejercicios-progresivos/competencia-lectora/ejercicios-cl.json',
+  'matematica-m1': '07-ejercicios-progresivos/matematica-m1/ejercicios-m1.json',
+  'matematica-m2': '07-ejercicios-progresivos/matematica-m2/ejercicios-m2.json',
+  'ciencias-biologia': '07-ejercicios-progresivos/ciencias-biologia/ejercicios-biologia.json',
+  'ciencias-fisica': '07-ejercicios-progresivos/ciencias-fisica/ejercicios-fisica.json',
+  'ciencias-quimica': '07-ejercicios-progresivos/ciencias-quimica/ejercicios-quimica.json',
+  'ciencias-tp': '07-ejercicios-progresivos/ciencias-tp/ejercicios-mtp.json',
+  'historia': '07-ejercicios-progresivos/historia/ejercicios-historia.json',
+};
+
+state.exercisesCache = {};
+state.studySubject = null;
+state.studyViewed = {};
+
+async function loadAllExercises(subjectId) {
+  if (state.exercisesCache[subjectId]) return state.exercisesCache[subjectId];
+  const filePath = EXERCISE_FILES[subjectId];
+  if (!filePath) return [];
+  try {
+    const res = await fetch(filePath);
+    if (!res.ok) return [];
+    const data = await res.json();
+    const exercises = Array.isArray(data) ? data : (data.exercises || []);
+    state.exercisesCache[subjectId] = exercises;
+    return exercises;
+  } catch {
+    return [];
+  }
+}
+
+function renderStudy(container) {
+  const subjects = Object.entries(SUBJECT_LABELS);
+  const currentSubject = state.studySubject;
+  const viewed = state.studyViewed[currentSubject] || {};
+  const viewedCount = Object.keys(viewed).length;
+
+  if (!currentSubject) {
+    container.innerHTML = `
+      ${renderNavbar()}
+      <div class="page study-page">
+        <div class="page-header animate-in">
+          <h2>Estudiar</h2>
+          <p>Explora ejercicios por materia</p>
+        </div>
+        <div class="subjects-grid animate-in delay-1">
+          ${subjects.map(([id, name]) => `
+            <div class="subject-card study-subject-card" onclick="window._selectStudySubject('${id}')" style="cursor:pointer">
+              <div class="subject-header">
+                <span class="subject-name">${name}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    window._selectStudySubject = async (id) => {
+      state.studySubject = id;
+      state.studyViewed[id] = state.studyViewed[id] || {};
+      renderStudy(container);
+    };
+    return;
+  }
+
+  container.innerHTML = `
+    ${renderNavbar()}
+    <div class="page study-page">
+      <div class="loading-container"><div class="loading-spinner"></div></div>
+    </div>
+  `;
+
+  loadAllExercises(currentSubject).then(exercises => {
+    const byLevel = { basico: [], intermedio: [], avanzado: [] };
+    exercises.forEach(ex => {
+      const lvl = (ex.nivel || ex.difficulty || 'basico').toLowerCase();
+      if (byLevel[lvl]) byLevel[lvl].push(ex);
+      else byLevel.basico.push(ex);
+    });
+
+    const totalExercises = exercises.length;
+    const levelOrder = [
+      { key: 'basico', label: 'Básico', color: 'var(--success)' },
+      { key: 'intermedio', label: 'Intermedio', color: 'var(--warning)' },
+      { key: 'avanzado', label: 'Avanzado', color: 'var(--error)' },
+    ];
+
+    container.innerHTML = `
+      ${renderNavbar()}
+      <div class="page study-page">
+        <a class="back-link" onclick="window._studyBack()">← Volver</a>
+        <div class="page-header animate-in">
+          <h2>${SUBJECT_LABELS[currentSubject] || currentSubject}</h2>
+          <p>${totalExercises} ejercicios &middot; ${viewedCount}/${totalExercises} vistos</p>
+        </div>
+
+        ${levelOrder.map(({ key, label, color }) => {
+          const items = byLevel[key];
+          if (items.length === 0) return '';
+          return `
+            <div class="study-level-section animate-in delay-1">
+              <h3 class="study-level-title" style="color:${color}">${label} (${items.length})</h3>
+              ${items.map(ex => {
+                const letters = ['A', 'B', 'C', 'D'];
+                const opts = ex.opciones || ex.options || [];
+                const correctIdx = ex.respuesta_correcta != null ? ex.respuesta_correcta : null;
+                const exId = ex.id || '';
+                const isViewed = viewed[exId];
+                if (exId) viewed[exId] = true;
+                return `
+                  <div class="study-exercise-card${isViewed ? ' viewed' : ''}">
+                    <div class="study-exercise-header">
+                      <span class="study-id-badge">${exId}</span>
+                      <span class="difficulty-badge ${(ex.nivel || 'basico').toLowerCase()}">${ex.nivel || ex.difficulty || 'Básico'}</span>
+                    </div>
+                    ${ex.titulo ? `<div class="study-titulo">${ex.titulo}</div>` : ''}
+                    ${ex.texto ? `<div class="study-texto">${ex.texto}</div>` : ''}
+                    <div class="study-enunciado">${ex.enunciado}</div>
+                    <div class="study-options">
+                      ${opts.map((opt, i) => {
+                        const optText = typeof opt === 'string' ? opt : opt.text || opt.texto || opt;
+                        const isCorrect = correctIdx != null && (correctIdx === i || ['A','B','C','D'][i] === correctIdx || String(correctIdx) === String(i));
+                        return `
+                          <div class="study-option${isCorrect ? ' correct' : ''}">
+                            <span class="option-letter">${letters[i]}</span>
+                            <span>${optText}</span>
+                          </div>
+                        `;
+                      }).join('')}
+                    </div>
+                    ${ex.explanation ? `
+                      <details class="study-details">
+                        <summary>Ver explicación</summary>
+                        <div class="study-explanation">${ex.explanation}</div>
+                      </details>
+                    ` : ''}
+                    ${ex.consejo ? `
+                      <div class="study-consejo">💡 ${ex.consejo}</div>
+                    ` : ''}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+
+    state.studyViewed[currentSubject] = viewed;
+  });
+
+  window._studyBack = () => {
+    state.studySubject = null;
+    renderStudy(container);
+  };
+}
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   router();
