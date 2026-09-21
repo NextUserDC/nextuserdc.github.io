@@ -650,12 +650,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // PRECIOS Y COSTOS
             {
                 keywords: ['precio', 'precios', 'costo', 'costos', 'cuanto', 'cuesta', 'cuestan', 'valor', 'valores', 'tarifa', 'tarifas', 'cobran', 'cobro', 'cobras', 'dinero', 'plata', 'pesos', 'clp', 'presupuesto', 'cotizar', 'cotizacion', 'cotizo'],
-                respuesta: 'PRECIOS PHOTOBOOTH\n\n- Servicio base: $8.000 CLP por hora\n- Impresiones ilimitadas: +$5.000 CLP (adicional, costo fijo)\n\nLimites de horas por tipo de evento:\n- Bodas: hasta 36 horas\n- Eventos Corporativos: hasta 12 horas\n- Fiestas: hasta 12 horas\n- Aire Libre: hasta 24 horas\n\nEjemplos:\n- 1 hora = $8.000\n- 3 horas = $24.000\n- 5 horas = $40.000\n- 5 horas + impresiones = $45.000\n\nUsa nuestro cotizador en la <a href="servicios.html">pagina de Servicios</a> para calcular el costo exacto de tu evento.'
+                respuesta: 'PRECIOS PHOTOBOOTH\n\n- Servicio base: $8.000 CLP por hora\n- Impresiones ilimitadas: +$5.000 CLP (adicional, costo fijo)\n\nLimites de horas por tipo de evento:\n- Bodas: hasta 36 horas\n- Eventos Corporativos: hasta 12 horas\n- Fiestas: hasta 12 horas\n- Aire Libre: hasta 24 horas\n\nEjemplos:\n- 1 hora = $8.000\n- 3 horas = $24.000\n- 5 horas = $40.000\n- 5 horas + impresiones = $45.000\n\nUsa nuestro cotizador en la pagina de Servicios para calcular el costo exacto de tu evento.'
             },
             // SERVICIO/PRODUCTO
             {
                 keywords: ['servicio', 'servicios', 'cabina', 'cabinas', 'fotografia', 'fotografica', 'totem', 'photo', 'booth', 'photobooth', 'arriendo', 'arrendar', 'alquilar', 'alquilan', 'renta', 'producto', 'productos', 'ofrecen', 'hacen'],
-                respuesta: 'NUESTRO SERVICIO\n\nOfrecemos el arriendo de Cabina Fotografica Totem, que incluye:\n\n- Iluminacion profesional\n- Fondo personalizado a tu gusto\n- Operador tecnico capacitado\n- Impresiones ilimitadas (opcional, +$5.000)\n- Formato Totem vertical moderno\n\nIdeal para bodas, fiestas, eventos corporativos, cumpleanos, graduaciones y mas. Consulta precios en la <a href="servicios.html">pagina de Servicios</a>.'
+                respuesta: 'NUESTRO SERVICIO\n\nOfrecemos el arriendo de Cabina Fotografica Totem, que incluye:\n\n- Iluminacion profesional\n- Fondo personalizado a tu gusto\n- Operador tecnico capacitado\n- Impresiones ilimitadas (opcional, +$5.000)\n- Formato Totem vertical moderno\n\nIdeal para bodas, fiestas, eventos corporativos, cumpleanos, graduaciones y mas. Consulta precios en la pagina de Servicios.'
             },
             // IMPRESIONES
             {
@@ -670,12 +670,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // UBICACION/DIRECCION
             {
                 keywords: ['ubicacion', 'direccion', 'donde', 'local', 'oficina', 'sede', 'mapa', 'location', 'address', 'llegar', 'estacion', 'central', 'avenida', 'calle'],
-                respuesta: 'NUESTRA UBICACION\n\n- Direccion: Avenida 5 de Abril 4936, Estacion Central, Santiago\n- Comuna: Estacion Central\n- Region: Metropolitana\n\nPuedes ver nuestra ubicacion exacta en el mapa interactivo de la <a href="contacto.html">pagina de Contacto</a>.'
+                respuesta: 'NUESTRA UBICACION\n\n- Direccion: Avenida 5 de Abril 4936, Estacion Central, Santiago\n- Comuna: Estacion Central\n- Region: Metropolitana\n\nPuedes ver nuestra ubicacion exacta en el mapa interactivo de la pagina de Contacto.'
             },
             // CONTACTO
             {
                 keywords: ['contacto', 'contactar', 'telefono', 'celular', 'mail', 'correo', 'email', 'whatsapp', 'llamar', 'escribir', 'numero', 'redes', 'social', 'instagram', 'facebook'],
-                respuesta: 'CONTACTO\n\n- Telefono: +56 9 7774 5816\n- Email: Disponible en la <a href="contacto.html">pagina de Contacto</a>\n- Horario de atencion: Lunes a Viernes 9:00 - 18:00\n\nTambien puedes enviarnos un mensaje directo desde la <a href="contacto.html">pagina de Contacto</a>. Si eres usuario registrado, el formulario se auto-completa con tus datos.'
+                respuesta: 'CONTACTO\n\n- Telefono: +56 9 7774 5816\n- Email: Disponible en la pagina de Contacto\n- Horario de atencion: Lunes a Viernes 9:00 - 18:00\n\nTambien puedes enviarnos un mensaje directo desde la pagina de Contacto. Si eres usuario registrado, el formulario se auto-completa con tus datos.'
             },
             // TIPOS DE EVENTOS
             {
@@ -685,12 +685,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // EQUIPO
             {
                 keywords: ['equipo', 'personal', 'trabajadores', 'empleados', 'quien', 'quienes', 'fotografo', 'operador', 'operadora', 'iluminacion', 'tecnico', 'staff', 'personas'],
-                respuesta: 'NUESTRO EQUIPO\n\nSomos un equipo de 3 profesionales:\n\n- Eli Nunez - Fotografo Principal (Canon EOS R6)\n- Camila Aponte - Operadora Tecnica (Sony A7 IV)\n- Mateo Rojas - Operador de Iluminacion (Nikon Z6 II)\n\nCada evento cuenta con al menos 1 operador tecnico capacitado. Mas detalles en la <a href="nosotros.html">pagina "Nosotros"</a>.'
+                respuesta: 'NUESTRO EQUIPO\n\nSomos un equipo de 3 profesionales:\n\n- Eli Nunez - Fotografo Principal (Canon EOS R6)\n- Camila Aponte - Operadora Tecnica (Sony A7 IV)\n- Mateo Rojas - Operador de Iluminacion (Nikon Z6 II)\n\nCada evento cuenta con al menos 1 operador tecnico capacitado. Mas detalles en la pagina "Nosotros".'
             },
             // COTIZADOR
             {
                 keywords: ['cotizar', 'cotizador', 'calcular', 'calculadora', 'estimar', 'estimacion', 'quote', 'calculator', 'suma', 'saldría', 'sale'],
-                respuesta: 'COTIZADOR\n\nPara calcular el costo exacto de tu evento:\n\n1. Ve a la <a href="servicios.html">pagina de Servicios</a>\n2. Selecciona el tipo de evento:\n   - Bodas (max. 36 horas)\n   - Eventos Corporativos (max. 12 horas)\n   - Fiestas (max. 12 horas)\n   - Aire Libre (max. 24 horas)\n3. Ingresa la cantidad de horas\n4. Marca la casilla si deseas impresiones ilimitadas (+$5.000)\n5. Haz clic en "Cotizar"\n\nEl sistema calculara el total automaticamente y podras guardar la reserva.'
+                respuesta: 'COTIZADOR\n\nPara calcular el costo exacto de tu evento:\n\n1. Ve a la pagina de Servicios\n2. Selecciona el tipo de evento:\n   - Bodas (max. 36 horas)\n   - Eventos Corporativos (max. 12 horas)\n   - Fiestas (max. 12 horas)\n   - Aire Libre (max. 24 horas)\n3. Ingresa la cantidad de horas\n4. Marca la casilla si deseas impresiones ilimitadas (+$5.000)\n5. Haz clic en "Cotizar"\n\nEl sistema calculara el total automaticamente y podras guardar la reserva.'
             },
             // QUE INCLUYE
             {
@@ -700,7 +700,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // RESERVA
             {
                 keywords: ['reservar', 'reserva', 'reservacion', 'agendar', 'agenda', 'booking', 'reservo', 'pasos', 'proceso'],
-                respuesta: 'COMO RESERVAR\n\n1. Registrate en <a href="index.html">nuestro sistema</a> (o inicia sesion si ya tienes cuenta)\n2. Cotiza tu evento en la <a href="servicios.html">pagina de Servicios</a>\n3. Contactanos desde la <a href="contacto.html">pagina de Contacto</a> con los detalles de tu evento\n4. Confirmamos la disponibilidad y coordinamos los detalles\n\nTe recomendamos reservar con al menos 1-2 semanas de anticipacion para garantizar disponibilidad.'
+                respuesta: 'COMO RESERVAR\n\n1. Registrate en nuestro sistema (o inicia sesion si ya tienes cuenta)\n2. Cotiza tu evento en la pagina de Servicios\n3. Contactanos desde la pagina de Contacto con los detalles de tu evento\n4. Confirmamos la disponibilidad y coordinamos los detalles\n\nTe recomendamos reservar con al menos 1-2 semanas de anticipacion para garantizar disponibilidad.'
             },
             // ESPECIFICACIONES TECNICAS
             {
@@ -936,23 +936,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!mensajes) return;
             var burbuja = document.createElement('div');
             burbuja.className = 'chatBurbuja ' + tipo;
-            if (tipo === 'bot') {
-                var partes = texto.split(/(<a\s[^>]*>.*?<\/a>)/g);
-                partes.forEach(function(parte) {
-                    var match = parte.match(/^<a\s+href="([^"]*)"[^>]*>(.*?)<\/a>$/);
-                    if (match) {
-                        var a = document.createElement('a');
-                        a.href = match[1];
-                        a.textContent = match[2];
-                        a.target = '_blank';
-                        burbuja.appendChild(a);
-                    } else if (parte) {
-                        burbuja.appendChild(document.createTextNode(parte));
-                    }
-                });
-            } else {
-                burbuja.textContent = texto;
-            }
+            burbuja.textContent = texto;
             mensajes.appendChild(burbuja);
             mensajes.scrollTop = mensajes.scrollHeight;
         }
