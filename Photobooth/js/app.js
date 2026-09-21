@@ -1,5 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    function escapeHtml(str) {
+        if (str == null) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    async function hashPassword(password) {
+        var enc = new TextEncoder();
+        var data = enc.encode(password);
+        var buf = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(buf)).map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+    }
+
     var sesion = JSON.parse(localStorage.getItem('sesionActiva') || 'null');
     var paginaActual = window.location.pathname.split('/').pop() || 'index.html';
 
@@ -21,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (sesion.tipo === 'admin') {
                 indicador.innerHTML = '<span class="sesionNombre">Administrador</span>';
             } else {
-                indicador.innerHTML = '<span class="sesionNombre">Hola, ' + sesion.nombre + '</span>';
+                indicador.innerHTML = '<span class="sesionNombre">Hola, ' + escapeHtml(sesion.nombre) + '</span>';
             }
             indicador.innerHTML += '<button class="btnCerrarSesion" id="btnCerrarSesion">Cerrar Sesión</button>';
             header.appendChild(indicador);
@@ -59,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tituloFormulario.textContent = 'Iniciar Sesión';
         });
 
-        formularioLogin.addEventListener('submit', function(e) {
+        formularioLogin.addEventListener('submit', async function(e) {
             e.preventDefault();
             var usuario = document.getElementById('inputLoginUsuario').value.trim();
             var password = document.getElementById('inputLoginPassword').value.trim();
@@ -78,9 +95,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             var usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+            var hash = await hashPassword(password);
             var encontrado = null;
             for (var i = 0; i < usuarios.length; i++) {
-                if (usuarios[i].usuario === usuario && usuarios[i].password === password) {
+                if (usuarios[i].usuario === usuario && usuarios[i].password === hash) {
                     encontrado = usuarios[i];
                     break;
                 }
@@ -100,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = 'inicio.html';
         });
 
-        formularioRegistro.addEventListener('submit', function(e) {
+        formularioRegistro.addEventListener('submit', async function(e) {
             e.preventDefault();
             var nombre = document.getElementById('inputRegNombre').value.trim();
             var telefono = document.getElementById('inputRegTelefono').value.trim();
@@ -155,7 +173,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
 
-            usuarios.push({ nombre: nombre, telefono: telefono, email: email, usuario: usuario, password: password });
+            var hashedPassword = await hashPassword(password);
+            usuarios.push({ nombre: nombre, telefono: telefono, email: email, usuario: usuario, password: hashedPassword });
             localStorage.setItem('usuarios', JSON.stringify(usuarios));
 
             localStorage.setItem('sesionActiva', JSON.stringify({
@@ -420,9 +439,9 @@ document.addEventListener('DOMContentLoaded', function() {
             var datos = JSON.parse(reservaActiva);
             var fila = document.createElement('tr');
             fila.innerHTML =
-                '<td>' + datos.servicio + '</td>' +
-                '<td>' + (datos.tipoServicio || 'No especificado') + '</td>' +
-                '<td>' + datos.horas + '</td>' +
+                '<td>' + escapeHtml(datos.servicio) + '</td>' +
+                '<td>' + escapeHtml(datos.tipoServicio || 'No especificado') + '</td>' +
+                '<td>' + escapeHtml(datos.horas) + '</td>' +
                 '<td>' + (datos.impresiones ? 'Sí' : 'No') + '</td>' +
                 '<td>$' + datos.total.toLocaleString('es-CL') + '</td>';
             tablaCuerpo.appendChild(fila);
@@ -440,11 +459,11 @@ document.addEventListener('DOMContentLoaded', function() {
             consultas.forEach(function(c) {
                 var fila = document.createElement('tr');
                 fila.innerHTML =
-                    '<td><strong>' + c.nombre + '</strong></td>' +
-                    '<td>' + c.telefono + '</td>' +
-                    '<td>' + c.email + '</td>' +
-                    '<td>' + c.mensaje + '</td>' +
-                    '<td style="white-space:nowrap;">' + c.fecha + '</td>';
+                    '<td><strong>' + escapeHtml(c.nombre) + '</strong></td>' +
+                    '<td>' + escapeHtml(c.telefono) + '</td>' +
+                    '<td>' + escapeHtml(c.email) + '</td>' +
+                    '<td>' + escapeHtml(c.mensaje) + '</td>' +
+                    '<td style="white-space:nowrap;">' + escapeHtml(c.fecha) + '</td>';
                 tablaConsultas.appendChild(fila);
             });
         } else {
@@ -461,10 +480,10 @@ document.addEventListener('DOMContentLoaded', function() {
             usuarios.forEach(function(u) {
                 var fila = document.createElement('tr');
                 fila.innerHTML =
-                    '<td><strong>' + u.nombre + '</strong></td>' +
-                    '<td>' + u.telefono + '</td>' +
-                    '<td>' + u.email + '</td>' +
-                    '<td>' + u.usuario + '</td>';
+                    '<td><strong>' + escapeHtml(u.nombre) + '</strong></td>' +
+                    '<td>' + escapeHtml(u.telefono) + '</td>' +
+                    '<td>' + escapeHtml(u.email) + '</td>' +
+                    '<td>' + escapeHtml(u.usuario) + '</td>';
                 tablaUsuarios.appendChild(fila);
             });
         } else {
@@ -917,7 +936,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!mensajes) return;
             var burbuja = document.createElement('div');
             burbuja.className = 'chatBurbuja ' + tipo;
-            burbuja.innerHTML = texto;
+            if (tipo === 'bot') {
+                burbuja.innerHTML = texto;
+            } else {
+                burbuja.textContent = texto;
+            }
             mensajes.appendChild(burbuja);
             mensajes.scrollTop = mensajes.scrollHeight;
         }
