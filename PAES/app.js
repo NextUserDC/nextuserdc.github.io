@@ -772,8 +772,8 @@ async function renderSettings(container) {
           <h3>Materias</h3>
           <div class="subject-toggles">
             ${subjectMap.map(sub => `
-              <label class="subject-toggle${s.subjects?.includes(sub.id) ? ' active' : ''}">
-                <input type="checkbox" ${s.subjects?.includes(sub.id) ? 'checked' : ''} onchange="window._toggleSubject('${sub.id}', this.checked)">
+              <label class="subject-toggle${s.subjects?.includes(sub.id) ? ' active' : ''}" data-subject="${sub.id}" onclick="event.preventDefault(); window._toggleSubject('${sub.id}')">
+                <input type="checkbox" ${s.subjects?.includes(sub.id) ? 'checked' : ''} tabindex="-1">
                 <span class="check-icon">${s.subjects?.includes(sub.id) ? '✓' : ''}</span>
                 <span>${sub.name}</span>
               </label>
@@ -900,14 +900,22 @@ async function renderSettings(container) {
     `;
   }
 
-  window._toggleSubject = (subject, checked) => {
-    if (!s.subjects) s.subjects = [];
-    if (checked) {
-      if (!s.subjects.includes(subject)) s.subjects.push(subject);
+  window._toggleSubject = (subject) => {
+    if (!s.subjects) s.subjects = [...ALL_SUBJECTS];
+    const idx = s.subjects.indexOf(subject);
+    if (idx >= 0) {
+      s.subjects.splice(idx, 1);
     } else {
-      s.subjects = s.subjects.filter(id => id !== subject);
+      s.subjects.push(subject);
     }
-    render();
+    document.querySelectorAll('.subject-toggle').forEach(el => {
+      const subId = el.getAttribute('data-subject');
+      if (subId === subject) {
+        const isActive = s.subjects.includes(subject);
+        el.classList.toggle('active', isActive);
+        el.querySelector('.check-icon').textContent = isActive ? '✓' : '';
+      }
+    });
   };
 
   window._updateSetting = (key, value) => {
