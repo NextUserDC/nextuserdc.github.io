@@ -22,11 +22,24 @@ async function api(path, options = {}) {
   const headers = { 'Content-Type': 'application/json' };
   if (state.token) headers['Authorization'] = `Bearer ${state.token}`;
   const res = await fetch(`https://api.nextuser.lat${path}`, { ...options, headers });
-  const data = await res.json();
+  const json = await res.json();
   if (!res.ok) {
-    throw new Error(data.error || data.message || 'Error del servidor');
+    throw new Error(json.error || json.message || 'Error del servidor');
   }
-  return data;
+  return json.data || json;
+}
+
+function normalizeSettings(raw) {
+  if (!raw) return null;
+  return {
+    subjects: typeof raw.subjects === 'string' ? JSON.parse(raw.subjects) : (raw.subjects || []),
+    questions_per_session: raw.questions_per_session || 10,
+    difficulty_filter: raw.difficulty_filter || 'all',
+    timer_enabled: !!raw.timer_enabled,
+    timer_seconds: raw.timer_seconds || 30,
+    show_explanations: raw.show_explanations !== false,
+    theme: raw.theme || 'purple',
+  };
 }
 
 /* ---------- Toast ---------- */
@@ -160,17 +173,16 @@ function renderLogin(container) {
           </div>
           ${error ? `<div class="form-error">${error}</div>` : ''}
           <form id="authForm" onsubmit="window._authSubmit(event)">
+            <div class="form-group">
+              <label>${activeTab === 'login' ? 'Usuario o correo' : 'Nombre de usuario'}</label>
+              <input type="text" id="authUsername" placeholder="${activeTab === 'login' ? 'Tu usuario o correo' : 'Tu nombre (ñ, tildes y espacios permitidos)'}" required autocomplete="username">
+            </div>
             ${activeTab === 'register' ? `
               <div class="form-group">
                 <label>Correo electrónico</label>
-                <input type="email" id="authEmail" placeholder="correo@ejemplo.com">
-                <span class="optional">(opcional)</span>
+                <input type="email" id="authEmail" placeholder="correo@ejemplo.com" required>
               </div>
             ` : ''}
-            <div class="form-group">
-              <label>Usuario</label>
-              <input type="text" id="authUsername" placeholder="Tu nombre de usuario" required autocomplete="username">
-            </div>
             <div class="form-group">
               <label>Contraseña</label>
               <input type="password" id="authPassword" placeholder="Tu contraseña" required autocomplete="${activeTab === 'login' ? 'current-password' : 'new-password'}">
@@ -203,6 +215,20 @@ function renderLogin(container) {
       return;
     }
 
+    if (activeTab === 'register' && !email) {
+      error = 'El correo electrónico es obligatorio';
+      render();
+      return;
+    }
+
+    if (activeTab === 'register') {
+      if (!/^[a-zA-Z0-9áéíóúñüÁÉÍÓÚÑÜ _-]+$/.test(username)) {
+        error = 'El usuario solo puede contener letras, números, espacios, guiones y bajos';
+        render();
+        return;
+      }
+    }
+
     loading = true;
     error = '';
     render();
@@ -210,7 +236,7 @@ function renderLogin(container) {
     try {
       const endpoint = activeTab === 'login' ? '/paes/api/auth/login' : '/paes/api/auth/register';
       const body = { username, password };
-      if (activeTab === 'register' && email) body.email = email;
+      if (activeTab === 'register') body.email = email;
 
       const data = await api(endpoint, {
         method: 'POST',
@@ -221,6 +247,7 @@ function renderLogin(container) {
       localStorage.setItem('paes_token', data.token);
 
       if (data.user) state.user = data.user;
+      else if (data.username) state.user = { username: data.username, id: data.user_id };
 
       showToast(activeTab === 'login' ? '¡Bienvenido!' : '¡Cuenta creada!', 'success');
       navigate('#/dashboard');
@@ -240,7 +267,7 @@ async function renderDashboard(container) {
 
   try {
     if (!state.user) {
-      const userData = await api('/paes/api/auth/me');
+      const userData = await api('/paes/api/auth/profile');
       state.user = userData.user || userData;
     }
     if (!state.settings) {
@@ -260,17 +287,35 @@ async function renderDashboard(container) {
   let subjectStats = [];
 
   try {
-    const dashData = await api('/paes/api/stats/dashboard');
-    if (dashData.stats) stats = { ...stats, ...dashData.stats };
-    if (dashData.subjects) subjectStats = dashData.subjects;
+    const progress = await api('/paes/api/progress');
+    stats.precision = progress.overallPct || 0;
+    stats.totalAnswers = progress.totalAnswered || 0;
+    stats.streak = progress.streak || 0;
+    subjectStats = progress.bySubject || [];
   } catch {
     // Stats unavailable
   }
 
-  const subjects = [
-    'Competencia Lectora', 'Matemática 1', 'Matemática 2', 'Biología',
-    'Física', 'Química', 'Módulo Técnico Profesional', 'Historia'
-  ];
+  let todaySessions = 0;
+  try {
+    const hist = await api('/paes/api/quiz/history?page=1&limit=50');
+    const todayStr = new Date().toISOString().split('T')[0];
+    todaySessions = (hist.sessions || []).filter(s => (s.started_at || '').startsWith(todayStr)).length;
+  } catch {
+    // ok
+  }
+  stats.todaySessions = todaySessions;
+
+  const subjectLabels = {
+    'competencia-lectora': 'Competencia Lectora',
+    'matematica-m1': 'Matemática 1',
+    'matematica-m2': 'Matemática 2',
+    'ciencias-biologia': 'Biología',
+    'ciencias-fisica': 'Física',
+    'ciencias-quimica': 'Química',
+    'ciencias-tp': 'Módulo Técnico Profesional',
+    'historia': 'Historia',
+  };
 
   const hasSettings = state.settings && state.settings.subjects && state.settings.subjects.length > 0;
 
@@ -315,16 +360,16 @@ async function renderDashboard(container) {
 
       <h3 class="section-title animate-in delay-3">Progreso por Materia</h3>
       <div class="subjects-grid animate-in delay-4">
-        ${subjects.map(s => {
-          const sub = subjectStats.find(x => x.name === s || x.subject === s);
-          const answered = sub?.answered || 0;
-          const total = sub?.total || 1;
-          const pct = Math.round((answered / total) * 100);
+        ${Object.entries(subjectLabels).map(([id, name]) => {
+          const sub = subjectStats.find(x => x.subject === id);
+          const answered = sub?.total || 0;
+          const total = sub?.total || 0;
+          const pct = sub?.pct || 0;
           return `
             <div class="subject-card">
               <div class="subject-header">
-                <span class="subject-name">${s}</span>
-                <span class="subject-count">${answered}/${total}</span>
+                <span class="subject-name">${name}</span>
+                <span class="subject-count">${answered} (${pct}%)</span>
               </div>
               <div class="progress-bar">
                 <div class="fill" style="width: ${Math.min(pct, 100)}%"></div>
@@ -363,8 +408,8 @@ async function generateQuiz(mode) {
   try {
     const body = {
       subjects: state.settings.subjects || [],
-      count: state.settings.questionsPerSession || 10,
-      difficulty: state.settings.difficulty || 'todas',
+      count: state.settings.questions_per_session || 10,
+      nivel: state.settings.difficulty_filter || 'all',
       mode,
     };
 
@@ -377,8 +422,8 @@ async function generateQuiz(mode) {
     state.currentAnswers = [];
     state.questionIndex = 0;
 
-    if (state.settings.timerEnabled) {
-      state.timerSeconds = (state.settings.timerSeconds || 30) * (state.currentQuiz.questions?.length || body.count);
+    if (state.settings.timer_enabled) {
+      state.timerSeconds = (state.settings.timer_seconds || 30) * (state.currentQuiz.questions?.length || body.count);
     }
 
     navigate('#/quiz');
@@ -399,8 +444,8 @@ function renderQuiz(container) {
   const idx = state.questionIndex;
   const q = questions[idx];
   const total = questions.length;
-  const practice = state.settings?.showExplanations !== false;
-  const timerEnabled = state.settings?.timerEnabled;
+  const practice = state.settings?.show_explanations !== false;
+  const timerEnabled = state.settings?.timer_enabled;
 
   if (state.timerInterval) clearInterval(state.timerInterval);
 
@@ -413,13 +458,15 @@ function renderQuiz(container) {
     const answered = selected !== undefined;
     const showExplanation = practice && answered;
 
+    const opts = q.opciones || q.options || [];
+
     container.innerHTML = `
       ${renderNavbar()}
       <div class="page quiz-page">
         <div class="quiz-topbar">
           <div class="quiz-info">
             <span class="quiz-question-count">Pregunta ${idx + 1}/${total}</span>
-            <span class="difficulty-badge ${(q.difficulty || '').toLowerCase()}">${q.difficulty || 'Normal'}</span>
+            <span class="difficulty-badge ${(q.nivel || q.difficulty || '').toLowerCase()}">${q.nivel || q.difficulty || 'Normal'}</span>
           </div>
           <div style="font-size:0.85rem;color:var(--text-secondary)">${q.subject || ''}</div>
           ${timerEnabled ? `<div class="quiz-timer ${timerClass}">⏱ ${timeStr}</div>` : ''}
@@ -433,19 +480,18 @@ function renderQuiz(container) {
           ${q.texto ? `<div class="question-text">${q.texto}</div>` : ''}
           <div class="question-enunciado">${q.enunciado}</div>
           <div class="options-grid">
-            ${q.options.map((opt, i) => {
+            ${opts.map((opt, i) => {
+              const optText = typeof opt === 'string' ? opt : opt.text || opt.texto || opt;
               let cls = 'quiz-option';
               if (answered) {
                 cls += ' disabled';
-                if (q.options[i] === q.correctAnswer || i === q.correct) cls += ' correct';
-                if (selected === i && i !== q.correct) cls += ' incorrect';
               } else if (selected === i) {
                 cls += ' selected';
               }
               return `
                 <button class="${cls}" onclick="window._selectAnswer(${i})" ${answered ? 'disabled' : ''}>
                   <span class="option-letter">${letters[i]}</span>
-                  <span>${typeof opt === 'string' ? opt : opt.text || opt}</span>
+                  <span>${optText}</span>
                 </button>
               `;
             }).join('')}
@@ -496,7 +542,7 @@ function renderQuiz(container) {
     if (state.currentAnswers[state.questionIndex] !== undefined) return;
     state.currentAnswers[state.questionIndex] = optionIndex;
 
-    if (state.settings?.showExplanations !== false) {
+    if (state.settings?.show_explanations !== false) {
       renderQuizView();
     } else {
       renderQuizView();
@@ -528,23 +574,23 @@ function renderQuiz(container) {
 
     try {
       const answersPayload = questions.map((q, i) => ({
-        questionId: q.id || i,
-        answer: state.currentAnswers[i] !== undefined ? state.currentAnswers[i] : null,
+        exercise_id: q.session_exercise_id || q.id,
+        selected: state.currentAnswers[i] !== undefined ? state.currentAnswers[i] : null,
+        time_spent_ms: 0,
       }));
 
       const data = await api('/paes/api/quiz/submit', {
         method: 'POST',
         body: JSON.stringify({
-          quizId: state.currentQuiz.id,
+          session_id: state.currentQuiz.session_id,
           answers: answersPayload,
-          timeSpent: state.settings?.timerEnabled
-            ? ((state.settings.timerSeconds || 30) * total) - state.timerSeconds
-            : 0,
         }),
       });
 
-      state.currentQuiz.results = data.results || data;
-      state.currentQuiz.score = data.score || data;
+      state.currentQuiz.results = data.results || [];
+      state.currentQuiz.score = data.score_pct || 0;
+      state.currentQuiz.correct = data.correct_answers || 0;
+      state.currentQuiz.total = data.total_questions || questions.length;
       navigate('#/results');
     } catch (err) {
       showToast(err.message || 'Error al enviar respuestas', 'error');
@@ -563,32 +609,22 @@ function renderResults(container) {
   }
 
   const questions = state.currentQuiz.questions;
-  const answers = state.currentAnswers;
-  const results = state.currentQuiz.results;
-  const practice = state.settings?.showExplanations !== false;
+  const results = state.currentQuiz.results || [];
+  const practice = state.settings?.show_explanations !== false;
 
-  let correct = 0;
-  questions.forEach((q, i) => {
-    const userAns = answers[i];
-    const correctIdx = q.correct;
-    if (userAns === correctIdx) correct++;
-  });
-
-  const total = questions.length;
-  const pct = Math.round((correct / total) * 100);
+  const correct = state.currentQuiz.correct || 0;
+  const total = state.currentQuiz.total || questions.length;
+  const pct = state.currentQuiz.score || 0;
   const circumference = 314;
   const offset = circumference - (circumference * pct / 100);
 
-  const timeSpent = results?.timeSpent || 0;
-  const mins = Math.floor(timeSpent / 60);
-  const secs = timeSpent % 60;
-
   const levels = { basico: { t: 0, c: 0 }, intermedio: { t: 0, c: 0 }, avanzado: { t: 0, c: 0 } };
-  questions.forEach((q, i) => {
-    const diff = (q.difficulty || 'basico').toLowerCase();
+  results.forEach(r => {
+    const q = questions.find(q => (q.session_exercise_id || q.id) === r.exercise_id);
+    const diff = (q?.nivel || 'basico').toLowerCase();
     if (levels[diff]) {
       levels[diff].t++;
-      if (answers[i] === q.correct) levels[diff].c++;
+      if (r.correct) levels[diff].c++;
     }
   });
 
@@ -614,11 +650,7 @@ function renderResults(container) {
           <div class="result-stat-label">Correctas</div>
         </div>
         <div class="result-stat">
-          <div class="result-stat-value">${mins}:${String(secs).padStart(2, '0')}</div>
-          <div class="result-stat-label">Tiempo</div>
-        </div>
-        <div class="result-stat">
-          <div class="result-stat-value" style="color:${pct >= 70 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)'}">${pct >= 70 ? 'Buen' : pct >= 50 ? 'Regular' : 'Necesita'} trabajo</div>
+          <div class="result-stat-value">${pct >= 70 ? 'Buen' : pct >= 50 ? 'Regular' : 'Necesita'} trabajo</div>
           <div class="result-stat-label">Nivel</div>
         </div>
       </div>
@@ -643,24 +675,31 @@ function renderResults(container) {
 
       <div class="results-details animate-in delay-3">
         <h3>Detalle de Preguntas</h3>
-        ${questions.map((q, i) => {
-          const userAns = answers[i];
-          const isCorrect = userAns === q.correct;
+        ${results.map((r, i) => {
+          const q = questions.find(q => (q.session_exercise_id || q.id) === r.exercise_id) || {};
           const letters = ['A', 'B', 'C', 'D'];
+          const opts = q.opciones || q.options || [];
+          const selectedIdx = r.selected != null ? ['A','B','C','D'].indexOf(r.selected) : -1;
+          const correctIdx = r.correct_answer != null ? ['A','B','C','D'].indexOf(r.correct_answer) : -1;
           return `
             <div class="result-item">
               <div class="result-item-header">
-                <span class="result-icon">${isCorrect ? '✅' : '❌'}</span>
+                <span class="result-icon">${r.correct ? '✅' : '❌'}</span>
                 <strong style="font-size:0.85rem;color:var(--text-secondary)">Pregunta ${i + 1}</strong>
               </div>
-              <div class="result-question">${q.enunciado}</div>
+              <div class="result-question">${q.enunciado || r.exercise_id}</div>
               <div class="result-answer">
-                Tu respuesta: <span class="${isCorrect ? 'correct-answer' : 'your-answer'}">${userAns !== undefined ? letters[userAns] + '. ' + (typeof q.options[userAns] === 'string' ? q.options[userAns] : q.options[userAns]?.text || '') : 'Sin respuesta'}</span>
-                ${!isCorrect ? `<br>Correcta: <span class="correct-answer">${letters[q.correct]}. ${typeof q.options[q.correct] === 'string' ? q.options[q.correct] : q.options[q.correct]?.text || ''}</span>` : ''}
+                Tu respuesta: <span class="${r.correct ? 'correct-answer' : 'your-answer'}">${r.selected || 'Sin respuesta'}</span>
+                ${!r.correct ? `<br>Correcta: <span class="correct-answer">${r.correct_answer}</span>` : ''}
               </div>
-              ${practice && q.explanation ? `
+              ${practice && r.explanation ? `
                 <div class="result-explanation">
-                  <strong>Explicación:</strong> ${q.explanation}
+                  <strong>Explicación:</strong> ${r.explanation}
+                </div>
+              ` : ''}
+              ${practice && r.consejo ? `
+                <div class="result-explanation" style="border-left-color:var(--accent-light)">
+                  <strong>Consejo:</strong> ${r.consejo}
                 </div>
               ` : ''}
             </div>
@@ -683,23 +722,29 @@ async function renderSettings(container) {
   if (!state.settings) {
     try {
       const data = await api('/paes/api/settings');
-      state.settings = data.settings || data;
+      state.settings = normalizeSettings(data);
     } catch {
       state.settings = {
         subjects: [],
-        questionsPerSession: 10,
-        difficulty: 'todas',
-        timerEnabled: false,
-        timerSeconds: 30,
-        showExplanations: true,
+        questions_per_session: 10,
+        difficulty_filter: 'all',
+        timer_enabled: false,
+        timer_seconds: 30,
+        show_explanations: true,
       };
     }
   }
 
   const s = state.settings;
-  const allSubjects = [
-    'Competencia Lectora', 'Matemática 1', 'Matemática 2', 'Biología',
-    'Física', 'Química', 'Módulo Técnico Profesional', 'Historia'
+  const subjectMap = [
+    { id: 'competencia-lectora', name: 'Competencia Lectora' },
+    { id: 'matematica-m1', name: 'Matemática 1' },
+    { id: 'matematica-m2', name: 'Matemática 2' },
+    { id: 'ciencias-biologia', name: 'Biología' },
+    { id: 'ciencias-fisica', name: 'Física' },
+    { id: 'ciencias-quimica', name: 'Química' },
+    { id: 'ciencias-tp', name: 'Módulo Técnico Profesional' },
+    { id: 'historia', name: 'Historia' },
   ];
 
   let saving = false;
@@ -718,11 +763,11 @@ async function renderSettings(container) {
         <div class="settings-section animate-in delay-1">
           <h3>Materias</h3>
           <div class="subject-toggles">
-            ${allSubjects.map(sub => `
-              <label class="subject-toggle${s.subjects?.includes(sub) ? ' active' : ''}" onclick="window._toggleSubject('${sub}')">
-                <input type="checkbox" ${s.subjects?.includes(sub) ? 'checked' : ''}>
-                <span class="check-icon">${s.subjects?.includes(sub) ? '✓' : ''}</span>
-                <span>${sub}</span>
+            ${subjectMap.map(sub => `
+              <label class="subject-toggle${s.subjects?.includes(sub.id) ? ' active' : ''}" onclick="window._toggleSubject('${sub.id}')">
+                <input type="checkbox" ${s.subjects?.includes(sub.id) ? 'checked' : ''}>
+                <span class="check-icon">${s.subjects?.includes(sub.id) ? '✓' : ''}</span>
+                <span>${sub.name}</span>
               </label>
             `).join('')}
           </div>
@@ -734,22 +779,22 @@ async function renderSettings(container) {
             <div>
               <div class="settings-label">Preguntas por sesión</div>
             </div>
-            <select class="settings-select" id="settingCount" onchange="window._updateSetting('questionsPerSession', parseInt(this.value))">
-              <option value="5" ${s.questionsPerSession === 5 ? 'selected' : ''}>5</option>
-              <option value="10" ${s.questionsPerSession === 10 ? 'selected' : ''}>10</option>
-              <option value="15" ${s.questionsPerSession === 15 ? 'selected' : ''}>15</option>
-              <option value="20" ${s.questionsPerSession === 20 ? 'selected' : ''}>20</option>
+            <select class="settings-select" id="settingCount" onchange="window._updateSetting('questions_per_session', parseInt(this.value))">
+              <option value="5" ${s.questions_per_session === 5 ? 'selected' : ''}>5</option>
+              <option value="10" ${s.questions_per_session === 10 ? 'selected' : ''}>10</option>
+              <option value="15" ${s.questions_per_session === 15 ? 'selected' : ''}>15</option>
+              <option value="20" ${s.questions_per_session === 20 ? 'selected' : ''}>20</option>
             </select>
           </div>
           <div class="settings-row">
             <div>
               <div class="settings-label">Dificultad</div>
             </div>
-            <select class="settings-select" id="settingDiff" onchange="window._updateSetting('difficulty', this.value)">
-              <option value="todas" ${s.difficulty === 'todas' ? 'selected' : ''}>Todas</option>
-              <option value="basico" ${s.difficulty === 'basico' ? 'selected' : ''}>Básico</option>
-              <option value="intermedio" ${s.difficulty === 'intermedio' ? 'selected' : ''}>Intermedio</option>
-              <option value="avanzado" ${s.difficulty === 'avanzado' ? 'selected' : ''}>Avanzado</option>
+            <select class="settings-select" id="settingDiff" onchange="window._updateSetting('difficulty_filter', this.value)">
+              <option value="all" ${s.difficulty_filter === 'all' ? 'selected' : ''}>Todas</option>
+              <option value="basico" ${s.difficulty_filter === 'basico' ? 'selected' : ''}>Básico</option>
+              <option value="intermedio" ${s.difficulty_filter === 'intermedio' ? 'selected' : ''}>Intermedio</option>
+              <option value="avanzado" ${s.difficulty_filter === 'avanzado' ? 'selected' : ''}>Avanzado</option>
             </select>
           </div>
           <div class="settings-row">
@@ -758,21 +803,21 @@ async function renderSettings(container) {
               <div class="settings-desc">Limitar tiempo por quiz</div>
             </div>
             <label class="toggle">
-              <input type="checkbox" ${s.timerEnabled ? 'checked' : ''} onchange="window._updateSetting('timerEnabled', this.checked)">
+              <input type="checkbox" ${s.timer_enabled ? 'checked' : ''} onchange="window._updateSetting('timer_enabled', this.checked)">
               <span class="toggle-track"></span>
               <span class="toggle-thumb"></span>
             </label>
           </div>
-          ${s.timerEnabled ? `
+          ${s.timer_enabled ? `
             <div class="settings-row">
               <div>
                 <div class="settings-label">Segundos por pregunta</div>
               </div>
-              <select class="settings-select" onchange="window._updateSetting('timerSeconds', parseInt(this.value))">
-                <option value="15" ${s.timerSeconds === 15 ? 'selected' : ''}>15s</option>
-                <option value="30" ${s.timerSeconds === 30 ? 'selected' : ''}>30s</option>
-                <option value="45" ${s.timerSeconds === 45 ? 'selected' : ''}>45s</option>
-                <option value="60" ${s.timerSeconds === 60 ? 'selected' : ''}>60s</option>
+              <select class="settings-select" onchange="window._updateSetting('timer_seconds', parseInt(this.value))">
+                <option value="15" ${s.timer_seconds === 15 ? 'selected' : ''}>15s</option>
+                <option value="30" ${s.timer_seconds === 30 ? 'selected' : ''}>30s</option>
+                <option value="45" ${s.timer_seconds === 45 ? 'selected' : ''}>45s</option>
+                <option value="60" ${s.timer_seconds === 60 ? 'selected' : ''}>60s</option>
               </select>
             </div>
           ` : ''}
@@ -782,7 +827,7 @@ async function renderSettings(container) {
               <div class="settings-desc">En modo práctica</div>
             </div>
             <label class="toggle">
-              <input type="checkbox" ${s.showExplanations !== false ? 'checked' : ''} onchange="window._updateSetting('showExplanations', this.checked)">
+              <input type="checkbox" ${s.show_explanations !== false ? 'checked' : ''} onchange="window._updateSetting('show_explanations', this.checked)">
               <span class="toggle-track"></span>
               <span class="toggle-thumb"></span>
             </label>
@@ -860,7 +905,7 @@ async function renderSettings(container) {
 
   window._updateSetting = (key, value) => {
     s[key] = value;
-    if (key === 'timerEnabled') render();
+    if (key === 'timer_enabled') render();
   };
 
   window._saveSettings = async () => {
@@ -868,8 +913,15 @@ async function renderSettings(container) {
     render();
     try {
       await api('/paes/api/settings', {
-        method: 'POST',
-        body: JSON.stringify(s),
+        method: 'PATCH',
+        body: JSON.stringify({
+          subjects: s.subjects,
+          questions_per_session: s.questions_per_session,
+          difficulty_filter: s.difficulty_filter,
+          timer_enabled: s.timer_enabled,
+          timer_seconds: s.timer_seconds,
+          show_explanations: s.show_explanations,
+        }),
       });
       showToast('Configuración guardada', 'success');
     } catch (err) {
@@ -952,8 +1004,8 @@ async function renderHistory(container) {
 
   try {
     const data = await api(`/paes/api/quiz/history?page=${state.historyPage}&limit=10`);
-    sessions = data.sessions || data.history || data.results || [];
-    totalPages = data.totalPages || data.pages || 1;
+    sessions = data.sessions || [];
+    totalPages = data.pagination?.pages || 1;
   } catch {
     sessions = [];
   }
@@ -989,21 +1041,23 @@ async function renderHistory(container) {
             </thead>
             <tbody>
               ${sessions.map(s => {
-                const date = new Date(s.date || s.createdAt || s.created_at);
+                const date = new Date(s.started_at || s.created_at);
                 const dateStr = date.toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' });
-                const score = s.score || s.percentage || 0;
+                const score = s.score_pct || 0;
                 const scoreClass = score >= 70 ? 'high' : score >= 50 ? 'mid' : 'low';
-                const subjects = s.subjects?.join(', ') || s.subject || 'General';
-                const time = s.timeSpent || s.time || 0;
-                const tMins = Math.floor(time / 60);
-                const tSecs = time % 60;
+                let subjs = [];
+                try { subjs = typeof s.subjects === 'string' ? JSON.parse(s.subjects) : (s.subjects || []); } catch { subjs = []; }
+                const subjectsStr = subjs.map(id => subjectLabels[id] || id).join(', ') || 'General';
+                const totalMs = s.total_time_ms || 0;
+                const tMins = Math.floor(totalMs / 60000);
+                const tSecs = Math.floor((totalMs % 60000) / 1000);
                 return `
-                  <tr onclick="window._expandHistory('${s.id || s._id || ''}')">
+                  <tr onclick="window._expandHistory('${s.id}')">
                     <td>${dateStr}</td>
-                    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${subjects}</td>
-                    <td>${s.mode || 'quick'}</td>
+                    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${subjectsStr}</td>
+                    <td>${s.mode || 'practice'}</td>
                     <td><span class="score-badge ${scoreClass}">${Math.round(score)}%</span></td>
-                    <td>${s.totalQuestions || s.questionsCount || '?'}</td>
+                    <td>${s.correct_answers || 0}/${s.total_questions || '?'}</td>
                     <td>${tMins}:${String(tSecs).padStart(2, '0')}</td>
                   </tr>
                 `;
