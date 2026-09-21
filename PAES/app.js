@@ -289,7 +289,7 @@ async function renderDashboard(container) {
     if (!state.settings) {
       try {
         const settingsData = await api('/paes/api/settings');
-        state.settings = settingsData.settings || settingsData;
+        state.settings = normalizeSettings(settingsData.settings || settingsData);
       } catch {
         state.settings = null;
       }
@@ -901,7 +901,10 @@ async function renderSettings(container) {
   }
 
   window._toggleSubject = (subject) => {
-    if (!s.subjects) s.subjects = [...ALL_SUBJECTS];
+    if (typeof s.subjects === 'string') {
+      try { s.subjects = JSON.parse(s.subjects); } catch { s.subjects = [...ALL_SUBJECTS]; }
+    }
+    if (!s.subjects || !Array.isArray(s.subjects)) s.subjects = [...ALL_SUBJECTS];
     const idx = s.subjects.indexOf(subject);
     if (idx >= 0) {
       s.subjects.splice(idx, 1);
