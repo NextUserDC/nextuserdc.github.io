@@ -322,7 +322,7 @@
         contadorEl.textContent = `${estado.actual + 1} / ${estado.personajes.length}`;
         document.getElementById('personaje-score').textContent = estado.score;
 
-        const opcionesShuffle = shuffle(p.opciones.map((op, i) => ({ texto: op, esCorrecta: i === 0 })));
+        const opcionesShuffle = shuffle(p.opciones.map((op, i) => ({ texto: op, esCorrecta: i === p.correcta })));
         opcionesEl.innerHTML = '';
 
         opcionesShuffle.forEach(op => {
@@ -644,7 +644,7 @@
             grid.appendChild(cartaEl);
         });
 
-        document.getElementById('memoria-mensaje').classList.add('oculto');
+        document.getElementById('memoria-resultado').classList.add('oculto');
     }
 
     function voltearCarta(index) {
@@ -675,7 +675,7 @@
 
                 if (memoriaEstado.emparejadas === MEMORIA_PAREJAS.length) {
                     memoriaEstado.terminado = true;
-                    const msgEl = document.getElementById('memoria-mensaje');
+                    const msgEl = document.getElementById('memoria-resultado');
                     mostrarFeedback(msgEl, `¡Ganaste! En ${memoriaEstado.movimientos} movimientos 🎉`, 'correcto');
                 }
             } else {

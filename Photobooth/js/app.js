@@ -670,7 +670,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // UBICACION/DIRECCION
             {
                 keywords: ['ubicacion', 'direccion', 'donde', 'local', 'oficina', 'sede', 'mapa', 'location', 'address', 'llegar', 'estacion', 'central', 'avenida', 'calle'],
-                respuesta: 'NUESTRA UBICACION\n\n- Direccion: Avenida 5 de Abril 4936, Estacion Central, Santiago\n- Comuna: Estacion Central\n- Region: Metropolitana\n\nPuedes ver nuestra ubicacion exacta en el mapa interactivo de la pagina de Contacto.'
+                respuesta: 'NUESTRA UBICACION\n\n- Direccion: Santiago de Chile\n- Region: Metropolitana\n\nPuedes ver nuestra ubicacion en el mapa interactivo de la pagina de Contacto.'
             },
             // CONTACTO
             {
@@ -715,7 +715,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // ZONA DE COBERTURA
             {
                 keywords: ['zona', 'cobertura', 'viajar', 'desplazamiento', 'transporte', 'traslado', 'region', 'comuna', 'santiago', 'providencia', 'condes', 'nunoa', 'vitacura'],
-                respuesta: 'ZONA DE COBERTURA\n\n- Principalmente operamos en Santiago y alrededores\n- Estacion Central es nuestra base de operaciones\n- Para eventos en otras comunas, consulta disponibilidad\n\nEl costo de traslado puede variar segun la ubicacion de tu evento. Contactanos para confirmar si podemos cubrir tu zona.'
+                respuesta: 'ZONA DE COBERTURA\n\n- Principalmente operamos en Santiago y alrededores\n- Santiago de Chile es nuestra base de operaciones\n- Para eventos en otras comunas, consulta disponibilidad\n\nEl costo de traslado puede variar segun la ubicacion de tu evento. Contactanos para confirmar si podemos cubrir tu zona.'
             },
             // CUENTA
             {

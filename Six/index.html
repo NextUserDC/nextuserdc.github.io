@@ -434,10 +434,13 @@
         <button class="btn-cerrar-modal" data-cerrar="personaje">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
-        <h3>Adivina el Personaje</h3>
+        <div class="personaje-header">
+            <h3>Adivina el Personaje</h3>
+            <span class="personaje-contador" id="personaje-contador">1 / 8</span>
+        </div>
         <div class="personaje-pista" id="personaje-pista"></div>
         <div class="personaje-opciones" id="personaje-opciones"></div>
-        <div class="personaje-resultado oculto" id="personaje-resultado"></div>
+        <div class="personaje-feedback oculto" id="personaje-feedback"></div>
         <div class="personaje-score">
             <span>Racha: <strong id="personaje-score">0</strong></span>
         </div>
