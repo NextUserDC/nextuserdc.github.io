@@ -25,10 +25,12 @@ body {
 /* ─── Background Animation ─── */
 .bg-animation {
   position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  contain: strict;
 }
 
 .bg-orb {
   position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.12;
+  will-change: transform;
 }
 
 .bg-orb-1 {
@@ -72,6 +74,7 @@ body {
   position: relative; z-index: 1;
   max-width: 1080px; margin: 0 auto;
   padding: 0 32px 64px;
+  contain: layout style;
 }
 
 /* ─── Glass Utility ─── */
@@ -88,6 +91,16 @@ body {
   position: relative; z-index: 1;
   text-align: center;
   padding: 64px 32px 56px;
+  contain: layout;
+}
+
+.hero-role {
+  display: block;
+  font-size: 0.55em;
+  font-weight: 600;
+  color: var(--accent-light);
+  -webkit-text-fill-color: var(--accent-light);
+  margin-top: 8px;
 }
 
 .hero-inner {

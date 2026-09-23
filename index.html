@@ -4,13 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portafolio de Elí Alexander Núñez Suárez, administrador de sistemas Linux y desarrollador web en Santiago, Chile. Proyectos de servidores cloud, apps web y automatización con IA.">
+  <meta name="description" content="Portafolio de Elí Alexander Núñez Suárez, administrador de sistemas Linux y desarrollador web en Santiago. Servidores cloud, apps web y automatización con IA.">
   <link rel="canonical" href="https://nextuser.lat/">
-  <title>Elí Núñez — Administrador de Sistemas Linux y Desarrollador Web | Santiago</title>
+  <title>Elí Núñez — Administrador de Sistemas Linux y Dev Web</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=optional" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="style.css?v=8">
   <meta property="og:title" content="Elí Núñez — Administrador de Sistemas Linux y Desarrollador Web">
   <meta property="og:description" content="Portafolio de Elí Alexander Núñez Suárez, administrador de sistemas Linux y desarrollador web en Santiago, Chile.">
   <meta property="og:url" content="https://nextuser.lat/">
@@ -31,22 +32,68 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Elí Alexander Núñez Suárez",
-    "url": "https://nextuser.lat/",
-    "jobTitle": "Estudiante de Programación y Administrador de Sistemas",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Santiago de Chile",
-      "addressCountry": "CL"
-    },
-    "knowsAbout": ["Linux", "Administración de sistemas", "Desarrollo web", "Git", "MySQL", "Java", "Cloud/VPS"],
-    "sameAs": [
-      "https://github.com/NextUserDC",
-      "https://nextuser.lat/instagram",
-      "https://nextuser.lat/fiverr",
-      "https://nextuser.lat/kick",
-      "https://nextuser.lat/twitter-x"
+    "@graph": [
+      {
+        "@type": "Person",
+        "name": "Elí Alexander Núñez Suárez",
+        "url": "https://nextuser.lat/",
+        "jobTitle": "Administrador de Sistemas Linux y Desarrollador Web",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Santiago de Chile",
+          "addressCountry": "CL"
+        },
+        "knowsAbout": ["Linux", "Administración de sistemas", "Desarrollo web", "Git", "MySQL", "Java", "Cloud/VPS"],
+        "sameAs": [
+          "https://github.com/NextUserDC",
+          "https://nextuser.lat/instagram",
+          "https://nextuser.lat/fiverr",
+          "https://nextuser.lat/kick",
+          "https://nextuser.lat/twitter-x"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "name": "Elí Núñez — Portafolio",
+        "url": "https://nextuser.lat/",
+        "inLanguage": "es-CL",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://nextuser.lat/?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "Organization",
+        "name": "Elí Núñez",
+        "url": "https://nextuser.lat/",
+        "logo": "https://nextuser.lat/og-cover.jpg",
+        "founder": {
+          "@type": "Person",
+          "name": "Elí Alexander Núñez Suárez"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Santiago de Chile",
+          "addressCountry": "CL"
+        },
+        "sameAs": [
+          "https://github.com/NextUserDC",
+          "https://nextuser.lat/instagram",
+          "https://nextuser.lat/fiverr",
+          "https://nextuser.lat/kick",
+          "https://nextuser.lat/twitter-x"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "elialexandern11@gmail.com",
+          "availableLanguage": ["Spanish", "English"]
+        }
+      }
     ]
   }
   </script>
@@ -64,7 +111,7 @@
     <section class="hero">
       <div class="hero-inner">
         <div class="hero-badge">Disponible para proyectos</div>
-        <h1 class="hero-name">Elí Alexander<br>Núñez Suárez</h1>
+        <h1 class="hero-name">Elí Alexander Núñez Suárez<br><span class="hero-role">Administrador de Sistemas Linux</span></h1>
         <p class="hero-tagline">Estudiante de Programación &amp; Administrador de Sistemas</p>
         <div class="hero-location">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
