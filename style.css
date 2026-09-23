@@ -197,6 +197,10 @@ body {
   color: rgba(255, 255, 255, 0.85);
 }
 
+.about-card p + p {
+  margin-top: 1rem;
+}
+
 /* ─── Skills ─── */
 .skills-grid {
   display: grid;
