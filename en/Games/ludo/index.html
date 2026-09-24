@@ -1,20 +1,33 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0a0a14">
+  <meta name="description" content="Play Ludo online: local games with 2-4 players or online matches with a room code.">
+  <link rel="canonical" href="https://nextuser.lat/en/Games/ludo/">
+  <link rel="alternate" hreflang="es" href="https://nextuser.lat/Games/ludo/">
+  <link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Games/ludo/">
+  <link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Games/ludo/">
+  <meta property="og:title" content="Ludo - Games">
+  <meta property="og:description" content="Play Ludo online: local games with 2-4 players or online matches with a room code.">
+  <meta property="og:url" content="https://nextuser.lat/en/Games/ludo/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://nextuser.lat/og-cover.jpg">
+  <meta property="og:site_name" content="Elí Núñez">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ludo - Games">
+  <meta name="twitter:description" content="Play Ludo online: local games with 2-4 players or online matches with a room code.">
+  <meta name="twitter:image" content="https://nextuser.lat/og-cover.jpg">
+  <meta name="robots" content="index, follow">
   <title>Ludo - Games</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="/Games/ludo/style.css?v=5">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9123517935698561" crossorigin="anonymous"></script>
-  <link rel="canonical" href="https://nextuser.lat/Games/ludo/">
-  <link rel="alternate" hreflang="es" href="https://nextuser.lat/Games/ludo/">
-  <link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Games/ludo/">
-  <link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Games/ludo/">
 </head>
 <body>
   <div class="background-animation">
@@ -24,29 +37,29 @@
 
   <div class="container">
     <header class="header">
-      <a href="/Games/" class="back-link">&larr; Games</a>
+      <a href="/en/Games/" class="back-link">&larr; Games</a>
       <h1 class="logo">Ludo</h1>
     </header>
 
     <div id="setup-screen" class="screen active">
       <div class="setup-card">
-        <h2>Modo de juego</h2>
+        <h2>Game mode</h2>
         <div class="mode-buttons">
           <button class="mode-btn selected" data-mode="local">
             <span class="mode-icon">🎲</span>
             <span class="mode-label">Local</span>
-            <span class="mode-desc">Juega en el mismo dispositivo</span>
+            <span class="mode-desc">Play on the same device</span>
           </button>
           <button class="mode-btn" data-mode="online">
             <span class="mode-icon">🌐</span>
             <span class="mode-label">Online</span>
-            <span class="mode-desc">Juega con codigo de sala</span>
+            <span class="mode-desc">Play with a room code</span>
           </button>
         </div>
 
         <div id="local-options">
           <div class="setup-section">
-            <label class="setup-label">Cantidad de jugadores</label>
+            <label class="setup-label">Number of players</label>
             <div class="player-count-btns">
               <button class="count-btn active" data-count="2">2</button>
               <button class="count-btn" data-count="3">3</button>
@@ -54,74 +67,74 @@
             </div>
           </div>
           <div class="setup-section">
-            <label class="setup-label">Colores</label>
+            <label class="setup-label">Colors</label>
             <div class="color-options" id="color-options">
-              <div class="color-opt selected" data-color="red"><span class="color-dot" style="background:#ef4444"></span> Rojo</div>
-              <div class="color-opt selected" data-color="green"><span class="color-dot" style="background:#22c55e"></span> Verde</div>
-              <div class="color-opt" data-color="yellow"><span class="color-dot" style="background:#eab308"></span> Amarillo</div>
-              <div class="color-opt" data-color="blue"><span class="color-dot" style="background:#3b82f6"></span> Azul</div>
+              <div class="color-opt selected" data-color="red"><span class="color-dot" style="background:#ef4444"></span> Red</div>
+              <div class="color-opt selected" data-color="green"><span class="color-dot" style="background:#22c55e"></span> Green</div>
+              <div class="color-opt" data-color="yellow"><span class="color-dot" style="background:#eab308"></span> Yellow</div>
+              <div class="color-opt" data-color="blue"><span class="color-dot" style="background:#3b82f6"></span> Blue</div>
             </div>
           </div>
           <div class="setup-section">
-            <label class="setup-label">Nombres</label>
+            <label class="setup-label">Names</label>
             <div id="name-inputs"></div>
           </div>
-          <button class="start-btn" id="start-game">Jugar</button>
+          <button class="start-btn" id="start-game">Play</button>
         </div>
 
         <div id="online-options" class="hidden">
           <div id="online-lobby">
             <div class="online-name-row">
-              <label>Tu nombre</label>
-              <input type="text" id="online-name" value="Jugador" maxlength="15">
+              <label>Your name</label>
+              <input type="text" id="online-name" value="Player" maxlength="15">
             </div>
             <div class="online-color-row">
-              <label>Tu color</label>
+              <label>Your color</label>
               <div class="ludo-dd" id="online-color-dropdown">
                 <div class="ludo-dd-selected" id="online-color-display">
                   <span class="color-dot" style="background:#ef4444"></span>
-                  <span class="ludo-dd-selected-text">Rojo</span>
+                  <span class="ludo-dd-selected-text">Red</span>
                   <span class="ludo-dd-arrow">&#9660;</span>
                 </div>
                 <div class="ludo-dd-options" id="online-color-options">
-                  <div class="ludo-dd-option" data-color="red"><span class="color-dot" style="background:#ef4444"></span> Rojo</div>
-                  <div class="ludo-dd-option" data-color="green"><span class="color-dot" style="background:#22c55e"></span> Verde</div>
-                  <div class="ludo-dd-option" data-color="yellow"><span class="color-dot" style="background:#eab308"></span> Amarillo</div>
-                  <div class="ludo-dd-option" data-color="blue"><span class="color-dot" style="background:#3b82f6"></span> Azul</div>
+                  <div class="ludo-dd-option" data-color="red"><span class="color-dot" style="background:#ef4444"></span> Red</div>
+                  <div class="ludo-dd-option" data-color="green"><span class="color-dot" style="background:#22c55e"></span> Green</div>
+                  <div class="ludo-dd-option" data-color="yellow"><span class="color-dot" style="background:#eab308"></span> Yellow</div>
+                  <div class="ludo-dd-option" data-color="blue"><span class="color-dot" style="background:#3b82f6"></span> Blue</div>
                 </div>
               </div>
             </div>
             <div class="online-actions">
               <div class="online-action">
-                <button class="start-btn" id="create-ludo-room">Crear sala</button>
-                <p class="online-hint">Crea una sala y comparte el codigo</p>
+                <button class="start-btn" id="create-ludo-room">Create room</button>
+                <p class="online-hint">Create a room and share the code</p>
               </div>
-              <div class="online-divider">o</div>
+              <div class="online-divider">or</div>
               <div class="online-action">
                 <div class="room-code-input">
                   <input type="text" id="ludo-room-code-input" maxlength="4" placeholder="----" autocomplete="off" spellcheck="false">
                 </div>
-                <button class="start-btn" id="join-ludo-room">Unirse</button>
-                <p class="online-hint">Ingresa el codigo de 4 caracteres</p>
+                <button class="start-btn" id="join-ludo-room">Join</button>
+                <p class="online-hint">Enter the 4-character code</p>
               </div>
             </div>
             <div id="ludo-online-status" class="online-status hidden"></div>
           </div>
           <div id="online-waiting" class="hidden">
             <div class="room-code-display">
-              <span class="room-code-label">Codigo de sala</span>
+              <span class="room-code-label">Room code</span>
               <span class="room-code" id="ludo-room-code-display">----</span>
-              <button class="copy-code-btn" id="ludo-copy-code" title="Copiar codigo">📋</button>
+              <button class="copy-code-btn" id="ludo-copy-code" title="Copy code">📋</button>
             </div>
             <div class="waiting-info">
               <div class="waiting-spinner"></div>
-              <p id="ludo-waiting-text">Esperando oponente...</p>
-              <p class="waiting-hint">Comparte este codigo con tu oponente</p>
+              <p id="ludo-waiting-text">Waiting for opponent...</p>
+              <p class="waiting-hint">Share this code with your opponent</p>
             </div>
           </div>
           <div id="online-start-area" class="hidden">
             <p id="online-players-info"></p>
-            <button class="start-btn" id="start-online-ludo">Iniciar partida</button>
+            <button class="start-btn" id="start-online-ludo">Start game</button>
           </div>
         </div>
       </div>
@@ -134,18 +147,18 @@
         </div>
         <div class="side-panel">
           <div class="turn-display">
-            <span class="turn-label">Turno de</span>
+            <span class="turn-label">Turn:</span>
             <span class="turn-name" id="turn-name">-</span>
           </div>
           <div class="dice-area">
             <div class="dice" id="dice">
               <div class="dice-face" id="dice-face">?</div>
             </div>
-            <button class="roll-btn" id="roll-btn">Tirar dado</button>
+            <button class="roll-btn" id="roll-btn">Roll dice</button>
           </div>
           <div class="players-list" id="players-list"></div>
           <div class="game-log" id="game-log"></div>
-          <button class="quit-btn" id="quit-btn">Salir</button>
+          <button class="quit-btn" id="quit-btn">Exit</button>
         </div>
       </div>
     </div>
@@ -153,18 +166,18 @@
     <div id="win-screen" class="screen hidden">
       <div class="win-card">
         <div class="confetti-container" id="confetti"></div>
-        <h2 id="win-title">Ganador!</h2>
+        <h2 id="win-title">Winner!</h2>
         <div class="win-trophy"></div>
         <p id="win-message"></p>
         <div class="results-actions">
-          <button class="start-btn" id="play-again">Jugar de nuevo</button>
-          <a href="/Games/" class="back-btn-results">Volver a Games</a>
+          <button class="start-btn" id="play-again">Play again</button>
+          <a href="/en/Games/" class="back-btn-results">Back to Games</a>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="app.js?v=5"></script>
+  <script src="/Games/ludo/app.js?v=5"></script>
   <script src="/js/i18n.js"></script>
 </body>
 </html>

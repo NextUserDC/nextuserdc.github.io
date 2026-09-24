@@ -1,4 +1,8 @@
 (() => {
+  var _EN = location.pathname.indexOf('/en/') === 0;
+  const FALLBACK_PARAGRAPH = _EN
+    ? 'The quick brown fox jumps over the lazy dog while the agile hare watches from the tall grass.'
+    : 'El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja.';
   let paragraphs = [];
   let duration = 60;
   let timer = null;
@@ -17,11 +21,11 @@
   const soloErrors = document.getElementById('solo-errors');
 
   let paragraphsLoaded = false;
-  fetch('paragraphs.json').then(r => r.json()).then(d => {
+  fetch('/Games/typing/paragraphs.json').then(r => r.json()).then(d => {
     paragraphs = d.paragraphs;
     paragraphsLoaded = true;
   }).catch(() => {
-    paragraphs = ['El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja.'];
+    paragraphs = [FALLBACK_PARAGRAPH];
     paragraphsLoaded = true;
   });
 
@@ -52,7 +56,7 @@
   }
 
   function getRandomParagraph() {
-    if (!paragraphs.length) return 'El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja.';
+    if (!paragraphs.length) return FALLBACK_PARAGRAPH;
     return paragraphs[Math.floor(Math.random() * paragraphs.length)];
   }
 
@@ -164,19 +168,19 @@
     const wpm = elapsed > 0 ? Math.round((state.correctChars / 5) / elapsed) : 0;
     const accuracy = state.charIndex > 0 ? Math.round((state.correctChars / state.charIndex) * 100) : 100;
 
-    document.getElementById('results-title').textContent = 'Resultados';
+    document.getElementById('results-title').textContent = _EN ? 'Results' : 'Resultados';
     document.getElementById('results-content').innerHTML = `
       <div class="result-player winner">
-        <div class="result-player-name">Tu resultado</div>
+        <div class="result-player-name">${_EN ? 'Your result' : 'Tu resultado'}</div>
         <div class="result-stats">
           <div><span class="result-stat-label">WPM</span><span class="result-stat-value">${wpm}</span></div>
-          <div><span class="result-stat-label">Precision</span><span class="result-stat-value">${accuracy}%</span></div>
-          <div><span class="result-stat-label">Errores</span><span class="result-stat-value">${state.errors}</span></div>
+          <div><span class="result-stat-label">${_EN ? 'Accuracy' : 'Precision'}</span><span class="result-stat-value">${accuracy}%</span></div>
+          <div><span class="result-stat-label">${_EN ? 'Errors' : 'Errores'}</span><span class="result-stat-value">${state.errors}</span></div>
         </div>
         <div class="result-stats" style="margin-top:0.75rem">
-          <div><span class="result-stat-label">Correctas</span><span class="result-stat-value">${state.correctChars}</span></div>
+          <div><span class="result-stat-label">${_EN ? 'Correct' : 'Correctas'}</span><span class="result-stat-value">${state.correctChars}</span></div>
           <div><span class="result-stat-label">Total</span><span class="result-stat-value">${state.text.length}</span></div>
-          <div><span class="result-stat-label">Tiempo</span><span class="result-stat-value">${duration}s</span></div>
+          <div><span class="result-stat-label">${_EN ? 'Time' : 'Tiempo'}</span><span class="result-stat-value">${duration}s</span></div>
         </div>
       </div>`;
     showScreen(resultsScreen);

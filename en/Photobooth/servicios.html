@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Services offered by PhotoBooth in Santiago de Chile.">
+        <meta name="keywords" content="rental, booth, photos, services, prints, photo, quote, photobooth">
+        <meta name="author" content="Elí Nuñez">
+        <title>PhotoBooth - Services</title>
+        <link rel="canonical" href="https://nextuser.lat/en/Photobooth/servicios.html">
+        <link rel="alternate" hreflang="es" href="https://nextuser.lat/Photobooth/servicios.html">
+        <link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Photobooth/servicios.html">
+        <link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Photobooth/servicios.html">
+        <meta property="og:title" content="PhotoBooth - Services">
+        <meta property="og:description" content="Services offered by PhotoBooth in Santiago de Chile: totem photo booth, unlimited prints and online quote.">
+        <meta property="og:url" content="https://nextuser.lat/en/Photobooth/servicios.html">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="https://nextuser.lat/og-cover.jpg">
+        <meta property="og:locale" content="en_US">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="PhotoBooth - Services">
+        <meta name="twitter:description" content="Services offered by PhotoBooth in Santiago de Chile: totem photo booth, unlimited prints and online quote.">
+        <meta name="twitter:image" content="https://nextuser.lat/og-cover.jpg">
+        <link rel="shortcut icon" href="/Photobooth/src/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="/Photobooth/css/styles.css">
+        <style>@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');</style>
+    </head>
+    <body>
+        <header>
+            <a href="inicio.html" class="headerLogo">
+                <img src="/Photobooth/src/favicon.png" alt="PhotoBooth - Logo">
+                <h1>Services</h1>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="inicio.html">Home</a></li>
+                    <li><a href="servicios.html">Services</a></li>
+                    <li><a href="finanzas.html">Finances</a></li>
+                    <li><a href="nosotros.html">About Us</a></li>
+                    <li><a href="contacto.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="servicioCard">
+                <h2>Totem Photo Booth</h2>
+                <p>Our totem-style photo booth is ideal for school events, parties, fairs and every kind of celebration. It includes professional lighting, a customized backdrop and a technical operator who will stay with you throughout the event.</p>
+                <p class="precioBase">Base cost: $8,000 per hour</p>
+            </section>
+            <section class="cotizador">
+                <h2>Get a Quote for Your Event</h2>
+                <div class="formulario">
+                    <label for="selectTipoServicio">Event Type</label>
+                    <select id="selectTipoServicio">
+                        <option value="bodas" data-max-horas="36">Weddings (max. 36 hours)</option>
+                        <option value="corporativos" data-max-horas="12">Corporate Events (max. 12 hours)</option>
+                        <option value="fiestas" data-max-horas="12">Parties (max. 12 hours)</option>
+                        <option value="airelibre" data-max-horas="24">Outdoors (max. 24 hours)</option>
+                    </select>
+                    <label for="inputHoras">Rental hours</label>
+                    <input type="number" id="inputHoras" placeholder="Enter the hours" min="1">
+                    <div class="checkImpresiones">
+                        <input type="checkbox" id="checkImpresiones">
+                        <label for="checkImpresiones">Unlimited prints on photo paper (+$5,000)</label>
+                    </div>
+                    <button id="btnCotizar">Get Quote</button>
+                    <p id="errorHoras"></p>
+                    <div id="resumenReserva"></div>
+                </div>
+            </section>
+            <section class="ctaSeccion">
+                <p>Already have your quote? Contact us to confirm your booking!</p>
+                <a href="contacto.html" class="btnCta">Contact Us!</a>
+            </section>
+        </main>
+        <footer>
+            <div class="footerContenido">
+                <div class="footerSeccion">
+                    <h4>PhotoBooth</h4>
+                    <p>&copy; 2026 All rights reserved.</p>
+                </div>
+                <div class="footerSeccion footerContacto">
+                    <p>Santiago de Chile, Metropolitan Region</p>
+                    <p>+56 9 7774 5816</p>
+                    <p>eli.alexandern11@gmail.com</p>
+                </div>
+            </div>
+            <div class="footerCopyright">
+                <p>&copy; 2026 PhotoBooth - Photo Booth Rentals. All rights reserved.</p>
+            </div>
+        </footer>
+        <script src="/Photobooth/js/app.js"></script>
+        <script src="/js/i18n.js"></script>
+    </body>
+</html>

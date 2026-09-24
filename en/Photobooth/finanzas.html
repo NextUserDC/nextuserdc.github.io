@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Budget estimate and Google Ads plans for PhotoBooth rental in Santiago de Chile.">
+        <meta name="keywords" content="rental, photo booth, photobooth santiago, photo booths events, digital photography school, budget, estimate, google ads">
+        <meta name="author" content="Elí Nuñez">
+        <title>PhotoBooth - Finances</title>
+        <link rel="canonical" href="https://nextuser.lat/en/Photobooth/finanzas.html">
+        <link rel="alternate" hreflang="es" href="https://nextuser.lat/Photobooth/finanzas.html">
+        <link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Photobooth/finanzas.html">
+        <link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Photobooth/finanzas.html">
+        <meta property="og:title" content="PhotoBooth - Finances">
+        <meta property="og:description" content="Budget estimate and Google Ads plans for PhotoBooth rental in Santiago de Chile.">
+        <meta property="og:url" content="https://nextuser.lat/en/Photobooth/finanzas.html">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="https://nextuser.lat/og-cover.jpg">
+        <meta property="og:locale" content="en_US">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="PhotoBooth - Finances">
+        <meta name="twitter:description" content="Budget estimate and Google Ads plans for PhotoBooth rental in Santiago de Chile.">
+        <meta name="twitter:image" content="https://nextuser.lat/og-cover.jpg">
+        <link rel="shortcut icon" href="/Photobooth/src/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="/Photobooth/css/styles.css">
+        <style>@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');</style>
+    </head>
+    <body>
+        <header>
+            <a href="inicio.html" class="headerLogo">
+                <img src="/Photobooth/src/favicon.png" alt="PhotoBooth - Logo">
+                <h1>Finances</h1>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="inicio.html">Home</a></li>
+                    <li><a href="servicios.html">Services</a></li>
+                    <li><a href="finanzas.html">Finances</a></li>
+                    <li><a href="nosotros.html">About Us</a></li>
+                    <li><a href="contacto.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="calculadora">
+                <h2>Budget Estimate</h2>
+                <p>Calculate the total cost of your PhotoBooth project, including domain, hosting, development and an advertising campaign.</p>
+                <div class="formulario">
+                    <div class="campoCalculo">
+                        <label>Annual Domain Cost (NIC Chile - nic.cl)</label>
+                        <p class="valorFijo">$9,990</p>
+                    </div>
+                    <div class="campoCalculo">
+                        <label>Annual Hosting Cost</label>
+                        <p class="valorFijo">$30,000</p>
+                    </div>
+                    <div class="campoCalculo">
+                        <label>Your Hourly Rate (CLP)</label>
+                        <p class="valorFijo">$10,000 / hour</p>
+                    </div>
+                    <div class="campoCalculo">
+                        <label>Total Development Hours</label>
+                        <p class="valorFijo">30 Hrs</p>
+                    </div>
+                    <div class="campoCalculo">
+                        <label for="inputCPC">Google Ads Keyword (estimated CPC)</label>
+                        <input type="text" id="inputCPC" placeholder="e.g. photobooth, booth, event, wedding">
+                    </div>
+                    <div class="campoCalculo">
+                        <label for="inputClics">Monthly Clicks</label>
+                        <input type="text" id="inputClics" placeholder="e.g. 500">
+                    </div>
+                    <p id="errorFinanzas"></p>
+                    <button id="btnCalcular">Calculate Budget</button>
+                </div>
+                <div id="resultadoFinanzas">
+                    <div class="finanzaFila">
+                        <span>Annual Domain (NIC Chile)</span>
+                        <span id="resDominio">$0</span>
+                    </div>
+                    <div class="finanzaFila">
+                        <span>Annual Hosting</span>
+                        <span id="resHosting">$0</span>
+                    </div>
+                    <div class="finanzaFila">
+                        <span>Human Capital (<span id="resHoras"></span> hrs × <span id="resTarifa"></span>/hr)</span>
+                        <span id="resHumano">$0</span>
+                    </div>
+                    <div class="finanzaFila">
+                        <span>Google Ads Campaign (CPC × Clicks)</span>
+                        <span id="resAds">$0</span>
+                    </div>
+                    <div class="finanzaFila">
+                        <span>TOTAL PROJECT COST</span>
+                        <span id="resTotal">$0</span>
+                    </div>
+                </div>
+                <div id="warningAds">
+                    ⚠️ High marketing budget for a launch phase. Google Ads spend exceeds $50,000 per month!
+                </div>
+                <div class="ctaSeccion" style="margin-top:50px;">
+                    <p>Ready to boost your business with Google Ads?</p>
+                    <a href="servicios.html" class="btnCta">Book your booth now!</a>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <div class="footerContenido">
+                <div class="footerSeccion">
+                    <h4>PhotoBooth</h4>
+                    <p>&copy; 2026 All rights reserved.</p>
+                </div>
+                <div class="footerSeccion footerContacto">
+                    <p>Santiago de Chile, Metropolitan Region</p>
+                    <p>+56 9 7774 5816</p>
+                    <p>eli.alexandern11@gmail.com</p>
+                </div>
+            </div>
+            <div class="footerCopyright">
+                <p>&copy; 2026 PhotoBooth - Photo Booth Rentals. All rights reserved.</p>
+            </div>
+        </footer>
+        <script src="/Photobooth/js/app.js"></script>
+        <script src="/js/i18n.js"></script>
+    </body>
+</html>

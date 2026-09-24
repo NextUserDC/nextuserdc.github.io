@@ -1,3 +1,5 @@
+var _EN = location.pathname.indexOf('/en/') === 0;
+
 document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('search-form');
     const searchInput = document.getElementById('search-input');
@@ -271,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchStores() {
         try {
             const response = await fetch(STORES_API);
-            if (!response.ok) throw new Error('Error al cargar tiendas');
+            if (!response.ok) throw new Error(_EN ? 'Error loading stores' : 'Error al cargar tiendas');
             const stores = await response.json();
 
             stores.forEach(store => {
@@ -323,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(`${DEALS_API}?title=${encodeURIComponent(query)}&exact=0`);
 
             if (!response.ok) {
-                throw new Error('Error en la respuesta de la red');
+                throw new Error(_EN ? 'Network response error' : 'Error en la respuesta de la red');
             }
 
             const deals = await response.json();
@@ -375,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const validDeals = deals.slice(0, 12);
 
         validDeals.forEach((deal, index) => {
-            const storeInfo = storesCache[deal.storeID] || { name: 'Tienda Desconocida', logo: '' };
+            const storeInfo = storesCache[deal.storeID] || { name: _EN ? 'Unknown Store' : 'Tienda Desconocida', logo: '' };
             const savingsPercent = parseFloat(deal.savings).toFixed(0);
 
             const card = document.createElement('article');
@@ -401,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${savingsHTML}
                     </div>
                     <a href="${REDIRECT_BASE}${escapeHtml(deal.dealID)}" target="_blank" rel="noopener noreferrer" class="get-deal-btn">
-                        Ver Oferta
+                        ${_EN ? 'View Deal' : 'Ver Oferta'}
                     </a>
                 </div>
             `;
@@ -415,8 +417,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderEmptyState(query, isError = false) {
         const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
         const message = isError
-            ? '<p>Ocurrió un error al buscar. Intenta nuevamente más tarde.</p>'
-            : '<p>No se encontraron resultados en tiendas oficiales.</p>';
+            ? (_EN ? '<p>An error occurred while searching. Please try again later.</p>' : '<p>Ocurrió un error al buscar. Intenta nuevamente más tarde.</p>')
+            : (_EN ? '<p>No results found in official stores.</p>' : '<p>No se encontraron resultados en tiendas oficiales.</p>');
 
         emptyState.innerHTML = `
             ${message}
@@ -427,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                     <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                 </svg>
-                Buscar "${query}" en Google
+                ${_EN ? 'Search' : 'Buscar'} "${query}" ${_EN ? 'on' : 'en'} Google
             </a>
         `;
         emptyState.classList.remove('hidden');
@@ -450,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="site-icon" style="background: ${site.color};">${site.icon}</div>
                 <span class="site-name">${site.name}</span>
                 <a href="${searchUrl}" target="_blank" rel="noopener noreferrer" class="site-search-btn">
-                    Buscar en ${site.name}
+                    ${_EN ? 'Search on' : 'Buscar en'} ${site.name}
                 </a>
             `;
 

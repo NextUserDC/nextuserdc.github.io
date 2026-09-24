@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ticket sales">
+    <link rel="canonical" href="https://nextuser.lat/en/SimulaVIP/">
+    <link rel="alternate" hreflang="es" href="https://nextuser.lat/SimulaVIP/">
+    <link rel="alternate" hreflang="en" href="https://nextuser.lat/en/SimulaVIP/">
+    <link rel="alternate" hreflang="x-default" href="https://nextuser.lat/SimulaVIP/">
+    <meta name="keywords" content="Ticket sales, Simulavip, Simulator, VIP, Tickets, Buy tickets">
+    <meta name="author" content="Elí Nuñez, Camila Aponte, Jade Gomez">
+    <title>SimulaVIP</title>
+    <link rel="stylesheet" href="/SimulaVIP/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="/SimulaVIP/favicon.svg">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9123517935698561" crossorigin="anonymous"></script>
+</head>
+<body>
+    <main>
+        <section class="login">
+            <header>
+                <h1>SimulaVIP - Login</h1>
+            </header>
+            <div>
+                <form id="formLogin" method="post" action="">
+                    <input id="inpUser" type="text" name="username" placeholder="Username" autocomplete="off">
+                    <input id="inpPass" type="password" name="password" placeholder="Password" autocomplete="off">
+                </form>
+                <button id="btnLogin" type="submit">Sign in</button>
+                <p id="errorLogin"></p>
+            </div>
+        </section>
+        <section class="compra" style="display: none;">
+            <button id="btnCerrar">Log out</button>
+            <header>
+                <h1>SimulaVIP - Purchase</h1>
+            </header>
+            <div class="compra-section">
+                <form id="formCompra" action="">
+                    <input id="nombreComprador" type="text" name="nombreComprador" placeholder="Buyer's name" autocomplete="off">
+                    <div class="campo-entrada">
+                        <label for="cantidadAdultos">Adult tickets - $3,500 each</label>
+                        <input id="cantidadAdultos" type="number" name="cantidadAdultos" value="0" step="1" min="0" placeholder="Quantity" autocomplete="off">
+                    </div>
+                    <div class="campo-entrada">
+                        <label for="cantidadNiños">Child tickets - $1,500 each</label>
+                        <input id="cantidadNiños" type="number" name="cantidadNiños" value="0" step="1" min="0" placeholder="Quantity" autocomplete="off">
+                    </div>
+                </form>
+                <button id="btnComprar" type="submit">Buy</button>
+                <p id="errorCompra"></p>
+            </div>
+            <div class="resultado" style="display: none;">
+                <p id="resComprador"></p>
+                <p id="resAdultos"></p>
+                <p id="resNinos"></p>
+                <p id="resDescuento"></p>
+                <div class="total-fila">
+                    <p id="resTotal"></p>
+                    <button id="btnVolver">Back</button>
+                </div>
+            </div>
+        </section>
+    </main> 
+    <script src="/SimulaVIP/js/script.js"></script>
+    <script src="/js/i18n.js"></script>
+</body>
+</html>

@@ -1,3 +1,5 @@
+var _EN = location.pathname.indexOf('/en/') === 0;
+
 class AccountSearcher {
     constructor() {
         this.index = {};
@@ -17,9 +19,9 @@ class AccountSearcher {
     async loadDatabase() {
         try {
             this.showLoading(true);
-            this.updateFileInfo('🔄 Cargando base de datos...');
+            this.updateFileInfo(_EN ? '🔄 Loading database...' : '🔄 Cargando base de datos...');
 
-            const response = await fetch('db_indexed.json');
+            const response = await fetch('/MCAccounts/db_indexed.json');
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
             this.index = await response.json();
@@ -27,11 +29,11 @@ class AccountSearcher {
 
             let total = 0;
             for (const key in this.index) total += this.index[key].length;
-            this.updateFileInfo(`✅ Base de datos cargada: ${total.toLocaleString()} cuentas`);
+            this.updateFileInfo(_EN ? `✅ Database loaded: ${total.toLocaleString()} accounts` : `✅ Base de datos cargada: ${total.toLocaleString()} cuentas`);
             this.showLoading(false);
         } catch (error) {
             console.error('Error loading database:', error);
-            this.updateFileInfo('❌ Error cargando la base de datos. Verifica la consola.');
+            this.updateFileInfo(_EN ? '❌ Error loading the database. Check the console.' : '❌ Error cargando la base de datos. Verifica la consola.');
             this.showLoading(false);
         }
     }
@@ -94,12 +96,12 @@ class AccountSearcher {
         const searchTerm = document.getElementById('searchInput').value.trim();
 
         if (!searchTerm) {
-            this.showError('Por favor, ingresa un nombre de usuario para buscar');
+            this.showError(_EN ? 'Please enter a username to search for' : 'Por favor, ingresa un nombre de usuario para buscar');
             return;
         }
 
         if (!this.loaded) {
-            this.showError('La base de datos no está cargada todavía. Por favor, espera.');
+            this.showError(_EN ? 'The database is not loaded yet. Please wait.' : 'La base de datos no está cargada todavía. Por favor, espera.');
             return;
         }
 
@@ -153,15 +155,19 @@ class AccountSearcher {
             resultsCount.innerHTML = `
                 <div class="error account-card">
                     <i class="fas fa-exclamation-triangle"></i>
-                    No se encontraron resultados para "<strong>${this.escapeHtml(searchTerm)}</strong>"
+                    ${_EN ? 'No results found for' : 'No se encontraron resultados para'} "<strong>${this.escapeHtml(searchTerm)}</strong>"
                 </div>
             `;
             return;
         }
 
-        let countMessage = `Se encontraron <strong>${results.length.toLocaleString()}</strong> resultado(s) para "<strong>${this.escapeHtml(searchTerm)}</strong>"`;
+        let countMessage = _EN
+            ? `Found <strong>${results.length.toLocaleString()}</strong> result(s) for "<strong>${this.escapeHtml(searchTerm)}</strong>"`
+            : `Se encontraron <strong>${results.length.toLocaleString()}</strong> resultado(s) para "<strong>${this.escapeHtml(searchTerm)}</strong>"`;
         if (results.length >= this.MAX_RESULTS) {
-            countMessage = `Mostrando los primeros <strong>${this.MAX_RESULTS}</strong> resultados para "<strong>${this.escapeHtml(searchTerm)}</strong>". Por favor, sé más específico.`;
+            countMessage = _EN
+                ? `Showing the first <strong>${this.MAX_RESULTS}</strong> results for "<strong>${this.escapeHtml(searchTerm)}</strong>". Please be more specific.`
+                : `Mostrando los primeros <strong>${this.MAX_RESULTS}</strong> resultados para "<strong>${this.escapeHtml(searchTerm)}</strong>". Por favor, sé más específico.`;
         }
 
         resultsCount.innerHTML = `
@@ -194,15 +200,15 @@ class AccountSearcher {
 
         card.innerHTML = `
             <div class="account-field">
-                <span class="field-label"><i class="fas fa-user"></i> Usuario</span>
+                <span class="field-label"><i class="fas fa-user"></i> ${_EN ? 'Username' : 'Usuario'}</span>
                 <span class="field-value">${this.escapeHtml(account.nick)}</span>
             </div>
             <div class="account-field">
-                <span class="field-label"><i class="fas fa-key"></i> Contraseña</span>
+                <span class="field-label"><i class="fas fa-key"></i> ${_EN ? 'Password' : 'Contraseña'}</span>
                 <span class="field-value">${this.escapeHtml(account.password)}</span>
             </div>
-            <button class="copy-btn" data-index="${index}" aria-label="Copiar datos de ${this.escapeHtml(account.nick)}">
-                <i class="fas fa-copy"></i> Copiar
+            <button class="copy-btn" data-index="${index}" aria-label="${_EN ? 'Copy data for' : 'Copiar datos de'} ${this.escapeHtml(account.nick)}">
+                <i class="fas fa-copy"></i> ${_EN ? 'Copy' : 'Copiar'}
             </button>
         `;
 
@@ -212,10 +218,12 @@ class AccountSearcher {
     copyToClipboard(index) {
         if (this.currentResults && this.currentResults[index]) {
             const account = this.currentResults[index];
-            const text = `Usuario: ${account.nick}\nContraseña: ${account.password || 'N/A'}`;
+            const text = _EN
+                ? `Username: ${account.nick}\nPassword: ${account.password || 'N/A'}`
+                : `Usuario: ${account.nick}\nContraseña: ${account.password || 'N/A'}`;
 
             navigator.clipboard.writeText(text).then(() => {
-                this.showToast('✅ Datos copiados al portapapeles');
+                this.showToast(_EN ? '✅ Data copied to clipboard' : '✅ Datos copiados al portapapeles');
             }).catch(err => {
                 console.error('Error copying to clipboard:', err);
                 this.fallbackCopyToClipboard(text);
@@ -230,9 +238,9 @@ class AccountSearcher {
         textArea.select();
         try {
             document.execCommand('copy');
-            this.showToast('✅ Datos copiados al portapapeles');
+            this.showToast(_EN ? '✅ Data copied to clipboard' : '✅ Datos copiados al portapapeles');
         } catch (err) {
-            this.showToast('❌ Error al copiar', 'error');
+            this.showToast(_EN ? '❌ Error copying' : '❌ Error al copiar', 'error');
         }
         document.body.removeChild(textArea);
     }

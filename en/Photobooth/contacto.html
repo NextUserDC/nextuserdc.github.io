@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact site for PhotoBooth Rental in Santiago de Chile.">
+    <meta name="keywords" content="photobooth, contact, book, rental, santiago, location, booth, photos">
+    <meta name="author" content="Elí Nuñez">
+    <title>PhotoBooth - Contact</title>
+    <link rel="canonical" href="https://nextuser.lat/en/Photobooth/contacto.html">
+    <link rel="alternate" hreflang="es" href="https://nextuser.lat/Photobooth/contacto.html">
+    <link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Photobooth/contacto.html">
+    <link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Photobooth/contacto.html">
+    <meta property="og:title" content="PhotoBooth - Contact">
+    <meta property="og:description" content="Contact PhotoBooth to rent a photo booth in Santiago de Chile. Phone, email and inquiry form.">
+    <meta property="og:url" content="https://nextuser.lat/en/Photobooth/contacto.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://nextuser.lat/og-cover.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PhotoBooth - Contact">
+    <meta name="twitter:description" content="Contact PhotoBooth to rent a photo booth in Santiago de Chile. Phone, email and inquiry form.">
+    <meta name="twitter:image" content="https://nextuser.lat/og-cover.jpg">
+    <link rel="shortcut icon" href="/Photobooth/src/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/Photobooth/css/styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="inicio.html" class="headerLogo">
+            <img src="/Photobooth/src/favicon.png" alt="PhotoBooth - Logo">
+            <h1>Contact</h1>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="inicio.html">Home</a></li>
+                <li><a href="servicios.html">Services</a></li>
+                <li><a href="finanzas.html">Finances</a></li>
+                <li><a href="nosotros.html">About Us</a></li>
+                <li><a href="contacto.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="contactoInfo">
+            <h2>Contact Us</h2>
+            <div class="contactoLayout">
+                <div>
+                    <div class="mapaContenedor">
+                        <iframe class="mapaIframe"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.8!2d-70.679!3d-33.456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sAvenida+5+de+Abril+4936,+Estaci%C3%B3n+Central,+Santiago!5e0!3m2!1sen!2scl"
+                            width="100%" height="250" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade" title="PhotoBooth Location"></iframe>
+                    </div>
+                    <div class="infoContacto">
+                        <p><strong>Address:</strong> Santiago de Chile, Metropolitan Region</p>
+                        <p><strong>Phone:</strong> +56 9 7774 5816</p>
+                        <p><strong>Email:</strong> eli.alexandern11@gmail.com</p>
+                        <p><strong>Hours:</strong> Monday to Friday, 9:00 - 18:00</p>
+                    </div>
+                </div>
+                <section class="cotizador">
+                    <h2>Send us your inquiry</h2>
+                    <form id="formularioContacto" class="formulario">
+                        <label for="inputNombreContacto">Full name</label>
+                        <input type="text" id="inputNombreContacto" placeholder="Enter your name">
+                        <label for="inputTelefonoContacto">Phone</label>
+                        <input type="text" id="inputTelefonoContacto" placeholder="e.g. 912345678">
+                        <label for="inputEmailContacto">Email address</label>
+                        <input type="text" id="inputEmailContacto" placeholder="e.g. email@example.com">
+                        <label for="inputMensajeContacto">Message</label>
+                        <input type="text" id="inputMensajeContacto" placeholder="Type your inquiry here">
+                        <p id="errorContacto"></p>
+                        <button type="submit">Send Inquiry</button>
+                    </form>
+                    <p id="exitoContacto" style="display:none; color:#059669; font-weight:600; margin-top:12px;"></p>
+                </section>
+            </div>
+        </section>
+        <section class="loginAdmin">
+            <div id="panelAdmin" style="display:none;">
+                <section class="adminCard">
+                    <h3>Bookings and Purchases</h3>
+                    <p>Bookings registered from the Services page:</p>
+                    <div class="tablaContenedor">
+                        <table id="tablaReservas">
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Type</th>
+                                    <th>Hours</th>
+                                    <th>Prints</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpoTabla">
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="btnVaciarReservas" class="btnVaciar">Clear Bookings</button>
+                </section>
+                <section class="adminCard">
+                    <h3>Customer Inquiries</h3>
+                    <p>Inquiries sent through the contact form:</p>
+                    <div class="tablaContenedor">
+                        <table id="tablaConsultas">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Message</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpoTablaConsultas">
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="btnVaciarConsultas" class="btnVaciar">Clear Inquiries</button>
+                </section>
+                <section class="adminCard">
+                    <h3>Registered Users</h3>
+                    <p>Users registered in the system:</p>
+                    <div class="tablaContenedor">
+                        <table id="tablaUsuarios">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Username</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpoTablaUsuarios">
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="btnVaciarUsuarios" class="btnVaciar">Clear Users</button>
+                </section>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footerContenido">
+            <div class="footerSeccion">
+                <h4>PhotoBooth</h4>
+                <p>&copy; 2026 All rights reserved.</p>
+            </div>
+            <div class="footerSeccion footerContacto">
+                <p>Santiago de Chile, Metropolitan Region</p>
+                <p>+56 9 7774 5816</p>
+                <p>eli.alexandern11@gmail.com</p>
+            </div>
+        </div>
+        <div class="footerCopyright">
+            <p>&copy; 2026 PhotoBooth - Photo Booth Rentals. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="/Photobooth/js/app.js"></script>
+    <script src="/js/i18n.js"></script>
+</body>
+
+</html>

@@ -1,3 +1,5 @@
+var _EN = location.pathname.indexOf('/en/') === 0;
+
 // Declaración de Variables (HTML -> JS)
 const inpUser = document.getElementById("inpUser");
 const inpPass = document.getElementById("inpPass");
@@ -43,17 +45,17 @@ btnLogin.addEventListener("click", (e) => {
 
     // Validación de campos vacíos en login
     if (user.trim() === "" && pass.trim() === "") {
-        errorLogin.innerText = "Error: Ingrese usuario y contraseña";
+        errorLogin.innerText = _EN ? 'Error: Enter username and password' : 'Error: Ingrese usuario y contraseña';
         errorLogin.style.color = "red";
         setTimeout(() => { errorLogin.innerText = ""; }, 2000);
         return;
     } else if (user.trim() === "") {
-        errorLogin.innerText = "Error: Ingrese el usuario";
+        errorLogin.innerText = _EN ? 'Error: Enter the username' : 'Error: Ingrese el usuario';
         errorLogin.style.color = "red";
         setTimeout(() => { errorLogin.innerText = ""; }, 2000);
         return;
     } else if (pass.trim() === "") {
-        errorLogin.innerText = "Error: Ingrese la contraseña";
+        errorLogin.innerText = _EN ? 'Error: Enter the password' : 'Error: Ingrese la contraseña';
         errorLogin.style.color = "red";
         setTimeout(() => { errorLogin.innerText = ""; }, 2000);
         return;
@@ -64,7 +66,7 @@ btnLogin.addEventListener("click", (e) => {
         login[0].style.display = "none";
         compra[0].style.display = "block";
     } else {
-        errorLogin.innerText = "Usuario o contraseña incorrectos";
+        errorLogin.innerText = _EN ? 'Incorrect username or password' : 'Usuario o contraseña incorrectos';
         errorLogin.style.color = "red";
         setTimeout(() => { errorLogin.innerText = ""; }, 2000);
     }
@@ -80,17 +82,17 @@ btnComprar.addEventListener("click", (e) => {
 
     // Validación de campos vacíos (uno por uno)
     if (comprador.trim() === "") {
-        errorCompra.innerText = "Error: Ingrese el nombre del comprador";
+        errorCompra.innerText = _EN ? 'Error: Enter the buyer\'s name' : 'Error: Ingrese el nombre del comprador';
         errorCompra.style.color = "red";
         setTimeout(() => { errorCompra.innerText = ""; }, 2000);
         return;
     } else if (cantidadAdultos.value.trim() === "") {
-        errorCompra.innerText = "Error: Ingrese la cantidad de entradas adulto";
+        errorCompra.innerText = _EN ? 'Error: Enter the number of adult tickets' : 'Error: Ingrese la cantidad de entradas adulto';
         errorCompra.style.color = "red";
         setTimeout(() => { errorCompra.innerText = ""; }, 2000);
         return;
     } else if (cantidadNiños.value.trim() === "") {
-        errorCompra.innerText = "Error: Ingrese la cantidad de entradas niño";
+        errorCompra.innerText = _EN ? 'Error: Enter the number of child tickets' : 'Error: Ingrese la cantidad de entradas niño';
         errorCompra.style.color = "red";
         setTimeout(() => { errorCompra.innerText = ""; }, 2000);
         return;
@@ -98,7 +100,7 @@ btnComprar.addEventListener("click", (e) => {
 
     // Validación de campos numéricos
     else if (isNaN(adultos) || isNaN(niños)) {
-        errorCompra.innerText = "Error: Ingrese valores numéricos válidos";
+        errorCompra.innerText = _EN ? 'Error: Enter valid numeric values' : 'Error: Ingrese valores numéricos válidos';
         errorCompra.style.color = "red";
         setTimeout(() => { errorCompra.innerText = ""; }, 2000);
         return;
@@ -106,7 +108,7 @@ btnComprar.addEventListener("click", (e) => {
 
     // Validación de campos negativos
     else if (adultos < 0 || niños < 0) {
-        errorCompra.innerText = "Error: Los valores no pueden ser negativos";
+        errorCompra.innerText = _EN ? 'Error: Values cannot be negative' : 'Error: Los valores no pueden ser negativos';
         errorCompra.style.color = "red";
         setTimeout(() => { errorCompra.innerText = ""; }, 2000);
         return;
@@ -114,7 +116,7 @@ btnComprar.addEventListener("click", (e) => {
 
     // Validación: al menos una entrada debe ser mayor a 0
     else if (adultos === 0 && niños === 0) {
-        errorCompra.innerText = "Error: Ingrese al menos 1 entrada (adulto o niño)";
+        errorCompra.innerText = _EN ? 'Error: Enter at least 1 ticket (adult or child)' : 'Error: Ingrese al menos 1 entrada (adulto o niño)';
         errorCompra.style.color = "red";
         setTimeout(() => { errorCompra.innerText = ""; }, 2000);
         return;
@@ -134,11 +136,11 @@ btnComprar.addEventListener("click", (e) => {
     let total = subtotal - descuento;
 
     // Cambio de contenido HTML por resultados
-    document.getElementById("resComprador").innerText = `Comprador: ${comprador}`;
-    document.getElementById("resAdultos").innerText = `Entradas adulto: ${adultos} × $3.500 = $${(adultos * 3500).toLocaleString()}`;
-    document.getElementById("resNinos").innerText = `Entradas niño: ${niños} × $1.500 = $${(niños * 1500).toLocaleString()}`;
-    document.getElementById("resDescuento").innerText = descuento > 0 ? `Descuento 10%: -$${descuento.toLocaleString()}` : "";
-    document.getElementById("resTotal").innerText = `Total a pagar: $${total.toLocaleString()}`;
+    document.getElementById("resComprador").innerText = `${_EN ? 'Buyer' : 'Comprador'}: ${comprador}`;
+    document.getElementById("resAdultos").innerText = `${_EN ? 'Adult tickets' : 'Entradas adulto'}: ${adultos} × $${_EN ? '3,500' : '3.500'} = $${(adultos * 3500).toLocaleString()}`;
+    document.getElementById("resNinos").innerText = `${_EN ? 'Child tickets' : 'Entradas niño'}: ${niños} × $${_EN ? '1,500' : '1.500'} = $${(niños * 1500).toLocaleString()}`;
+    document.getElementById("resDescuento").innerText = descuento > 0 ? `${_EN ? '10% discount' : 'Descuento 10%'}: -$${descuento.toLocaleString()}` : "";
+    document.getElementById("resTotal").innerText = `${_EN ? 'Total to pay' : 'Total a pagar'}: $${total.toLocaleString()}`;
 
     // Cambio de pantalla
     compraSection[0].style.display = "none";

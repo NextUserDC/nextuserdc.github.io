@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Finder</title>
-    <meta name="description" content="Busca y encuentra las mejores ofertas de videojuegos en tiendas legales.">
-    <link rel="canonical" href="https://nextuser.lat/GameFinder/">
+    <meta name="description" content="Search and find the best video game deals on legitimate stores.">
+    <link rel="canonical" href="https://nextuser.lat/en/GameFinder/">
+    <link rel="alternate" hreflang="es" href="https://nextuser.lat/GameFinder/">
+    <link rel="alternate" hreflang="en" href="https://nextuser.lat/en/GameFinder/">
+    <link rel="alternate" hreflang="x-default" href="https://nextuser.lat/GameFinder/">
     <meta name="robots" content="index, follow">
-    <link rel="stylesheet" href="style.css">
-    <meta property="og:title" content="GameFinder - Mejores ofertas de videojuegos">
-    <meta property="og:description" content="Busca y compara precios de videojuegos en tiendas legales.">
-    <meta property="og:url" content="https://nextuser.lat/GameFinder/">
+    <link rel="stylesheet" href="/GameFinder/style.css">
+    <meta property="og:title" content="GameFinder - Best video game deals">
+    <meta property="og:description" content="Search and compare video game prices on legitimate stores.">
+    <meta property="og:url" content="https://nextuser.lat/en/GameFinder/">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#0a0a14">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://api.cheapshark.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/GameFinder/logo.png" type="image/x-icon">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9123517935698561" crossorigin="anonymous"></script>
-  <link rel="alternate" hreflang="es" href="https://nextuser.lat/GameFinder/">
-    <link rel="alternate" hreflang="en" href="https://nextuser.lat/en/GameFinder/">
-    <link rel="alternate" hreflang="x-default" href="https://nextuser.lat/GameFinder/">
 </head>
 <body>
     <div class="background-animation"></div>
@@ -29,7 +29,7 @@
     <main class="container">
         <header>
             <h1 class="logo">Game <span>Finder</span></h1>
-            <p class="subtitle">Encuentra los mejores precios en tiendas oficiales</p>
+            <p class="subtitle">Find the best prices in official stores</p>
         </header>
 
         <section class="search-section">
@@ -39,29 +39,29 @@
                         <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M21.0004 21.0004L16.6504 16.6504" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <input type="text" id="search-input" placeholder="Buscar juego" autocomplete="off" required>
+                    <input type="text" id="search-input" placeholder="Search game" autocomplete="off" required>
                 </div>
-                <button type="submit" id="search-btn">Buscar</button>
+                <button type="submit" id="search-btn">Search</button>
             </form>
         </section>
 
         <nav class="tabs-header">
-            <button class="tab-btn active" data-tab="deals">Ofertas Legales</button>
-            <button class="tab-btn" data-tab="other">Otros Sitios</button>
+            <button class="tab-btn active" data-tab="deals">Legitimate Deals</button>
+            <button class="tab-btn" data-tab="other">Other Sites</button>
         </nav>
 
         <div id="loading-state" class="hidden">
             <div class="spinner"></div>
-            <p>Buscando ofertas...</p>
+            <p>Searching for deals...</p>
         </div>
 
         <div id="tab-deals" class="tab-panel active">
             <div id="official-stores-container" class="official-stores-grid"></div>
-            <h3 class="section-divider">Ofertas en otras tiendas</h3>
+            <h3 class="section-divider">Deals at other stores</h3>
             <section id="results-container" class="results-grid">
             </section>
             <div id="empty-state" class="hidden">
-                <p>No se encontraron resultados. Intenta con otro nombre.</p>
+                <p>No results found. Try another name.</p>
             </div>
         </div>
 
@@ -69,12 +69,12 @@
             <section id="other-sites-container" class="sites-grid">
             </section>
             <div id="other-empty-state" class="hidden">
-                <p>Escribe un nombre de juego y selecciona "Otros Sitios" para ver los enlaces de búsqueda.</p>
+                <p>Type a game name and select "Other Sites" to see the search links.</p>
             </div>
         </div>
     </main>
 
-    <script src="app.js" defer></script>
-  <script src="/js/i18n.js"></script>
+    <script src="/GameFinder/app.js" defer></script>
+    <script src="/js/i18n.js"></script>
 </body>
 </html>

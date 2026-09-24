@@ -1,3 +1,5 @@
+var _EN = location.pathname.indexOf('/en/') === 0;
+
 (() => {
   const API = 'https://api.nextuser.lat';
 
@@ -181,12 +183,12 @@
       show(app);
       restoreSession();
     } else {
-      loginError.textContent = 'Contrasena incorrecta';
+      loginError.textContent = _EN ? 'Incorrect password' : 'Contrasena incorrecta';
       loginPassword.value = '';
       loginPassword.focus();
     }
     loginBtn.disabled = false;
-    loginBtn.textContent = 'Entrar';
+    loginBtn.textContent = _EN ? 'Enter' : 'Entrar';
   }
 
   loginBtn.addEventListener('click', doLogin);
@@ -239,7 +241,7 @@
     const res = await fetch(`${API}${path}`, opts);
     if (!res.ok) {
       const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-      return { code: res.status, error: err.error || 'Error del servidor', data: null };
+      return { code: res.status, error: err.error || (_EN ? 'Server error' : 'Error del servidor'), data: null };
     }
     return res.json();
   }
@@ -287,7 +289,7 @@
   // ===== GENERATE =====
   async function generate() {
     generateBtn.disabled = true;
-    generateBtn.textContent = 'Generando...';
+    generateBtn.textContent = _EN ? 'Generating...' : 'Generando...';
 
     try {
       let payload = {};
@@ -300,11 +302,11 @@
 
       if (code !== 0) {
         if (error === 'Address already in use') {
-          generateBtn.textContent = 'Direccion en uso';
-          setTimeout(() => { generateBtn.textContent = 'Generar direccion'; }, 2000);
+          generateBtn.textContent = _EN ? 'Address in use' : 'Direccion en uso';
+          setTimeout(() => { generateBtn.textContent = _EN ? 'Generate address' : 'Generar direccion'; }, 2000);
         } else {
           generateBtn.textContent = error || 'Error';
-          setTimeout(() => { generateBtn.textContent = 'Generar direccion'; }, 2000);
+          setTimeout(() => { generateBtn.textContent = _EN ? 'Generate address' : 'Generar direccion'; }, 2000);
         }
         return;
       }
@@ -324,8 +326,8 @@
       activateSession();
     } catch (e) {
       console.error('Generate error:', e);
-      generateBtn.textContent = 'Error de conexion';
-      setTimeout(() => { generateBtn.textContent = 'Generar direccion'; }, 2000);
+      generateBtn.textContent = _EN ? 'Connection error' : 'Error de conexion';
+      setTimeout(() => { generateBtn.textContent = _EN ? 'Generate address' : 'Generar direccion'; }, 2000);
     } finally {
       generateBtn.disabled = false;
     }
@@ -390,14 +392,14 @@
   function updateTimer() {
     if (endAt && new Date(endAt).getFullYear() >= 2099) {
       timerPrefix.textContent = '';
-      timerText.textContent = 'Permanente';
+      timerText.textContent = _EN ? 'Permanent' : 'Permanente';
       timerText.style.color = '#22c55e';
       timerText.style.fontWeight = '700';
       hide(extendBtn);
       clearInterval(timerInterval);
       return;
     }
-    timerPrefix.textContent = 'Expira en ';
+    timerPrefix.textContent = _EN ? 'Expires in ' : 'Expira en ';
     timerText.style.color = '';
     show(extendBtn);
     const remaining = endAt - Date.now();
@@ -405,7 +407,7 @@
       timerText.textContent = '00:00:00';
       clearInterval(timerInterval);
       clearSession();
-      generateBtn.textContent = 'Generar direccion';
+      generateBtn.textContent = _EN ? 'Generate address' : 'Generar direccion';
       return;
     }
     const h = Math.floor(remaining / 3600000);
@@ -457,9 +459,9 @@
           clearSession();
           inboxList.innerHTML = '';
           inboxCount.textContent = '0';
-          inboxEmpty.textContent = 'Genera una direccion para comenzar';
+          inboxEmpty.textContent = _EN ? 'Generate an address to get started' : 'Genera una direccion para comenzar';
           emailText.textContent = '';
-          generateBtn.textContent = 'Generar direccion';
+          generateBtn.textContent = _EN ? 'Generate address' : 'Generar direccion';
         }
         return;
       }
@@ -478,7 +480,7 @@
       inboxCount.textContent = rows.length;
 
       if (rows.length === 0) {
-        inboxEmpty.textContent = 'Esperando correos...';
+        inboxEmpty.textContent = _EN ? 'Waiting for emails...' : 'Esperando correos...';
         inboxEmpty.classList.remove('hidden');
         _pollDelay = Math.min(_pollDelay + 2000, 30000);
         return;
@@ -514,7 +516,7 @@
               <span class="inbox-item-subject">${esc(row.subject)}</span>
             </div>
             <span class="inbox-item-date">${formatDate(row.date)}</span>
-            <button class="inbox-delete-btn" title="Eliminar" data-msg-id="${row.id}">
+            <button class="inbox-delete-btn" title="${_EN ? 'Delete' : 'Eliminar'}" data-msg-id="${row.id}">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             </button>
           `;
@@ -547,7 +549,7 @@
     composeTo.value = opts.to || '';
     composeSubject.value = opts.subject || '';
     composeBody.value = opts.body || '';
-    composeTitle.textContent = opts.title || 'Redactar correo';
+    composeTitle.textContent = opts.title || (_EN ? 'Compose email' : 'Redactar correo');
     composeStatus.classList.add('hidden');
     composeStatus.textContent = '';
     show(composeModal);
@@ -569,11 +571,11 @@
     const subject = composeSubject.value.trim();
     const body = composeBody.value.trim();
     if (!to) { composeTo.focus(); return; }
-    if (!EMAIL_REGEX.test(to)) { composeStatus.textContent = 'Email invalido'; composeStatus.className = 'compose-status error'; composeStatus.classList.remove('hidden'); composeTo.focus(); return; }
+    if (!EMAIL_REGEX.test(to)) { composeStatus.textContent = _EN ? 'Invalid email' : 'Email invalido'; composeStatus.className = 'compose-status error'; composeStatus.classList.remove('hidden'); composeTo.focus(); return; }
     if (!body) { composeBody.focus(); return; }
 
     composeSend.disabled = true;
-    composeSend.innerHTML = '<span class="spinner"></span> Enviando...';
+    composeSend.innerHTML = _EN ? '<span class="spinner"></span> Sending...' : '<span class="spinner"></span> Enviando...';
     composeStatus.classList.add('hidden');
 
     try {
@@ -582,21 +584,21 @@
       });
 
       if (code === 0) {
-        composeStatus.textContent = 'Correo enviado exitosamente';
+        composeStatus.textContent = _EN ? 'Email sent successfully' : 'Correo enviado exitosamente';
         composeStatus.className = 'compose-status success';
         composeBody.value = '';
         setTimeout(closeCompose, 500);
         setTimeout(fetchInbox, 300);
       } else {
-        composeStatus.textContent = error || 'Error al enviar';
+        composeStatus.textContent = error || (_EN ? 'Error sending' : 'Error al enviar');
         composeStatus.className = 'compose-status error';
       }
     } catch (e) {
-      composeStatus.textContent = 'Error de conexion';
+      composeStatus.textContent = _EN ? 'Connection error' : 'Error de conexion';
       composeStatus.className = 'compose-status error';
     } finally {
       composeSend.disabled = false;
-      composeSend.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar';
+      composeSend.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> ' + (_EN ? 'Send' : 'Enviar');
     }
   }
 
@@ -610,11 +612,11 @@
         console.error('Message error:', error || 'Unknown');
         return;
       }
-      viewerFrom.innerHTML = `<img class="viewer-avatar" src="/favicon.svg" alt=""> <span>De: ${esc(data.from)}</span>`;
+      viewerFrom.innerHTML = `<img class="viewer-avatar" src="/favicon.svg" alt=""> <span>${_EN ? 'From:' : 'De:'} ${esc(data.from)}</span>`;
       viewerSubject.textContent = data.subject;
       viewerDate.textContent = formatDate(data.date);
       // Sanitize HTML to prevent XSS
-      viewerBody.innerHTML = data.html ? sanitizeHtml(data.html) : (data.text ? esc(data.text).replace(/\n/g, '<br>') : '(sin contenido)');
+      viewerBody.innerHTML = data.html ? sanitizeHtml(data.html) : (data.text ? esc(data.text).replace(/\n/g, '<br>') : (_EN ? '(no content)' : '(sin contenido)'));
       lastViewerFrom = data.from || '';
       lastViewerSubject = data.subject || '';
 
@@ -635,7 +637,7 @@
   // ===== DELETE (with error feedback) =====
   async function deleteMailbox() {
     if (!currentAddress || !currentSecret) return;
-    if (!confirm('Eliminar este buzon y todos sus correos?')) return;
+    if (!confirm(_EN ? 'Delete this mailbox and all its emails?' : 'Eliminar este buzon y todos sus correos?')) return;
 
     try {
       const result = await apiCall('DELETE', `/api/mailbox/${encodeURIComponent(currentAddress)}`, { secret: currentSecret });
@@ -643,22 +645,22 @@
         // Mailbox already gone from DB — clear local session anyway
         if (result.error && result.error.includes('not found')) {
           clearSession();
-          inboxEmpty.textContent = 'Genera una direccion para comenzar';
-          generateBtn.textContent = 'Generar direccion';
+          inboxEmpty.textContent = _EN ? 'Generate an address to get started' : 'Genera una direccion para comenzar';
+          generateBtn.textContent = _EN ? 'Generate address' : 'Generar direccion';
           return;
         }
-        alert('Error al eliminar: ' + (result.error || 'Error desconocido'));
+        alert((_EN ? 'Error deleting: ' : 'Error al eliminar: ') + (result.error || (_EN ? 'Unknown error' : 'Error desconocido')));
         return;
       }
     } catch (e) {
       // Connection error — still clear if user wants
-      alert('Error de conexion al eliminar');
+      alert(_EN ? 'Connection error while deleting' : 'Error de conexion al eliminar');
       return;
     }
 
     clearSession();
-    inboxEmpty.textContent = 'Genera una direccion para comenzar';
-    generateBtn.textContent = 'Generar direccion';
+    inboxEmpty.textContent = _EN ? 'Generate an address to get started' : 'Genera una direccion para comenzar';
+    generateBtn.textContent = _EN ? 'Generate address' : 'Generar direccion';
   }
 
   // ===== CONNECT =====
@@ -677,22 +679,22 @@
 
   async function connectWithToken() {
     const token = connectTokenInput.value.trim();
-    if (!token) { connectError.textContent = 'Ingresa un token valido'; return; }
+    if (!token) { connectError.textContent = _EN ? 'Enter a valid token' : 'Ingresa un token valido'; return; }
 
     connectSubmitBtn.disabled = true;
-    connectSubmitBtn.textContent = 'Conectando...';
+    connectSubmitBtn.textContent = _EN ? 'Connecting...' : 'Conectando...';
     connectError.textContent = '';
 
     try {
       const { code, data, error } = await apiCall('POST', '/api/connect', { secret: token });
 
       if (code !== 0) {
-        connectError.textContent = error || 'Token invalido';
+        connectError.textContent = error || (_EN ? 'Invalid token' : 'Token invalido');
         return;
       }
 
       if (!data || !data.address || !data.secret) {
-        connectError.textContent = 'Respuesta invalida del servidor';
+        connectError.textContent = _EN ? 'Invalid server response' : 'Respuesta invalida del servidor';
         return;
       }
 
@@ -708,14 +710,14 @@
       await storeSecure('tmail_endAt', String(endAt));
       await storeSecure('tmail_custom', 'true');
 
-      generateBtn.textContent = 'Nueva direccion';
+      generateBtn.textContent = _EN ? 'New address' : 'Nueva direccion';
       activateSession();
       closeConnectModal();
     } catch (e) {
-      connectError.textContent = 'Error de conexion';
+      connectError.textContent = _EN ? 'Connection error' : 'Error de conexion';
     } finally {
       connectSubmitBtn.disabled = false;
-      connectSubmitBtn.textContent = 'Conectar';
+      connectSubmitBtn.textContent = _EN ? 'Connect' : 'Conectar';
     }
   }
 
@@ -740,7 +742,7 @@
       });
 
       if (code !== 0) {
-        extendError.textContent = error || 'Error al extender';
+        extendError.textContent = error || (_EN ? 'Error extending' : 'Error al extender');
         return;
       }
 
@@ -752,7 +754,7 @@
       startTimer();
       closeExtendModal();
     } catch (e) {
-      extendError.textContent = 'Error de conexion';
+      extendError.textContent = _EN ? 'Connection error' : 'Error de conexion';
     }
   }
 
@@ -787,7 +789,7 @@
     if (!iso) return '';
     const d = new Date(iso);
     if (isNaN(d.getTime())) return '';
-    return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleDateString(_EN ? 'en-US' : 'es-ES', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
   }
 
   function formatSize(bytes) {
@@ -829,7 +831,7 @@
     }
     hide(generateBtn); hide(customSection); hide(connectLinkBtn);
     show(inboxSection);
-    inboxEmpty.textContent = 'Esperando correos...';
+    inboxEmpty.textContent = _EN ? 'Waiting for emails...' : 'Esperando correos...';
     inboxList.innerHTML = '';
     inboxCount.textContent = '0';
     startTimer();
@@ -909,7 +911,7 @@
 
   function ncloudRenderBreadcrumb() {
     const parts = ncloudCurrentPath.split('/').filter(Boolean);
-    let html = '<button class="breadcrumb-item' + (parts.length === 0 ? ' active' : '') + '" data-path="">Archivos</button>';
+    let html = '<button class="breadcrumb-item' + (parts.length === 0 ? ' active' : '') + '" data-path="">' + (_EN ? 'Files' : 'Archivos') + '</button>';
     let accumulated = '';
     parts.forEach((part, i) => {
       accumulated += (i > 0 ? '/' : '') + part;
@@ -954,10 +956,10 @@
           <div class="ncloud-file-icon folder">${getFileIconSvg('folder')}</div>
           <div class="ncloud-file-info">
             <div class="ncloud-file-name">${esc(f.name)}</div>
-            <div class="ncloud-file-meta">Carpeta</div>
+            <div class="ncloud-file-meta">${_EN ? 'Folder' : 'Carpeta'}</div>
           </div>
           <div class="ncloud-file-actions">
-            <button class="ncloud-file-action delete" title="Eliminar" data-action="delete-folder" data-name="${esc(f.name)}">
+            <button class="ncloud-file-action delete" title="${_EN ? 'Delete' : 'Eliminar'}" data-action="delete-folder" data-name="${esc(f.name)}">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             </button>
           </div>
@@ -969,7 +971,7 @@
         if (f.expiresAt) {
           const remaining = f.expiresAt - Date.now();
           if (remaining <= 0) {
-            ttlBadge = '<span class="ncloud-ttl-badge expired">Expirado</span>';
+            ttlBadge = _EN ? '<span class="ncloud-ttl-badge expired">Expired</span>' : '<span class="ncloud-ttl-badge expired">Expirado</span>';
           } else {
             const mins = Math.floor(remaining / 60000);
             const hrs = Math.floor(mins / 60);
@@ -978,7 +980,9 @@
             ttlBadge = `<span class="ncloud-ttl-badge${urgentClass}">\u23F1 ${label}</span>`;
           }
         } else {
-          ttlBadge = '<span class="ncloud-ttl-badge" style="background:rgba(34,197,94,0.15);color:#22c55e">\u2714 Permanente</span>';
+          ttlBadge = _EN
+            ? '<span class="ncloud-ttl-badge" style="background:rgba(34,197,94,0.15);color:#22c55e">\u2714 Permanent</span>'
+            : '<span class="ncloud-ttl-badge" style="background:rgba(34,197,94,0.15);color:#22c55e">\u2714 Permanente</span>';
         }
         html += `<div class="ncloud-file-item" style="animation-delay:${(folders.length + i) * 0.03}s" data-type="file" data-key="${esc(f.key)}" data-name="${esc(f.name)}">
           <div class="ncloud-file-icon ${cat}">${getFileIconSvg(cat)}</div>
@@ -987,13 +991,13 @@
             <div class="ncloud-file-meta">${formatSize(f.size)}</div>
           </div>
           <div class="ncloud-file-actions">
-            <button class="ncloud-file-action share" title="Compartir" data-action="share" data-key="${esc(f.key)}" data-name="${esc(f.name)}">
+            <button class="ncloud-file-action share" title="${_EN ? 'Share' : 'Compartir'}" data-action="share" data-key="${esc(f.key)}" data-name="${esc(f.name)}">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
             </button>
-            <button class="ncloud-file-action" title="Descargar" data-action="download" data-key="${esc(f.key)}">
+            <button class="ncloud-file-action" title="${_EN ? 'Download' : 'Descargar'}" data-action="download" data-key="${esc(f.key)}">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             </button>
-            <button class="ncloud-file-action delete" title="Eliminar" data-action="delete-file" data-key="${esc(f.key)}">
+            <button class="ncloud-file-action delete" title="${_EN ? 'Delete' : 'Eliminar'}" data-action="delete-file" data-key="${esc(f.key)}">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             </button>
           </div>
@@ -1026,7 +1030,9 @@
     const total = fileList.length;
     let completed = 0;
     let aborted = false;
-    ncloudProgressText.textContent = ttl === 0 ? `Subiendo (permanente)... 0/${total}` : `Subiendo... 0/${total}`;
+    ncloudProgressText.textContent = ttl === 0
+      ? (_EN ? `Uploading (permanent)... 0/${total}` : `Subiendo (permanente)... 0/${total}`)
+      : (_EN ? `Uploading... 0/${total}` : `Subiendo... 0/${total}`);
     for (const file of fileList) {
       if (aborted) break;
       try {
@@ -1058,7 +1064,9 @@
         completed++;
         const pct = Math.round((completed / total) * 100);
         ncloudProgressFill.style.width = pct + '%';
-        ncloudProgressText.textContent = ttl === 0 ? `Subiendo (permanente)... ${completed}/${total}` : `Subiendo... ${completed}/${total}`;
+        ncloudProgressText.textContent = ttl === 0
+          ? (_EN ? `Uploading (permanent)... ${completed}/${total}` : `Subiendo (permanente)... ${completed}/${total}`)
+          : (_EN ? `Uploading... ${completed}/${total}` : `Subiendo... ${completed}/${total}`);
       } catch (e) {
         console.error('Upload error:', e);
       }
@@ -1086,7 +1094,7 @@
 
   async function ncloudDeleteFile(key) {
     if (!currentAddress || !currentSecret) return;
-    if (!confirm('Eliminar este archivo?')) return;
+    if (!confirm(_EN ? 'Delete this file?' : 'Eliminar este archivo?')) return;
     try {
       await fetch(`${API}/ncloud/file?key=${encodeURIComponent(key)}`, {
         method: 'DELETE',
@@ -1101,7 +1109,7 @@
 
   async function ncloudDeleteFolder(name) {
     if (!currentAddress || !currentSecret) return;
-    if (!confirm(`Eliminar la carpeta "${name}" y todo su contenido?`)) return;
+    if (!confirm(_EN ? `Delete the folder "${name}" and all its content?` : `Eliminar la carpeta "${name}" y todo su contenido?`)) return;
     const prefix = ncloudCurrentPath ? ncloudCurrentPath + '/' + name : name;
     try {
       const res = await fetch(`${API}/ncloud/files?path=${encodeURIComponent(prefix)}`, {
@@ -1141,7 +1149,7 @@
     if (!ncloudSharePendingKey || !currentAddress || !currentSecret) return;
     const slug = ncloudShareSlug.value.trim();
     ncloudShareCreateBtn.disabled = true;
-    ncloudShareCreateBtn.textContent = 'Creando...';
+    ncloudShareCreateBtn.textContent = _EN ? 'Creating...' : 'Creando...';
     try {
       const body = { key: ncloudSharePendingKey };
       if (slug) body.slug = slug;
@@ -1155,15 +1163,15 @@
         ncloudShareLink.value = data.url;
         ncloudShareLinkBox.style.display = '';
       } else {
-        ncloudShareLink.value = 'Error: ' + (data.error || 'No se pudo crear');
+        ncloudShareLink.value = 'Error: ' + (data.error || (_EN ? 'Could not create it' : 'No se pudo crear'));
         ncloudShareLinkBox.style.display = '';
       }
     } catch (e) {
-      ncloudShareLink.value = 'Error de conexion';
+      ncloudShareLink.value = _EN ? 'Connection error' : 'Error de conexion';
       ncloudShareLinkBox.style.display = '';
     }
     ncloudShareCreateBtn.disabled = false;
-    ncloudShareCreateBtn.textContent = 'Crear enlace';
+    ncloudShareCreateBtn.textContent = _EN ? 'Create link' : 'Crear enlace';
   }
 
   function ncloudShareFile(key, name) {
@@ -1185,7 +1193,7 @@
       const data = await res.json();
       const shares = data.shares || [];
       if (shares.length === 0) {
-        ncloudSharesList.innerHTML = '<p class="ncloud-empty">No hay enlaces activos</p>';
+        ncloudSharesList.innerHTML = _EN ? '<p class="ncloud-empty">No active links</p>' : '<p class="ncloud-empty">No hay enlaces activos</p>';
         show(ncloudSharesModal);
         return;
       }
@@ -1197,9 +1205,9 @@
         html += `<div class="ncloud-share-item">
           <div class="ncloud-share-item-info">
             <div class="ncloud-share-item-name">${esc(fileName)}</div>
-            <div class="ncloud-share-item-expiry">Expira en ${remaining} min</div>
+            <div class="ncloud-share-item-expiry">${_EN ? 'Expires in' : 'Expira en'} ${remaining} min</div>
           </div>
-          <button class="ncloud-share-revoke" data-id="${esc(s.id)}">Revocar</button>
+          <button class="ncloud-share-revoke" data-id="${esc(s.id)}">${_EN ? 'Revoke' : 'Revocar'}</button>
         </div>`;
       });
       ncloudSharesList.innerHTML = html;
@@ -1233,7 +1241,7 @@
       });
       const data = await res.json();
       ncloudSpaceUsed.textContent = formatSize(data.used || 0);
-      ncloudSpaceCount.textContent = (data.count || 0) + ' archivos';
+      ncloudSpaceCount.textContent = (data.count || 0) + (_EN ? ' files' : ' archivos');
       const pct = Math.min(100, ((data.used || 0) / (10 * 1024 * 1024 * 1024)) * 100);
       ncloudSpaceFill.style.width = pct + '%';
     } catch (e) {
@@ -1255,7 +1263,7 @@
     openCompose({
       to: lastViewerFrom,
       subject: lastViewerSubject.startsWith('Re: ') ? lastViewerSubject : `Re: ${lastViewerSubject}`,
-      title: 'Responder correo',
+      title: _EN ? 'Reply to email' : 'Responder correo',
     });
   });
 
@@ -1325,12 +1333,12 @@
     e.stopPropagation();
     const msgId = btn.dataset.msgId;
     const item = btn.closest('.inbox-item');
-    if (!confirm('Eliminar este correo?')) return;
+    if (!confirm(_EN ? 'Delete this email?' : 'Eliminar este correo?')) return;
     try {
       const result = await apiCall('DELETE', messagePath(msgId), { secret: currentSecret });
       if (result.code !== 0) {
         console.error('Delete failed:', result.error);
-        alert('Error al eliminar: ' + (result.error || 'Error desconocido'));
+        alert((_EN ? 'Error deleting: ' : 'Error al eliminar: ') + (result.error || (_EN ? 'Unknown error' : 'Error desconocido')));
         return;
       }
       if (item) {
@@ -1441,7 +1449,7 @@
   });
 
   // ===== PWA: Service Worker =====
-  if ('serviceWorker' in navigator) {
+  if (!_EN && 'serviceWorker' in navigator) {
     navigator.serviceWorker.register('/TMail/sw.js').catch(() => {});
   }
 
@@ -1449,7 +1457,7 @@
   let deferredPrompt = null;
   const installBtn = document.createElement('button');
   installBtn.className = 'pwa-install-btn hidden';
-  installBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Instalar';
+  installBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> ' + (_EN ? 'Install' : 'Instalar');
   document.body.appendChild(installBtn);
 
   window.addEventListener('beforeinstallprompt', (e) => {
@@ -1479,7 +1487,7 @@
   // Exponer funcion de share global
   window.shareNcloudLink = function(url, name) {
     if (navigator.share) {
-      navigator.share({ title: name || 'TMail', text: 'Archivo compartido via TMail', url }).catch(() => {});
+      navigator.share({ title: name || 'TMail', text: _EN ? 'File shared via TMail' : 'Archivo compartido via TMail', url }).catch(() => {});
     } else {
       navigator.clipboard.writeText(url);
     }

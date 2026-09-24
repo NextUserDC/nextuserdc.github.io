@@ -1,6 +1,9 @@
 (() => {
+  var _EN = location.pathname.indexOf('/en/') === 0;
   const COLORS = ['red', 'green', 'yellow', 'blue'];
-  const COLOR_NAMES = { red: 'Rojo', green: 'Verde', yellow: 'Amarillo', blue: 'Azul' };
+  const COLOR_NAMES = _EN
+    ? { red: 'Red', green: 'Green', yellow: 'Yellow', blue: 'Blue' }
+    : { red: 'Rojo', green: 'Verde', yellow: 'Amarillo', blue: 'Azul' };
   const CELL = 36;
   const BOARD_SIZE = 15;
   const WS_URL = 'wss://vps.nextuser.lat/ws/ludo';
@@ -191,13 +194,13 @@
       ws = new WebSocket(WS_URL);
       const timeout = setTimeout(() => {
         ws.close();
-        reject(new Error('Tiempo de conexion agotado'));
+        reject(new Error(_EN ? 'Connection timed out' : 'Tiempo de conexion agotado'));
       }, 8000);
       ws.onopen = () => { clearTimeout(timeout); resolve(); };
-      ws.onerror = () => { clearTimeout(timeout); reject(new Error('No se pudo conectar al servidor')); };
+      ws.onerror = () => { clearTimeout(timeout); reject(new Error(_EN ? 'Could not connect to the server' : 'No se pudo conectar al servidor')); };
       ws.onclose = () => {
         if (isOnline && gameActive) {
-          addLog('⚠ Conexion perdida');
+          addLog(_EN ? '⚠ Connection lost' : '⚠ Conexion perdida');
         }
       };
       ws.onmessage = (e) => {
@@ -217,10 +220,10 @@
 
   async function createLudoRoom() {
     const btn = document.getElementById('create-ludo-room');
-    const name = document.getElementById('online-name').value.trim() || 'Jugador';
+    const name = document.getElementById('online-name').value.trim() || (_EN ? 'Player' : 'Jugador');
     myColor = onlineSelectedColor;
     btn.disabled = true;
-    btn.textContent = 'Conectando...';
+    btn.textContent = _EN ? 'Connecting...' : 'Conectando...';
     try {
       await connectWS();
       ws.send(JSON.stringify({
@@ -232,20 +235,20 @@
       showOnlineStatus(err.message, 'error');
     } finally {
       btn.disabled = false;
-      btn.textContent = 'Crear sala';
+      btn.textContent = _EN ? 'Create room' : 'Crear sala';
     }
   }
 
   async function joinLudoRoom() {
     const btn = document.getElementById('join-ludo-room');
     const code = document.getElementById('ludo-room-code-input').value.trim().toUpperCase();
-    const name = document.getElementById('online-name').value.trim() || 'Jugador';
+    const name = document.getElementById('online-name').value.trim() || (_EN ? 'Player' : 'Jugador');
     if (code.length !== 4) {
-      showOnlineStatus('El codigo debe tener 4 caracteres', 'error');
+      showOnlineStatus(_EN ? 'The code must be 4 characters long' : 'El codigo debe tener 4 caracteres', 'error');
       return;
     }
     btn.disabled = true;
-    btn.textContent = 'Conectando...';
+    btn.textContent = _EN ? 'Connecting...' : 'Conectando...';
     try {
       await connectWS();
       ws.send(JSON.stringify({
@@ -258,7 +261,7 @@
       showOnlineStatus(err.message, 'error');
     } finally {
       btn.disabled = false;
-      btn.textContent = 'Unirse';
+      btn.textContent = _EN ? 'Join' : 'Unirse';
     }
   }
 
@@ -280,30 +283,34 @@
             dropdownDisplay.querySelector('.color-dot').style.background = COLOR_DOT_COLORS[msg.colorAssigned];
             dropdownDisplay.querySelector('.ludo-dd-selected-text').textContent = COLOR_NAMES[msg.colorAssigned];
           }
-          showOnlineStatus('Tu color estaba en uso. Se te asigno: ' + COLOR_NAMES[msg.colorAssigned], 'error');
+          showOnlineStatus((_EN ? 'Your color was already taken. You were assigned: ' : 'Tu color estaba en uso. Se te asigno: ') + COLOR_NAMES[msg.colorAssigned], 'error');
         }
         document.getElementById('online-lobby').classList.add('hidden');
         document.getElementById('online-waiting').classList.remove('hidden');
         document.getElementById('ludo-room-code-display').textContent = msg.code;
-        document.getElementById('ludo-waiting-text').textContent = 'Esperando que el anfitrion inicie...';
+        document.getElementById('ludo-waiting-text').textContent = _EN ? 'Waiting for the host to start...' : 'Esperando que el anfitrion inicie...';
         document.querySelector('#online-waiting .waiting-hint').textContent = '';
         break;
 
       case 'player_joined':
-        document.getElementById('ludo-waiting-text').textContent = `${msg.name} se unio! (${msg.players}/2)`;
-        document.querySelector('#online-waiting .waiting-hint').textContent = myPlayerId === 'p1' ? 'Presiona "Iniciar" cuando estes listo' : '';
+        document.getElementById('ludo-waiting-text').textContent = _EN
+          ? `${msg.name} joined! (${msg.players}/2)`
+          : `${msg.name} se unio! (${msg.players}/2)`;
+        document.querySelector('#online-waiting .waiting-hint').textContent = myPlayerId === 'p1'
+          ? (_EN ? 'Press "Start" when you are ready' : 'Presiona "Iniciar" cuando estes listo')
+          : '';
         if (myPlayerId === 'p1' && msg.players === 2) {
           document.getElementById('online-start-area').classList.remove('hidden');
-          document.getElementById('online-players-info').textContent = '2 jugadores conectados';
+          document.getElementById('online-players-info').textContent = _EN ? '2 players connected' : '2 jugadores conectados';
         }
         break;
 
       case 'player_left':
-        addLog(`${msg.name} se desconecto`);
+        addLog(_EN ? `${msg.name} disconnected` : `${msg.name} se desconecto`);
         if (gameActive) {
           gameActive = false;
           rollBtn.disabled = true;
-          addLog('Juego terminado - oponente desconectado');
+          addLog(_EN ? 'Game over - opponent disconnected' : 'Juego terminado - oponente desconectado');
         }
         break;
 
@@ -366,7 +373,7 @@
     consecutiveSixes = 0;
     moveInProgress = false;
     diceRolled = false;
-    addLog('Partida online iniciada!');
+    addLog(_EN ? 'Online game started!' : 'Partida online iniciada!');
   }
 
   function handleOnlineTurn(turnPlayerId) {
@@ -384,9 +391,9 @@
     rollBtn.disabled = !isMyTurnOnline;
     updateTurnDisplay();
     if (isMyTurnOnline) {
-      addLog('Tu turno!');
+      addLog(_EN ? 'Your turn!' : 'Tu turno!');
     } else {
-      addLog('Turno del oponente...');
+      addLog(_EN ? "Opponent's turn..." : 'Turno del oponente...');
     }
   }
 
@@ -394,7 +401,7 @@
     diceValue = value;
     diceFace.textContent = value;
     const p = players.find(pl => pl.color === (playerId === 'p1' ? players[0].color : players[1]?.color));
-    if (p) addLog(`${p.name} saco ${value}`);
+    if (p) addLog(_EN ? `${p.name} rolled ${value}` : `${p.name} saco ${value}`);
   }
 
   function handleRemoteMove(playerId, pieceIndex, toPos, piecesState) {
@@ -421,7 +428,7 @@
     if (p && p.pieces[opponentPieceIndex] !== undefined) {
       p.pieces[opponentPieceIndex] = -1;
       positionPiece(p, opponentPieceIndex);
-      addLog('💥 Captura!');
+      addLog('💥 ' + (_EN ? 'Capture!' : 'Captura!'));
     }
   }
 
@@ -452,7 +459,7 @@
     moveInProgress = false;
     diceRolled = false;
     updateTurnDisplay();
-    addLog('Partida iniciada!');
+    addLog(_EN ? 'Game started!' : 'Partida iniciada!');
   }
 
   document.getElementById('start-online-ludo')?.addEventListener('click', () => {
@@ -630,12 +637,12 @@
   function onDiceRolled() {
     diceRolled = true;
     const player = players[currentTurn];
-    addLog(`${player.name} saco ${diceValue}`);
+    addLog(_EN ? `${player.name} rolled ${diceValue}` : `${player.name} saco ${diceValue}`);
 
     if (diceValue === 6) {
       consecutiveSixes++;
       if (consecutiveSixes >= 3) {
-        addLog('Tres 6 seguidos! Pierde turno');
+        addLog(_EN ? 'Three 6s in a row! Turn skipped' : 'Tres 6 seguidos! Pierde turno');
         consecutiveSixes = 0;
         moveInProgress = false;
         endTurn(false);
@@ -647,7 +654,7 @@
 
     const movable = getMovablePieces(player);
     if (movable.length === 0) {
-      addLog('No hay movimientos posibles');
+      addLog(_EN ? 'No possible moves' : 'No hay movimientos posibles');
       setTimeout(() => {
         moveInProgress = false;
         diceRolled = false;
@@ -685,7 +692,7 @@
     movable.forEach(i => {
       player.pieceElements[i].classList.add('selectable');
     });
-    addLog('Elige una ficha');
+    addLog(_EN ? 'Choose a piece' : 'Elige una ficha');
   }
 
   function clearSelectable(player) {
@@ -751,7 +758,7 @@
 
     if (pos === -1 && (diceValue === 1 || diceValue === 6)) {
       player.pieces[pieceIndex] = 0;
-      addLog(`${player.name}: ficha ${pieceIndex+1} sale de base`);
+      addLog(_EN ? `${player.name}: piece ${pieceIndex+1} leaves base` : `${player.name}: ficha ${pieceIndex+1} sale de base`);
       animateMove(player, pieceIndex, -1, 0, stepDelay, () => {
         checkCapture(player, 0);
         sendMove(player, pieceIndex);
@@ -769,7 +776,7 @@
             animateMoveStepByStep(player, pieceIndex, pos, 51, stepDelay, () => {
               animateMove(player, pieceIndex, 51, 57, stepDelay, () => {
                 player.pieces[pieceIndex] = 57;
-                addLog(`★ ${player.name}: ficha ${pieceIndex+1} llego a casa!`);
+                addLog(_EN ? `★ ${player.name}: piece ${pieceIndex+1} made it home!` : `★ ${player.name}: ficha ${pieceIndex+1} llego a casa!`);
                 positionPiece(player, pieceIndex);
                 sendMove(player, pieceIndex);
                 afterMove(player);
@@ -780,7 +787,7 @@
               const finalPos = 52 + homeEntry;
               animateMove(player, pieceIndex, 51, finalPos, stepDelay, () => {
                 player.pieces[pieceIndex] = finalPos;
-                addLog(`${player.name}: ficha ${pieceIndex+1} entra a columna de casa`);
+                addLog(_EN ? `${player.name}: piece ${pieceIndex+1} enters the home column` : `${player.name}: ficha ${pieceIndex+1} entra a columna de casa`);
                 positionPiece(player, pieceIndex);
                 sendMove(player, pieceIndex);
                 afterMove(player);
@@ -807,7 +814,7 @@
         animateMoveStepByStep(player, pieceIndex, pos, newPos, stepDelay, () => {
           player.pieces[pieceIndex] = newPos;
           if (newPos === 57) {
-            addLog(`★ ${player.name}: ficha ${pieceIndex+1} llego a casa!`);
+            addLog(_EN ? `★ ${player.name}: piece ${pieceIndex+1} made it home!` : `★ ${player.name}: ficha ${pieceIndex+1} llego a casa!`);
           }
           positionPiece(player, pieceIndex);
           sendMove(player, pieceIndex);
@@ -880,7 +887,7 @@
     } else {
       if (extraTurn) {
         rollBtn.disabled = false;
-        addLog('Turno extra por sacar 6');
+        addLog(_EN ? 'Extra turn for rolling a 6' : 'Turno extra por sacar 6');
       } else {
         nextTurn();
       }
@@ -899,7 +906,7 @@
           if (myAbs === opAbs) {
             opponent.pieces[oi] = -1;
             positionPiece(opponent, oi);
-            addLog(`💥 ${player.name} captura a ${opponent.name}!`);
+            addLog(_EN ? `💥 ${player.name} captures ${opponent.name}!` : `💥 ${player.name} captura a ${opponent.name}!`);
             if (isOnline && ws && ws.readyState === 1) {
               ws.send(JSON.stringify({ type: 'capture', opponentPiece: oi, opponentColor: opponent.color }));
             }
@@ -924,8 +931,10 @@
 
   function showWin(player) {
     showScreen(winScreen);
-    document.getElementById('win-title').textContent = `${player.name} gana!`;
-    document.getElementById('win-message').textContent = `Todas las fichas de ${COLOR_NAMES[player.color]} llegaron a casa`;
+    document.getElementById('win-title').textContent = _EN ? `${player.name} wins!` : `${player.name} gana!`;
+    document.getElementById('win-message').textContent = _EN
+      ? `All ${COLOR_NAMES[player.color]} pieces made it home`
+      : `Todas las fichas de ${COLOR_NAMES[player.color]} llegaron a casa`;
     createConfetti();
   }
 
