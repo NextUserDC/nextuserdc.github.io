@@ -22,7 +22,10 @@
     '/Photobooth/contacto.html',
     '/Games/',
     '/Games/ludo/',
-    '/Games/typing/'
+    '/Games/typing/',
+    '/privacidad.html',
+    '/cookies.html',
+    '/terminos.html'
   ];
 
   var path = location.pathname;
