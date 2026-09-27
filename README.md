@@ -20,8 +20,8 @@ Monorepo con **dos webs estaticas** servidas desde el mismo repositorio en **Clo
 
 | Dominio | Proyecto CF Pages | Contenido |
 |:---:|:---:|:---|
-| `nextuser.lat` | raiz del repo | Hub de juegos + webs de juegos (AdSense aqui) |
-| `portfolio.nextuser.lat` | directorio `portfolio/` | Portfolio personal + legales (sin AdSense) |
+| `nextuser.lat` | raiz del repo | Hub de juegos + webs de juegos |
+| `portfolio.nextuser.lat` | directorio `portfolio/` | Portfolio personal + legales |
 
 Las rutas que cambiaron de dominio se redirigen con `301` via el archivo `_redirects` de la raiz.
 
@@ -33,7 +33,6 @@ Las rutas que cambiaron de dominio se redirigen con `301` via el archivo `_redir
 /
 ├── index.html          # Hub de juegos (nextuser.lat)
 ├── _redirects          # 301 de rutas movidas a portfolio.nextuser.lat
-├── ads.txt             # AdSense — solo en la raiz (juegos)
 ├── sitemap.xml         # Sitemap de juegos
 ├── Games/              # Mecanografía, Ludo (ES + EN)
 ├── PlayMC/             # Selector Eaglercraft (1.12.2 / 1.8.8)
@@ -127,7 +126,7 @@ Pagina web de un restaurante venezolano con menu completo, seccion de cultura ve
 <td>
 
 ### SimulaVIP
-Sistema de venta de entradas para un simulador VIP con login y calculo de precios.
+Sistema de venta de entradas para un simulador VIP con calculo de precios.
 
 `/SimulaVIP/`
 
@@ -137,7 +136,7 @@ Sistema de venta de entradas para un simulador VIP con login y calculo de precio
 <td>
 
 ### Photobooth
-Sitio web de arriendo de cabinas fotograficas con login, cotizador, galeria y panel admin.
+Sitio web de arriendo de cabinas fotograficas con cotizador y galeria.
 
 `/Photobooth/`
 
@@ -155,7 +154,7 @@ Pagina web personal dedicada con cuenta regresiva, mini-juego Wordle y album de 
 <td>
 
 ### Six
-Regalo de 6 meses con tema The Simpsons y bioinformativa. Timeline, viñetas, scrapbook y 5 juegos en Krustyland Arcade (acceso con contraseña, `noindex`).
+Regalo de 6 meses con tema The Simpsons y bioinformativa. Timeline, viñetas, scrapbook y 5 juegos en Krustyland Arcade.
 
 `/Six/`
 
@@ -181,7 +180,7 @@ Politicas de privacidad, cookies y terminos, en español e ingles.
 | CSS3 | Glassmorphism, Grid, Flexbox, responsive |
 | JavaScript vanilla | Logica, interaccion, animaciones |
 | Cloudflare Pages | Hosting de ambos proyectos (monorepo) |
-| Cloudflare Worker | API `api.nextuser.lat` (verificacion de passwords, correo) |
+| Cloudflare Worker | API `api.nextuser.lat` (correo y servicios web) |
 | Cloudflare D1 | Base de datos del worker (SQLite en la nube) |
 | Cloudflare DNS | Dominios y redirecciones 301 |
 
