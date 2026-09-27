@@ -1,4 +1,4 @@
-/* nextuser.lat — i18n: auto-redirect ES/EN + toggle
+/* nextuser.lat (juegos) — i18n: auto-redirect ES/EN + toggle. Rutas SOLO de juegos (el hub '/' es ES-only).
    '/' = español, '/en/' = inglés. Solo aplica a páginas traducidas. */
 (function () {
   'use strict';
@@ -7,25 +7,11 @@
 
   // Rutas que tienen versión EN (relativas al dominio, sin index.html)
   var TRANSLATED = [
-    '/',
-    '/TMail/',
-    '/MCAccounts/',
-    '/GameFinder/',
-    '/Os/',
-    '/Mesa58/',
-    '/SimulaVIP/',
-    '/Photobooth/',
-    '/Photobooth/inicio.html',
-    '/Photobooth/servicios.html',
-    '/Photobooth/finanzas.html',
-    '/Photobooth/nosotros.html',
-    '/Photobooth/contacto.html',
     '/Games/',
     '/Games/ludo/',
     '/Games/typing/',
-    '/privacidad.html',
-    '/cookies.html',
-    '/terminos.html'
+    '/MCAccounts/',
+    '/GameFinder/'
   ];
 
   var path = location.pathname;

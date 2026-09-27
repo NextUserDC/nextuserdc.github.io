@@ -51,8 +51,8 @@
   };
 
   var t = T[isEN ? 'en' : 'es'];
-  var PRIV = isEN ? '/en/privacidad.html' : '/privacidad.html';
-  var COOK = isEN ? '/en/cookies.html' : '/cookies.html';
+  var PRIV = isEN ? 'https://portfolio.nextuser.lat/en/privacidad.html' : 'https://portfolio.nextuser.lat/privacidad.html';
+  var COOK = isEN ? 'https://portfolio.nextuser.lat/en/cookies.html' : 'https://portfolio.nextuser.lat/cookies.html';
 
   function read() {
     try { var r = localStorage.getItem(KEY); return r ? JSON.parse(r) : null; } catch (e) { return null; }
