@@ -3,7 +3,7 @@
    Sin categoría de publicidad (AdSense excluido de este proyecto).
    Los marcadores inértes <script type="text/plain"
    data-nu-track="..."> solo se activan tras consentimiento explícito.
-   Registro de consentimiento en localStorage 'nu-consent' (Ley 21.719 / AdSense EEA). */
+   Registro de consentimiento en localStorage 'nu-consent' (Ley 21.719). */
 (function () {
   'use strict';
 
@@ -23,8 +23,6 @@
       necessaryHint: 'Siempre activas (preferencias y sesión)',
       stats: 'Estadísticas',
       statsHint: 'Cloudflare Web Analytics (visitas anónimas)',
-      marketing: 'Publicidad',
-      marketingHint: 'Google AdSense (anuncios personalizados)',
       links: 'Más información: ',
       cookies: 'Política de cookies',
       privacy: 'Privacidad',
@@ -42,8 +40,6 @@
       necessaryHint: 'Always active (preferences and session)',
       stats: 'Statistics',
       statsHint: 'Cloudflare Web Analytics (anonymous visits)',
-      marketing: 'Advertising',
-      marketingHint: 'Google AdSense (personalized ads)',
       links: 'More information: ',
       cookies: 'Cookie policy',
       privacy: 'Privacy',
@@ -88,7 +84,7 @@
   var customView = false;
 
   function current() {
-    return read() || { necessary: true, statistics: false, marketing: false };
+    return read() || { necessary: true, statistics: false };
   }
 
   function css() {
@@ -147,8 +143,6 @@
         '<input type="checkbox" checked disabled> <span><b>' + t.necessary + '</b> — ' + t.necessaryHint + '</span></label>';
       html += '<label style="display:flex;gap:8px;align-items:center;padding:6px 0;cursor:pointer;">' +
         '<input type="checkbox" id="nu-st"' + (c.statistics ? ' checked' : '') + '> <span><b>' + t.stats + '</b> — ' + t.statsHint + '</span></label>';
-      html += '<label style="display:flex;gap:8px;align-items:center;padding:6px 0;cursor:pointer;">' +
-        '<input type="checkbox" id="nu-mk"' + (c.marketing ? ' checked' : '') + '> <span><b>' + t.marketing + '</b> — ' + t.marketingHint + '</span></label>';
       html += '</div>';
       html += '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
         '<button id="nu-save" style="' + btn(true) + '">' + t.save + '</button>' +
@@ -163,18 +157,17 @@
   function bind() {
     function on(id, fn) { var el = document.getElementById(id); if (el) el.addEventListener('click', fn); }
 
-    on('nu-accept', function () { commit(true, true); });
-    on('nu-reject', function () { commit(false, false); });
+    on('nu-accept', function () { commit(true); });
+    on('nu-reject', function () { commit(false); });
     on('nu-custom', function () { customView = true; render(); });
     on('nu-back', function () { customView = false; render(); });
     on('nu-save', function () {
       var st = document.getElementById('nu-st');
-      var mk = document.getElementById('nu-mk');
-      commit(st && st.checked, mk && mk.checked);
+      commit(st && st.checked);
     });
   }
 
-  function commit(stats, mkt) {
+  function commit(stats) {
     var prev = read();
     var rec = {
       v: 1,
@@ -182,8 +175,7 @@
       first: prev ? prev.first : new Date().toISOString(),
       version: '2026-09-24',
       necessary: true,
-      statistics: !!stats,
-      marketing: !!mkt
+      statistics: !!stats
     };
     write(rec);
     activate(rec);
