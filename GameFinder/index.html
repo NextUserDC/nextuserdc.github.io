@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Finder</title>
+    <title>GameFinder — Ofertas de videojuegos en tiendas legales</title>
     <meta name="description" content="Busca y encuentra las mejores ofertas de videojuegos en tiendas legales.">
     <link rel="canonical" href="https://nextuser.lat/GameFinder/">
     <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="style.css">
-    <meta property="og:title" content="GameFinder - Mejores ofertas de videojuegos">
+    <meta property="og:title" content="GameFinder — Ofertas de videojuegos en tiendas legales">
     <meta property="og:description" content="Busca y compara precios de videojuegos en tiendas legales.">
     <meta property="og:url" content="https://nextuser.lat/GameFinder/">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="https://nextuser.lat/og-cover.jpg">
+    <meta property="og:locale" content="es_CL">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#0a0a14">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://api.cheapshark.com" crossorigin>
+    <link rel="preconnect" href="https://www.cheapshark.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
 <script type="text/plain" data-nu-track="ads" data-src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9123517935698561" crossorigin="anonymous"></script>
@@ -35,6 +38,7 @@
 
         <section class="search-section">
             <form id="search-form" class="search-box">
+                <label for="search-input" class="sr-only">Buscar juegos</label>
                 <div class="input-wrapper">
                     <svg class="search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -46,9 +50,9 @@
             </form>
         </section>
 
-        <nav class="tabs-header">
-            <button class="tab-btn active" data-tab="deals">Ofertas Legales</button>
-            <button class="tab-btn" data-tab="other">Otros Sitios</button>
+        <nav class="tabs-header" role="tablist">
+            <button class="tab-btn active" data-tab="deals" id="tab-btn-deals" role="tab" aria-selected="true" aria-controls="tab-deals">Ofertas Legales</button>
+            <button class="tab-btn" data-tab="other" id="tab-btn-other" role="tab" aria-selected="false" aria-controls="tab-other">Otros Sitios</button>
         </nav>
 
         <div id="loading-state" class="hidden">
@@ -56,7 +60,7 @@
             <p>Buscando ofertas...</p>
         </div>
 
-        <div id="tab-deals" class="tab-panel active">
+        <div id="tab-deals" class="tab-panel active" role="tabpanel" aria-labelledby="tab-btn-deals">
             <div id="official-stores-container" class="official-stores-grid"></div>
             <h3 class="section-divider">Ofertas en otras tiendas</h3>
             <section id="results-container" class="results-grid">
@@ -66,7 +70,7 @@
             </div>
         </div>
 
-        <div id="tab-other" class="tab-panel">
+        <div id="tab-other" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-other">
             <section id="other-sites-container" class="sites-grid">
             </section>
             <div id="other-empty-state" class="hidden">
@@ -75,9 +79,10 @@
         </div>
     </main>
 
-    <script src="app.js" defer></script>
+    <script src="app.js?v=1" defer></script>
   <script src="/js/i18n.js"></script>
 <footer class="nu-legal-bar" style="position:fixed;left:16px;right:16px;bottom:16px;margin:0;padding:14px 16px;z-index:9990;width:auto;border-top:1px solid rgba(148,163,184,.25);display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:center;font:400 13px/1.4 system-ui,-apple-system,sans-serif;color:#94a3b8;background:rgba(18,18,28,.6);border-radius:12px;"><nav style="display:flex;gap:16px;flex-wrap:wrap;"><a href="https://portfolio.nextuser.lat/privacidad.html" style="color:#a78bfa;text-decoration:none;">Privacidad</a><a href="https://portfolio.nextuser.lat/cookies.html" style="color:#a78bfa;text-decoration:none;">Cookies</a><a href="https://portfolio.nextuser.lat/terminos.html" style="color:#a78bfa;text-decoration:none;">T&eacute;rminos</a><a href="https://portfolio.nextuser.lat/cookies.html" data-nu-consent-manage style="color:#a78bfa;text-decoration:none;">Gestionar cookies</a></nav><span>&copy; 2026 El&iacute; Alexander N&uacute;&ntilde;ez Su&aacute;rez</span></footer>
   <script src="/js/consent.js"></script>
+<script type="text/plain" data-nu-track="beacon" data-src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "2009e2df4a6a472d9ed0dcafd22217f8"}'></script>
   </body>
 </html>

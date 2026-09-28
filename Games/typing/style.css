@@ -1,4 +1,5 @@
 :root {
+  color-scheme: dark;
   --bg-primary: #0a0a14;
   --bg-secondary: #161623;
   --bg-card: rgba(22, 22, 35, 0.6);
@@ -121,6 +122,8 @@ body {
 }
 
 .start-btn:hover { background: #2563eb; transform: translateY(-2px); box-shadow: 0 4px 20px rgba(59,130,246,0.3); }
+.start-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.start-btn:disabled:hover { background: var(--blue); transform: none; box-shadow: none; }
 
 .game-header {
   display: flex; justify-content: center; align-items: center; gap: 1rem;
@@ -246,4 +249,12 @@ body {
   .result-stats { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
   .result-stat-value { font-size: 1.1rem; }
   .paragraph-display { font-size: 0.95rem; padding: 0.8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

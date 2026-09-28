@@ -13,6 +13,7 @@
   const gameScreen = document.getElementById('game-screen');
   const resultsScreen = document.getElementById('results-screen');
   const timerDisplay = document.getElementById('timer');
+  const startBtn = document.getElementById('start-solo');
 
   const soloText = document.getElementById('solo-text');
   const soloInput = document.getElementById('solo-input');
@@ -21,23 +22,37 @@
   const soloErrors = document.getElementById('solo-errors');
 
   let paragraphsLoaded = false;
-  fetch('/Games/typing/paragraphs.json').then(r => r.json()).then(d => {
-    paragraphs = d.paragraphs;
+  startBtn.disabled = true;
+  startBtn.textContent = _EN ? 'Loading…' : 'Cargando…';
+
+  function onParagraphsReady() {
     paragraphsLoaded = true;
-  }).catch(() => {
-    paragraphs = [FALLBACK_PARAGRAPH];
-    paragraphsLoaded = true;
-  });
+    startBtn.disabled = false;
+    startBtn.textContent = _EN ? 'Play' : 'Jugar';
+  }
+
+  fetch(_EN ? '/en/Games/typing/paragraphs.json' : '/Games/typing/paragraphs.json')
+    .then(r => r.json()).then(d => {
+      paragraphs = d.paragraphs || [];
+      onParagraphsReady();
+    }).catch(() => {
+      paragraphs = [FALLBACK_PARAGRAPH];
+      onParagraphsReady();
+    });
 
   document.querySelectorAll('.dur-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.dur-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.dur-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       duration = parseInt(btn.dataset.time);
     });
   });
 
-  document.getElementById('start-solo').addEventListener('click', startGame);
+  startBtn.addEventListener('click', startGame);
   document.getElementById('play-again').addEventListener('click', showMenu);
 
   function showScreen(screen) {
@@ -73,7 +88,7 @@
   let state;
 
   function startGame() {
-    if (!paragraphs.length) return;
+    if (!paragraphsLoaded) return;
     const para = getRandomParagraph();
     timeLeft = duration;
     gameActive = true;
@@ -84,7 +99,7 @@
 
     state = {
       text: para, charIndex: 0, errors: 0,
-      correctChars: 0, startTime: null, finished: false
+      correctChars: 0, startTime: Date.now(), finished: false
     };
 
     renderChars(soloText, para);
@@ -115,7 +130,6 @@
 
   soloInput.addEventListener('input', () => {
     if (!gameActive || state.finished) return;
-    if (!state.startTime) state.startTime = Date.now();
 
     const typed = soloInput.value;
     const chars = soloText.querySelectorAll('.char');
@@ -164,23 +178,25 @@
   }
 
   function showResults() {
-    const elapsed = state.startTime ? (Date.now() - state.startTime) / 60000 : 0;
+    const elapsedMs = state.startTime ? Date.now() - state.startTime : 0;
+    const elapsed = elapsedMs / 60000;
     const wpm = elapsed > 0 ? Math.round((state.correctChars / 5) / elapsed) : 0;
     const accuracy = state.charIndex > 0 ? Math.round((state.correctChars / state.charIndex) * 100) : 100;
+    const timePlayed = Math.min(Math.round(elapsedMs / 1000), duration);
 
     document.getElementById('results-title').textContent = _EN ? 'Results' : 'Resultados';
     document.getElementById('results-content').innerHTML = `
-      <div class="result-player winner">
+      <div class="result-player">
         <div class="result-player-name">${_EN ? 'Your result' : 'Tu resultado'}</div>
         <div class="result-stats">
           <div><span class="result-stat-label">WPM</span><span class="result-stat-value">${wpm}</span></div>
-          <div><span class="result-stat-label">${_EN ? 'Accuracy' : 'Precision'}</span><span class="result-stat-value">${accuracy}%</span></div>
+          <div><span class="result-stat-label">${_EN ? 'Accuracy' : 'Precisión'}</span><span class="result-stat-value">${accuracy}%</span></div>
           <div><span class="result-stat-label">${_EN ? 'Errors' : 'Errores'}</span><span class="result-stat-value">${state.errors}</span></div>
         </div>
         <div class="result-stats" style="margin-top:0.75rem">
           <div><span class="result-stat-label">${_EN ? 'Correct' : 'Correctas'}</span><span class="result-stat-value">${state.correctChars}</span></div>
           <div><span class="result-stat-label">Total</span><span class="result-stat-value">${state.text.length}</span></div>
-          <div><span class="result-stat-label">${_EN ? 'Time' : 'Tiempo'}</span><span class="result-stat-value">${duration}s</span></div>
+          <div><span class="result-stat-label">${_EN ? 'Time' : 'Tiempo'}</span><span class="result-stat-value">${timePlayed}s</span></div>
         </div>
       </div>`;
     showScreen(resultsScreen);

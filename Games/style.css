@@ -1,4 +1,5 @@
 :root {
+  color-scheme: dark;
   --bg-primary: #0a0a14;
   --bg-secondary: #161623;
   --bg-card: rgba(22, 22, 35, 0.6);
@@ -29,13 +30,16 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  overflow: hidden;
+  contain: strict;
 }
 
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.4;
+  filter: blur(120px);
+  opacity: 0.12;
+  will-change: transform;
 }
 
 .orb-1 {
@@ -166,6 +170,11 @@ body {
   color: var(--accent);
 }
 
+.icon-play {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.05));
+  color: var(--green);
+}
+
 .game-icon svg {
   width: 36px;
   height: 36px;
@@ -236,4 +245,12 @@ body {
   .game-icon { width: 56px; height: 56px; padding: 12px; }
   .game-icon svg { width: 28px; height: 28px; }
   .game-title { font-size: 1.1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

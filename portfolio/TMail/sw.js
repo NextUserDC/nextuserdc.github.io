@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tmail-v1';
+const CACHE_NAME = 'tmail-v2';
 const STATIC_ASSETS = [
   '/TMail/',
   '/TMail/index.html',
@@ -25,7 +25,12 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
 
-  if (url.hostname === 'api.nextuser.lat' || url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
+  if (url.hostname === 'api.nextuser.lat') {
+    e.respondWith(fetch(e.request));
+    return;
+  }
+
+  if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
     e.respondWith(
       caches.open(CACHE_NAME).then((cache) =>
         fetch(e.request).then((res) => {

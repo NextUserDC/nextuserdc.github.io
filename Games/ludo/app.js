@@ -4,7 +4,6 @@
   const COLOR_NAMES = _EN
     ? { red: 'Red', green: 'Green', yellow: 'Yellow', blue: 'Blue' }
     : { red: 'Rojo', green: 'Verde', yellow: 'Amarillo', blue: 'Azul' };
-  const CELL = 36;
   const BOARD_SIZE = 15;
   const WS_URL = 'wss://vps.nextuser.lat/ws/ludo';
 
@@ -78,10 +77,47 @@
     blue:   [[10.5,1.5],[10.5,3.5],[12.5,1.5],[12.5,3.5]]
   };
 
+  const FINISH_OFFSET = {
+    red:    [-0.2, 0],
+    green:  [0, -0.2],
+    yellow: [0.2, 0],
+    blue:   [0, 0.2]
+  };
+
+  const STACK_OFFSETS = [[0,0],[1,-1],[-1,1],[1,1],[-1,-1],[-1,0],[0,1],[1,0],[0,-1]];
+
+  const PIECE_NAMES = _EN
+    ? { red: 'red piece', green: 'green piece', yellow: 'yellow piece', blue: 'blue piece' }
+    : { red: 'ficha roja', green: 'ficha verde', yellow: 'ficha amarilla', blue: 'ficha azul' };
+
+  let baseZones = [];
+  let joinedRoom = false;
+  let lastRoomCode = '';
+  let lastRoomName = '';
+  let reconnecting = false;
+  let reconnectAttempts = 0;
+
+  function cellPx() {
+    const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--cell'));
+    return isNaN(v) ? 36 : v;
+  }
+
+  function pieceHalf(el) {
+    if (el) {
+      const w = parseFloat(getComputedStyle(el).width);
+      if (!isNaN(w) && w > 0) return w / 2;
+    }
+    return 13;
+  }
+
   document.querySelectorAll('.setup-card .mode-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.setup-card .mode-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('.setup-card .mode-btn').forEach(b => {
+        b.classList.remove('selected');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('selected');
+      btn.setAttribute('aria-pressed', 'true');
       gameMode = btn.dataset.mode;
       document.getElementById('local-options').classList.toggle('hidden', gameMode !== 'local');
       document.getElementById('online-options').classList.toggle('hidden', gameMode !== 'online');
@@ -92,32 +128,88 @@
   const dropdownOptions = document.getElementById('online-color-options');
   const COLOR_DOT_COLORS = { red: '#ef4444', green: '#22c55e', yellow: '#eab308', blue: '#3b82f6' };
 
+  function isDropdownOpen() {
+    return !!dropdownOptions && dropdownOptions.classList.contains('open');
+  }
+
+  function openDropdown() {
+    if (!dropdownOptions || !dropdownDisplay) return;
+    dropdownOptions.classList.add('open');
+    dropdownDisplay.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeDropdown(focusTrigger) {
+    if (!dropdownOptions || !dropdownDisplay) return;
+    dropdownOptions.classList.remove('open');
+    dropdownDisplay.setAttribute('aria-expanded', 'false');
+    if (focusTrigger) dropdownDisplay.focus();
+  }
+
+  function selectDropdownColor(color) {
+    if (!dropdownDisplay) return;
+    onlineSelectedColor = color;
+    dropdownDisplay.querySelector('.color-dot').style.background = COLOR_DOT_COLORS[color];
+    dropdownDisplay.querySelector('.ludo-dd-selected-text').textContent = COLOR_NAMES[color];
+    if (dropdownOptions) {
+      dropdownOptions.querySelectorAll('.ludo-dd-option').forEach(o => {
+        o.setAttribute('aria-selected', o.dataset.color === color ? 'true' : 'false');
+      });
+    }
+    closeDropdown(true);
+  }
+
   if (dropdownDisplay && dropdownOptions) {
+    const ddOptions = [...dropdownOptions.querySelectorAll('.ludo-dd-option')];
+
     dropdownDisplay.addEventListener('click', (e) => {
       e.stopPropagation();
-      dropdownOptions.classList.toggle('open');
+      if (isDropdownOpen()) closeDropdown(false);
+      else openDropdown();
     });
 
-    dropdownOptions.querySelectorAll('.ludo-dd-option').forEach(opt => {
+    dropdownDisplay.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      e.stopPropagation();
+      openDropdown();
+      const opt = e.key === 'ArrowDown' ? ddOptions[0] : ddOptions[ddOptions.length - 1];
+      if (opt) opt.focus();
+    });
+
+    ddOptions.forEach((opt, i) => {
       opt.addEventListener('click', (e) => {
         e.stopPropagation();
-        const color = opt.dataset.color;
-        onlineSelectedColor = color;
-        dropdownDisplay.querySelector('.color-dot').style.background = COLOR_DOT_COLORS[color];
-        dropdownDisplay.querySelector('.ludo-dd-selected-text').textContent = COLOR_NAMES[color];
-        dropdownOptions.classList.remove('open');
+        selectDropdownColor(opt.dataset.color);
+      });
+      opt.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          e.stopPropagation();
+          const next = e.key === 'ArrowDown'
+            ? (i + 1) % ddOptions.length
+            : (i - 1 + ddOptions.length) % ddOptions.length;
+          ddOptions[next].focus();
+        } else if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          e.stopPropagation();
+          selectDropdownColor(opt.dataset.color);
+        }
       });
     });
 
     document.addEventListener('click', () => {
-      dropdownOptions.classList.remove('open');
+      closeDropdown(false);
     });
   }
 
   document.querySelectorAll('.count-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.count-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       numPlayers = parseInt(btn.dataset.count);
       updateColorOptions();
       updateNameInputs();
@@ -125,14 +217,22 @@
   });
 
   document.querySelectorAll('.color-opt').forEach(opt => {
-    opt.addEventListener('click', () => {
+    const toggleOpt = () => {
       if (opt.classList.contains('disabled')) return;
       if (!opt.classList.contains('selected')) {
         const currentSelected = document.querySelectorAll('.color-opt.selected').length;
         if (currentSelected >= numPlayers) return;
       }
       opt.classList.toggle('selected');
+      opt.setAttribute('aria-pressed', opt.classList.contains('selected') ? 'true' : 'false');
       updateColorOptions();
+    };
+    opt.addEventListener('click', toggleOpt);
+    opt.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleOpt();
+      }
     });
   });
 
@@ -151,6 +251,8 @@
       } else {
         opt.classList.remove('disabled');
       }
+      opt.setAttribute('aria-pressed', opt.classList.contains('selected') ? 'true' : 'false');
+      opt.setAttribute('aria-disabled', opt.classList.contains('disabled') ? 'true' : 'false');
     });
     updateNameInputs();
   }
@@ -164,7 +266,7 @@
       const row = document.createElement('div');
       row.className = 'name-input-row';
       row.innerHTML = `<span class="color-dot" style="background:var(--${color})"></span>
-        <input class="name-input" data-color="${color}" value="${COLOR_NAMES[color]}" maxlength="12">`;
+        <input class="name-input" data-color="${color}" value="${COLOR_NAMES[color]}" maxlength="12" aria-label="${_EN ? 'Name' : 'Nombre'}: ${COLOR_NAMES[color]}">`;
       container.appendChild(row);
     });
   }
@@ -172,16 +274,23 @@
   updateNameInputs();
 
   document.getElementById('start-game').addEventListener('click', startLocalGame);
-  document.getElementById('quit-btn').addEventListener('click', () => location.reload());
+  document.getElementById('quit-btn').addEventListener('click', () => {
+    if (confirm(_EN ? 'Abandon the game?' : '¿Abandonar la partida?')) location.reload();
+  });
   document.getElementById('play-again').addEventListener('click', () => location.reload());
 
   document.getElementById('create-ludo-room').addEventListener('click', createLudoRoom);
   document.getElementById('join-ludo-room').addEventListener('click', joinLudoRoom);
   document.getElementById('ludo-copy-code').addEventListener('click', () => {
+    const btn = document.getElementById('ludo-copy-code');
     const code = document.getElementById('ludo-room-code-display').textContent;
     navigator.clipboard.writeText(code).then(() => {
-      document.getElementById('ludo-copy-code').textContent = '✅';
-      setTimeout(() => { document.getElementById('ludo-copy-code').textContent = '📋'; }, 1500);
+      btn.textContent = '✅';
+      announce(_EN ? 'Room code copied' : 'Código de sala copiado');
+      setTimeout(() => { btn.textContent = '📋'; }, 1500);
+    }).catch(() => {
+      btn.textContent = '📋';
+      announce(_EN ? 'Could not copy the room code' : 'No se pudo copiar el código de sala');
     });
   });
   document.getElementById('ludo-room-code-input').addEventListener('keydown', (e) => {
@@ -194,20 +303,77 @@
       ws = new WebSocket(WS_URL);
       const timeout = setTimeout(() => {
         ws.close();
-        reject(new Error(_EN ? 'Connection timed out' : 'Tiempo de conexion agotado'));
+        reject(new Error(_EN ? 'Connection timed out' : 'Tiempo de conexión agotado'));
       }, 8000);
       ws.onopen = () => { clearTimeout(timeout); resolve(); };
       ws.onerror = () => { clearTimeout(timeout); reject(new Error(_EN ? 'Could not connect to the server' : 'No se pudo conectar al servidor')); };
-      ws.onclose = () => {
-        if (isOnline && gameActive) {
-          addLog(_EN ? '⚠ Connection lost' : '⚠ Conexion perdida');
-        }
-      };
+      ws.onclose = handleWSClose;
       ws.onmessage = (e) => {
-        const msg = JSON.parse(e.data);
+        let msg;
+        try {
+          msg = JSON.parse(e.data);
+        } catch (err) {
+          return;
+        }
         handleWSMessage(msg);
       };
     });
+  }
+
+  function shouldReconnect() {
+    return isOnline && gameActive && joinedRoom && !!lastRoomCode && !!lastRoomName;
+  }
+
+  function handleWSClose() {
+    if (!shouldReconnect()) {
+      if (isOnline && gameActive) {
+        addLog(_EN ? '⚠ Connection lost' : '⚠ Conexión perdida');
+      }
+      return;
+    }
+    if (reconnecting) return;
+    scheduleReconnect();
+  }
+
+  function scheduleReconnect() {
+    if (reconnectAttempts >= 2) {
+      reconnecting = false;
+      reconnectAttempts = 0;
+      showOnlineStatus(
+        _EN ? 'Connection lost. Could not reconnect.' : 'Conexión perdida. No se pudo reconectar.',
+        'error'
+      );
+      addLog(_EN ? '⚠ Could not reconnect to the room' : '⚠ No se pudo reconectar a la sala');
+      return;
+    }
+    reconnectAttempts++;
+    reconnecting = true;
+    showOnlineStatus(
+      _EN ? 'Connection lost, reconnecting…' : 'Conexión perdida, reconectando…',
+      'error'
+    );
+    addLog(_EN ? 'Connection lost, reconnecting…' : 'Conexión perdida, reconectando…');
+    setTimeout(doReconnect, 2000);
+  }
+
+  async function doReconnect() {
+    try {
+      ws = null;
+      await connectWS();
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+          type: 'join',
+          code: lastRoomCode,
+          name: lastRoomName,
+          color: myColor || onlineSelectedColor
+        }));
+      }
+      reconnecting = false;
+      reconnectAttempts = 0;
+      showOnlineStatus(_EN ? 'Reconnected' : 'Reconectado', 'success');
+    } catch (err) {
+      scheduleReconnect();
+    }
   }
 
   function showOnlineStatus(text, type) {
@@ -218,10 +384,20 @@
     el.classList.remove('hidden');
   }
 
+  function announce(text) {
+    const el = document.getElementById('ludo-a11y-live');
+    if (!el) return;
+    el.textContent = '';
+    setTimeout(() => { el.textContent = text; }, 80);
+  }
+
   async function createLudoRoom() {
     const btn = document.getElementById('create-ludo-room');
     const name = document.getElementById('online-name').value.trim() || (_EN ? 'Player' : 'Jugador');
     myColor = onlineSelectedColor;
+    lastRoomName = name;
+    reconnecting = false;
+    reconnectAttempts = 0;
     btn.disabled = true;
     btn.textContent = _EN ? 'Connecting...' : 'Conectando...';
     try {
@@ -244,9 +420,13 @@
     const code = document.getElementById('ludo-room-code-input').value.trim().toUpperCase();
     const name = document.getElementById('online-name').value.trim() || (_EN ? 'Player' : 'Jugador');
     if (code.length !== 4) {
-      showOnlineStatus(_EN ? 'The code must be 4 characters long' : 'El codigo debe tener 4 caracteres', 'error');
+      showOnlineStatus(_EN ? 'The code must be 4 characters long' : 'El código debe tener 4 caracteres', 'error');
       return;
     }
+    lastRoomCode = code;
+    lastRoomName = name;
+    reconnecting = false;
+    reconnectAttempts = 0;
     btn.disabled = true;
     btn.textContent = _EN ? 'Connecting...' : 'Conectando...';
     try {
@@ -269,6 +449,8 @@
     switch (msg.type) {
       case 'created':
         myPlayerId = msg.player;
+        joinedRoom = true;
+        lastRoomCode = msg.code;
         document.getElementById('online-lobby').classList.add('hidden');
         document.getElementById('online-waiting').classList.remove('hidden');
         document.getElementById('ludo-room-code-display').textContent = msg.code;
@@ -276,6 +458,8 @@
 
       case 'joined':
         myPlayerId = msg.player;
+        joinedRoom = true;
+        lastRoomCode = msg.code;
         if (msg.colorAssigned && msg.colorChanged) {
           myColor = msg.colorAssigned;
           onlineSelectedColor = msg.colorAssigned;
@@ -283,21 +467,21 @@
             dropdownDisplay.querySelector('.color-dot').style.background = COLOR_DOT_COLORS[msg.colorAssigned];
             dropdownDisplay.querySelector('.ludo-dd-selected-text').textContent = COLOR_NAMES[msg.colorAssigned];
           }
-          showOnlineStatus((_EN ? 'Your color was already taken. You were assigned: ' : 'Tu color estaba en uso. Se te asigno: ') + COLOR_NAMES[msg.colorAssigned], 'error');
+          showOnlineStatus((_EN ? 'Your color was already taken. You were assigned: ' : 'Tu color estaba en uso. Se te asignó: ') + COLOR_NAMES[msg.colorAssigned], 'error');
         }
         document.getElementById('online-lobby').classList.add('hidden');
         document.getElementById('online-waiting').classList.remove('hidden');
         document.getElementById('ludo-room-code-display').textContent = msg.code;
-        document.getElementById('ludo-waiting-text').textContent = _EN ? 'Waiting for the host to start...' : 'Esperando que el anfitrion inicie...';
+        document.getElementById('ludo-waiting-text').textContent = _EN ? 'Waiting for the host to start...' : 'Esperando que el anfitrión inicie...';
         document.querySelector('#online-waiting .waiting-hint').textContent = '';
         break;
 
       case 'player_joined':
         document.getElementById('ludo-waiting-text').textContent = _EN
           ? `${msg.name} joined! (${msg.players}/2)`
-          : `${msg.name} se unio! (${msg.players}/2)`;
+          : `${msg.name} se unió! (${msg.players}/2)`;
         document.querySelector('#online-waiting .waiting-hint').textContent = myPlayerId === 'p1'
-          ? (_EN ? 'Press "Start" when you are ready' : 'Presiona "Iniciar" cuando estes listo')
+          ? (_EN ? 'Press "Start" when you are ready' : 'Presiona "Iniciar" cuando estés listo')
           : '';
         if (myPlayerId === 'p1' && msg.players === 2) {
           document.getElementById('online-start-area').classList.remove('hidden');
@@ -306,7 +490,7 @@
         break;
 
       case 'player_left':
-        addLog(_EN ? `${msg.name} disconnected` : `${msg.name} se desconecto`);
+        addLog(_EN ? `${msg.name} disconnected` : `${msg.name} se desconectó`);
         if (gameActive) {
           gameActive = false;
           rollBtn.disabled = true;
@@ -398,10 +582,11 @@
   }
 
   function handleRemoteRoll(playerId, value) {
+    if (playerId === myPlayerId) return;
     diceValue = value;
     diceFace.textContent = value;
     const p = players.find(pl => pl.color === (playerId === 'p1' ? players[0].color : players[1]?.color));
-    if (p) addLog(_EN ? `${p.name} rolled ${value}` : `${p.name} saco ${value}`);
+    if (p) addLog(_EN ? `${p.name} rolled ${value}` : `${p.name} sacó ${value}`);
   }
 
   function handleRemoteMove(playerId, pieceIndex, toPos, piecesState) {
@@ -418,7 +603,7 @@
     }
 
     animateMoveStepByStep(p, pieceIndex, fromPos, p.pieces[pieceIndex], 150, () => {
-      positionPiece(p, pieceIndex);
+      repositionAll();
       renderPlayersList();
     });
   }
@@ -427,7 +612,7 @@
     const p = players.find(pl => pl.color === opponentColor);
     if (p && p.pieces[opponentPieceIndex] !== undefined) {
       p.pieces[opponentPieceIndex] = -1;
-      positionPiece(p, opponentPieceIndex);
+      repositionAll();
       addLog('💥 ' + (_EN ? 'Capture!' : 'Captura!'));
     }
   }
@@ -464,11 +649,13 @@
 
   document.getElementById('start-online-ludo')?.addEventListener('click', () => {
     if (myPlayerId !== 'p1') return;
+    if (!ws || ws.readyState !== WebSocket.OPEN) return;
     ws.send(JSON.stringify({ type: 'start' }));
   });
 
   function buildBoard() {
     boardEl.innerHTML = '';
+    baseZones = [];
     for (let r=0; r<15; r++) {
       for (let c=0; c<15; c++) {
         const cell = document.createElement('div');
@@ -486,19 +673,23 @@
         if (r < 6 && c > 8 && v === 0) cell.classList.add('base-green');
         if (r > 8 && c > 8 && v === 0) cell.classList.add('base-yellow');
         if (r > 8 && c < 6 && v === 0) cell.classList.add('base-blue');
-        if (r === 7 && c >= 1 && c <= 5 && v === 0) cell.classList.add('home-red');
-        if (c === 7 && r >= 1 && r <= 5 && v === 0) cell.classList.add('home-green');
-        if (r === 7 && c >= 9 && c <= 13 && v === 0) cell.classList.add('home-yellow');
-        if (c === 7 && r >= 9 && r <= 13 && v === 0) cell.classList.add('home-blue');
         boardEl.appendChild(cell);
       }
     }
+
+    Object.keys(HOME_COLUMN).forEach(color => {
+      HOME_COLUMN[color].forEach(coords => {
+        const cell = boardEl.children[coords[0] * 15 + coords[1]];
+        if (cell) cell.classList.add('home-' + color);
+      });
+    });
 
     const center = boardEl.children[7*15+7];
     center.classList.add('center-cell');
     center.textContent = 'HOME';
 
     const playingColors = players.map(p => p.color);
+    const cellSize = cellPx();
     ['red','green','yellow','blue'].forEach(color => {
       if (!playingColors.includes(color)) return;
       const base = document.createElement('div');
@@ -510,9 +701,10 @@
       }
       const pos = {red:'0,0', green:'0,9', yellow:'9,9', blue:'9,0'}[color];
       const [r,c] = pos.split(',').map(Number);
-      base.style.top = (r*CELL)+'px';
-      base.style.left = (c*CELL)+'px';
+      base.style.top = (r*cellSize)+'px';
+      base.style.left = (c*cellSize)+'px';
       boardEl.appendChild(base);
+      baseZones.push({ el: base, row: r, col: c });
     });
 
     players.forEach(p => {
@@ -521,7 +713,16 @@
         piece.className = `piece ${p.color}`;
         piece.dataset.player = p.color;
         piece.dataset.piece = i;
+        piece.setAttribute('role', 'button');
+        piece.setAttribute('tabindex', '-1');
         piece.addEventListener('click', () => onPieceClick(p.color, i));
+        piece.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            onPieceClick(p.color, i);
+          }
+        });
         boardEl.appendChild(piece);
         p.pieceElements.push(piece);
       }
@@ -529,36 +730,109 @@
     });
   }
 
+  function repositionBases() {
+    const cell = cellPx();
+    baseZones.forEach(b => {
+      b.el.style.top = (b.row * cell) + 'px';
+      b.el.style.left = (b.col * cell) + 'px';
+    });
+  }
+
+  let resizeRaf = 0;
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(resizeRaf);
+    resizeRaf = requestAnimationFrame(() => {
+      if (!players.length) return;
+      repositionBases();
+      repositionAll();
+    });
+  });
+
   function positionAllPieces(player) {
     player.pieces.forEach((pos, i) => {
       positionPiece(player, i);
     });
   }
 
-  function positionPiece(player, pieceIndex) {
-    const pos = player.pieces[pieceIndex];
-    const el = player.pieceElements[pieceIndex];
-    if (!el) return;
-    let row, col;
+  function repositionAll() {
+    players.forEach(p => positionAllPieces(p));
+  }
 
+  function pieceTargetAt(player, pos, pieceIndex) {
     if (pos === -1) {
-      const bp = BASE_POS[player.color][pieceIndex];
-      row = bp[0]; col = bp[1];
-    } else if (pos >= 0 && pos <= 51) {
+      const bp = BASE_POS[player.color][pieceIndex] || BASE_POS[player.color][0];
+      return { row: bp[0], col: bp[1], group: 'base-' + player.color + '-' + pieceIndex, finish: false };
+    }
+    if (pos >= 0 && pos <= 51) {
       const trackPos = (START_INDEX[player.color] + pos) % 52;
       const coords = MAIN_TRACK[trackPos];
-      row = coords[0]; col = coords[1];
-    } else if (pos >= 52 && pos <= 56) {
-      const homeIdx = pos - 52;
-      const coords = HOME_COLUMN[player.color][homeIdx];
-      row = coords[0]; col = coords[1];
-    } else if (pos === 57) {
-      const hc = HOME_COLUMN[player.color][4];
-      row = hc[0]; col = hc[1];
+      return { row: coords[0], col: coords[1], group: 'track-' + trackPos, finish: false };
     }
+    if (pos >= 52 && pos <= 56) {
+      const coords = HOME_COLUMN[player.color][pos - 52];
+      return { row: coords[0], col: coords[1], group: 'home-' + coords[0] + '-' + coords[1], finish: false };
+    }
+    if (pos === 57) {
+      return { row: 7, col: 7, group: 'finish-' + player.color, finish: true };
+    }
+    return { row: 0, col: 0, group: 'unknown', finish: false };
+  }
 
-    el.style.left = (col * CELL + CELL/2 - 13) + 'px';
-    el.style.top = (row * CELL + CELL/2 - 13) + 'px';
+  function pieceTarget(player, pieceIndex) {
+    return pieceTargetAt(player, player.pieces[pieceIndex], pieceIndex);
+  }
+
+  function stackIndexFor(targetPlayer, targetIndex, group) {
+    let idx = 0;
+    for (const p of players) {
+      for (let i = 0; i < p.pieces.length; i++) {
+        if (p === targetPlayer && i === targetIndex) return idx;
+        if (pieceTarget(p, i).group === group) idx++;
+      }
+    }
+    return 0;
+  }
+
+  function targetPixels(player, pos, pieceIndex) {
+    const t = pieceTargetAt(player, pos, pieceIndex);
+    const el = player.pieceElements[pieceIndex];
+    const cell = cellPx();
+    const half = pieceHalf(el);
+    let x = t.col * cell + cell / 2 - half;
+    let y = t.row * cell + cell / 2 - half;
+    if (t.finish) {
+      x += FINISH_OFFSET[player.color][0] * cell;
+      y += FINISH_OFFSET[player.color][1] * cell;
+    }
+    return { x, y, t };
+  }
+
+  function pieceLabel(player, pieceIndex) {
+    const pos = player.pieces[pieceIndex];
+    const name = PIECE_NAMES[player.color];
+    if (pos === -1) return _EN ? name + ', base' : name + ', en base';
+    if (pos === 57) return _EN ? name + ', home' : name + ', en casa';
+    if (pos >= 52) return _EN ? name + ', home column' : name + ', columna de casa';
+    return _EN ? name + ', square ' + (pos + 1) : name + ', casilla ' + (pos + 1);
+  }
+
+  function positionPiece(player, pieceIndex) {
+    const el = player.pieceElements[pieceIndex];
+    if (!el) return;
+    const pos = player.pieces[pieceIndex];
+    const target = targetPixels(player, pos, pieceIndex);
+    let x = target.x;
+    let y = target.y;
+    const stack = stackIndexFor(player, pieceIndex, target.t.group);
+    if (stack > 0) {
+      const step = Math.max(3, Math.round(cellPx() * 0.1));
+      const off = STACK_OFFSETS[Math.min(stack, STACK_OFFSETS.length - 1)];
+      x += off[0] * step;
+      y += off[1] * step;
+    }
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.setAttribute('aria-label', pieceLabel(player, pieceIndex));
   }
 
   function renderPlayersList() {
@@ -626,7 +900,7 @@
         diceValue = rollDiceValue();
         diceFace.textContent = diceValue;
 
-        if (isOnline) {
+        if (isOnline && ws && ws.readyState === WebSocket.OPEN) {
           ws.send(JSON.stringify({ type: 'roll', value: diceValue }));
         }
         onDiceRolled();
@@ -637,7 +911,7 @@
   function onDiceRolled() {
     diceRolled = true;
     const player = players[currentTurn];
-    addLog(_EN ? `${player.name} rolled ${diceValue}` : `${player.name} saco ${diceValue}`);
+    addLog(_EN ? `${player.name} rolled ${diceValue}` : `${player.name} sacó ${diceValue}`);
 
     if (diceValue === 6) {
       consecutiveSixes++;
@@ -691,12 +965,16 @@
   function highlightSelectable(player, movable) {
     movable.forEach(i => {
       player.pieceElements[i].classList.add('selectable');
+      player.pieceElements[i].setAttribute('tabindex', '0');
     });
     addLog(_EN ? 'Choose a piece' : 'Elige una ficha');
   }
 
   function clearSelectable(player) {
-    player.pieceElements.forEach(el => el.classList.remove('selectable'));
+    player.pieceElements.forEach(el => {
+      el.classList.remove('selectable');
+      el.setAttribute('tabindex', '-1');
+    });
   }
 
   function onPieceClick(color, pieceIndex) {
@@ -713,40 +991,21 @@
     movePiece(player, pieceIndex);
   }
 
-  function getCellCoords(player, relativePos) {
-    if (relativePos === -1) {
-      const bp = BASE_POS[player.color][0];
-      return { row: bp[0], col: bp[1] };
-    } else if (relativePos >= 0 && relativePos <= 51) {
-      const trackPos = (START_INDEX[player.color] + relativePos) % 52;
-      const coords = MAIN_TRACK[trackPos];
-      return { row: coords[0], col: coords[1] };
-    } else if (relativePos >= 52 && relativePos <= 56) {
-      const homeIdx = relativePos - 52;
-      const coords = HOME_COLUMN[player.color][homeIdx];
-      return { row: coords[0], col: coords[1] };
-    } else if (relativePos === 57) {
-      const hc = HOME_COLUMN[player.color][4];
-      return { row: hc[0], col: hc[1] };
-    }
-    return { row: 0, col: 0 };
-  }
-
   function animateMove(player, pieceIndex, fromPos, toPos, stepDelay, callback) {
     const el = player.pieceElements[pieceIndex];
     if (!el) { callback(); return; }
-    const from = getCellCoords(player, fromPos);
-    const to = getCellCoords(player, toPos);
+    const from = targetPixels(player, fromPos, pieceIndex);
+    const to = targetPixels(player, toPos, pieceIndex);
 
     el.style.transition = 'none';
-    el.style.left = (from.col * CELL + CELL/2 - 13) + 'px';
-    el.style.top = (from.row * CELL + CELL/2 - 13) + 'px';
+    el.style.left = from.x + 'px';
+    el.style.top = from.y + 'px';
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         el.style.transition = `left ${stepDelay}ms ease-in-out, top ${stepDelay}ms ease-in-out`;
-        el.style.left = (to.col * CELL + CELL/2 - 13) + 'px';
-        el.style.top = (to.row * CELL + CELL/2 - 13) + 'px';
+        el.style.left = to.x + 'px';
+        el.style.top = to.y + 'px';
         setTimeout(callback, stepDelay + 30);
       });
     });
@@ -760,6 +1019,7 @@
       player.pieces[pieceIndex] = 0;
       addLog(_EN ? `${player.name}: piece ${pieceIndex+1} leaves base` : `${player.name}: ficha ${pieceIndex+1} sale de base`);
       animateMove(player, pieceIndex, -1, 0, stepDelay, () => {
+        positionPiece(player, pieceIndex);
         checkCapture(player, 0);
         sendMove(player, pieceIndex);
         afterMove(player);
@@ -776,7 +1036,7 @@
             animateMoveStepByStep(player, pieceIndex, pos, 51, stepDelay, () => {
               animateMove(player, pieceIndex, 51, 57, stepDelay, () => {
                 player.pieces[pieceIndex] = 57;
-                addLog(_EN ? `★ ${player.name}: piece ${pieceIndex+1} made it home!` : `★ ${player.name}: ficha ${pieceIndex+1} llego a casa!`);
+                addLog(_EN ? `★ ${player.name}: piece ${pieceIndex+1} made it home!` : `★ ${player.name}: ficha ${pieceIndex+1} llegó a casa!`);
                 positionPiece(player, pieceIndex);
                 sendMove(player, pieceIndex);
                 afterMove(player);
@@ -814,7 +1074,7 @@
         animateMoveStepByStep(player, pieceIndex, pos, newPos, stepDelay, () => {
           player.pieces[pieceIndex] = newPos;
           if (newPos === 57) {
-            addLog(_EN ? `★ ${player.name}: piece ${pieceIndex+1} made it home!` : `★ ${player.name}: ficha ${pieceIndex+1} llego a casa!`);
+            addLog(_EN ? `★ ${player.name}: piece ${pieceIndex+1} made it home!` : `★ ${player.name}: ficha ${pieceIndex+1} llegó a casa!`);
           }
           positionPiece(player, pieceIndex);
           sendMove(player, pieceIndex);
@@ -829,7 +1089,7 @@
   }
 
   function sendMove(player, pieceIndex) {
-    if (!isOnline || !ws || ws.readyState !== 1) return;
+    if (!isOnline || !ws || ws.readyState !== WebSocket.OPEN) return;
     ws.send(JSON.stringify({
       type: 'move',
       pieceIndex,
@@ -863,11 +1123,12 @@
   }
 
   function afterMove(player) {
+    repositionAll();
     renderPlayersList();
 
     if (player.pieces.every(p => p === 57)) {
       gameActive = false;
-      if (isOnline && ws && ws.readyState === 1) {
+      if (isOnline && ws && ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({ type: 'win' }));
       }
       setTimeout(() => showWin(player), 500);
@@ -883,7 +1144,9 @@
 
   function endTurn(extraTurn) {
     if (isOnline) {
-      ws.send(JSON.stringify({ type: 'turn_end', extraTurn }));
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: 'turn_end', extraTurn }));
+      }
     } else {
       if (extraTurn) {
         rollBtn.disabled = false;
@@ -907,7 +1170,7 @@
             opponent.pieces[oi] = -1;
             positionPiece(opponent, oi);
             addLog(_EN ? `💥 ${player.name} captures ${opponent.name}!` : `💥 ${player.name} captura a ${opponent.name}!`);
-            if (isOnline && ws && ws.readyState === 1) {
+            if (isOnline && ws && ws.readyState === WebSocket.OPEN) {
               ws.send(JSON.stringify({ type: 'capture', opponentPiece: oi, opponentColor: opponent.color }));
             }
           }
@@ -971,10 +1234,15 @@
   }
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === ' ' && gameActive && !rollBtn.disabled) {
+    const target = e.target;
+    const onControl = target && target.closest && target.closest('button, a, input, select, textarea, [role="button"]');
+    if (e.key === ' ' && gameActive && !rollBtn.disabled && !onControl) {
       e.preventDefault();
       rollDice();
     }
-    if (e.key === 'Escape') location.reload();
+    if (e.key === 'Escape' && isDropdownOpen()) {
+      e.preventDefault();
+      closeDropdown(true);
+    }
   });
 })();

@@ -9,7 +9,7 @@
   <link rel="alternate" hreflang="es" href="https://nextuser.lat/Games/ludo/">
   <link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Games/ludo/">
   <link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Games/ludo/">
-  <meta property="og:title" content="Ludo - Games">
+  <meta property="og:title" content="Ludo — Games | NextUser">
   <meta property="og:description" content="Play Ludo online: local games with 2-4 players or online matches with a room code.">
   <meta property="og:url" content="https://nextuser.lat/en/Games/ludo/">
   <meta property="og:type" content="website">
@@ -17,24 +17,27 @@
   <meta property="og:site_name" content="Elí Núñez">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Ludo - Games">
+  <meta name="twitter:title" content="Ludo — Games | NextUser">
   <meta name="twitter:description" content="Play Ludo online: local games with 2-4 players or online matches with a room code.">
   <meta name="twitter:image" content="https://nextuser.lat/og-cover.jpg">
   <meta name="robots" content="index, follow">
-  <title>Ludo - Games</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Ludo — Games | NextUser</title>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Ludo — Multiplayer Board Game in Your Browser","url":"https://nextuser.lat/en/Games/ludo/","image":"https://nextuser.lat/og-cover.jpg","description":"Play Ludo in your browser: 2 to 4 players, local match or online multiplayer with a room code. Free, no install.","inLanguage":"en","gamePlatform":"Web browser","operatingSystem":"Any","applicationCategory":"GameApplication","genre":"Board game","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/Games/ludo/style.css?v=5">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="/Games/ludo/style.css?v=6">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
 <script type="text/plain" data-nu-track="ads" data-src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9123517935698561" crossorigin="anonymous"></script>
 <style>body{padding-bottom:88px}</style>
   </head>
 <body>
-  <div class="background-animation">
+  <div class="background-animation" aria-hidden="true">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
   </div>
+  <div id="ludo-a11y-live" class="sr-only" role="status" aria-live="polite"></div>
 
   <div class="container">
     <header class="header">
@@ -46,13 +49,13 @@
       <div class="setup-card">
         <h2>Game mode</h2>
         <div class="mode-buttons">
-          <button class="mode-btn selected" data-mode="local">
-            <span class="mode-icon">🎲</span>
+          <button class="mode-btn selected" data-mode="local" aria-pressed="true">
+            <span class="mode-icon" aria-hidden="true">🎲</span>
             <span class="mode-label">Local</span>
             <span class="mode-desc">Play on the same device</span>
           </button>
-          <button class="mode-btn" data-mode="online">
-            <span class="mode-icon">🌐</span>
+          <button class="mode-btn" data-mode="online" aria-pressed="false">
+            <span class="mode-icon" aria-hidden="true">🌐</span>
             <span class="mode-label">Online</span>
             <span class="mode-desc">Play with a room code</span>
           </button>
@@ -60,25 +63,25 @@
 
         <div id="local-options">
           <div class="setup-section">
-            <label class="setup-label">Number of players</label>
-            <div class="player-count-btns">
-              <button class="count-btn active" data-count="2">2</button>
-              <button class="count-btn" data-count="3">3</button>
-              <button class="count-btn" data-count="4">4</button>
+            <label class="setup-label" id="lbl-count">Number of players</label>
+            <div class="player-count-btns" role="group" aria-labelledby="lbl-count">
+              <button class="count-btn active" data-count="2" aria-pressed="true">2</button>
+              <button class="count-btn" data-count="3" aria-pressed="false">3</button>
+              <button class="count-btn" data-count="4" aria-pressed="false">4</button>
             </div>
           </div>
           <div class="setup-section">
-            <label class="setup-label">Colors</label>
-            <div class="color-options" id="color-options">
-              <div class="color-opt selected" data-color="red"><span class="color-dot" style="background:#ef4444"></span> Red</div>
-              <div class="color-opt selected" data-color="green"><span class="color-dot" style="background:#22c55e"></span> Green</div>
-              <div class="color-opt" data-color="yellow"><span class="color-dot" style="background:#eab308"></span> Yellow</div>
-              <div class="color-opt" data-color="blue"><span class="color-dot" style="background:#3b82f6"></span> Blue</div>
+            <label class="setup-label" id="lbl-colors">Colors</label>
+            <div class="color-options" id="color-options" role="group" aria-labelledby="lbl-colors">
+              <div class="color-opt selected" data-color="red" role="button" tabindex="0" aria-pressed="true"><span class="color-dot" style="background:#ef4444" aria-hidden="true"></span> Red</div>
+              <div class="color-opt selected" data-color="green" role="button" tabindex="0" aria-pressed="true"><span class="color-dot" style="background:#22c55e" aria-hidden="true"></span> Green</div>
+              <div class="color-opt" data-color="yellow" role="button" tabindex="0" aria-pressed="false"><span class="color-dot" style="background:#eab308" aria-hidden="true"></span> Yellow</div>
+              <div class="color-opt" data-color="blue" role="button" tabindex="0" aria-pressed="false"><span class="color-dot" style="background:#3b82f6" aria-hidden="true"></span> Blue</div>
             </div>
           </div>
           <div class="setup-section">
-            <label class="setup-label">Names</label>
-            <div id="name-inputs"></div>
+            <label class="setup-label" id="lbl-names">Names</label>
+            <div id="name-inputs" role="group" aria-labelledby="lbl-names"></div>
           </div>
           <button class="start-btn" id="start-game">Play</button>
         </div>
@@ -86,22 +89,22 @@
         <div id="online-options" class="hidden">
           <div id="online-lobby">
             <div class="online-name-row">
-              <label>Your name</label>
+              <label for="online-name">Your name</label>
               <input type="text" id="online-name" value="Player" maxlength="15">
             </div>
             <div class="online-color-row">
-              <label>Your color</label>
+              <label for="online-color-display" id="lbl-dd-color">Your color</label>
               <div class="ludo-dd" id="online-color-dropdown">
-                <div class="ludo-dd-selected" id="online-color-display">
-                  <span class="color-dot" style="background:#ef4444"></span>
-                  <span class="ludo-dd-selected-text">Red</span>
-                  <span class="ludo-dd-arrow">&#9660;</span>
-                </div>
-                <div class="ludo-dd-options" id="online-color-options">
-                  <div class="ludo-dd-option" data-color="red"><span class="color-dot" style="background:#ef4444"></span> Red</div>
-                  <div class="ludo-dd-option" data-color="green"><span class="color-dot" style="background:#22c55e"></span> Green</div>
-                  <div class="ludo-dd-option" data-color="yellow"><span class="color-dot" style="background:#eab308"></span> Yellow</div>
-                  <div class="ludo-dd-option" data-color="blue"><span class="color-dot" style="background:#3b82f6"></span> Blue</div>
+                <button type="button" class="ludo-dd-selected" id="online-color-display" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-dd-color online-color-text">
+                  <span class="color-dot" style="background:#ef4444" aria-hidden="true"></span>
+                  <span class="ludo-dd-selected-text" id="online-color-text">Red</span>
+                  <span class="ludo-dd-arrow" aria-hidden="true">&#9660;</span>
+                </button>
+                <div class="ludo-dd-options" id="online-color-options" role="listbox" aria-labelledby="lbl-dd-color">
+                  <div class="ludo-dd-option" data-color="red" role="option" tabindex="-1" aria-selected="true"><span class="color-dot" style="background:#ef4444" aria-hidden="true"></span> Red</div>
+                  <div class="ludo-dd-option" data-color="green" role="option" tabindex="-1" aria-selected="false"><span class="color-dot" style="background:#22c55e" aria-hidden="true"></span> Green</div>
+                  <div class="ludo-dd-option" data-color="yellow" role="option" tabindex="-1" aria-selected="false"><span class="color-dot" style="background:#eab308" aria-hidden="true"></span> Yellow</div>
+                  <div class="ludo-dd-option" data-color="blue" role="option" tabindex="-1" aria-selected="false"><span class="color-dot" style="background:#3b82f6" aria-hidden="true"></span> Blue</div>
                 </div>
               </div>
             </div>
@@ -113,22 +116,22 @@
               <div class="online-divider">or</div>
               <div class="online-action">
                 <div class="room-code-input">
-                  <input type="text" id="ludo-room-code-input" maxlength="4" placeholder="----" autocomplete="off" spellcheck="false">
+                  <input type="text" id="ludo-room-code-input" maxlength="4" placeholder="----" autocomplete="off" spellcheck="false" aria-label="Room code">
                 </div>
                 <button class="start-btn" id="join-ludo-room">Join</button>
                 <p class="online-hint">Enter the 4-character code</p>
               </div>
             </div>
-            <div id="ludo-online-status" class="online-status hidden"></div>
+            <div id="ludo-online-status" class="online-status hidden" role="status" aria-live="polite"></div>
           </div>
           <div id="online-waiting" class="hidden">
             <div class="room-code-display">
               <span class="room-code-label">Room code</span>
               <span class="room-code" id="ludo-room-code-display">----</span>
-              <button class="copy-code-btn" id="ludo-copy-code" title="Copy code">📋</button>
+              <button class="copy-code-btn" id="ludo-copy-code" title="Copy code" aria-label="Copy code">📋</button>
             </div>
             <div class="waiting-info">
-              <div class="waiting-spinner"></div>
+              <div class="waiting-spinner" aria-hidden="true"></div>
               <p id="ludo-waiting-text">Waiting for opponent...</p>
               <p class="waiting-hint">Share this code with your opponent</p>
             </div>
@@ -147,18 +150,18 @@
           <div class="board" id="board"></div>
         </div>
         <div class="side-panel">
-          <div class="turn-display">
+          <div class="turn-display" role="status">
             <span class="turn-label">Turn:</span>
             <span class="turn-name" id="turn-name">-</span>
           </div>
           <div class="dice-area">
-            <div class="dice" id="dice">
+            <div class="dice" id="dice" aria-hidden="true">
               <div class="dice-face" id="dice-face">?</div>
             </div>
             <button class="roll-btn" id="roll-btn">Roll dice</button>
           </div>
           <div class="players-list" id="players-list"></div>
-          <div class="game-log" id="game-log"></div>
+          <div class="game-log" id="game-log" aria-live="polite" aria-atomic="false"></div>
           <button class="quit-btn" id="quit-btn">Exit</button>
         </div>
       </div>
@@ -166,9 +169,9 @@
 
     <div id="win-screen" class="screen hidden">
       <div class="win-card">
-        <div class="confetti-container" id="confetti"></div>
+        <div class="confetti-container" id="confetti" aria-hidden="true"></div>
         <h2 id="win-title">Winner!</h2>
-        <div class="win-trophy"></div>
+        <div class="win-trophy">🏆</div>
         <p id="win-message"></p>
         <div class="results-actions">
           <button class="start-btn" id="play-again">Play again</button>
@@ -178,9 +181,10 @@
     </div>
   </div>
 
-  <script src="/Games/ludo/app.js?v=5"></script>
+  <script src="/Games/ludo/app.js?v=6"></script>
   <script src="/js/i18n.js"></script>
 <footer class="nu-legal-bar" style="position:fixed;left:16px;right:16px;bottom:16px;margin:0;padding:14px 16px;z-index:9990;width:auto;border-top:1px solid rgba(148,163,184,.25);display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:center;font:400 13px/1.4 system-ui,-apple-system,sans-serif;color:#94a3b8;background:rgba(18,18,28,.6);border-radius:12px;"><nav style="display:flex;gap:16px;flex-wrap:wrap;"><a href="https://portfolio.nextuser.lat/en/privacidad.html" style="color:#a78bfa;text-decoration:none;">Privacy</a><a href="https://portfolio.nextuser.lat/en/cookies.html" style="color:#a78bfa;text-decoration:none;">Cookies</a><a href="https://portfolio.nextuser.lat/en/terminos.html" style="color:#a78bfa;text-decoration:none;">Terms</a><a href="https://portfolio.nextuser.lat/en/cookies.html" data-nu-consent-manage style="color:#a78bfa;text-decoration:none;">Manage cookies</a></nav><span>&copy; 2026 El&iacute; Alexander N&uacute;&ntilde;ez Su&aacute;rez</span></footer>
   <script src="/js/consent.js"></script>
+<script type="text/plain" data-nu-track="beacon" data-src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "2009e2df4a6a472d9ed0dcafd22217f8"}'></script>
   </body>
 </html>

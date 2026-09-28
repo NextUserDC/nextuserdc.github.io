@@ -100,6 +100,21 @@ class AccountSearcher {
             return;
         }
 
+        if (searchTerm.length < 3) {
+            this.currentResults = [];
+            this.displayedCount = 0;
+            document.getElementById('resultsContainer').innerHTML = '';
+            document.getElementById('resultsCount').innerHTML = `
+                <div class="warning account-card-first">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    ${_EN
+                        ? 'Type at least <strong>3</strong> characters to search. Please be more specific.'
+                        : 'Escribe al menos <strong>3</strong> caracteres para buscar. Por favor, sé más específico.'}
+                </div>
+            `;
+            return;
+        }
+
         if (!this.loaded) {
             this.showError(_EN ? 'The database is not loaded yet. Please wait.' : 'La base de datos no está cargada todavía. Por favor, espera.');
             return;
@@ -115,19 +130,6 @@ class AccountSearcher {
         const searchLower = searchTerm.toLowerCase();
         const results = [];
         const MAX = this.MAX_RESULTS;
-
-        if (searchLower.length < 3) {
-            for (const prefix in this.index) {
-                const candidates = this.index[prefix];
-                for (let i = 0; i < candidates.length && results.length < MAX; i++) {
-                    const [nick, password] = candidates[i];
-                    if (nick.toLowerCase().includes(searchLower)) {
-                        results.push({ nick, password });
-                    }
-                }
-            }
-            return results;
-        }
 
         const prefix = searchLower.substring(0, 3);
         const candidates = this.index[prefix];
@@ -180,7 +182,19 @@ class AccountSearcher {
         this.appendNextBatch();
     }
 
+    isNearBottom() {
+        return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 500;
+    }
+
     appendNextBatch() {
+        if (this.displayedCount >= this.currentResults.length) return;
+
+        do {
+            this.appendBatch();
+        } while (this.displayedCount < this.currentResults.length && this.isNearBottom());
+    }
+
+    appendBatch() {
         const resultsContainer = document.getElementById('resultsContainer');
         const fragment = document.createDocumentFragment();
         const end = Math.min(this.displayedCount + this.BATCH_SIZE, this.currentResults.length);

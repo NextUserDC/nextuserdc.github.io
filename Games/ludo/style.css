@@ -1,4 +1,5 @@
 :root {
+  color-scheme: dark;
   --bg-primary: #0a0a14;
   --bg-secondary: #161623;
   --bg-card: rgba(22, 22, 35, 0.6);
@@ -15,6 +16,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 .hidden { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
 body {
   font-family: 'Outfit', sans-serif;
@@ -43,7 +45,7 @@ body {
 .setup-card {
   max-width: 500px; margin: 0 auto;
   background: var(--bg-card); border: 1px solid var(--glass-border);
-  border-radius: 16px; padding: 2rem; backdrop-filter: blur(12px);
+  border-radius: 16px; padding: 2rem; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
 }
 .setup-card h2 { text-align: center; font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--text-muted); font-weight: 400; }
 .setup-section { margin-bottom: 1.5rem; }
@@ -119,15 +121,20 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
   padding: 0.5rem 0.7rem;
   background: rgba(109,40,217,0.15);
   border: 1px solid rgba(109,40,217,0.4);
   border-radius: 8px;
   cursor: pointer;
+  font-family: inherit;
   font-size: 0.85rem;
   color: var(--text-main);
+  text-align: left;
   user-select: none;
   transition: all 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
 }
 .ludo-dd-selected:hover {
   background: rgba(109,40,217,0.25);
@@ -177,6 +184,10 @@ body {
 .ludo-dd-option:hover .color-dot {
   border-color: rgba(255,255,255,0.4);
 }
+.ludo-dd-selected:focus-visible, .ludo-dd-option:focus-visible, .color-opt:focus-visible, .piece:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
 .online-actions { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.2rem; }
 .online-action { text-align: center; }
 .online-divider { text-align: center; color: var(--text-muted); font-size: 0.8rem; }
@@ -213,7 +224,7 @@ body {
 
 .board-wrapper {
   background: var(--bg-card); border: 1px solid var(--glass-border);
-  border-radius: 16px; padding: 1rem; backdrop-filter: blur(12px);
+  border-radius: 16px; padding: 1rem; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   flex-shrink: 0;
 }
 
@@ -267,7 +278,7 @@ body {
   justify-items: center;
 }
 .base-zone.red { top: 0; left: 0; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.25); }
-.base-zone.green { top: 0; right: 0; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,179,94,0.25); }
+.base-zone.green { top: 0; right: 0; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.25); }
 .base-zone.yellow { bottom: 0; right: 0; background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.25); }
 .base-zone.blue { bottom: 0; left: 0; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.25); }
 
@@ -308,6 +319,7 @@ body {
 .turn-display {
   background: var(--bg-card); border: 1px solid var(--glass-border);
   border-radius: 12px; padding: 1rem; text-align: center;
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 .turn-label { display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
@@ -316,6 +328,7 @@ body {
 .dice-area {
   background: var(--bg-card); border: 1px solid var(--glass-border);
   border-radius: 12px; padding: 1.2rem; text-align: center;
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -356,7 +369,7 @@ body {
 
 .players-list {
   background: var(--bg-card); border: 1px solid var(--glass-border);
-  border-radius: 12px; padding: 0.8rem; backdrop-filter: blur(12px);
+  border-radius: 12px; padding: 0.8rem; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
 }
 
 .player-row {
@@ -371,7 +384,7 @@ body {
 .game-log {
   background: var(--bg-card); border: 1px solid var(--glass-border);
   border-radius: 12px; padding: 0.8rem; max-height: 120px; overflow-y: auto;
-  font-size: 0.78rem; color: var(--text-muted); backdrop-filter: blur(12px);
+  font-size: 0.78rem; color: var(--text-muted); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
 }
 
 .log-entry { padding: 0.2rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
@@ -387,7 +400,7 @@ body {
 .win-card {
   max-width: 500px; margin: 0 auto; text-align: center;
   background: var(--bg-card); border: 1px solid var(--glass-border);
-  border-radius: 16px; padding: 3rem 2rem; backdrop-filter: blur(12px);
+  border-radius: 16px; padding: 3rem 2rem; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   position: relative; overflow: hidden;
 }
 .win-card h2 {
@@ -442,4 +455,12 @@ body {
   .base-zone { gap: 2px; padding: 6px; border-radius: 8px; }
   .board-wrapper { padding: 0.3rem; border-radius: 10px; }
   .cell { border-width: 0.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

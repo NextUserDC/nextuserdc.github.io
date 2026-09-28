@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mcaccounts-v2';
+const CACHE_NAME = 'mcaccounts-v3';
 const STATIC_ASSETS = [
     './',
     './index.html',
@@ -20,7 +20,9 @@ self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((keys) => {
             return Promise.all(
-                keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+                keys
+                    .filter(k => k.startsWith('mcaccounts-') && k !== CACHE_NAME)
+                    .map(k => caches.delete(k))
             );
         })
     );
@@ -28,36 +30,40 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-    const url = new URL(event.request.url);
+    const request = event.request;
+    if (request.method !== 'GET') return;
 
-    // Cache-first for the main database (large, rarely changes)
+    const url = new URL(request.url);
+    if (url.origin !== self.location.origin) return;
+
+    const fetchAndCache = () => fetch(request).then((response) => {
+        if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(c => c.put(request, clone));
+        }
+        return response;
+    });
+
+    // Cache-first for the main database (16.9 MB, too expensive to refresh in the background)
     if (url.pathname.includes('db_indexed.json')) {
         event.respondWith(
-            caches.match(event.request).then((cached) => {
+            caches.match(request).then((cached) => {
                 if (cached) return cached;
-                return fetch(event.request).then((response) => {
-                    if (response.ok) {
-                        const clone = response.clone();
-                        caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
-                    }
-                    return response;
-                });
+                return fetchAndCache();
             })
         );
         return;
     }
 
-    // Cache-first for static assets
+    // Stale-while-revalidate for everything else: serve the cached copy
+    // immediately while the network refreshes the cache in the background.
     event.respondWith(
-        caches.match(event.request).then((cached) => {
-            if (cached) return cached;
-            return fetch(event.request).then((response) => {
-                if (response.ok) {
-                    const clone = response.clone();
-                    caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
-                }
-                return response;
-            });
+        caches.match(request).then((cached) => {
+            if (cached) {
+                fetchAndCache().catch(() => {});
+                return cached;
+            }
+            return fetchAndCache();
         })
     );
 });

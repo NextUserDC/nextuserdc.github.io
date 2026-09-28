@@ -241,50 +241,73 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastQuery = '';
     let activeTab = 'deals';
     let searchTimeout = null;
+    const RESULTS_PAGE_SIZE = 12;
+    let visibleCount = RESULTS_PAGE_SIZE;
 
     function escapeHtml(text) {
         if (!text) return '';
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+        return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
     // ==========================================
     // LÓGICA DE PESTAÑAS
     // ==========================================
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const tab = btn.dataset.tab;
-            if (tab === activeTab) return;
+    function activateTab(btn) {
+        const tab = btn.dataset.tab;
+        if (tab === activeTab) return;
 
-            tabBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+        tabBtns.forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
 
-            tabPanels.forEach(panel => panel.classList.remove('active'));
-            document.getElementById(`tab-${tab}`).classList.add('active');
+        tabPanels.forEach(panel => panel.classList.remove('active'));
+        document.getElementById(`tab-${tab}`).classList.add('active');
 
-            activeTab = tab;
+        activeTab = tab;
+    }
+
+    tabBtns.forEach((btn, index) => {
+        btn.addEventListener('click', () => activateTab(btn));
+
+        btn.addEventListener('keydown', (e) => {
+            if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+            e.preventDefault();
+            const nextIndex = e.key === 'ArrowRight'
+                ? (index + 1) % tabBtns.length
+                : (index - 1 + tabBtns.length) % tabBtns.length;
+            tabBtns[nextIndex].focus();
+            activateTab(tabBtns[nextIndex]);
         });
     });
 
     // ==========================================
     // OBTENER INFORMACIÓN DE LAS TIENDAS
     // ==========================================
-    async function fetchStores() {
-        try {
-            const response = await fetch(STORES_API);
-            if (!response.ok) throw new Error(_EN ? 'Error loading stores' : 'Error al cargar tiendas');
-            const stores = await response.json();
+    let storesPromise = null;
 
-            stores.forEach(store => {
-                storesCache[store.storeID] = {
-                    name: store.storeName,
-                    logo: `https://www.cheapshark.com${store.images.logo}`
-                };
-            });
-        } catch (error) {
-            console.error('Error fetching stores:', error);
+    function fetchStores() {
+        if (!storesPromise) {
+            storesPromise = (async () => {
+                try {
+                    const response = await fetch(STORES_API);
+                    if (!response.ok) throw new Error(_EN ? 'Error loading stores' : 'Error al cargar tiendas');
+                    const stores = await response.json();
+
+                    stores.forEach(store => {
+                        storesCache[store.storeID] = {
+                            name: store.storeName,
+                            logo: `https://www.cheapshark.com${store.images.logo}`
+                        };
+                    });
+                } catch (error) {
+                    console.error('Error fetching stores:', error);
+                }
+            })();
         }
+        return storesPromise;
     }
 
     fetchStores();
@@ -321,8 +344,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        await fetchStores();
+
         try {
-            const response = await fetch(`${DEALS_API}?title=${encodeURIComponent(query)}&exact=0`);
+            const response = await fetch(`${DEALS_API}?title=${encodeURIComponent(query)}&exact=0&pageSize=50`);
 
             if (!response.ok) {
                 throw new Error(_EN ? 'Network response error' : 'Error en la respuesta de la red');
@@ -373,42 +398,65 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // RENDERIZADO DE OFERTAS (CheapShark)
     // ==========================================
-    function renderResults(deals) {
-        const validDeals = deals.slice(0, 12);
+    function createDealCard(deal, index) {
+        const storeInfo = storesCache[deal.storeID] || { name: _EN ? 'Unknown Store' : 'Tienda Desconocida', logo: '' };
+        const savingsPercent = parseFloat(deal.savings).toFixed(0);
 
-        validDeals.forEach((deal, index) => {
-            const storeInfo = storesCache[deal.storeID] || { name: _EN ? 'Unknown Store' : 'Tienda Desconocida', logo: '' };
-            const savingsPercent = parseFloat(deal.savings).toFixed(0);
+        const card = document.createElement('article');
+        card.className = 'game-card';
+        card.style.animationDelay = `${index * 0.05}s`;
 
-            const card = document.createElement('article');
-            card.className = 'game-card';
-            card.style.animationDelay = `${index * 0.05}s`;
+        const hasSavings = savingsPercent > 0;
+        const savingsHTML = hasSavings ? `<span class="savings">-${escapeHtml(String(savingsPercent))}%</span>` : '';
 
-            const hasSavings = savingsPercent > 0;
-            const savingsHTML = hasSavings ? `<span class="savings">-${escapeHtml(String(savingsPercent))}%</span>` : '';
+        const imgSrc = escapeHtml(deal.thumb || 'https://placehold.co/400x150/161623/f8fafc?text=No+Image');
 
-            const imgSrc = escapeHtml(deal.thumb || 'https://via.placeholder.com/400x150/161623/f8fafc?text=No+Image');
-
-            card.innerHTML = `
-                <img src="${imgSrc}" alt="${escapeHtml(deal.title)}" class="card-image" loading="lazy">
-                <div class="card-content">
-                    <h3 class="game-title" title="${escapeHtml(deal.title)}">${escapeHtml(deal.title)}</h3>
-                    <div class="store-info">
-                        ${storeInfo.logo ? `<img src="${escapeHtml(storeInfo.logo)}" alt="${escapeHtml(storeInfo.name)}" class="store-logo">` : ''}
-                        <span>${escapeHtml(storeInfo.name)}</span>
-                    </div>
-                    <div class="price-container">
-                        <span class="sale-price">$${escapeHtml(String(deal.salePrice))}</span>
-                        <span class="normal-price">$${escapeHtml(String(deal.normalPrice))}</span>
-                        ${savingsHTML}
-                    </div>
-                    <a href="${REDIRECT_BASE}${escapeHtml(deal.dealID)}" target="_blank" rel="noopener noreferrer" class="get-deal-btn">
-                        ${_EN ? 'View Deal' : 'Ver Oferta'}
-                    </a>
+        card.innerHTML = `
+            <img src="${imgSrc}" alt="${escapeHtml(deal.title)}" class="card-image" loading="lazy">
+            <div class="card-content">
+                <h3 class="game-title" title="${escapeHtml(deal.title)}">${escapeHtml(deal.title)}</h3>
+                <div class="store-info">
+                    ${storeInfo.logo ? `<img src="${escapeHtml(storeInfo.logo)}" alt="${escapeHtml(storeInfo.name)}" class="store-logo">` : ''}
+                    <span>${escapeHtml(storeInfo.name)}</span>
                 </div>
-            `;
-            resultsContainer.appendChild(card);
+                <div class="price-container">
+                    <span class="sale-price">$${escapeHtml(String(deal.salePrice))}</span>
+                    <span class="normal-price">$${escapeHtml(String(deal.normalPrice))}</span>
+                    ${savingsHTML}
+                </div>
+                <a href="${REDIRECT_BASE}${escapeHtml(deal.dealID)}" target="_blank" rel="noopener noreferrer" class="get-deal-btn">
+                    ${_EN ? 'View Deal' : 'Ver Oferta'}
+                </a>
+            </div>
+        `;
+        return card;
+    }
+
+    function renderResults(deals) {
+        visibleCount = RESULTS_PAGE_SIZE;
+        resultsContainer.innerHTML = '';
+
+        deals.slice(0, visibleCount).forEach((deal, index) => {
+            resultsContainer.appendChild(createDealCard(deal, index));
         });
+
+        if (deals.length <= visibleCount) return;
+
+        const loadMoreBtn = document.createElement('button');
+        loadMoreBtn.type = 'button';
+        loadMoreBtn.className = 'load-more-btn';
+        loadMoreBtn.textContent = _EN ? 'Show more results' : 'Ver más resultados';
+        loadMoreBtn.addEventListener('click', () => {
+            const from = visibleCount;
+            visibleCount = Math.min(visibleCount + RESULTS_PAGE_SIZE, deals.length);
+
+            deals.slice(from, visibleCount).forEach((deal, index) => {
+                resultsContainer.insertBefore(createDealCard(deal, from + index), loadMoreBtn);
+            });
+
+            if (visibleCount >= deals.length) loadMoreBtn.remove();
+        });
+        resultsContainer.appendChild(loadMoreBtn);
     }
 
     // ==========================================
@@ -429,7 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                     <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                 </svg>
-                ${_EN ? 'Search' : 'Buscar'} "${query}" ${_EN ? 'on' : 'en'} Google
+                ${_EN ? 'Search' : 'Buscar'} "${escapeHtml(query)}" ${_EN ? 'on' : 'en'} Google
             </a>
         `;
         emptyState.classList.remove('hidden');

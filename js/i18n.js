@@ -11,12 +11,12 @@
     '/Games/ludo/',
     '/Games/typing/',
     '/MCAccounts/',
-    '/GameFinder/'
+    '/GameFinder/',
+    '/PlayMC/'
   ];
 
   var path = location.pathname;
   if (path.slice(-11) === '/index.html') path = path.slice(0, -11) || '/';
-  else if (path.slice(-5) === '.html') path = path;
 
   var isEN = path === '/en' || path.indexOf('/en/') === 0;
 
@@ -69,14 +69,14 @@
 
     var btn = document.createElement('a');
     btn.id = 'nu-lang-toggle';
-    btn.href = isEN ? esPath(path) : enPath(path);
+    btn.href = (isEN ? esPath(path) : enPath(path)) + location.search + location.hash;
     btn.textContent = isEN ? 'ES' : 'EN';
     btn.setAttribute('aria-label', isEN ? 'Cambiar a español' : 'Switch to English');
     btn.setAttribute('title', isEN ? 'Español' : 'English');
     btn.style.cssText = [
       'position:fixed',
       'right:16px',
-      'bottom:16px',
+      'bottom:84px',
       'z-index:99999',
       'width:44px',
       'height:44px',

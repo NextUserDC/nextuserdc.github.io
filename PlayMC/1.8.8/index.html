@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <html style="width:100%;height:100%;background-color:black;">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-<meta name="description" content="Eaglercraft 1.8.8 - Juega Minecraft en el navegador" />
-<meta name="keywords" content="eaglercraft, eaglercraftx, minecraft, 1.8, 1.8.8" />
-<link rel="canonical" href="https://nextuser.lat/PlayMC/" />
-<title>Eaglercraft 1.8.8</title>
+<meta name="description" content="Juega Minecraft 1.8.8 gratis en el navegador con Eaglercraft: versión clásica, ligera y estable, sin instalar nada y con multijugador online." />
+<meta name="keywords" content="eaglercraft 1.8.8, minecraft 1.8.8, minecraft 1.8.8 gratis, minecraft 1.8 en navegador, minecraft 1.8 online, minecraft 1.8 gratis, minecraft pvp, minecraft clásico, minecraft legacy, eaglercraftx, minecraft en el navegador, minecraft gratis, minecraft gratis en el navegador, minecraft online, jugar minecraft, jugar minecraft 1.8.8, minecraft sin descargar, minecraft sin instalar, minecraft gratis sin instalar, minecraft gratis sin java, minecraft sin cuenta, minecraft web, minecraft browser, minecraft java en el navegador, minecraft multijugador online, minecraft hunger games, minecraft skywars, minecraft bedwars 1.8, minecraft kits pvp, minecraft gratis para pc, minecraft gratis pc, minecraft online gratis, juego de minecraft, juegos de minecraft gratis, play minecraft online, minecraft browser game, minecraft no download, eaglercraft gratis, eaglercraft online, minecraft 1.8 skins, nextuser" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://nextuser.lat/PlayMC/1.8.8/" />
+<title>Eaglercraft 1.8.8 — Minecraft clásico gratis en el navegador</title>
 <meta property="og:locale" content="es_ES" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Eaglercraft 1.8.8 - Juega Minecraft en el navegador" />
-<meta property="og:description" content="Juega Minecraft 1.8.8 directamente en tu navegador con Eaglercraft WASM-GC" />
+<meta property="og:title" content="Eaglercraft 1.8.8 — Minecraft clásico gratis en el navegador" />
+<meta property="og:description" content="Juega Minecraft 1.8.8 gratis en el navegador con Eaglercraft: versión clásica, ligera y estable, sin instalar nada y con multijugador online." />
+<meta property="og:url" content="https://nextuser.lat/PlayMC/1.8.8/" />
+<meta property="og:image" content="https://nextuser.lat/og-cover.jpg" />
+<meta property="og:site_name" content="Elí Núñez" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Eaglercraft 1.8.8 — Minecraft clásico gratis en el navegador" />
+<meta name="twitter:description" content="Juega Minecraft 1.8.8 gratis en el navegador con Eaglercraft: versión clásica, ligera y estable, sin instalar nada y con multijugador online." />
+<meta name="twitter:image" content="https://nextuser.lat/og-cover.jpg" />
+<meta name="theme-color" content="#000000" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://nextuser.lat/"},{"@type":"ListItem","position":2,"name":"Eaglercraft","item":"https://nextuser.lat/PlayMC/"},{"@type":"ListItem","position":3,"name":"Eaglercraft 1.8.8","item":"https://nextuser.lat/PlayMC/1.8.8/"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"VideoGame","name":"Eaglercraft 1.8.8 — Minecraft clásico en el navegador","url":"https://nextuser.lat/PlayMC/1.8.8/","image":"https://nextuser.lat/og-cover.jpg","description":"Juega Minecraft 1.8.8 gratis en el navegador con Eaglercraft: versión clásica, ligera y estable, sin instalar nada y con multijugador online.","inLanguage":"es","gamePlatform":"Web browser","operatingSystem":"Any","applicationCategory":"GameApplication","genre":"Sandbox","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
 <script type="text/javascript">
 "use strict";
 var relayId = Math.floor(Math.random() * 3);
@@ -79,7 +79,7 @@ b.src=a;document.head.appendChild(b)}}}}}else b='window.eaglercraftXOpts.contain
 		launchCountdownProgressElement.style.width = "" + launchCounter + "%";
 		if(++launchCounter > 100 || launchSkipCountdown) {
 			clearInterval(launchInterval);
-			setTimeout(function() { document.body.removeChild(document.getElementById("launch_countdown_screen")); document.body.style.backgroundColor = "black"; main(); }, 50);
+			setTimeout(function() { document.body.removeChild(document.getElementById("launch_countdown_screen")); document.body.style.backgroundColor = "black"; var lb = document.querySelector(".nu-legal-bar"); if (lb) lb.style.display = "none"; main(); }, 50);
 		}
 	};
 
@@ -101,8 +101,12 @@ b.src=a;document.head.appendChild(b)}}}}}else b='window.eaglercraftXOpts.contain
 <div style="margin:auto;text-align:center;">
 <h1>Eaglercraft 1.8.8 <span style="color:#AA0000;">WASM-GC</span></h1>
 <h3>El juego se lanzará en <span id="launchCountdownNumber">5</span>...</h3>
-<div style="border:2px solid black;width:100%;height:15px;padding:1px;margin-bottom:20vh;"><div id="launchCountdownProgress" style="background-color:#555555;width:0%;height:100%;"></div>
-<p style="margin-top:30px;"><button id="skipCountdown" autofocus>Saltar cuenta regresiva</button></p></div>
+<div style="border:2px solid black;width:100%;height:15px;padding:1px;margin-bottom:20vh;"><div id="launchCountdownProgress" style="background-color:#555555;width:0%;height:100%;"></div></div>
+<p style="margin-top:30px;"><button id="skipCountdown" autofocus>Saltar cuenta regresiva</button></p>
+<div style="display:flex;gap:16px;justify-content:center;margin-top:18px;font-family:Arial,sans-serif;">
+<a href="/PlayMC/" style="color:#a78bfa;text-decoration:none;font-size:14px;">&larr; Volver al selector</a>
+<a href="/PlayMC/1.12.2/" style="color:#a78bfa;text-decoration:none;font-size:14px;">Probar Eaglercraft 1.12.2 &rarr;</a>
+</div>
 </div>
 </div>
 <footer class="nu-legal-bar" style="position:fixed;left:16px;right:16px;bottom:16px;margin:0;padding:14px 16px;z-index:9990;width:auto;border-top:1px solid rgba(148,163,184,.25);display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:center;font:400 13px/1.4 system-ui,-apple-system,sans-serif;color:#94a3b8;background:rgba(18,18,28,.6);border-radius:12px;"><nav style="display:flex;gap:16px;flex-wrap:wrap;"><a href="https://portfolio.nextuser.lat/privacidad.html" style="color:#a78bfa;text-decoration:none;">Privacidad</a><a href="https://portfolio.nextuser.lat/cookies.html" style="color:#a78bfa;text-decoration:none;">Cookies</a><a href="https://portfolio.nextuser.lat/terminos.html" style="color:#a78bfa;text-decoration:none;">T&eacute;rminos</a><a href="https://portfolio.nextuser.lat/cookies.html" data-nu-consent-manage style="color:#a78bfa;text-decoration:none;">Gestionar cookies</a></nav><span>&copy; 2026 El&iacute; Alexander N&uacute;&ntilde;ez Su&aacute;rez</span></footer>
