@@ -34,7 +34,8 @@ Las rutas que cambiaron de dominio se redirigen con `301` via el archivo `_redir
 ├── index.html          # Hub de juegos (nextuser.lat)
 ├── _redirects          # 301 de rutas movidas a portfolio.nextuser.lat
 ├── sitemap.xml         # Sitemap de juegos
-├── Games/              # Mecanografía, Ludo (ES + EN)
+├── typing/             # Mecanografía (ES + EN)
+├── ludo/               # Ludo (ES + EN)
 ├── PlayMC/             # Selector Eaglercraft (1.12.2 / 1.8.8)
 ├── MCAccounts/         # Buscador de cuentas (ES + EN)
 ├── GameFinder/         # Ofertas de videojuegos (ES + EN)
@@ -56,10 +57,10 @@ Las rutas que cambiaron de dominio se redirigen con `301` via el archivo `_redir
 <tr>
 <td width="50%">
 
-### Games
+### Mecanografía y Ludo
 Juegos web interactivos: Mecanografia (solitario) y Ludo (local 2-4 jugadores + online), con version en ingles.
 
-`/Games/`
+`/typing/` · `/ludo/`
 
 </td>
 <td width="50%">

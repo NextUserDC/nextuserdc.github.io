@@ -31,7 +31,7 @@
     startBtn.textContent = _EN ? 'Play' : 'Jugar';
   }
 
-  fetch(_EN ? '/en/Games/typing/paragraphs.json' : '/Games/typing/paragraphs.json')
+  fetch(_EN ? '/en/typing/paragraphs.json' : '/typing/paragraphs.json')
     .then(r => r.json()).then(d => {
       paragraphs = d.paragraphs || [];
       onParagraphsReady();

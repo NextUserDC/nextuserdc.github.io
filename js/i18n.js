@@ -7,9 +7,8 @@
 
   // Rutas que tienen versión EN (relativas al dominio, sin index.html)
   var TRANSLATED = [
-    '/Games/',
-    '/Games/ludo/',
-    '/Games/typing/',
+    '/ludo/',
+    '/typing/',
     '/MCAccounts/',
     '/GameFinder/',
     '/PlayMC/'

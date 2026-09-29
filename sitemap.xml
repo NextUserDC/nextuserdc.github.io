@@ -55,15 +55,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nextuser.lat/Games/</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://nextuser.lat/Games/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Games/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Games/"/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://nextuser.lat/en/GameFinder/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://nextuser.lat/GameFinder/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://nextuser.lat/en/GameFinder/"/>
@@ -82,47 +73,38 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nextuser.lat/en/Games/</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://nextuser.lat/Games/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Games/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Games/"/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://nextuser.lat/en/Games/ludo/</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://nextuser.lat/Games/ludo/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Games/ludo/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Games/ludo/"/>
-    <lastmod>2026-09-28</lastmod>
+    <loc>https://nextuser.lat/en/ludo/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nextuser.lat/ludo/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nextuser.lat/en/ludo/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nextuser.lat/ludo/"/>
+    <lastmod>2026-09-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nextuser.lat/en/Games/typing/</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://nextuser.lat/Games/typing/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Games/typing/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Games/typing/"/>
-    <lastmod>2026-09-28</lastmod>
+    <loc>https://nextuser.lat/en/typing/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nextuser.lat/typing/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nextuser.lat/en/typing/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nextuser.lat/typing/"/>
+    <lastmod>2026-09-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nextuser.lat/Games/ludo/</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://nextuser.lat/Games/ludo/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Games/ludo/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Games/ludo/"/>
-    <lastmod>2026-09-28</lastmod>
+    <loc>https://nextuser.lat/ludo/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nextuser.lat/ludo/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nextuser.lat/en/ludo/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nextuser.lat/ludo/"/>
+    <lastmod>2026-09-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nextuser.lat/Games/typing/</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://nextuser.lat/Games/typing/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nextuser.lat/en/Games/typing/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://nextuser.lat/Games/typing/"/>
-    <lastmod>2026-09-28</lastmod>
+    <loc>https://nextuser.lat/typing/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nextuser.lat/typing/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nextuser.lat/en/typing/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nextuser.lat/typing/"/>
+    <lastmod>2026-09-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
