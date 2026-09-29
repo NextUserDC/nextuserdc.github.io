@@ -12,7 +12,13 @@ var _EN = location.pathname.indexOf('/en/') === 0;
         body: JSON.stringify({ service: 'tmail', password: pw }),
       });
       const data = await res.json();
-      return data.code === 0 && data.data?.valid;
+      const valid = data.code === 0 && data.data?.valid;
+      if (valid) {
+        localStorage.setItem('tmail_gate', data.data.token || 'legacy');
+      } else {
+        localStorage.removeItem('tmail_gate');
+      }
+      return valid;
     } catch {
       return false;
     }
@@ -89,6 +95,34 @@ var _EN = location.pathname.indexOf('/en/') === 0;
   function clearSecure(key) {
     localStorage.removeItem(key);
     localStorage.removeItem(key + '_h');
+  }
+
+  // ===== GATE TOKEN (server-side session) =====
+  function gateToken() {
+    return localStorage.getItem('tmail_gate') || '';
+  }
+
+  function clearGateToken() {
+    localStorage.removeItem('tmail_gate');
+  }
+
+  function gateHdr() {
+    const t = gateToken();
+    return t ? { 'X-Gate-Token': t } : {};
+  }
+
+  function handleGateExpired() {
+    clearGateToken();
+    stopPolling();
+    if (loginGate && loginGate.classList.contains('hidden')) {
+      hide(app);
+      show(loginGate);
+      loginError.textContent = _EN
+        ? 'Session expired, enter the password again'
+        : 'Sesion expirada, introduce la contrasena de nuevo';
+      loginPassword.value = '';
+      setTimeout(() => loginPassword.focus(), 50);
+    }
   }
 
   // ===== DOM (Cached) =====
@@ -196,10 +230,14 @@ var _EN = location.pathname.indexOf('/en/') === 0;
 
   // ===== INIT =====
   const _authUntil = parseInt(localStorage.getItem('tmail_auth'), 10);
-  if (_authUntil && Date.now() < _authUntil) {
+  if (_authUntil && Date.now() < _authUntil && gateToken()) {
     hide(loginGate);
     show(app);
     restoreSession();
+  } else if (_authUntil && Date.now() < _authUntil) {
+    loginError.textContent = _EN
+      ? 'Session expired, enter the password again'
+      : 'Sesion expirada, introduce la contrasena de nuevo';
   } else {
     localStorage.removeItem('tmail_auth');
   }
@@ -236,12 +274,19 @@ var _EN = location.pathname.indexOf('/en/') === 0;
 
   // ===== API CALLS (with res.ok check + secret support) =====
   async function apiCall(method, path, body) {
-    const opts = { method, headers: { 'Content-Type': 'application/json' } };
+    const opts = { method, headers: { 'Content-Type': 'application/json', ...gateHdr() } };
     if (body) opts.body = JSON.stringify(body);
     const res = await fetch(`${API}${path}`, opts);
     if (!res.ok) {
       const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-      return { code: res.status, error: err.error || (_EN ? 'Server error' : 'Error del servidor'), data: null };
+      const isGate = res.status === 401 && (err.gate === true || err.error === 'Gate token required');
+      if (isGate) handleGateExpired();
+      return {
+        code: res.status,
+        error: err.error || (_EN ? 'Server error' : 'Error del servidor'),
+        data: null,
+        gate: isGate,
+      };
     }
     return res.json();
   }
@@ -451,7 +496,14 @@ var _EN = location.pathname.indexOf('/en/') === 0;
   async function fetchInbox() {
     if (!currentAddress) return;
     try {
-      const { data, error, code } = await apiCall('GET', inboxPath());
+      const { data, error, code, gate } = await apiCall('GET', inboxPath());
+      if (gate) {
+        return;
+      }
+      if (data && data.gate) {
+        handleGateExpired();
+        return;
+      }
       if (code !== 0 || !data) {
         // Mailbox doesn't exist in DB (cleared or expired) — clear local session
         if (code !== 0) {
@@ -700,6 +752,8 @@ var _EN = location.pathname.indexOf('/en/') === 0;
 
       currentAddress = data.address;
       currentSecret = data.secret;
+      if (data.token) localStorage.setItem('tmail_gate', data.token);
+      else if (!gateToken()) localStorage.setItem('tmail_gate', 'legacy');
       const parsedEnd = new Date(data.expiresAt).getTime();
       endAt = isNaN(parsedEnd) ? Date.now() + 24 * 3600000 : parsedEnd;
       tokenRevealed = false;
@@ -933,7 +987,7 @@ var _EN = location.pathname.indexOf('/en/') === 0;
     if (!currentAddress || !currentSecret) return;
     try {
       const res = await fetch(`${API}/ncloud/files?path=${encodeURIComponent(ncloudCurrentPath)}`, {
-        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() }
       });
       const data = await res.json();
       if (!data.folders && !data.files) {
@@ -1039,7 +1093,7 @@ var _EN = location.pathname.indexOf('/en/') === 0;
         const key = ncloudCurrentPath ? ncloudCurrentPath + '/' + file.name : file.name;
         const uploadRes = await fetch(`${API}/ncloud/upload-url`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() },
           body: JSON.stringify({ key, size: file.size, ttl })
         });
         const result = await uploadRes.json();
@@ -1052,7 +1106,7 @@ var _EN = location.pathname.indexOf('/en/') === 0;
         await fetch(result.url, { method: 'PUT', body: file });
         const confirmRes = await fetch(`${API}/ncloud/confirm-upload`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() },
           body: JSON.stringify({ key: result.key })
         });
         const confirm = await confirmRes.json();
@@ -1083,7 +1137,7 @@ var _EN = location.pathname.indexOf('/en/') === 0;
     if (!currentAddress || !currentSecret) return;
     try {
       const res = await fetch(`${API}/ncloud/download-url?key=${encodeURIComponent(key)}`, {
-        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() }
       });
       const { url } = await res.json();
       if (url) window.open(url, '_blank');
@@ -1098,7 +1152,7 @@ var _EN = location.pathname.indexOf('/en/') === 0;
     try {
       await fetch(`${API}/ncloud/file?key=${encodeURIComponent(key)}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() }
       });
       ncloudListFiles();
       ncloudUpdateSpace();
@@ -1113,14 +1167,14 @@ var _EN = location.pathname.indexOf('/en/') === 0;
     const prefix = ncloudCurrentPath ? ncloudCurrentPath + '/' + name : name;
     try {
       const res = await fetch(`${API}/ncloud/files?path=${encodeURIComponent(prefix)}`, {
-        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() }
       });
       const data = await res.json();
       const allKeys = (data.files || []).map(f => f.key);
       allKeys.push(`${currentAddress}/${prefix}/.keep`);
       await fetch(`${API}/ncloud/delete-batch`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() },
         body: JSON.stringify({ keys: allKeys })
       });
       ncloudListFiles();
@@ -1136,7 +1190,7 @@ var _EN = location.pathname.indexOf('/en/') === 0;
       const path = ncloudCurrentPath ? ncloudCurrentPath + '/' + name.trim() : name.trim();
       await fetch(`${API}/ncloud/mkdir`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() },
         body: JSON.stringify({ path })
       });
       ncloudListFiles();
@@ -1155,7 +1209,7 @@ var _EN = location.pathname.indexOf('/en/') === 0;
       if (slug) body.slug = slug;
       const res = await fetch(`${API}/ncloud/share`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}` },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() },
         body: JSON.stringify(body)
       });
       const data = await res.json();
@@ -1188,7 +1242,7 @@ var _EN = location.pathname.indexOf('/en/') === 0;
     if (!currentAddress || !currentSecret) return;
     try {
       const res = await fetch(`${API}/ncloud/shares`, {
-        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() }
       });
       const data = await res.json();
       const shares = data.shares || [];
@@ -1225,7 +1279,7 @@ var _EN = location.pathname.indexOf('/en/') === 0;
     try {
       await fetch(`${API}/ncloud/share/${id}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() }
       });
       ncloudListShares();
     } catch (e) {
@@ -1237,12 +1291,13 @@ var _EN = location.pathname.indexOf('/en/') === 0;
     if (!currentAddress || !currentSecret) return;
     try {
       const res = await fetch(`${API}/ncloud/space`, {
-        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}` }
+        headers: { 'Authorization': `Bearer ${currentAddress}:${currentSecret}`, ...gateHdr() }
       });
       const data = await res.json();
       ncloudSpaceUsed.textContent = formatSize(data.used || 0);
       ncloudSpaceCount.textContent = (data.count || 0) + (_EN ? ' files' : ' archivos');
-      const pct = Math.min(100, ((data.used || 0) / (10 * 1024 * 1024 * 1024)) * 100);
+      const limit = data.limit || (10 * 1024 * 1024 * 1024);
+      const pct = Math.min(100, ((data.used || 0) / limit) * 100);
       ncloudSpaceFill.style.width = pct + '%';
     } catch (e) {
       console.error('Space error:', e);
