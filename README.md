@@ -36,7 +36,7 @@ Las rutas que cambiaron de dominio se redirigen con `301` via el archivo `_redir
 ├── sitemap.xml         # Sitemap de juegos
 ├── typing/             # Mecanografía (ES + EN)
 ├── ludo/               # Ludo (ES + EN)
-├── PlayMC/             # Selector Eaglercraft (1.12.2 / 1.8.8)
+├── PlayMC/             # Selector Eaglercraft (1.12.2 / 1.8.8 / guía 1.21)
 ├── MCAccounts/         # Buscador de cuentas (ES + EN)
 ├── GameFinder/         # Ofertas de videojuegos (ES + EN)
 ├── js/                 # consent.js e i18n.js de juegos
@@ -66,9 +66,9 @@ Juegos web interactivos: Mecanografia (solitario) y Ludo (local 2-4 jugadores + 
 <td width="50%">
 
 ### Eaglercraft (PlayMC)
-Selector con dos versiones de Minecraft en el navegador basado en EaglercraftX: **1.12.2** (WASM-GC, ultima) y **1.8.8** (clasica y estable). Mundos propios por version.
+Selector con dos versiones de Minecraft en el navegador basado en EaglercraftX: **1.12.2** (WASM-GC, ultima) y **1.8.8** (clasica y estable), mas una guia de estado sobre la supuesta 1.21 (no existe aun). Mundos propios por version.
 
-`/PlayMC/`
+`/PlayMC/` · `/PlayMC/1.21/`
 
 </td>
 </tr>

@@ -11,7 +11,8 @@
     '/typing/',
     '/MCAccounts/',
     '/GameFinder/',
-    '/PlayMC/'
+    '/PlayMC/',
+    '/PlayMC/1.21/'
   ];
 
   var path = location.pathname;
