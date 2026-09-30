@@ -1508,32 +1508,6 @@ var _EN = location.pathname.indexOf('/en/') === 0;
     navigator.serviceWorker.register('/TMail/sw.js').catch(() => {});
   }
 
-  // ===== PWA: Install Prompt =====
-  let deferredPrompt = null;
-  const installBtn = document.createElement('button');
-  installBtn.className = 'pwa-install-btn hidden';
-  installBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> ' + (_EN ? 'Install' : 'Instalar');
-  document.body.appendChild(installBtn);
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.classList.remove('hidden');
-  });
-
-  installBtn.addEventListener('click', async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    installBtn.classList.add('hidden');
-  });
-
-  window.addEventListener('appinstalled', () => {
-    deferredPrompt = null;
-    installBtn.classList.add('hidden');
-  });
-
   // ===== PWA: Web Share API para archivos =====
   if (typeof navigator.share === 'undefined') {
     navigator.share = null;

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tmail-v3';
+const CACHE_NAME = 'tmail-v4';
 const STATIC_ASSETS = [
   '/TMail/',
   '/TMail/index.html',
