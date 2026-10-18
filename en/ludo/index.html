@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0a0a14">
-  <meta name="description" content="Play Ludo online: local games with 2-4 players or online matches with a room code.">
+  <meta name="description" content="Play Ludo in your browser: local games with 2-4 players on the same device. Free, no install.">
   <link rel="canonical" href="https://nextuser.lat/en/ludo/">
   <link rel="alternate" hreflang="es" href="https://nextuser.lat/ludo/">
   <link rel="alternate" hreflang="en" href="https://nextuser.lat/en/ludo/">
   <link rel="alternate" hreflang="x-default" href="https://nextuser.lat/ludo/">
   <meta property="og:title" content="Ludo — Games | NextUser">
-  <meta property="og:description" content="Play Ludo online: local games with 2-4 players or online matches with a room code.">
+  <meta property="og:description" content="Play Ludo in your browser: local games with 2-4 players on the same device. Free, no install.">
   <meta property="og:url" content="https://nextuser.lat/en/ludo/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://nextuser.lat/og-cover.jpg">
@@ -18,16 +18,16 @@
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Ludo — Games | NextUser">
-  <meta name="twitter:description" content="Play Ludo online: local games with 2-4 players or online matches with a room code.">
+  <meta name="twitter:description" content="Play Ludo in your browser: local games with 2-4 players on the same device. Free, no install.">
   <meta name="twitter:image" content="https://nextuser.lat/og-cover.jpg">
   <meta name="robots" content="index, follow">
 <title>Ludo — Games | NextUser</title>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Ludo — Multiplayer Board Game in Your Browser","url":"https://nextuser.lat/en/ludo/","image":"https://nextuser.lat/og-cover.jpg","description":"Play Ludo in your browser: 2 to 4 players, local match or online multiplayer with a room code. Free, no install.","inLanguage":"en","gamePlatform":"Web browser","operatingSystem":"Any","applicationCategory":"GameApplication","genre":"Board game","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Ludo — Board Game in Your Browser","url":"https://nextuser.lat/en/ludo/","image":"https://nextuser.lat/og-cover.jpg","description":"Play Ludo in your browser: 2 to 4 players on the same device, local match. Free, no install.","inLanguage":"en","gamePlatform":"Web browser","operatingSystem":"Any","applicationCategory":"GameApplication","genre":"Board game","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"></noscript>
-  <link rel="stylesheet" href="/ludo/style.css?v=6">
+  <link rel="stylesheet" href="/ludo/style.css?v=7">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
 <script type="text/plain" data-nu-track="ads" data-src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9123517935698561" crossorigin="anonymous"></script>
 <style>body{padding-bottom:88px}</style>
@@ -47,19 +47,7 @@
 
     <div id="setup-screen" class="screen active">
       <div class="setup-card">
-        <h2>Game mode</h2>
-        <div class="mode-buttons">
-          <button class="mode-btn selected" data-mode="local" aria-pressed="true">
-            <span class="mode-icon" aria-hidden="true">🎲</span>
-            <span class="mode-label">Local</span>
-            <span class="mode-desc">Play on the same device</span>
-          </button>
-          <button class="mode-btn" data-mode="online" aria-pressed="false">
-            <span class="mode-icon" aria-hidden="true">🌐</span>
-            <span class="mode-label">Online</span>
-            <span class="mode-desc">Play with a room code</span>
-          </button>
-        </div>
+        <h2>New game</h2>
 
         <div id="local-options">
           <div class="setup-section">
@@ -86,61 +74,7 @@
           <button class="start-btn" id="start-game">Play</button>
         </div>
 
-        <div id="online-options" class="hidden">
-          <div id="online-lobby">
-            <div class="online-name-row">
-              <label for="online-name">Your name</label>
-              <input type="text" id="online-name" value="Player" maxlength="15">
-            </div>
-            <div class="online-color-row">
-              <label for="online-color-display" id="lbl-dd-color">Your color</label>
-              <div class="ludo-dd" id="online-color-dropdown">
-                <button type="button" class="ludo-dd-selected" id="online-color-display" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-dd-color online-color-text">
-                  <span class="color-dot" style="background:#ef4444" aria-hidden="true"></span>
-                  <span class="ludo-dd-selected-text" id="online-color-text">Red</span>
-                  <span class="ludo-dd-arrow" aria-hidden="true">&#9660;</span>
-                </button>
-                <div class="ludo-dd-options" id="online-color-options" role="listbox" aria-labelledby="lbl-dd-color">
-                  <div class="ludo-dd-option" data-color="red" role="option" tabindex="-1" aria-selected="true"><span class="color-dot" style="background:#ef4444" aria-hidden="true"></span> Red</div>
-                  <div class="ludo-dd-option" data-color="green" role="option" tabindex="-1" aria-selected="false"><span class="color-dot" style="background:#22c55e" aria-hidden="true"></span> Green</div>
-                  <div class="ludo-dd-option" data-color="yellow" role="option" tabindex="-1" aria-selected="false"><span class="color-dot" style="background:#eab308" aria-hidden="true"></span> Yellow</div>
-                  <div class="ludo-dd-option" data-color="blue" role="option" tabindex="-1" aria-selected="false"><span class="color-dot" style="background:#3b82f6" aria-hidden="true"></span> Blue</div>
-                </div>
-              </div>
-            </div>
-            <div class="online-actions">
-              <div class="online-action">
-                <button class="start-btn" id="create-ludo-room">Create room</button>
-                <p class="online-hint">Create a room and share the code</p>
-              </div>
-              <div class="online-divider">or</div>
-              <div class="online-action">
-                <div class="room-code-input">
-                  <input type="text" id="ludo-room-code-input" maxlength="4" placeholder="----" autocomplete="off" spellcheck="false" aria-label="Room code">
-                </div>
-                <button class="start-btn" id="join-ludo-room">Join</button>
-                <p class="online-hint">Enter the 4-character code</p>
-              </div>
-            </div>
-            <div id="ludo-online-status" class="online-status hidden" role="status" aria-live="polite"></div>
-          </div>
-          <div id="online-waiting" class="hidden">
-            <div class="room-code-display">
-              <span class="room-code-label">Room code</span>
-              <span class="room-code" id="ludo-room-code-display">----</span>
-              <button class="copy-code-btn" id="ludo-copy-code" title="Copy code" aria-label="Copy code">📋</button>
-            </div>
-            <div class="waiting-info">
-              <div class="waiting-spinner" aria-hidden="true"></div>
-              <p id="ludo-waiting-text">Waiting for opponent...</p>
-              <p class="waiting-hint">Share this code with your opponent</p>
-            </div>
-          </div>
-          <div id="online-start-area" class="hidden">
-            <p id="online-players-info"></p>
-            <button class="start-btn" id="start-online-ludo">Start game</button>
-          </div>
-        </div>
+
       </div>
     </div>
 
@@ -181,7 +115,7 @@
     </div>
   </div>
 
-  <script src="/ludo/app.js?v=6"></script>
+  <script src="/ludo/app.js?v=7"></script>
   <script src="/js/i18n.js?v=2"></script>
 <footer class="nu-legal-bar" style="position:fixed;left:16px;right:16px;bottom:16px;margin:0;padding:14px 16px;z-index:9990;width:auto;border-top:1px solid rgba(148,163,184,.25);display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:center;font:400 13px/1.4 system-ui,-apple-system,sans-serif;color:#94a3b8;background:rgba(18,18,28,.6);border-radius:12px;"><nav style="display:flex;gap:16px;flex-wrap:wrap;"><a href="https://portfolio.nextuser.lat/en/privacidad.html" style="color:#a78bfa;text-decoration:none;">Privacy</a><a href="https://portfolio.nextuser.lat/en/cookies.html" style="color:#a78bfa;text-decoration:none;">Cookies</a><a href="https://portfolio.nextuser.lat/en/terminos.html" style="color:#a78bfa;text-decoration:none;">Terms</a><a href="https://portfolio.nextuser.lat/en/cookies.html" data-nu-consent-manage style="color:#a78bfa;text-decoration:none;">Manage cookies</a></nav><span>&copy; 2026 El&iacute; Alexander N&uacute;&ntilde;ez Su&aacute;rez</span></footer>
   <script src="/js/consent.js"></script>

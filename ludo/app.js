@@ -5,7 +5,6 @@
     ? { red: 'Red', green: 'Green', yellow: 'Yellow', blue: 'Blue' }
     : { red: 'Rojo', green: 'Verde', yellow: 'Amarillo', blue: 'Azul' };
   const BOARD_SIZE = 15;
-  const WS_URL = 'wss://vps.nextuser.lat/ws/ludo';
 
   let players = [];
   let numPlayers = 2;
@@ -15,14 +14,6 @@
   let consecutiveSixes = 0;
   let moveInProgress = false;
   let diceRolled = false;
-  let gameMode = 'local';
-  let isMyTurnOnline = false;
-
-  let ws = null;
-  let myPlayerId = null;
-  let myColor = null;
-  let isOnline = false;
-  let onlineSelectedColor = 'red';
 
   const setupScreen = document.getElementById('setup-screen');
   const gameScreen = document.getElementById('game-screen');
@@ -91,11 +82,6 @@
     : { red: 'ficha roja', green: 'ficha verde', yellow: 'ficha amarilla', blue: 'ficha azul' };
 
   let baseZones = [];
-  let joinedRoom = false;
-  let lastRoomCode = '';
-  let lastRoomName = '';
-  let reconnecting = false;
-  let reconnectAttempts = 0;
 
   function cellPx() {
     const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--cell'));
@@ -108,98 +94,6 @@
       if (!isNaN(w) && w > 0) return w / 2;
     }
     return 13;
-  }
-
-  document.querySelectorAll('.setup-card .mode-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.setup-card .mode-btn').forEach(b => {
-        b.classList.remove('selected');
-        b.setAttribute('aria-pressed', 'false');
-      });
-      btn.classList.add('selected');
-      btn.setAttribute('aria-pressed', 'true');
-      gameMode = btn.dataset.mode;
-      document.getElementById('local-options').classList.toggle('hidden', gameMode !== 'local');
-      document.getElementById('online-options').classList.toggle('hidden', gameMode !== 'online');
-    });
-  });
-
-  const dropdownDisplay = document.getElementById('online-color-display');
-  const dropdownOptions = document.getElementById('online-color-options');
-  const COLOR_DOT_COLORS = { red: '#ef4444', green: '#22c55e', yellow: '#eab308', blue: '#3b82f6' };
-
-  function isDropdownOpen() {
-    return !!dropdownOptions && dropdownOptions.classList.contains('open');
-  }
-
-  function openDropdown() {
-    if (!dropdownOptions || !dropdownDisplay) return;
-    dropdownOptions.classList.add('open');
-    dropdownDisplay.setAttribute('aria-expanded', 'true');
-  }
-
-  function closeDropdown(focusTrigger) {
-    if (!dropdownOptions || !dropdownDisplay) return;
-    dropdownOptions.classList.remove('open');
-    dropdownDisplay.setAttribute('aria-expanded', 'false');
-    if (focusTrigger) dropdownDisplay.focus();
-  }
-
-  function selectDropdownColor(color) {
-    if (!dropdownDisplay) return;
-    onlineSelectedColor = color;
-    dropdownDisplay.querySelector('.color-dot').style.background = COLOR_DOT_COLORS[color];
-    dropdownDisplay.querySelector('.ludo-dd-selected-text').textContent = COLOR_NAMES[color];
-    if (dropdownOptions) {
-      dropdownOptions.querySelectorAll('.ludo-dd-option').forEach(o => {
-        o.setAttribute('aria-selected', o.dataset.color === color ? 'true' : 'false');
-      });
-    }
-    closeDropdown(true);
-  }
-
-  if (dropdownDisplay && dropdownOptions) {
-    const ddOptions = [...dropdownOptions.querySelectorAll('.ludo-dd-option')];
-
-    dropdownDisplay.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (isDropdownOpen()) closeDropdown(false);
-      else openDropdown();
-    });
-
-    dropdownDisplay.addEventListener('keydown', (e) => {
-      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-      e.preventDefault();
-      e.stopPropagation();
-      openDropdown();
-      const opt = e.key === 'ArrowDown' ? ddOptions[0] : ddOptions[ddOptions.length - 1];
-      if (opt) opt.focus();
-    });
-
-    ddOptions.forEach((opt, i) => {
-      opt.addEventListener('click', (e) => {
-        e.stopPropagation();
-        selectDropdownColor(opt.dataset.color);
-      });
-      opt.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-          e.preventDefault();
-          e.stopPropagation();
-          const next = e.key === 'ArrowDown'
-            ? (i + 1) % ddOptions.length
-            : (i - 1 + ddOptions.length) % ddOptions.length;
-          ddOptions[next].focus();
-        } else if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          e.stopPropagation();
-          selectDropdownColor(opt.dataset.color);
-        }
-      });
-    });
-
-    document.addEventListener('click', () => {
-      closeDropdown(false);
-    });
   }
 
   document.querySelectorAll('.count-btn').forEach(btn => {
@@ -279,346 +173,7 @@
   });
   document.getElementById('play-again').addEventListener('click', () => location.reload());
 
-  document.getElementById('create-ludo-room').addEventListener('click', createLudoRoom);
-  document.getElementById('join-ludo-room').addEventListener('click', joinLudoRoom);
-  document.getElementById('ludo-copy-code').addEventListener('click', () => {
-    const btn = document.getElementById('ludo-copy-code');
-    const code = document.getElementById('ludo-room-code-display').textContent;
-    navigator.clipboard.writeText(code).then(() => {
-      btn.textContent = '✅';
-      announce(_EN ? 'Room code copied' : 'Código de sala copiado');
-      setTimeout(() => { btn.textContent = '📋'; }, 1500);
-    }).catch(() => {
-      btn.textContent = '📋';
-      announce(_EN ? 'Could not copy the room code' : 'No se pudo copiar el código de sala');
-    });
-  });
-  document.getElementById('ludo-room-code-input').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') joinLudoRoom();
-  });
-
-  function connectWS() {
-    return new Promise((resolve, reject) => {
-      if (ws && ws.readyState === WebSocket.OPEN) { resolve(); return; }
-      ws = new WebSocket(WS_URL);
-      const timeout = setTimeout(() => {
-        ws.close();
-        reject(new Error(_EN ? 'Connection timed out' : 'Tiempo de conexión agotado'));
-      }, 8000);
-      ws.onopen = () => { clearTimeout(timeout); resolve(); };
-      ws.onerror = () => { clearTimeout(timeout); reject(new Error(_EN ? 'Could not connect to the server' : 'No se pudo conectar al servidor')); };
-      ws.onclose = handleWSClose;
-      ws.onmessage = (e) => {
-        let msg;
-        try {
-          msg = JSON.parse(e.data);
-        } catch (err) {
-          return;
-        }
-        handleWSMessage(msg);
-      };
-    });
-  }
-
-  function shouldReconnect() {
-    return isOnline && gameActive && joinedRoom && !!lastRoomCode && !!lastRoomName;
-  }
-
-  function handleWSClose() {
-    if (!shouldReconnect()) {
-      if (isOnline && gameActive) {
-        addLog(_EN ? '⚠ Connection lost' : '⚠ Conexión perdida');
-      }
-      return;
-    }
-    if (reconnecting) return;
-    scheduleReconnect();
-  }
-
-  function scheduleReconnect() {
-    if (reconnectAttempts >= 2) {
-      reconnecting = false;
-      reconnectAttempts = 0;
-      showOnlineStatus(
-        _EN ? 'Connection lost. Could not reconnect.' : 'Conexión perdida. No se pudo reconectar.',
-        'error'
-      );
-      addLog(_EN ? '⚠ Could not reconnect to the room' : '⚠ No se pudo reconectar a la sala');
-      return;
-    }
-    reconnectAttempts++;
-    reconnecting = true;
-    showOnlineStatus(
-      _EN ? 'Connection lost, reconnecting…' : 'Conexión perdida, reconectando…',
-      'error'
-    );
-    addLog(_EN ? 'Connection lost, reconnecting…' : 'Conexión perdida, reconectando…');
-    setTimeout(doReconnect, 2000);
-  }
-
-  async function doReconnect() {
-    try {
-      ws = null;
-      await connectWS();
-      if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({
-          type: 'join',
-          code: lastRoomCode,
-          name: lastRoomName,
-          color: myColor || onlineSelectedColor
-        }));
-      }
-      reconnecting = false;
-      reconnectAttempts = 0;
-      showOnlineStatus(_EN ? 'Reconnected' : 'Reconectado', 'success');
-    } catch (err) {
-      scheduleReconnect();
-    }
-  }
-
-  function showOnlineStatus(text, type) {
-    const el = document.getElementById('ludo-online-status');
-    if (!el) return;
-    el.textContent = text;
-    el.className = 'online-status ' + type;
-    el.classList.remove('hidden');
-  }
-
-  function announce(text) {
-    const el = document.getElementById('ludo-a11y-live');
-    if (!el) return;
-    el.textContent = '';
-    setTimeout(() => { el.textContent = text; }, 80);
-  }
-
-  async function createLudoRoom() {
-    const btn = document.getElementById('create-ludo-room');
-    const name = document.getElementById('online-name').value.trim() || (_EN ? 'Player' : 'Jugador');
-    myColor = onlineSelectedColor;
-    lastRoomName = name;
-    reconnecting = false;
-    reconnectAttempts = 0;
-    btn.disabled = true;
-    btn.textContent = _EN ? 'Connecting...' : 'Conectando...';
-    try {
-      await connectWS();
-      ws.send(JSON.stringify({
-        type: 'create',
-        name,
-        color: myColor
-      }));
-    } catch (err) {
-      showOnlineStatus(err.message, 'error');
-    } finally {
-      btn.disabled = false;
-      btn.textContent = _EN ? 'Create room' : 'Crear sala';
-    }
-  }
-
-  async function joinLudoRoom() {
-    const btn = document.getElementById('join-ludo-room');
-    const code = document.getElementById('ludo-room-code-input').value.trim().toUpperCase();
-    const name = document.getElementById('online-name').value.trim() || (_EN ? 'Player' : 'Jugador');
-    if (code.length !== 4) {
-      showOnlineStatus(_EN ? 'The code must be 4 characters long' : 'El código debe tener 4 caracteres', 'error');
-      return;
-    }
-    lastRoomCode = code;
-    lastRoomName = name;
-    reconnecting = false;
-    reconnectAttempts = 0;
-    btn.disabled = true;
-    btn.textContent = _EN ? 'Connecting...' : 'Conectando...';
-    try {
-      await connectWS();
-      ws.send(JSON.stringify({
-        type: 'join',
-        code,
-        name,
-        color: onlineSelectedColor
-      }));
-    } catch (err) {
-      showOnlineStatus(err.message, 'error');
-    } finally {
-      btn.disabled = false;
-      btn.textContent = _EN ? 'Join' : 'Unirse';
-    }
-  }
-
-  function handleWSMessage(msg) {
-    switch (msg.type) {
-      case 'created':
-        myPlayerId = msg.player;
-        joinedRoom = true;
-        lastRoomCode = msg.code;
-        document.getElementById('online-lobby').classList.add('hidden');
-        document.getElementById('online-waiting').classList.remove('hidden');
-        document.getElementById('ludo-room-code-display').textContent = msg.code;
-        break;
-
-      case 'joined':
-        myPlayerId = msg.player;
-        joinedRoom = true;
-        lastRoomCode = msg.code;
-        if (msg.colorAssigned && msg.colorChanged) {
-          myColor = msg.colorAssigned;
-          onlineSelectedColor = msg.colorAssigned;
-          if (dropdownDisplay) {
-            dropdownDisplay.querySelector('.color-dot').style.background = COLOR_DOT_COLORS[msg.colorAssigned];
-            dropdownDisplay.querySelector('.ludo-dd-selected-text').textContent = COLOR_NAMES[msg.colorAssigned];
-          }
-          showOnlineStatus((_EN ? 'Your color was already taken. You were assigned: ' : 'Tu color estaba en uso. Se te asignó: ') + COLOR_NAMES[msg.colorAssigned], 'error');
-        }
-        document.getElementById('online-lobby').classList.add('hidden');
-        document.getElementById('online-waiting').classList.remove('hidden');
-        document.getElementById('ludo-room-code-display').textContent = msg.code;
-        document.getElementById('ludo-waiting-text').textContent = _EN ? 'Waiting for the host to start...' : 'Esperando que el anfitrión inicie...';
-        document.querySelector('#online-waiting .waiting-hint').textContent = '';
-        break;
-
-      case 'player_joined':
-        document.getElementById('ludo-waiting-text').textContent = _EN
-          ? `${msg.name} joined! (${msg.players}/2)`
-          : `${msg.name} se unió! (${msg.players}/2)`;
-        document.querySelector('#online-waiting .waiting-hint').textContent = myPlayerId === 'p1'
-          ? (_EN ? 'Press "Start" when you are ready' : 'Presiona "Iniciar" cuando estés listo')
-          : '';
-        if (myPlayerId === 'p1' && msg.players === 2) {
-          document.getElementById('online-start-area').classList.remove('hidden');
-          document.getElementById('online-players-info').textContent = _EN ? '2 players connected' : '2 jugadores conectados';
-        }
-        break;
-
-      case 'player_left':
-        addLog(_EN ? `${msg.name} disconnected` : `${msg.name} se desconectó`);
-        if (gameActive) {
-          gameActive = false;
-          rollBtn.disabled = true;
-          addLog(_EN ? 'Game over - opponent disconnected' : 'Juego terminado - oponente desconectado');
-        }
-        break;
-
-      case 'error':
-        showOnlineStatus(msg.msg, 'error');
-        break;
-
-      case 'game_start':
-        isOnline = true;
-        setupOnlineGame(msg);
-        break;
-
-      case 'turn':
-        handleOnlineTurn(msg.player);
-        break;
-
-      case 'roll':
-        handleRemoteRoll(msg.player, msg.value);
-        break;
-
-      case 'move':
-        handleRemoteMove(msg.player, msg.pieceIndex, msg.to, msg.pieces);
-        break;
-
-      case 'capture':
-        handleRemoteCapture(msg.player, msg.opponentPiece, msg.opponentColor);
-        break;
-
-      case 'win': {
-        const winnerId = msg.player;
-        const winPlayer = players.find((p, i) => {
-          if (winnerId === myPlayerId) return i === 0;
-          return i === 1;
-        });
-        if (winPlayer) {
-          gameActive = false;
-          setTimeout(() => showWin(winPlayer), 500);
-        }
-        break;
-      }
-    }
-  }
-
-  function setupOnlineGame(msg) {
-    const colors = msg.colors;
-    const names = msg.names;
-    const myColorVal = colors[myPlayerId];
-    const oppColorVal = colors[myPlayerId === 'p1' ? 'p2' : 'p1'];
-
-    players = [
-      { color: myColorVal, name: names[myPlayerId], pieces: [-1,-1,-1,-1], pieceElements: [] },
-      { color: oppColorVal, name: names[myPlayerId === 'p1' ? 'p2' : 'p1'], pieces: [-1,-1,-1,-1], pieceElements: [] }
-    ];
-
-    showScreen(gameScreen);
-    buildBoard();
-    renderPlayersList();
-    gameActive = true;
-    currentTurn = 0;
-    consecutiveSixes = 0;
-    moveInProgress = false;
-    diceRolled = false;
-    addLog(_EN ? 'Online game started!' : 'Partida online iniciada!');
-  }
-
-  function handleOnlineTurn(turnPlayerId) {
-    isMyTurnOnline = turnPlayerId === myPlayerId;
-    if (isMyTurnOnline) {
-      currentTurn = 0;
-    } else {
-      currentTurn = 1;
-    }
-    diceRolled = false;
-    moveInProgress = false;
-    consecutiveSixes = 0;
-    diceValue = 0;
-    diceFace.textContent = '?';
-    rollBtn.disabled = !isMyTurnOnline;
-    updateTurnDisplay();
-    if (isMyTurnOnline) {
-      addLog(_EN ? 'Your turn!' : 'Tu turno!');
-    } else {
-      addLog(_EN ? "Opponent's turn..." : 'Turno del oponente...');
-    }
-  }
-
-  function handleRemoteRoll(playerId, value) {
-    if (playerId === myPlayerId) return;
-    diceValue = value;
-    diceFace.textContent = value;
-    const p = players.find(pl => pl.color === (playerId === 'p1' ? players[0].color : players[1]?.color));
-    if (p) addLog(_EN ? `${p.name} rolled ${value}` : `${p.name} sacó ${value}`);
-  }
-
-  function handleRemoteMove(playerId, pieceIndex, toPos, piecesState) {
-    const isOpponent = playerId !== myPlayerId;
-    if (!isOpponent) return;
-    const p = players[1];
-    if (!p || !p.pieceElements[pieceIndex]) return;
-    const fromPos = p.pieces[pieceIndex];
-
-    if (piecesState) {
-      p.pieces = piecesState;
-    } else {
-      p.pieces[pieceIndex] = toPos;
-    }
-
-    animateMoveStepByStep(p, pieceIndex, fromPos, p.pieces[pieceIndex], 150, () => {
-      repositionAll();
-      renderPlayersList();
-    });
-  }
-
-  function handleRemoteCapture(playerId, opponentPieceIndex, opponentColor) {
-    const p = players.find(pl => pl.color === opponentColor);
-    if (p && p.pieces[opponentPieceIndex] !== undefined) {
-      p.pieces[opponentPieceIndex] = -1;
-      repositionAll();
-      addLog('💥 ' + (_EN ? 'Capture!' : 'Captura!'));
-    }
-  }
-
   function startLocalGame() {
-    isOnline = false;
     const selectedColors = [...document.querySelectorAll('.color-opt.selected')].map(o => o.dataset.color);
     if (selectedColors.length !== numPlayers) {
       return;
@@ -646,12 +201,6 @@
     updateTurnDisplay();
     addLog(_EN ? 'Game started!' : 'Partida iniciada!');
   }
-
-  document.getElementById('start-online-ludo')?.addEventListener('click', () => {
-    if (myPlayerId !== 'p1') return;
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
-    ws.send(JSON.stringify({ type: 'start' }));
-  });
 
   function buildBoard() {
     boardEl.innerHTML = '';
@@ -885,7 +434,6 @@
 
   function rollDice() {
     if (!gameActive || moveInProgress) return;
-    if (isOnline && !isMyTurnOnline) return;
     rollBtn.disabled = true;
     diceEl.classList.add('rolling');
     diceFace.textContent = '';
@@ -900,9 +448,6 @@
         diceValue = rollDiceValue();
         diceFace.textContent = diceValue;
 
-        if (isOnline && ws && ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ type: 'roll', value: diceValue }));
-        }
         onDiceRolled();
       }
     }, 60);
@@ -979,7 +524,6 @@
 
   function onPieceClick(color, pieceIndex) {
     if (!gameActive || moveInProgress || !diceRolled) return;
-    if (isOnline && !isMyTurnOnline) return;
     const player = players[currentTurn];
     if (player.color !== color) return;
 
@@ -1021,7 +565,6 @@
       animateMove(player, pieceIndex, -1, 0, stepDelay, () => {
         positionPiece(player, pieceIndex);
         checkCapture(player, 0);
-        sendMove(player, pieceIndex);
         afterMove(player);
       });
       return;
@@ -1038,7 +581,6 @@
                 player.pieces[pieceIndex] = 57;
                 addLog(_EN ? `★ ${player.name}: piece ${pieceIndex+1} made it home!` : `★ ${player.name}: ficha ${pieceIndex+1} llegó a casa!`);
                 positionPiece(player, pieceIndex);
-                sendMove(player, pieceIndex);
                 afterMove(player);
               });
             });
@@ -1049,7 +591,6 @@
                 player.pieces[pieceIndex] = finalPos;
                 addLog(_EN ? `${player.name}: piece ${pieceIndex+1} enters the home column` : `${player.name}: ficha ${pieceIndex+1} entra a columna de casa`);
                 positionPiece(player, pieceIndex);
-                sendMove(player, pieceIndex);
                 afterMove(player);
               });
             });
@@ -1062,7 +603,6 @@
         player.pieces[pieceIndex] = newPos;
         checkCapture(player, newPos);
         positionPiece(player, pieceIndex);
-        sendMove(player, pieceIndex);
         afterMove(player);
       });
       return;
@@ -1077,7 +617,6 @@
             addLog(_EN ? `★ ${player.name}: piece ${pieceIndex+1} made it home!` : `★ ${player.name}: ficha ${pieceIndex+1} llegó a casa!`);
           }
           positionPiece(player, pieceIndex);
-          sendMove(player, pieceIndex);
           afterMove(player);
         });
       }
@@ -1086,17 +625,6 @@
 
     positionPiece(player, pieceIndex);
     afterMove(player);
-  }
-
-  function sendMove(player, pieceIndex) {
-    if (!isOnline || !ws || ws.readyState !== WebSocket.OPEN) return;
-    ws.send(JSON.stringify({
-      type: 'move',
-      pieceIndex,
-      from: -1,
-      to: player.pieces[pieceIndex],
-      pieces: player.pieces.slice()
-    }));
   }
 
   function animateMoveStepByStep(player, pieceIndex, from, to, stepDelay, callback) {
@@ -1128,9 +656,6 @@
 
     if (player.pieces.every(p => p === 57)) {
       gameActive = false;
-      if (isOnline && ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ type: 'win' }));
-      }
       setTimeout(() => showWin(player), 500);
       return;
     }
@@ -1143,17 +668,11 @@
   }
 
   function endTurn(extraTurn) {
-    if (isOnline) {
-      if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ type: 'turn_end', extraTurn }));
-      }
+    if (extraTurn) {
+      rollBtn.disabled = false;
+      addLog(_EN ? 'Extra turn for rolling a 6' : 'Turno extra por sacar 6');
     } else {
-      if (extraTurn) {
-        rollBtn.disabled = false;
-        addLog(_EN ? 'Extra turn for rolling a 6' : 'Turno extra por sacar 6');
-      } else {
-        nextTurn();
-      }
+      nextTurn();
     }
   }
 
@@ -1170,9 +689,6 @@
             opponent.pieces[oi] = -1;
             positionPiece(opponent, oi);
             addLog(_EN ? `💥 ${player.name} captures ${opponent.name}!` : `💥 ${player.name} captura a ${opponent.name}!`);
-            if (isOnline && ws && ws.readyState === WebSocket.OPEN) {
-              ws.send(JSON.stringify({ type: 'capture', opponentPiece: oi, opponentColor: opponent.color }));
-            }
           }
         }
       });
@@ -1239,10 +755,6 @@
     if (e.key === ' ' && gameActive && !rollBtn.disabled && !onControl) {
       e.preventDefault();
       rollDice();
-    }
-    if (e.key === 'Escape' && isDropdownOpen()) {
-      e.preventDefault();
-      closeDropdown(true);
     }
   });
 })();
