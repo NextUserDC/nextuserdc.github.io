@@ -60,10 +60,6 @@ a {
     display: none !important;
 }
 
-.texto-centrado {
-    text-align: center;
-}
-
 /* --- Secciones base ----------------------------------------------------- */
 .seccion {
     min-height: 100vh;
@@ -155,28 +151,6 @@ a {
     padding: 0.5rem 1.5rem;
     background: rgba(253, 216, 53, 0.05);
 }
-
-.dna-decoracion {
-    position: absolute;
-    bottom: 2rem;
-    left: 2rem;
-    display: flex;
-    gap: 0.3rem;
-    opacity: 0.06;
-    font-family: monospace;
-    font-size: 0.7rem;
-    font-weight: bold;
-    letter-spacing: 0.15rem;
-}
-
-.dna-decoracion span:nth-child(1) { color: var(--amarillo); }
-.dna-decoracion span:nth-child(2) { color: var(--rojo); }
-.dna-decoracion span:nth-child(3) { color: var(--azul-medio); }
-.dna-decoracion span:nth-child(4) { color: var(--verde); }
-.dna-decoracion span:nth-child(5) { color: var(--amarillo); }
-.dna-decoracion span:nth-child(6) { color: var(--rojo); }
-.dna-decoracion span:nth-child(7) { color: var(--azul-medio); }
-.dna-decoracion span:nth-child(8) { color: var(--verde); }
 
 /* ==========================================================================
    Viñetas — Nuestra Historia
@@ -963,16 +937,6 @@ a {
     font-size: 0.9rem;
 }
 
-.personaje-resultado {
-    text-align: center;
-    padding: 0.8rem;
-    border-radius: 8px;
-    margin-top: 1rem;
-    font-weight: 600;
-    font-size: 0.9rem;
-    border: 1px solid transparent;
-}
-
 .personaje-score {
     text-align: center;
     margin-top: 1rem;
@@ -1136,24 +1100,6 @@ a {
     color: var(--amarillo);
 }
 
-.memoria-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.memoria-stats {
-    display: flex;
-    gap: 1rem;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
-
-.memoria-stats strong {
-    color: var(--amarillo);
-}
-
 .memoria-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1230,14 +1176,6 @@ a {
     font-weight: 600;
     font-size: 0.9rem;
     border: 1px solid transparent;
-}
-
-.memoria-mensaje {
-    text-align: center;
-    padding: 0.8rem;
-    border-radius: 8px;
-    margin-top: 1rem;
-    font-weight: 600;
 }
 
 /* ==========================================================================
@@ -1790,12 +1728,6 @@ a {
 
     .bio-codon {
         font-size: 0.6rem;
-    }
-
-    .dna-decoracion {
-        font-size: 0.6rem;
-        bottom: 1rem;
-        left: 1rem;
     }
 }
 

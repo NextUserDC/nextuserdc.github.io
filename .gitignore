@@ -9,8 +9,6 @@ Thumbs.db
 .vscode/
 .idea/
 .cache/
-Camila/encrypt.js
-Six/encrypt.js
 Six/imgs/1.jpg
 Six/imgs/2.jpg
 Six/imgs/3.jpg
@@ -21,6 +19,7 @@ Six/imgs/7.jpg
 AGENTS.md
 .mimocode/
 
+.cloudflare/
 .wrangler/
 wrangler.toml
 wrangler.json

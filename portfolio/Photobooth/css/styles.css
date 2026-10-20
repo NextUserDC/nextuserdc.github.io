@@ -526,10 +526,6 @@ main {
     margin-bottom: 50px;
 }
 
-.galeria3col {
-    grid-template-columns: repeat(3, 1fr);
-}
-
 .galeriaItem {
     position: relative;
     border-radius: var(--radius);
@@ -642,14 +638,6 @@ main {
 .servicioCard:hover {
     box-shadow: var(--shadow-purple);
     border-color: var(--border-hover);
-}
-
-.servicioImg {
-    width: 100%;
-    border-radius: var(--radius);
-    margin-bottom: 24px;
-    object-fit: cover;
-    max-height: 400px;
 }
 
 .servicioCard h2 {
@@ -1368,10 +1356,6 @@ footer {
     .galeriaGrid {
         grid-template-columns: 1fr 1fr;
         gap: 16px;
-    }
-
-    .galeria3col {
-        grid-template-columns: 1fr;
     }
 
     .contactoLayout {
